@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,21 +26,82 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        $rules = [
+            'name' => 'required|string|max:20',
+            'lastName' => 'nullable|string|max:50',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|in:usuario,alumno,profesor,empresa',
+        ];
+
+        switch ($request->role) {
+            case 'alumno':
+                $rules = array_merge($rules, [
+                    'birthDate' => 'required|date',
+                    'currentCourse' => 'required|string|max:50',
+                    'educationalCenter' => 'required|string|max:100',
+                ]);
+                break;
+            case 'profesor':
+                $rules = array_merge($rules, [
+                    'birthDate' => 'required|date',
+                    'specialization' => 'required|string|max:100',
+                    'department' => 'required|string|max:100',
+                    'validationDocument' => 'required|string|max:255',
+                ]);
+                break;
+            case 'empresa':
+                $rules = array_merge($rules, [
+                    'CIF' => 'required|string|max:50',
+                    'address' => 'required|string|max:255',
+                    'sector' => 'required|string|max:100',
+                    'website' => 'nullable|url|max:255',
+                ]);
+                break;
+        }
+
+        $validated = $request->validate($rules);
 
         $user = User::create([
             'name' => $request->name,
+            'last_name' => $request->lastName,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'usuario', // valor por defecto
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
         ]);
 
+        $details = ['user_id' => $user->id];
+
+        switch ($user->role) {
+            case 'alumno':
+                $details += [
+                    'birth_date' => $request->birthDate,
+                    'current_course' => $request->currentCourse,
+                    'educational_center' => $request->educationalCenter,
+                ];
+                break;
+            case 'profesor':
+                $details += [
+                    'birth_date' => $request->birthDate,
+                    'specialization' => $request->specialization,
+                    'department' => $request->department,
+                    'validation_document' => $request->validationDocument,
+                ];
+                break;
+            case 'empresa':
+                $details += [
+                    'cif' => $request->CIF,
+                    'address' => $request->address,
+                    'sector' => $request->sector,
+                    'website' => $request->website,
+                ];
+                break;
+        }
+
+        UserDetail::create($details);
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Registro exitoso.');
+        return redirect('/dashboard');
+
     }
 }

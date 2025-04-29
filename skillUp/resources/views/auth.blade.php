@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Autenticación</title>
 </head>
+
 <body>
     <h2>Iniciar Sesión</h2>
     <form action="{{ route('login') }}" method="POST">
@@ -18,17 +20,70 @@
     <hr>
 
     <h2>Registrarse</h2>
-    <form action="{{ route('register') }}" method="POST">
+    @if ($errors->any())
+        <div class="error-box">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form method="POST" action="{{ route('register') }}" class="space-y-4" id="registerForm">
         @csrf
-        <label>Nombre:</label>
-        <input type="text" name="name" required><br>
-        <label>Email:</label>
-        <input type="email" name="email" required><br>
-        <label>Contraseña:</label>
-        <input type="password" name="password" required><br>
-        <label>Confirmar Contraseña:</label>
-        <input type="password" name="password_confirmation" required><br>
-        <button type="submit">Registrarse</button>
+
+        <input type="text" name="name" placeholder="Nombre" required class="w-full p-3 border rounded">
+        <input type="text" name="lastName" placeholder="Apellido" required class="w-full p-3 border rounded">
+        <input type="email" name="email" placeholder="Correo electrónico" required class="w-full p-3 border rounded">
+        <input type="password" name="password" placeholder="Password" required class="w-full p-3 border rounded">
+        <input type="password" name="password_confirmation" placeholder="Confirmar contraseña" required
+            class="w-full p-3 border rounded">
+
+        <select name="role" id="role" required class="w-full p-3 border rounded">
+            <option value="">Selecciona tu rol</option>
+            <option value="usuario">Usuario</option>
+            <option value="alumno">Estudiante</option>
+            <option value="profesor">Profesor</option>
+            <option value="empresa">Empresa</option>
+        </select>
+
+        <!-- Dynamic fields based on role -->
+        <div id="additionalFields" class="space-y-4"></div>
+
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+            Register
+        </button>
     </form>
+
+    <script>
+        document.getElementById('role').addEventListener('change', function () {
+            const container = document.getElementById('additionalFields');
+            container.innerHTML = '';
+            const role = this.value;
+
+            if (role === 'alumno') {
+                container.innerHTML = `
+                <input type="date" name="birthDate" placeholder="Fecha de nacimiento" required>
+                <input type="text" name="currentCourse" placeholder="Curso actual" required>
+                <input type="text" name="educationalCenter" placeholder="Centro educativo" required>
+            `;
+            } else if (role === 'profesor') {
+                container.innerHTML = `
+                <input type="date" name="birthDate" placeholder="Fecha de nacimiento" required>
+                <input type="text" name="specialization" placeholder="Especialización" required>
+                <input type="text" name="department" placeholder="Departmento" required>
+                <input type="text" name="validationDocument" placeholder="Documento que lo valide" required>
+            `;
+            } else if (role === 'empresa') {
+                container.innerHTML = `
+                <input type="text" name="cif" placeholder="CIF" required>
+                <input type="text" name="address" placeholder="Dirección" required>
+                <input type="text" name="sector" placeholder="Sector" required>
+                <input type="url" name="website" placeholder="Sitio web">
+            `;
+            }
+        });
+    </script>
 </body>
+
 </html>
