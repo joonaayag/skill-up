@@ -52,7 +52,7 @@ class AuthController extends Controller
                 break;
             case 'empresa':
                 $rules = array_merge($rules, [
-                    'CIF' => 'required|string|max:50',
+                    'cif' => 'required|string|max:50',
                     'address' => 'required|string|max:255',
                     'sector' => 'required|string|max:100',
                     'website' => 'nullable|url|max:255',
@@ -90,7 +90,7 @@ class AuthController extends Controller
                 break;
             case 'empresa':
                 $details += [
-                    'cif' => $request->CIF,
+                    'cif' => $request->cif,
                     'address' => $request->address,
                     'sector' => $request->sector,
                     'website' => $request->website,
