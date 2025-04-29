@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect('/')->with('success', 'Sesión iniciada.');
+            return redirect('/dashboard');
         }
 
         return back()->withErrors(['email' => 'Credenciales incorrectas.']);
