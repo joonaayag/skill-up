@@ -6,6 +6,6 @@
 </head>
 <body>
     <h1>Bienvenido a la plataforma</h1>
-    <a href="{{ route('auth.page') }}">Iniciar sesión o registrarse</a>
+    <a href="{{ route('auth') }}">Iniciar sesión o registrarse</a>
 </body>
 </html>
