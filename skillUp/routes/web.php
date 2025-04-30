@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SchoolProjectController;
@@ -36,12 +37,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ofertas', [JobOfferController::class, 'index'])->name('job.offers.index');
     Route::get('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
     Route::post('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
-    
-    Route::post('/ofertas/aplicar', [ApplicationController::class,'store'])->name('applications.store');
-    Route::get('/candidatos/{id}', [ApplicationController::class,'show'])->name('applications.show');
-    Route::get('/candidatos', [ApplicationController::class,'index'])->name('applications.index');
+
+    Route::post('/ofertas/aplicar', [ApplicationController::class, 'store'])->name('applications.store');
+    Route::get('/candidatos/{id}', [ApplicationController::class, 'show'])->name('applications.show');
+    Route::get('/candidatos', [ApplicationController::class, 'index'])->name('applications.index');
     Route::delete('/candidaturas/{id}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
     Route::put('/candidaturas/{id}', [ApplicationController::class, 'update'])->name('applications.update');
+
+    Route::get('/favoritos', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::post('/favoritos', [FavoriteController::class, 'store'])->name('favorites.store');
+    Route::delete('/favoritos/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+
 
 
 

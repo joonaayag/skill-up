@@ -11,7 +11,32 @@
                 <strong>{{ $project->name }}</strong><br>
                 <span><em>Categoría:</em> {{ $project->category }} | <em>Fecha:</em> {{ $project->creation_date }}</span><br>
                 <p>{{ $project->description }}</p>
+
+                @php
+                    $favorite = auth()->user()->favorites()
+                        ->where('type', 'proyecto')
+                        ->where('reference_id', $project->id)
+                        ->first();
+                @endphp
+
+                @if ($favorite)
+                    <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">❌ Quitar de favoritos</button>
+                    </form>
+                @else
+                    <form action="{{ route('favorites.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="type" value="proyecto">
+                        <input type="hidden" name="reference_id" value="{{ $project->id }}">
+                        <button type="submit">❤️ Añadir a favoritos</button>
+                    </form>
+                @endif
+
+
                 <hr>
+
             </li>
         @empty
             <p>No hay proyectos disponibles.</p>

@@ -3,6 +3,7 @@
         <a href="{{ route('dashboard') }}">Inicio</a>
         <a href="{{ route('projects.index') }}">Proyectos</a>
         <a href="{{ route('job.offers.index') }}">Ofertas de empleo</a>
+        <a href="{{ route('favorites.index') }}">Favoritos</a>
 
         @auth
                 @php

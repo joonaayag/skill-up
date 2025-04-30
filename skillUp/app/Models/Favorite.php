@@ -17,5 +17,15 @@ class Favorite extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function item()
+    {
+        return match($this->type) {
+            'proyecto' => Project::find($this->reference_id),
+            'oferta' => JobOffer::find($this->reference_id),
+            default => null
+        };
+    }
+
 }
 
