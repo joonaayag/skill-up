@@ -26,6 +26,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
     Route::post('/proyectos', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/proyectos/{id}', [ProjectController::class, 'show'])->name('projects.show');
+
 
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
