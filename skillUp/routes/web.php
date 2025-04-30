@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\ProjectController;
@@ -31,5 +32,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/ofertas/{id}', [JobOfferController::class, 'destroy'])->name('job.offers.destroy');
 
     Route::get('/ofertas', [JobOfferController::class, 'index'])->name('job.offers.index');
+    Route::get('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
+    Route::post('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
+    
+    Route::post('/ofertas/aplicar', [ApplicationController::class,'store'])->name('applications.store');
 
 });

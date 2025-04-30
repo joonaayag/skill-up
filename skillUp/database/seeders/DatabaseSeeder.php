@@ -23,6 +23,22 @@ class DatabaseSeeder extends Seeder
                 'role' => 'usuario',
             ]
         );
+        User::firstOrCreate(
+            ['email' => 'james@gmail.com'],
+            [
+                'name' => 'James',
+                'password' => Hash::make('password'),
+                'role' => 'empresa',
+            ]
+        );
+        User::firstOrCreate(
+            ['email' => 'alberto@gmail.com'],
+            [
+                'name' => 'Alberto',
+                'password' => Hash::make('password'),
+                'role' => 'profesor',
+            ]
+        );
 
         $user = User::firstOrCreate(
             ['email' => 'pedro@gmail.com'],

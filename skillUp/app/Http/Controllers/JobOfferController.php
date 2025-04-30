@@ -68,7 +68,7 @@ class JobOfferController extends Controller
         return redirect()->route('job.offers.company.index');
     }
 
-    
+
     public function update(Request $request, $id)
     {
         $jobOffer = JobOffer::findOrFail($id);
@@ -98,6 +98,12 @@ class JobOfferController extends Controller
         ]);
 
         return redirect()->route('job.offers.company.index');
+    }
+
+    public function show($id)
+    {
+        $offer = JobOffer::findOrFail($id);
+        return view('job_offers.offer_details', compact('offer'));
     }
 
 
