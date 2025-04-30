@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/proyecto-escolar/{id}', [SchoolProjectController::class, 'destroy'])->name('school.projects.destroy');
 
     Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
+    Route::post('/proyectos', [ProjectController::class, 'store'])->name('projects.store');
+
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
     Route::get('/tus-ofertas', [JobOfferController::class, 'companyIndex'])->name('job.offers.company.index');

@@ -21,6 +21,7 @@ return new class extends Migration
                 'TFG', 'TFM', 'Tesis', 'Individual', 'Grupal',
                 'Tecnología', 'Ciencias', 'Artes', 'Ingeniería'
             ]);
+            $table->string('link')->nullable();
 
             $table->date('creation_date');
             $table->timestamps();

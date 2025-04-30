@@ -15,6 +15,7 @@ class Project extends Model
         'description',
         'author_id',
         'category',
+        'link',
         'creation_date',
     ];
 
