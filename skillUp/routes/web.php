@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/candidatos/{id}', [ApplicationController::class,'show'])->name('applications.show');
     Route::get('/candidatos', [ApplicationController::class,'index'])->name('applications.index');
     Route::delete('/candidaturas/{id}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
+    Route::put('/candidaturas/{id}', [ApplicationController::class, 'update'])->name('applications.update');
+
 
 
 });

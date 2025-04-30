@@ -52,5 +52,21 @@ class ApplicationController extends Controller
         return redirect()->route('applications.index');
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'state' => 'required|in:nueva,en revisión,aceptado,rechazado',
+        ]);
+
+        $application = Application::where('id', $id)
+            ->whereHas('jobOffer', fn($q) => $q->where('company_id', auth()->id()))
+            ->firstOrFail();
+
+        $application->update([
+            'state' => $request->state,
+        ]);
+
+        return redirect()->route('applications.index');
+    }
 
 }
