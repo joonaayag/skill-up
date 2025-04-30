@@ -14,7 +14,7 @@
                 @elseif($role === 'profesor')
                     <a href="{{ route('school.projects.index') }}">Gestión de proyectos escolares</a>
                 @elseif($role === 'empresa')
-                    <a href="">Gestión de candidaturas</a>
+                    <a href="{{ route('applications.index') }}">Gestión de candidaturas</a>
                     <a href="{{ route('job.offers.company.index') }}">Tus ofertas</a>
                 @endif
 

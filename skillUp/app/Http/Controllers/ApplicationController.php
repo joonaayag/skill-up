@@ -17,7 +17,7 @@ class ApplicationController extends Controller
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
-        $application = Application::create([
+        Application::create([
             'user_id' => auth()->id(),
             'offer_id' => $request->offer_id,
             'candidate_name' => $request->candidate_name,
@@ -28,7 +28,29 @@ class ApplicationController extends Controller
             'application_date' => now(),
         ]);
 
-        return redirect()->route('job.offers.show', $request->offer_id)
-            ->with('success', 'Tu aplicación ha sido enviada correctamente.');
+        return redirect()->route('job.offers.show', $request->offer_id);
     }
+
+    public function index()
+    {
+
+        $applications = Application::whereHas('jobOffer', function ($query) {
+            $query->where('company_id', auth()->id());
+        })->latest()->get();
+
+        return view('applications.index', compact('applications'));
+    }
+
+    public function destroy($id)
+    {
+        $application = Application::where('id', $id)
+            ->whereHas('jobOffer', fn($q) => $q->where('company_id', auth()->id()))
+            ->firstOrFail();
+
+        $application->delete();
+
+        return redirect()->route('applications.index');
+    }
+
+
 }

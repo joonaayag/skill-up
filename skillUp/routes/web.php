@@ -36,5 +36,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
     
     Route::post('/ofertas/aplicar', [ApplicationController::class,'store'])->name('applications.store');
+    Route::get('/candidatos/{id}', [ApplicationController::class,'show'])->name('applications.show');
+    Route::get('/candidatos', [ApplicationController::class,'index'])->name('applications.index');
+    Route::delete('/candidaturas/{id}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
+
 
 });
