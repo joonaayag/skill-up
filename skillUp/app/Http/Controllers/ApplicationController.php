@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicationStatusChanged;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use Mail;
 
 class ApplicationController extends Controller
 {
@@ -65,6 +67,19 @@ class ApplicationController extends Controller
         $application->update([
             'state' => $request->state,
         ]);
+
+        $messages = [
+            'nueva' => 'Tu candidatura ha sido registrada correctamente y será revisada pronto.',
+            'en revisión' => 'Estamos revisando tu perfil. Te mantendremos informado.',
+            'aceptado' => '¡Felicidades! Tu candidatura ha sido aceptada. Nos pondremos en contacto contigo pronto.',
+            'rechazado' => 'Lamentamos informarte que esta vez no ha sido posible continuar con tu candidatura.',
+        ];
+
+        $email = $application->user->email ?? null;
+
+        if ($email) {
+            Mail::to($email)->send(new ApplicationStatusChanged($application, $messages[$request->state]));
+        }
 
         return redirect()->route('applications.index');
     }
