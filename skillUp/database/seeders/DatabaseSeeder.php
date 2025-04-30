@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Project;
 use App\Models\SchoolProject;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -22,9 +23,150 @@ class DatabaseSeeder extends Seeder
                 'role' => 'usuario',
             ]
         );
-        
 
-        // Proyectos escolares
+        $user = User::firstOrCreate(
+            ['email' => 'pedro@gmail.com'],
+            [
+                'name' => 'Pedro',
+                'password' => Hash::make('password'),
+                'role' => 'usuario',
+            ]
+        );
+
+        Project::insert([
+            [
+                'name' => 'Gestor de tareas colaborativo',
+                'image' => null,
+                'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
+                'author_id' => $user->id,
+                'category' => 'Individual',
+                'creation_date' => '2023-09-01',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Sistema de reservas para coworking',
+                'image' => null,
+                'description' => 'Herramienta para gestionar la reserva de espacios en oficinas compartidas.',
+                'author_id' => $user->id,
+                'category' => 'Grupal',
+                'creation_date' => '2023-11-10',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Portal de aprendizaje interactivo',
+                'image' => null,
+                'description' => 'Plataforma para ofrecer cursos con materiales multimedia y ejercicios.',
+                'author_id' => $user->id,
+                'category' => 'Tecnología',
+                'creation_date' => '2024-02-15',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Simulador de entrevistas con IA',
+                'image' => null,
+                'description' => 'Proyecto que simula entrevistas laborales usando inteligencia artificial.',
+                'author_id' => $user->id,
+                'category' => 'Artes',
+                'creation_date' => '2024-03-25',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+            
+        ]);
+
         SchoolProject::insert([
             [
                 'title' => 'Sistema de gestión académica',

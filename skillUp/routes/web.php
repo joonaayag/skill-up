@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JobOfferController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SchoolProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -19,4 +21,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gestion-proyectos-escolares', [SchoolProjectController::class, 'index'])->name('school.projects.index');
     Route::put('/school-projects/{id}', [SchoolProjectController::class, 'update'])->name('school.projects.update');
     Route::delete('/proyecto-escolar/{id}', [SchoolProjectController::class, 'destroy'])->name('school.projects.destroy');
+
+    Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
+
+    // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
+    Route::get('/tus-ofertas', [JobOfferController::class, 'companyIndex'])->name('job.offers.company.index');
+    Route::post('/tus-ofertas/crear', [JobOfferController::class, 'store'])->name('job.offers.store');
+    Route::put('/ofertas/{id}', [JobOfferController::class, 'update'])->name('job.offers.update');
+    Route::delete('/ofertas/{id}', [JobOfferController::class, 'destroy'])->name('job.offers.destroy');
+
+    Route::get('/ofertas', [JobOfferController::class, 'index'])->name('job.offers.index');
+
 });

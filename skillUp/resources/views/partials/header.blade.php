@@ -1,8 +1,8 @@
 <header>
     <nav>
         <a href="{{ route('dashboard') }}">Inicio</a>
-        <a href="">Proyectos</a>
-        <a href="">Ofertas de empleo</a>
+        <a href="{{ route('projects.index') }}">Proyectos</a>
+        <a href="{{ route('job.offers.index') }}">Ofertas de empleo</a>
 
         @auth
                 @php
@@ -15,7 +15,7 @@
                     <a href="{{ route('school.projects.index') }}">Gestión de proyectos escolares</a>
                 @elseif($role === 'empresa')
                     <a href="">Gestión de candidaturas</a>
-                    <a href="">Tus ofertas</a>
+                    <a href="{{ route('job.offers.company.index') }}">Tus ofertas</a>
                 @endif
 
                 <span>Hola, {{ auth()->user()->name }}</span>
