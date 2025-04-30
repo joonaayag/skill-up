@@ -17,9 +17,15 @@ return new class extends Migration
 
             $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
 
-            $table->enum('category', [
+            $table->enum('tags', [
                 'TFG', 'TFM', 'Tesis', 'Individual', 'Grupal',
                 'Tecnología', 'Ciencias', 'Artes', 'Ingeniería'
+            ]);
+
+            $table->enum('general_category', [
+                'Tecnología y desarrollo', 'Diseño y comunicación',
+                'Administración y negocio', 'Comunicación',
+                'Educación', 'Ciencia y salud', 'Industria', 'Otro'
             ]);
             $table->string('link')->nullable();
 

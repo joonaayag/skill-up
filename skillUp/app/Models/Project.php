@@ -14,7 +14,8 @@ class Project extends Model
         'image',
         'description',
         'author_id',
-        'category',
+        'tags',
+        'general_category',
         'link',
         'creation_date',
     ];
