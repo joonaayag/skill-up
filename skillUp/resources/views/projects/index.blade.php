@@ -11,7 +11,7 @@
             <a href="{{ route('projects.show', $project->id) }}">
                 <li>
                     <strong>{{ $project->name }}</strong><br>
-                    <span><em>Categoría:</em> {{ $project->category }} | <em>Fecha:</em>
+                    <span><em>Categoría:</em> {{ $project->general_category }} | <em>Fecha:</em>
                         {{ $project->creation_date }}</span><br>
                     <p>{{ $project->description }}</p>
 
