@@ -5,6 +5,45 @@
 @section('content')
     <h1>Gestión de Proyectos Escolares</h1>
 
+    <!-- Botón para abrir el modal -->
+    <div x-data="{ showCreate: false }" class="mb-4">
+        <button @click="showCreate = true">+ Nuevo Proyecto</button>
+
+        <!-- Modal para crear nuevo proyecto -->
+        <div x-show="showCreate" style="background: rgba(0, 0, 0, 0.5);"
+            class="fixed inset-0 flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded shadow w-full max-w-md">
+                <h2 class="text-xl font-bold mb-4">Crear Nuevo Proyecto</h2>
+                <form action="{{ route('school.projects.store') }}" method="POST">
+                    @csrf
+
+                    <label>Título:</label>
+                    <input type="text" name="title" required><br>
+
+                    <label>Autor:</label>
+                    <input type="text" name="author" required><br>
+
+                    <label>Fecha de creación:</label>
+                    <input type="date" name="creation_date" required><br>
+
+                    <label>Descripción:</label>
+                    <textarea name="description" required></textarea><br>
+
+                    <label>Tags:</label>
+                    <input type="text" name="tags"><br>
+
+                    <label>Categoría general:</label>
+                    <input type="text" name="general_category"><br>
+
+                    <div class="mt-4">
+                        <button type="submit">Guardar</button>
+                        <button type="button" @click="showCreate = false">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <ul>
         @foreach($projects as $project)
             <li x-data="{ showDelete: false, showEdit: false }">
@@ -51,7 +90,7 @@
                     </form>
                 </div>
             </li>
-
         @endforeach
     </ul>
+
 @endsection
