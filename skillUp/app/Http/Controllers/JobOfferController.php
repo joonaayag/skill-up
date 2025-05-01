@@ -8,22 +8,70 @@ use Illuminate\Http\Request;
 class JobOfferController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $offers = JobOffer::latest()->take(5)->get();
+        $query = JobOffer::query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('author')) {
+            $query->whereHas('company', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->author . '%');
+            });
+        }
+
+        if ($request->filled('general_category')) {
+            $query->whereIn('general_category', $request->general_category);
+        }
+
+        if ($request->filled('sector_category')) {
+            $query->whereIn('sector_category', $request->sector_category);
+        }
+
+        $offers = $query->latest()->get();
 
         return view('job_offers.index', compact('offers'));
     }
 
-    public function companyIndex()
+
+    public function companyIndex(Request $request)
     {
-        $offers = JobOffer::where('company_id', auth()->id())
-            ->latest()
-            ->take(5)
-            ->get();
+        $query = JobOffer::where('company_id', auth()->id());
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('general_category')) {
+            $query->whereIn('general_category', (array) $request->general_category);
+        }
+
+        if ($request->filled('sector_category')) {
+            $query->whereIn('sector_category', (array) $request->sector_category);
+        }
+
+        if ($request->filled('order')) {
+            $query->orderBy($request->order, 'asc');
+        } else {
+            $query->latest();
+        }
+
+        $offers = $query->get();
 
         return view('job_offers.company.index', compact('offers'));
     }
+
+
 
     public function store(Request $request)
     {

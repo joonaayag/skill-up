@@ -33,15 +33,29 @@ class ApplicationController extends Controller
         return redirect()->route('job.offers.show', $request->offer_id);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-
-        $applications = Application::whereHas('jobOffer', function ($query) {
+        $query = Application::whereHas('jobOffer', function ($query) {
             $query->where('company_id', auth()->id());
-        })->latest()->get();
+        });
+
+        if ($request->filled('candidate_name')) {
+            $query->where('candidate_name', 'like', '%' . $request->candidate_name . '%');
+        }
+
+        if ($request->filled('position_applied')) {
+            $query->where('position_applied', 'like', '%' . $request->position_applied . '%');
+        }
+
+        if ($request->filled('state')) {
+            $query->where('state', $request->state);
+        }
+
+        $applications = $query->latest()->get();
 
         return view('applications.index', compact('applications'));
     }
+
 
     public function destroy($id)
     {

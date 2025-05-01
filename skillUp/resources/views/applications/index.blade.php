@@ -5,12 +5,28 @@
 @section('content')
     <h1>Gestión de candidaturas</h1>
 
+    <form method="GET" action="{{ route('applications.index') }}" class="mb-6 space-y-2">
+        <input type="text" name="candidate_name" placeholder="Nombre del candidato" value="{{ request('candidate_name') }}">
+        <input type="text" name="position_applied" placeholder="Puesto solicitado"
+            value="{{ request('position_applied') }}">
+
+        <select name="state">
+            <option value="">-- Estado --</option>
+            <option value="nueva" @selected(request('state') == 'nueva')>Nueva</option>
+            <option value="en revisión" @selected(request('state') == 'en revisión')>En revisión</option>
+            <option value="aceptado" @selected(request('state') == 'aceptado')>Aceptado</option>
+            <option value="rechazado" @selected(request('state') == 'rechazado')>Rechazado</option>
+        </select>
+
+        <button type="submit">Filtrar</button>
+    </form>
+
     @forelse ($applications as $app)
         <div x-data="{ showView: false, showDelete: false }"
             style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
             {{-- VISTA RESUMIDA --}}
             <p><strong>Nombre:</strong> {{ $app->candidate_name }}</p>
-            <p><strong>Categoría:</strong> {{ $app->position_applied }}</p>
+            <p><strong>Puesto:</strong> {{ $app->position_applied }}</p>
             <p><strong>Estado:</strong> {{ ucfirst($app->state) }}</p>
             <p><strong>Fecha:</strong> {{ $app->application_date }}</p>
 

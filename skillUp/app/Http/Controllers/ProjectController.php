@@ -68,12 +68,33 @@ class ProjectController extends Controller
     }
 
 
-    public function ownProjects()
+    public function ownProjects(Request $request)
     {
-        $userProjects = auth()->user()->projects()->latest()->get();
+        $query = auth()->user()->projects();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('general_category', $request->category);
+        }
+
+        if ($request->filled('order')) {
+            $query->orderBy($request->order, 'asc');
+        } else {
+            $query->latest();
+        }
+
+        $userProjects = $query->get();
 
         return view('projects.own_projects', compact('userProjects'));
     }
+
 
     public function show($id)
     {
@@ -120,7 +141,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect()->route('projects.index');
+        return redirect()->back();
     }
 
 }

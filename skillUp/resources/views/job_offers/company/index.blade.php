@@ -5,6 +5,96 @@
 @section('content')
     <h1>Mis ofertas de empleo</h1>
 
+    <form method="GET" action="{{ route('job.offers.company.index') }}" class="mb-6 space-y-2">
+        <input type="text" name="name" placeholder="Título" value="{{ request('name') }}">
+        <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
+        <div>
+            <label><strong>Categorías generales:</strong></label><br>
+            @php
+                $generalCategories = [
+                    'Tecnología y desarrollo',
+                    'Diseño y comunicación',
+                    'Administración y negocio',
+                    'Comunicación',
+                    'Educación',
+                    'Ciencia y salud',
+                    'Industria',
+                    'Otro'
+                ];
+            @endphp
+            @foreach ($generalCategories as $cat)
+                <label class="block">
+                    <input type="checkbox" name="general_category[]" value="{{ $cat }}"
+                        @checked(is_array(request('general_category')) && in_array($cat, request('general_category')))>
+                    {{ $cat }}
+                </label>
+            @endforeach
+        </div>
+        <div>
+            <label><strong>Categorías específicas:</strong></label><br>
+            @php
+                $sectorCategories = [
+                    'Desarrollo software',
+                    'Ciberseguridad',
+                    'Datos y analíticas',
+                    'IA',
+                    'Redes y sistemas',
+                    'Publicidad',
+                    'Diseño gráfico',
+                    'Fotografía/Video',
+                    'Finanzas y contabilidad',
+                    'RRHH',
+                    'Ventas',
+                    'Logística',
+                    'Legal/Jurídico',
+                    'Periodismo',
+                    'Traducción',
+                    'SEO/SEM',
+                    'Community Manager',
+                    'Profesorado',
+                    'Coordinación educativa',
+                    'Orientación',
+                    'Medicina/Enfermería',
+                    'Psicología',
+                    'Farmacia',
+                    'Investigación/Laboratorio',
+                    'Terapias/Rehabilitación',
+                    'Nutrición',
+                    'Construcción',
+                    'Electricidad/Fontanería',
+                    'Mecánica',
+                    'Operario industrial',
+                    'Energía/Renovables',
+                    'Automoción',
+                    'Agricultura/Medioambiente',
+                    'Hostelería/Turismo',
+                    'Arte/Cultura',
+                    'Transporte/Reparto',
+                    'Seguridad'
+                ];
+            @endphp
+            @foreach ($sectorCategories as $sector)
+                <label class="block">
+                    <input type="checkbox" name="sector_category[]" value="{{ $sector }}"
+                        @checked(is_array(request('sector_category')) && in_array($sector, request('sector_category')))>
+                    {{ $sector }}
+                </label>
+            @endforeach
+        </div>
+        <div>
+            <label><strong>Ordenar por:</strong></label><br>
+            <select name="order">
+                <option value="">-- Selecciona un campo --</option>
+                <option value="name" @selected(request('order') == 'name')>Título</option>
+                <option value="general_category" @selected(request('order') == 'general_category')>Categoría general</option>
+                <option value="sector_category" @selected(request('order') == 'sector_category')>Categoría específica</option>
+                <option value="created_at" @selected(request('order') == 'created_at')>Fecha de creación</option>
+            </select>
+        </div>
+
+        <button type="submit" class="mt-2">Buscar</button>
+    </form>
+
     <div x-data="{ showModal: false }">
 
         @forelse ($offers as $offer)
