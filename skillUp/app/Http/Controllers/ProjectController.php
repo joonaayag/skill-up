@@ -16,6 +16,12 @@ class ProjectController extends Controller
         return view('projects.index', compact('projects', 'schoolProjects'));
     }
 
+    public function ownProjects()
+    {
+        $userProjects = auth()->user()->projects()->latest()->get();
+
+        return view('projects.own_projects', compact('userProjects'));
+    }
 
     public function show($id)
     {

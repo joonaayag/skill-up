@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
     Route::post('/proyectos', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/proyectos/{id}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/tus-proyectos', [ProjectController::class, 'ownProjects'])->name('projects.ownProjects');
     
     Route::put('/perfil/{id}', [UserController::class, 'update'])->name('user.update');
 

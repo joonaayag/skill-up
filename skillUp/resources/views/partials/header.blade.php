@@ -11,7 +11,7 @@
             @endphp
 
             @if(in_array($role, ['usuario', 'alumno']))
-                <a href="">Tus proyectos</a>
+                <a href="{{ route('projects.ownProjects') }}">Tus proyectos</a>
             @elseif($role === 'profesor')
                 <a href="{{ route('school.projects.index') }}">Gestión de proyectos escolares</a>
             @elseif($role === 'empresa')
