@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('last_name')->nullable(); // should be null for companys
+            $table->text('description')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             

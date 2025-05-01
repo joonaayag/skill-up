@@ -6,6 +6,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SchoolProjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -19,6 +20,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    Route::get('/perfil', [DashboardController::class, 'profile'])->name('profile.index');
 
     Route::get('/gestion-proyectos-escolares', [SchoolProjectController::class, 'index'])->name('school.projects.index');
     Route::put('/school-projects/{id}', [SchoolProjectController::class, 'update'])->name('school.projects.update');
@@ -30,15 +32,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
     Route::post('/proyectos', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/proyectos/{id}', [ProjectController::class, 'show'])->name('projects.show');
-
-
+    
+    Route::put('/perfil/{id}', [UserController::class, 'update'])->name('user.update');
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
     Route::get('/tus-ofertas', [JobOfferController::class, 'companyIndex'])->name('job.offers.company.index');
     Route::post('/tus-ofertas/crear', [JobOfferController::class, 'store'])->name('job.offers.store');
     Route::put('/ofertas/{id}', [JobOfferController::class, 'update'])->name('job.offers.update');
     Route::delete('/ofertas/{id}', [JobOfferController::class, 'destroy'])->name('job.offers.destroy');
-
     Route::get('/ofertas', [JobOfferController::class, 'index'])->name('job.offers.index');
     Route::get('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
     Route::post('/ofertas/{id}/detalles', [JobOfferController::class, 'show'])->name('job.offers.show');
