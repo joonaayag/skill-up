@@ -38,7 +38,31 @@ class ProjectController extends Controller
 
         $projects = $query->get();
 
-        $schoolProjects = SchoolProject::latest()->take(9)->get();
+        $schoolQuery = SchoolProject::query();
+
+        if ($request->filled('name')) {
+            $schoolQuery->where('title', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('description')) {
+            $schoolQuery->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('author')) {
+            $schoolQuery->where('author', 'like', '%' . $request->author . '%');
+        }
+
+        if ($request->filled('category')) {
+            $schoolQuery->where('general_category', $request->category);
+        }
+
+        if ($request->filled('order')) {
+            $schoolQuery->orderBy($request->order, 'asc');
+        } else {
+            $schoolQuery->latest();
+        }
+
+        $schoolProjects = $schoolQuery->get();
 
         return view('projects.index', compact('projects', 'schoolProjects'));
     }
