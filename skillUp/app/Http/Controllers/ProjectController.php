@@ -8,13 +8,41 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::latest()->take(9)->get();
+        $query = Project::query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('description')) {
+            $query->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('author')) {
+            $query->whereHas('author', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->author . '%');
+            });
+        }
+
+        if ($request->filled('category')) {
+            $query->where('general_category', $request->category);
+        }
+
+        if ($request->filled('order')) {
+            $query->orderBy($request->order, 'asc');
+        } else {
+            $query->latest();
+        }
+
+        $projects = $query->get();
+
         $schoolProjects = SchoolProject::latest()->take(9)->get();
 
         return view('projects.index', compact('projects', 'schoolProjects'));
     }
+
 
     public function ownProjects()
     {

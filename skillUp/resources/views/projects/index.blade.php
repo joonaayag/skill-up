@@ -5,6 +5,34 @@
 @section('content')
     <h1>Proyectos</h1>
 
+    <form method="GET" action="{{ route('projects.index') }}" class="mb-6 space-y-2">
+        <input type="text" name="name" placeholder="Título" value="{{ request('name') }}">
+        <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
+        <input type="text" name="author" placeholder="Autor" value="{{ request('author') }}">
+
+        <select name="category">
+            <option value="">-- Categoría --</option>
+            <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
+            <option value="Diseño y comunicación">Diseño y comunicación</option>
+            <option value="Administración y negocio">Administración y negocio</option>
+            <option value="Comunicación">Comunicación</option>
+            <option value="Educación">Educación</option>
+            <option value="Ciencia y salud">Ciencia y salud</option>
+            <option value="Industria">Industria</option>
+            <option value="Otro">Otro</option>
+        </select>
+
+        <select name="order">
+            <option value="">-- Ordenar por --</option>
+            <option value="name">Nombre</option>
+            <option value="creation_date">Fecha</option>
+            <option value="general_category">Categoría</option>
+        </select>
+
+        <button type="submit">Buscar</button>
+    </form>
+
+
     {{-- PROYECTOS GENERALES --}}
     <ul>
         @forelse ($projects as $project)
