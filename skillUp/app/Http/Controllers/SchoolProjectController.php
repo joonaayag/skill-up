@@ -44,9 +44,17 @@ class SchoolProjectController extends Controller
             'creation_date' => $request->creation_date,
             'description' => $request->description,
             'tags' => $request->tags,
+            'user_id' => auth()->id(),
             'general_category' => $request->general_category,
         ]);
 
         return redirect()->route('school.projects.index');
     }
+
+    public function show($id)
+    {
+        $schoolProject = SchoolProject::findOrFail($id);
+        return view('school_projects.show', compact('schoolProject'));
+    }
+
 }

@@ -20,4 +20,10 @@ class SchoolProject extends Model
         'file',
         'link',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

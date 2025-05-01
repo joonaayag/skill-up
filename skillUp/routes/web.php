@@ -23,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/gestion-proyectos-escolares', [SchoolProjectController::class, 'index'])->name('school.projects.index');
     Route::put('/school-projects/{id}', [SchoolProjectController::class, 'update'])->name('school.projects.update');
     Route::delete('/proyecto-escolar/{id}', [SchoolProjectController::class, 'destroy'])->name('school.projects.destroy');
+    Route::get('/proyectos-escolares/{id}', [SchoolProjectController::class, 'show'])->name('school.projects.show');
 
     Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
     Route::post('/proyectos', [ProjectController::class, 'store'])->name('projects.store');

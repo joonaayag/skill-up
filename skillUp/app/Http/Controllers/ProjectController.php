@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\SchoolProject;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -10,9 +11,11 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::latest()->take(9)->get();
+        $schoolProjects = SchoolProject::latest()->take(9)->get();
 
-        return view('projects.index', compact('projects'));
+        return view('projects.index', compact('projects', 'schoolProjects'));
     }
+
 
     public function show($id)
     {

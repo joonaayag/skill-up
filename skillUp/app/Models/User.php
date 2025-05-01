@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class);
     }
+    public function schoolProjects()
+    {
+        return $this->hasMany(SchoolProject::class);
+    }
+
 }
