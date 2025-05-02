@@ -30,7 +30,9 @@ class UserController extends Controller
         $user->email = $validated['email'];
         $user->description = $validated['description'] ?? null;
 
-        // Subir y guardar la nueva foto de perfil si existe
+        Storage::disk('public')->makeDirectory('banners');
+        Storage::disk('public')->makeDirectory('perfiles');
+
         if ($request->hasFile('foto_perfil') && $request->file('foto_perfil')->isValid()) {
             // Eliminar la foto antigua si existe
             if ($user->foto_perfil) {
@@ -39,7 +41,6 @@ class UserController extends Controller
             $user->foto_perfil = $request->file('foto_perfil')->store('perfiles', 'public');
         }
 
-        // Subir y guardar el nuevo banner si existe
         if ($request->hasFile('banner') && $request->file('banner')->isValid()) {
             // Eliminar el banner antiguo si existe
             if ($user->banner) {
