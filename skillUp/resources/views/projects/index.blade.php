@@ -32,8 +32,6 @@
         <button type="submit">Buscar</button>
     </form>
 
-
-    {{-- PROYECTOS GENERALES --}}
     <ul>
         @forelse ($projects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
@@ -73,7 +71,6 @@
         @endforelse
     </ul>
 
-    {{-- MODAL DE CREACIÓN DE PROYECTOS GENERALES --}}
     <div x-data="{ showModal: false }">
         <button @click="showModal = true">Crear proyecto</button>
 
@@ -113,8 +110,8 @@
                 <label>Imagen destacada:</label>
                 <input type="file" name="image" accept="image/*"><br>
 
-                <label>Archivos adicionales:</label>
-                <input type="file" name="files[]" multiple><br>
+                <label>Imágenes adicionales:</label>
+                <input type="file" name="project_images[]" multiple accept="image/*"><br>
 
                 <button type="submit">Guardar</button>
                 <button type="button" @click="showModal = false">Cancelar</button>
@@ -124,7 +121,6 @@
 
     <hr><br>
 
-    {{-- PROYECTOS ESCOLARES --}}
     <h2>Proyectos Escolares</h2>
     <ul>
         @forelse ($schoolProjects as $school)

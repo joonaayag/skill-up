@@ -111,7 +111,7 @@ class ProjectController extends Controller
             'sector_category' => 'required|string|max:255',
             'creation_date' => 'required|date',
             'link' => 'nullable|url|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'project_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ]);
 
@@ -131,15 +131,15 @@ class ProjectController extends Controller
             'author_id' => auth()->id(),
         ]);
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $path = $file->store('project_files', 'public');
-
-                $project->files()->create([
-                    'path' => $path
+        if ($request->hasFile('project_images')) {
+            foreach ($request->file('project_images') as $imageFile) {
+                $path = $imageFile->store('project_images', 'public');
+                $project->images()->create([
+                    'path' => $path,
                 ]);
             }
         }
+        
 
         return redirect()->back();
     }
