@@ -8,24 +8,12 @@
             <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
                 alt="Fondo" class="w-full h-40 object-cover" id="bannerImage">
 
-            <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
+            <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                 <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
                     alt="Perfil" id="profileImage"
                     class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg">
             </div>
         </div>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-
 
         <div class="pt-16 pb-6 px-6 text-center">
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
@@ -68,30 +56,23 @@
                     @csrf
                     @method('PUT')
 
-                    <!-- Banner actual -->
-                    <label class="block text-sm font-medium mb-1">Banner</label>
-                    <div class="relative mb-4">
+                    <div class="relative mb-8">
                         <img id="bannerPreview"
                             src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
-                            class="w-full h-40 object-cover rounded cursor-pointer"
-                            onclick="document.getElementById('bannerInput').click();" alt="Banner">
-                        <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden"
-                            onchange="previewImage(event, 'bannerPreview')">
-                    </div>
+                            class="w-full h-40 object-cover cursor-pointer" alt="Banner">
+                        <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden">
 
-                    <!-- Foto de perfil -->
-                    <label class="block text-sm font-medium mb-1">Foto de perfil</label>
-                    <div class="flex justify-center mb-6">
-                        <img id="fotoPerfilPreview"
-                            src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
-                            class="h-24 w-24 rounded-full object-cover border-4 border-white shadow cursor-pointer"
-                            onclick="document.getElementById('fotoPerfilInput').click();" alt="Foto de perfil">
-                        <input type="file" name="foto_perfil" id="fotoPerfilInput" accept="image/*" class="hidden"
-                            onchange="previewImage(event, 'fotoPerfilPreview')">
+                        <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
+                            <img id="fotoPerfilPreview"
+                                src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
+                                class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
+                                alt="Foto de perfil">
+                            <input type="file" name="foto_perfil" id="fotoPerfilInput" accept="image/*" class="hidden">
+                        </div>
                     </div>
 
                     <!-- Campos de texto -->
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mt-12">
                         <div>
                             <label class="block text-sm font-medium">Nombre</label>
                             <input type="text" name="name" value="{{ old('name', $user->name) }}"
@@ -127,5 +108,45 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const bannerImage = document.getElementById('bannerImage');
+            const profileImage = document.getElementById('profileImage');
+
+            const bannerInput = document.getElementById('bannerInput');
+            const bannerPreview = document.getElementById('bannerPreview');
+
+            const fotoPerfilInput = document.getElementById('fotoPerfilInput');
+            const fotoPerfilPreview = document.getElementById('fotoPerfilPreview');
+
+            bannerPreview.addEventListener('click', () => bannerInput.click());
+            fotoPerfilPreview.addEventListener('click', () => fotoPerfilInput.click());
+
+            bannerInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        bannerPreview.src = e.target.result;
+                        bannerImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            fotoPerfilInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        fotoPerfilPreview.src = e.target.result;
+                        profileImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 
 @endsection
