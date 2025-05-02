@@ -20,6 +20,10 @@
             <span
                 class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ auth()->user()->role }}</span>
 
+            @php
+                $details = auth()->user()->detail;
+            @endphp
+
             <div class="mt-6 text-left space-y-4">
                 <div class="flex">
                     <div class="w-1/2 font-medium text-gray-700">Nombre</div>
@@ -33,6 +37,48 @@
                     <div class="w-1/2 font-medium text-gray-700">Email</div>
                     <div class="w-1/2 text-gray-900">{{ auth()->user()->email }}</div>
                 </div>
+
+                @if (auth()->user()->role === 'alumno')
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Fecha de nacimiento</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->birth_date ?? 'No especificado' }}</div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Curso actual</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->current_course ?? 'No especificado' }}</div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Centro educativo</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->educational_center ?? 'No especificado' }}</div>
+                    </div>
+                @elseif (auth()->user()->role === 'profesor')
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Especialización</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->specialization ?? 'No especificado' }}</div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Departamento</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->department ?? 'No especificado' }}</div>
+                    </div>
+                @elseif (auth()->user()->role === 'empresa')
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">CIF</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->cif ?? 'No especificado' }}</div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Dirección</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->address ?? 'No especificado' }}</div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Sector</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->sector ?? 'No especificado' }}</div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-1/2 font-medium text-gray-700">Sitio web</div>
+                        <div class="w-1/2 text-gray-900">{{ $details?->website ?? 'No especificado' }}</div>
+                    </div>
+                @endif
+
                 <div>
                     <div class="font-medium text-gray-700">Descripción</div>
                     <div class="text-gray-900 text-sm mt-1">
@@ -40,6 +86,8 @@
                     </div>
                 </div>
             </div>
+
+
 
             <button @click="open = true"
                 class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
@@ -71,8 +119,7 @@
                         </div>
                     </div>
 
-                    <!-- Campos de texto -->
-                    <div class="grid grid-cols-2 gap-4 mt-12">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium">Nombre</label>
                             <input type="text" name="name" value="{{ old('name', $user->name) }}"
@@ -96,6 +143,66 @@
                         <textarea name="description" class="w-full border rounded px-3 py-2"
                             rows="4">{{ old('description', $user->description) }}</textarea>
                     </div>
+
+                    @if ($user->role === 'alumno')
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Fecha de nacimiento</label>
+                            <input type="date" name="birth_date"
+                                value="{{ old('birth_date', $user->detail->birth_date ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Curso actual</label>
+                            <input type="text" name="current_course"
+                                value="{{ old('current_course', $user->detail->current_course ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Centro educativo</label>
+                            <input type="text" name="educational_center"
+                                value="{{ old('educational_center', $user->detail->educational_center ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                    @endif
+
+                    @if ($user->role === 'profesor')
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Especialización</label>
+                            <input type="text" name="specialization"
+                                value="{{ old('specialization', $user->detail->specialization ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Departamento</label>
+                            <input type="text" name="department"
+                                value="{{ old('department', $user->detail->department ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                    @endif
+
+                    @if ($user->role === 'empresa')
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">CIF</label>
+                            <input type="text" name="cif" value="{{ old('cif', $user->detail->cif ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Dirección</label>
+                            <input type="text" name="address" value="{{ old('address', $user->detail->address ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Sector</label>
+                            <input type="text" name="sector" value="{{ old('sector', $user->detail->sector ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">Sitio web</label>
+                            <input type="url" name="website" value="{{ old('website', $user->detail->website ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                    @endif
+
 
                     <div class="mt-6 flex justify-end">
                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
