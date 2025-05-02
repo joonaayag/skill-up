@@ -4,20 +4,22 @@
 
 @section('content')
     <div x-data="{ open: false }" class="max-w-xl mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-10">
-        <!-- Header con imagen de fondo -->
         <div class="relative">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Fondo"
-                class="w-full h-40 object-cover" id="bannerImage">
+            <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
+                alt="Fondo" class="w-full h-40 object-cover" id="bannerImage">
+
             <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-                <img class="h-24 w-24 rounded-full border-4 border-white object-cover"
-                    src="https://randomuser.me/api/portraits/men/32.jpg" alt="Perfil" id="profileImage">
+                <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
+                    alt="Perfil" id="profileImage"
+                    class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg">
             </div>
         </div>
 
-        <!-- Contenido -->
+
         <div class="pt-16 pb-6 px-6 text-center">
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
-            <span class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ auth()->user()->role }}</span>
+            <span
+                class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ auth()->user()->role }}</span>
 
             <div class="mt-6 text-left space-y-4">
                 <div class="flex">
@@ -50,54 +52,67 @@
         <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white w-full max-w-lg p-6 rounded shadow relative" @click.away="open = false">
                 <h3 class="text-xl font-bold mb-4">Editar Perfil</h3>
-                <form action="{{ route('user.update', auth()->id()) }}" method="POST">
+                <form action="{{ route('user.update', auth()->id()) }}" method="POST" enctype="multipart/form-data"
+                    class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
                     @csrf
                     @method('PUT')
-                    <!-- Banner -->
-                    <div class="mb-4 relative">
-                        <img id="editBannerPreview" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
-                            alt="Banner" class="w-full h-40 object-cover rounded cursor-pointer"
-                            onclick="document.getElementById('editBannerInput').click();">
-                        <input type="file" id="editBannerInput" accept="image/*" class="hidden"
-                            onchange="previewImage(event, 'editBannerPreview')">
+
+                    <!-- Banner actual -->
+                    <label class="block text-sm font-medium mb-1">Banner</label>
+                    <div class="relative mb-4">
+                        <img id="bannerPreview"
+                            src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
+                            class="w-full h-40 object-cover rounded cursor-pointer"
+                            onclick="document.getElementById('bannerInput').click();" alt="Banner">
+                        <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden"
+                            onchange="previewImage(event, 'bannerPreview')">
                     </div>
 
                     <!-- Foto de perfil -->
-                    <div class="mb-4 flex justify-center">
-                        <img id="editProfilePreview" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Perfil"
+                    <label class="block text-sm font-medium mb-1">Foto de perfil</label>
+                    <div class="flex justify-center mb-6">
+                        <img id="fotoPerfilPreview"
+                            src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
                             class="h-24 w-24 rounded-full object-cover border-4 border-white shadow cursor-pointer"
-                            onclick="document.getElementById('editProfileInput').click();">
-                        <input type="file" id="editProfileInput" accept="image/*" class="hidden"
-                            onchange="previewImage(event, 'editProfilePreview')">
+                            onclick="document.getElementById('fotoPerfilInput').click();" alt="Foto de perfil">
+                        <input type="file" name="foto_perfil" id="fotoPerfilInput" accept="image/*" class="hidden"
+                            onchange="previewImage(event, 'fotoPerfilPreview')">
                     </div>
 
+                    <!-- Campos de texto -->
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium">Nombre</label>
-                            <input type="text" name="name" class="mt-1 w-full border rounded px-3 py-2" value={{ auth()->user()->name }}>
+                            <input type="text" name="name" value="{{ old('name', $user->name) }}"
+                                class="w-full border rounded px-3 py-2" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">Apellido</label>
-                            <input type="text" name="last_name" class="mt-1 w-full border rounded px-3 py-2" value={{ auth()->user()->last_name }}>
+                            <label class="block text-sm font-medium">Apellidos</label>
+                            <input type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}"
+                                class="w-full border rounded px-3 py-2">
                         </div>
                     </div>
 
                     <div class="mt-4">
                         <label class="block text-sm font-medium">Email</label>
-                        <input type="email" name="email" class="mt-1 w-full border rounded px-3 py-2" value={{ auth()->user()->email }}>
+                        <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                            class="w-full border rounded px-3 py-2" required>
                     </div>
 
                     <div class="mt-4">
                         <label class="block text-sm font-medium">Descripción</label>
-                        <textarea name="description" class="mt-1 w-full border rounded px-3 py-2"
-                            rows="3">Lorem ipsum dolor sit amet...</textarea>
+                        <textarea name="description" class="w-full border rounded px-3 py-2"
+                            rows="4">{{ old('description', $user->description) }}</textarea>
                     </div>
 
-                    <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="open = false" class="px-4 py-2 rounded border">Cancelar</button>
-                        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Guardar</button>
+                    <div class="mt-6 flex justify-end">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Guardar cambios
+                        </button>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>
