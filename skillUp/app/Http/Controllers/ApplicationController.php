@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ApplicationStatusChanged;
 use App\Models\Application;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Mail;
 
@@ -19,7 +20,7 @@ class ApplicationController extends Controller
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
-        Application::create([
+        $application = Application::create([
             'user_id' => auth()->id(),
             'offer_id' => $request->offer_id,
             'candidate_name' => $request->candidate_name,
@@ -29,6 +30,18 @@ class ApplicationController extends Controller
             'state' => 'nueva',
             'application_date' => now(),
         ]);
+
+        $company = $application->jobOffer->company;
+
+        if ($company) {
+            Notification::create([
+                'user_id' => $company->id,
+                'type' => 'candidatura',
+                'title' => 'Nueva candidatura recibida',
+                'message' => $application->user->name . $application->user->last_name . ' se ha postulado a tu oferta "' . $application->jobOffer->name . '".',
+            ]);
+        }
+
 
         return redirect()->route('job.offers.show', $request->offer_id);
     }
@@ -63,6 +76,13 @@ class ApplicationController extends Controller
             ->whereHas('jobOffer', fn($q) => $q->where('company_id', auth()->id()))
             ->firstOrFail();
 
+        Notification::create([
+            'user_id' => $application->user->id,
+            'type' => 'candidatura_eliminada',
+            'title' => 'Tu candidatura ha sido retirada',
+            'message' => 'Tu candidatura para la oferta "' . $application->jobOffer->name . '" ha sido retirada por la empresa.',
+        ]);
+
         $application->delete();
 
         return redirect()->route('applications.index');
@@ -94,6 +114,13 @@ class ApplicationController extends Controller
         if ($email) {
             Mail::to($email)->send(new ApplicationStatusChanged($application, $messages[$request->state]));
         }
+
+        Notification::create([
+            'user_id' => $application->user->id,
+            'type' => 'candidatura',
+            'title' => 'Tu candidatura para la oferta ' . $application->jobOffer->name . ' ha sido actualizada.',
+            'message' => ' Estado actualizado: ' . ucfirst($request->state) . ', ' . $messages[$request->state],
+        ]);
 
         return redirect()->route('applications.index');
     }

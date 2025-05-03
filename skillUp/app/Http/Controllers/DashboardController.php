@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
-    public function show()
+    public function index()
     {
-        return view('dashboard');
+        $notifications = auth()->user()
+            ->notifications()
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('dashboard', compact('notifications'));
     }
 
     public function profile()
