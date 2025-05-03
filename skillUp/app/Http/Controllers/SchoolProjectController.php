@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\SchoolProject;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,17 @@ class SchoolProjectController extends Controller
             abort(403, 'Acceso denegado');
         }
         $project = SchoolProject::findOrFail($id);
+
+        if ($project->user_id) {
+            Notification::create([
+                'user_id' => $project->user_id,
+                'type' => 'proyecto',
+                'title' => 'Tu proyecto ha sido eliminado',
+                'message' => 'El proyecto "' . $project->title . '" ha sido eliminado por el profesorado.',
+            ]);
+        }
+
+
         $project->delete();
 
         return redirect()->route('school.projects.index');
@@ -47,6 +59,16 @@ class SchoolProjectController extends Controller
             'user_id' => auth()->id(),
             'general_category' => $request->general_category,
         ]);
+
+        if ($project->user_id !== auth()->id()) {
+            Notification::create([
+                'user_id' => $project->user_id,
+                'type' => 'proyecto',
+                'title' => 'Tu proyecto ha sido actualizado',
+                'message' => 'El proyecto "' . $project->title . '" ha sido actualizado por el profesorado.',
+            ]);
+        }
+
 
         return redirect()->route('school.projects.index');
     }
@@ -77,6 +99,14 @@ class SchoolProjectController extends Controller
         $project->tags = $validated['tags'] ?? null;
         $project->general_category = $validated['general_category'] ?? null;
         $project->save();
+
+        Notification::create([
+            'user_id' => auth()->id(),
+            'type' => 'proyecto',
+            'title' => 'Proyecto escolar publicado',
+            'message' => 'Tu proyecto "' . $project->title . '" ha sido registrado correctamente.',
+        ]);
+
 
         return redirect()->route('school.projects.index');
     }

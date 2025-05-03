@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JobOfferController extends Controller
@@ -89,7 +91,7 @@ class JobOfferController extends Controller
             'logo' => 'nullable|string|max:255',
         ]);
 
-        JobOffer::create([
+        $jobOffer = JobOffer::create([
             'name' => $request->name,
             'subtitle' => $request->subtitle,
             'description' => $request->description,
@@ -99,6 +101,17 @@ class JobOfferController extends Controller
             'company_id' => auth()->id(),
             'logo' => $request->logo,
         ]);
+
+        $alumnos = User::whereIn('role', ['alumno', 'usuario'])->get();
+
+        foreach ($alumnos as $alumno) {
+            Notification::create([
+                'user_id' => $alumno->id,
+                'type' => 'oferta',
+                'title' => '¡Nueva oferta disponible!',
+                'message' => 'Se ha publicado una nueva oferta: "' . $jobOffer->name . '".',
+            ]);
+        }
 
         return redirect()->route('job.offers.company.index');
     }
@@ -110,6 +123,21 @@ class JobOfferController extends Controller
         if (auth()->user()->role !== 'empresa' || $jobOffer->company_id !== auth()->id()) {
             abort(403, 'Acceso denegado');
         }
+
+        $jobOffer = JobOffer::findOrFail($id);
+        $applications = $jobOffer->applications()->with('user')->get();
+
+        foreach ($applications as $application) {
+            Notification::create([
+                'user_id' => $application->user->id,
+                'type' => 'oferta',
+                'title' => 'Oferta retirada',
+                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por la empresa.',
+            ]);
+        }
+
+        $jobOffer->delete();
+
 
         $jobOffer->delete();
 
@@ -144,6 +172,22 @@ class JobOfferController extends Controller
             'state' => $request->state,
             'logo' => $request->logo,
         ]);
+
+        $jobOffer->update($request->all());
+
+        if ($jobOffer->status === 'cerrada') {
+            $applications = $jobOffer->applications()->with('user')->get();
+
+            foreach ($applications as $application) {
+                Notification::create([
+                    'user_id' => $application->user->id,
+                    'type' => 'oferta',
+                    'title' => 'Oferta cerrada',
+                    'message' => 'La oferta "' . $jobOffer->name . '" ha sido cerrada por la empresa.',
+                ]);
+            }
+        }
+
 
         return redirect()->route('job.offers.company.index');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Project;
 use App\Models\SchoolProject;
 use Illuminate\Http\Request;
@@ -131,6 +132,13 @@ class ProjectController extends Controller
             'author_id' => auth()->id(),
         ]);
 
+        Notification::create([
+            'user_id' => auth()->id(),
+            'type' => 'proyecto',
+            'title' => 'Proyecto registrado',
+            'message' => 'Tu proyecto "' . $project->name . '" ha sido creado correctamente.',
+        ]);
+
         if ($request->hasFile('project_images')) {
             foreach ($request->file('project_images') as $imageFile) {
                 $path = $imageFile->store('project_images', 'public');
@@ -139,7 +147,7 @@ class ProjectController extends Controller
                 ]);
             }
         }
-        
+
 
         return redirect()->back();
     }

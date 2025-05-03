@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
@@ -100,6 +101,35 @@ class AuthController extends Controller
 
         UserDetail::create($details);
         Auth::login($user);
+
+        $message = match ($user->role) {
+            'alumno' => [
+                'title' => '¡Bienvenido a SkillUp!',
+                'message' => 'Ya puedes explorar ofertas y postularte a proyectos adaptados a tu perfil educativo.',
+            ],
+            'usuario' => [
+                'title' => '¡Bienvenido a SkillUp!',
+                'message' => 'Ya puedes explorar ofertas y postularte a proyectos adaptados a tu perfil educativo.',
+            ],
+            'empresa' => [
+                'title' => 'Tu cuenta de empresa está lista',
+                'message' => 'Ahora puedes publicar ofertas y recibir candidaturas de estudiantes.',
+            ],
+            'profesor' => [
+                'title' => 'Perfil de profesor creado',
+                'message' => 'Puedes gestionar y validar proyectos académicos desde tu panel.',
+            ],
+            default => null,
+        };
+
+        if ($message) {
+            Notification::create([
+                'user_id' => $user->id,
+                'type' => 'mensaje',
+                'title' => $message['title'],
+                'message' => $message['message'],
+            ]);
+        }
 
         return redirect('/dashboard');
 
