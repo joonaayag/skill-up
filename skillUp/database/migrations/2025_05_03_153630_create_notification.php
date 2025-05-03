@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['oferta', 'candidatura', 'proyecto', 'mensaje'])->index();
+            $table->enum('type', ['oferta', 'candidatura', 'proyecto', 'mensaje', 'sugerencia'])->index();
             $table->string('title');
             $table->text('message')->nullable();
             $table->timestamps();
