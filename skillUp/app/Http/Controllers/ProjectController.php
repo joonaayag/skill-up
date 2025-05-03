@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\Project;
 use App\Models\SchoolProject;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -138,6 +139,16 @@ class ProjectController extends Controller
             'title' => 'Proyecto registrado',
             'message' => 'Tu proyecto "' . $project->name . '" ha sido creado correctamente.',
         ]);
+        $otrosUsuarios = User::where('id', '!=', auth()->id())->get();
+
+        foreach ($otrosUsuarios as $usuario) {
+            Notification::create([
+                'user_id' => $usuario->id,
+                'type' => 'proyecto',
+                'title' => 'Nuevos proyectos disponible',
+                'message' => 'Se han publicado nuevos proyectos recientemente, ve a descubrirlos! ',
+            ]);
+        }
 
         if ($request->hasFile('project_images')) {
             foreach ($request->file('project_images') as $imageFile) {

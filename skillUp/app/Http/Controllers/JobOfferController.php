@@ -102,16 +102,17 @@ class JobOfferController extends Controller
             'logo' => $request->logo,
         ]);
 
-        $alumnos = User::whereIn('role', ['alumno', 'usuario'])->get();
+        $usuarios = User::where('id', '!=', auth()->id())->get();
 
-        foreach ($alumnos as $alumno) {
+        foreach ($usuarios as $usuario) {
             Notification::create([
-                'user_id' => $alumno->id,
+                'user_id' => $usuario->id,
                 'type' => 'oferta',
                 'title' => '¡Nueva oferta disponible!',
                 'message' => 'Se ha publicado una nueva oferta: "' . $jobOffer->name . '".',
             ]);
         }
+
 
         return redirect()->route('job.offers.company.index');
     }
