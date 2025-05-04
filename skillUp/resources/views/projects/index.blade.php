@@ -62,6 +62,7 @@
                             <button type="submit">❤️ Añadir a favoritos</button>
                         </form>
                     @endif
+                    <p class="text-sm text-gray-500">👁️ {{ $project->views }} visitas</p>
 
                     <p>Calificación actual: {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}</p>
     
@@ -154,6 +155,7 @@
                             <button type="submit">❤️ Añadir a favoritos</button>
                         </form>
                     @endif
+                    <p class="text-sm text-gray-500">👁️ {{ $school->views }} visitas</p>
 
                     <p>Calificación actual: {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}</p>
     

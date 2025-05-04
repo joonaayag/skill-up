@@ -19,6 +19,7 @@
         <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
     @endif
 
+    <p class="text-sm text-gray-500">👁️ {{ $schoolProject->views }} visitas</p>
     <h3>Valorar este proyecto</h3>
     <p>Calificación actual:
         {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'Sin calificaciones' }}</p>

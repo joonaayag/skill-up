@@ -38,6 +38,9 @@
             </div>
         </div>
     @endif
+
+    <p class="text-sm text-gray-500">👁️ {{ $project->views }} visitas</p>
+
     <h3>Valorar este proyecto</h3>
     <p>Calificación actual:
         {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}</p>

@@ -196,6 +196,7 @@ class JobOfferController extends Controller
     public function show($id)
     {
         $offer = JobOffer::findOrFail($id);
+        $offer->increment('views'); 
         return view('job_offers.offer_details', compact('offer'));
     }
 

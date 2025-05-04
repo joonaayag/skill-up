@@ -76,6 +76,7 @@ class SchoolProjectController extends Controller
     public function show($id)
     {
         $schoolProject = SchoolProject::findOrFail($id);
+        $schoolProject->increment('views'); 
         return view('school_projects.show', compact('schoolProject'));
     }
 

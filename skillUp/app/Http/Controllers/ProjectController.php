@@ -101,6 +101,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::findOrFail($id);
+        $project->increment('views'); 
         return view('projects.project_details', compact('project'));
     }
 

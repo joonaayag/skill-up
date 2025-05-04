@@ -120,6 +120,9 @@
                 </form>
             @endif
 
+            <p class="text-sm text-gray-500">👁️ {{ $offer->views }} visitas</p>
+
+
         </div>
 
     @empty
