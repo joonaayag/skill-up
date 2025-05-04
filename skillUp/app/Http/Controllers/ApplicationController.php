@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Mail;
+use Storage;
 
 class ApplicationController extends Controller
 {
@@ -20,9 +21,11 @@ class ApplicationController extends Controller
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
-        $cvPath = null;
-
         if ($request->hasFile('cv')) {
+            if ($request->cv && Storage::disk('public')->exists($request->cv)) {
+                Storage::disk('public')->delete($request->cv);
+            }
+
             $cvPath = $request->file('cv')->store('cvs', 'public');
         }
 

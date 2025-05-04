@@ -85,10 +85,23 @@
                         {{ auth()->user()->description }}
                     </div>
                 </div>
+
+                @if(auth()->user()->cv)
+                    <div>
+                        <div class="font-medium text-gray-700">Curriculum</div>
+                        <div class="text-gray-900 text-sm mt-1">
+                            <p>📄 <a href="{{ asset('storage/' . auth()->user()->cv) }}" target="_blank"
+                                    class="underline text-blue-600">
+                                    Ver mi CV
+                                </a></p>
+                        </div>
+                    </div>
+
+                @else
+                    <p class="text-gray-500">No has subido ningún CV aún.</p>
+                @endif
             </div>
-
-
-
+            
             <button @click="open = true"
                 class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
                 Editar perfil
@@ -203,6 +216,10 @@
                         </div>
                     @endif
 
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium">Subir Cv</label>
+                        <input type="file" name="cv" accept=".pdf">
+                    </div>
 
                     <div class="mt-6 flex justify-end">
                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

@@ -20,13 +20,23 @@ class UserController extends Controller
             'description' => 'nullable|string|max:1000',
             'foto_perfil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
+            'cv' => 'nullable|file|mimes:pdf|max:2048',
         ]);
+
+        if ($request->hasFile('cv')) {
+            if ($request->cv && Storage::disk('public')->exists($request->cv)) {
+                Storage::disk('public')->delete($request->cv);
+            }
+
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $user->cv = $cvPath;
+        }
+
         $user->name = $validated['name'];
         $user->last_name = $validated['last_name'];
         $user->email = $validated['email'];
         $user->description = $validated['description'];
 
-        
 
         if ($request->hasFile('foto_perfil')) {
             $path = $request->file('foto_perfil')->store('perfil', 'public');
