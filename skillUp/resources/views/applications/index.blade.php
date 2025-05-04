@@ -42,7 +42,12 @@
                 <p><strong>Fecha:</strong> {{ $app->application_date }}</p>
 
                 @if ($app->cv)
-                    <p><a href="{{ asset('storage/' . $app->cv) }}" target="_blank">Ver CV</a></p>
+                    <p>
+                        <a href="{{ asset('storage/' . $app->cv) }}" class="text-blue-600 underline" target="_blank">📄
+                            Ver CV</a>
+                    </p>
+                @else
+                    <p class="text-gray-500">No se subió CV</p>
                 @endif
 
                 {{-- FORMULARIO PARA CAMBIAR EL ESTADO --}}

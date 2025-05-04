@@ -20,13 +20,19 @@ class ApplicationController extends Controller
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
+        $cvPath = null;
+
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+        }
+
         $application = Application::create([
             'user_id' => auth()->id(),
             'offer_id' => $request->offer_id,
             'candidate_name' => $request->candidate_name,
             'position_applied' => $request->position_applied,
             'application_reason' => $request->application_reason,
-            'cv' => $request->file('cv') ? $request->file('cv')->store('cvs') : null,
+            'cv' => $cvPath,
             'state' => 'nueva',
             'application_date' => now(),
         ]);
