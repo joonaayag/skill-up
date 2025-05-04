@@ -32,7 +32,7 @@ class Project extends Model
 
     public function ratings()
     {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(Rating::class, 'project_id');
     }
 
     public function averageRating()
@@ -48,5 +48,15 @@ class Project extends Model
     public function getRatingByUser($userId)
     {
         return $this->ratings()->where('user_id', $userId)->first();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function mainComments()
+    {
+        return $this->comments()->whereNull('parent_id');
     }
 }

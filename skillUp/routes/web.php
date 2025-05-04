@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\JobOfferController;
@@ -69,6 +70,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects/{project}/rate', [RatingController::class, 'rateProject'])->name('projects.rate');
     Route::post('/school-projects/{schoolProject}/rate', [RatingController::class, 'rateSchoolProject'])->name('school-projects.rate');
 
+    Route::post('/projects/{project}/comments', [CommentController::class, 'storeProjectComment'])->name('projects.comments.store');
+    Route::post('/school-projects/{schoolProject}/comments', [CommentController::class, 'storeSchoolProjectComment'])->name('school-projects.comments.store');
+    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 
 });

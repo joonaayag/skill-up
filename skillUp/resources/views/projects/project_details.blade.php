@@ -60,4 +60,6 @@
 
 
     <a href="{{ route('projects.index') }}">← Volver</a>
+
+    @include('comments.comment_section', ['commentable' => $project, 'type' => 'project'])
 @endsection

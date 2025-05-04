@@ -40,4 +40,6 @@
     @endauth
 
     <p><a href="{{ route('projects.index') }}">← Volver</a></p>
+
+    @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'school-project'])
 @endsection
