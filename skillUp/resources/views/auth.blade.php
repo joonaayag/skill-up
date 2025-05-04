@@ -7,6 +7,12 @@
 </head>
 
 <body>
+    @if (session('status'))
+        <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <h2>Iniciar Sesión</h2>
     <form action="{{ route('login') }}" method="POST">
         @csrf
@@ -16,6 +22,11 @@
         <input type="password" name="password" required><br>
         <button type="submit">Entrar</button>
     </form>
+    <p class="text-sm text-center mt-4">
+        <a href="{{ route('password.request') }}" class="text-blue-600 hover:underline">
+            ¿Has olvidado tu contraseña?
+        </a>
+    </p>
 
     <hr>
 
