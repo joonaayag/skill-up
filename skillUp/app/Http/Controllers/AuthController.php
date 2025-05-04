@@ -33,6 +33,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|in:usuario,alumno,profesor,empresa',
+            'g-recaptcha-response' => 'required',
         ];
 
         switch ($request->role) {
@@ -61,7 +62,9 @@ class AuthController extends Controller
                 break;
         }
 
-        $validated = $request->validate($rules);
+        $request->validate($rules,  [
+            'g-recaptcha-response.required' => 'Por favor, confirma que no eres un robot.',
+        ]);
 
         $user = User::create([
             'name' => $request->name,

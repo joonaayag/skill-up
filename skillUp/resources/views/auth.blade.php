@@ -61,6 +61,9 @@
         <!-- Dynamic fields based on role -->
         <div id="additionalFields" class="space-y-4"></div>
 
+        <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
+
+
         <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
             Register
         </button>
@@ -95,6 +98,8 @@
             }
         });
     </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </body>
 
 </html>
