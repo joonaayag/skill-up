@@ -42,6 +42,10 @@ class PasswordResetController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
+        ],[
+            'password.required' => 'Debes introducir una contraseña.',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
 
         $status = Password::reset(
