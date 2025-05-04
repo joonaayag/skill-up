@@ -38,7 +38,26 @@
             </div>
         </div>
     @endif
+    <h3>Valorar este proyecto</h3>
+    <p>Calificación actual:
+        {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}</p>
+
+    @auth
+        <form action="{{ route('projects.rate', $project->id) }}" method="POST">
+            @csrf
+            <div class="rating-stars">
+                @for ($i = 1; $i <= 5; $i++)
+                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating == $i ? 'checked' : '' }}>
+                    <label for="star{{ $i }}">★</label>
+                @endfor
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                {{ $project->getRatingByUser(auth()->id()) ? 'Actualizar valoración' : 'Enviar valoración' }}
+            </button>
+        </form>
+    @endauth
 
 
-    <a href="{{ url()->previous() }}">← Volver</a>
+    <a href="{{ route('projects.index') }}">← Volver</a>
 @endsection

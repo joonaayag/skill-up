@@ -6,6 +6,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SchoolProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +66,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/favoritos', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favoritos/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
 
+    Route::post('/projects/{project}/rate', [RatingController::class, 'rateProject'])->name('projects.rate');
+    Route::post('/school-projects/{schoolProject}/rate', [RatingController::class, 'rateSchoolProject'])->name('school-projects.rate');
 
 
 

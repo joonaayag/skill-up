@@ -63,6 +63,8 @@
                         </form>
                     @endif
 
+                    <p>Calificación actual: {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}</p>
+    
                     <hr>
                 </li>
             </a>
@@ -153,6 +155,8 @@
                         </form>
                     @endif
 
+                    <p>Calificación actual: {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}</p>
+    
                     <hr>
                 </li>
             </a>

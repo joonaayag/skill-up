@@ -26,4 +26,23 @@ class SchoolProject extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->ratings()->avg('rating');
+    }
+
+    public function isRatedByUser($userId)
+    {
+        return $this->ratings()->where('user_id', $userId)->exists();
+    }
+
+    public function getRatingByUser($userId)
+    {
+        return $this->ratings()->where('user_id', $userId)->first();
+    }
 }
