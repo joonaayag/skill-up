@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
+use App\Models\Notification;
 use App\Models\Project;
 use App\Models\SchoolProject;
 use App\Models\User;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
-use Notification;
 use Storage;
 
 class AdminController extends Controller
@@ -233,13 +233,134 @@ class AdminController extends Controller
         return view('admin.offers', compact('offers'));
     }
 
-    public function schoolProjectsShow()
+    public function showSchoolProjects()
     {
         if (auth()->user()->role !== 'admin') {
             abort(403, 'Acceso denegado');
         }
         $schoolProjects = SchoolProject::all();
         return view('admin.school_projects', compact('schoolProjects'));
+    }
+
+    public function detailsSchoolProject($id)
+    {
+        $schoolProject = SchoolProject::with(['images', 'ratings', 'comments'])->findOrFail($id);
+        return view('admin.school_project_details', compact('schoolProject'));
+    }
+    public function updateSchoolProject(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:40',
+            'author' => 'required|string|max:50',
+            'creation_date' => 'required|date',
+            'description' => 'required|string',
+            'tags' => 'nullable|string|max:50',
+            'general_category' => 'nullable|string|max:40',
+            'link' => 'nullable|url|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'files.*' => 'nullable|file|max:4096',
+        ], [
+            'title.required' => 'El título es obligatorio.',
+            'title.string' => 'El título debe ser una cadena de texto.',
+            'title.max' => 'El título no puede tener más de 40 caracteres.',
+
+            'author.required' => 'El autor es obligatorio.',
+            'author.string' => 'El autor debe ser una cadena de texto.',
+            'author.max' => 'El autor no puede tener más de 50 caracteres.',
+
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser una fecha válida.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden tener más de 50 caracteres.',
+
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.max' => 'La categoría general no puede tener más de 40 caracteres.',
+
+            'link.url' => 'El enlace debe tener un formato de URL válido.',
+            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+
+            'image.image' => 'Cada imagen debe ser un archivo de imagen válido.',
+            'image.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
+            'image.max' => 'Cada imagen no puede superar los 4MB.',
+
+            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
+            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+        ]);
+
+        $project = SchoolProject::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            if ($project->image && Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
+            }
+
+            $imagePath = $request->file('image')->store('project_images', 'public');
+            $project->image = $imagePath;
+        }
+
+        $project->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'creation_date' => $request->creation_date,
+            'description' => $request->description,
+            'tags' => $request->tags,
+            'user_id' => auth()->id(),
+            'general_category' => $request->general_category,
+            'link' => $request->link,
+        ]);
+
+        if ($project->user_id !== auth()->id()) {
+            Notification::create([
+                'user_id' => $project->user_id,
+                'type' => 'proyecto',
+                'title' => 'Tu proyecto ha sido actualizado',
+                'message' => 'El proyecto "' . $project->title . '" ha sido actualizado por el administrador.',
+            ]);
+        }
+
+        if ($request->hasFile('files')) {
+
+            foreach ($project->images as $img) {
+                Storage::disk('public')->delete($img->path);
+                $img->delete();
+            }
+
+            foreach ($request->file('files') as $file) {
+                $path = $file->store('project_images', 'public');
+                $project->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
+
+
+        return redirect()->route('admin.school_project.details', $project->id);
+    }
+
+    public function destroy($id)
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Acceso denegado');
+        }
+        $project = SchoolProject::findOrFail($id);
+
+        if ($project->user_id) {
+            Notification::create([
+                'user_id' => $project->user_id,
+                'type' => 'proyecto',
+                'title' => 'Tu proyecto ha sido eliminado',
+                'message' => 'El proyecto "' . $project->title . '" ha sido eliminado por el administrador.',
+            ]);
+        }
+
+
+        $project->delete();
+
+        return redirect()->route('admin.school_projects');
     }
 
     public function ProjectsShow()

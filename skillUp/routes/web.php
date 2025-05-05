@@ -42,7 +42,11 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/admin/proyectos-escolares', [AdminController::class, 'projectsSchoolShow'])->name('admin.school_projects');
+    Route::get('/admin/proyectos-escolares', [AdminController::class, 'showSchoolProjects'])->name('admin.school_projects');
+    Route::get('/admin/proyectos-escolares/{id}', [AdminController::class, 'detailsSchoolProject'])->name('admin.school_project.details');
+    Route::put('/admin/proyectos-escolares/{id}', [AdminController::class, 'updateSchoolProject'])->name('admin.school_project.update');
+    Route::delete('/admin/proyectos-escolares/{id}', [AdminController::class, 'destroySchoolProject'])->name('admin.school_project.destroy');
+
 
     Route::get('/admin/usuarios', [AdminController::class, 'showUsers'])->name('admin.users');
     Route::put('/admin/usuarios/editar/{id}', [AdminController::class, 'updateUser'])->name('admin.user.update');

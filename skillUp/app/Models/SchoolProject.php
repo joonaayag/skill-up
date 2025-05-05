@@ -10,7 +10,7 @@ class SchoolProject extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'title',
         'author',
         'creation_date',
         'description',
