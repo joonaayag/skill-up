@@ -115,7 +115,7 @@ class ProjectController extends Controller
             'sector_category' => 'required|string|max:40',
             'creation_date' => 'required|date',
             'link' => 'nullable|url|max:255',
-            'project_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
             'name.required' => 'El nombre del proyecto es obligatorio.',
@@ -139,9 +139,9 @@ class ProjectController extends Controller
             'link.url' => 'El enlace debe tener un formato de URL válido.',
             'link.max' => 'El enlace no puede tener más de 255 caracteres.',
 
-            'project_images.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'project_images.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'project_images.*.max' => 'Cada imagen no puede superar los 4MB.',
+            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
+            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
+            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
 
             'files.*.file' => 'Cada archivo debe ser un archivo válido.',
             'files.*.max' => 'Cada archivo no puede superar los 4MB.',
@@ -206,6 +206,34 @@ class ProjectController extends Controller
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
+        ], [
+            'name.required' => 'El nombre del proyecto es obligatorio.',
+            'name.string' => 'El nombre del proyecto debe ser una cadena de texto.',
+            'name.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'tags.required' => 'Las etiquetas son obligatorias.',
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+
+            'sector_category.required' => 'La categoría del sector es obligatoria.',
+            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser válida.',
+
+            'link.url' => 'El enlace debe tener un formato de URL válido.',
+            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+
+            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
+            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
+            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+
+            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
+            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
         ]);
 
         if ($request->hasFile('image')) {

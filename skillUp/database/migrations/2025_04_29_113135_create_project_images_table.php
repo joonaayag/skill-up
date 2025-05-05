@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
+            $table->foreignId('school_project_id')->constrained('school_projects')->onDelete('cascade');
 
             $table->string('path');
 

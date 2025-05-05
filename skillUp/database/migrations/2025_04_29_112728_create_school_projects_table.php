@@ -29,7 +29,6 @@ return new class extends Migration
             ]);
 
             $table->string('image')->nullable();
-            $table->string('file')->nullable();
             $table->string('link')->nullable();
 
             $table->timestamps();

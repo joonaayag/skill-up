@@ -4,7 +4,15 @@
 
 @section('content')
     <h1>Gestión de Proyectos Escolares</h1>
-
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <!-- Botón para abrir el modal -->
     <div x-data="{ showCreate: false }" class="mb-4">
         <button @click="showCreate = true">+ Nuevo Proyecto</button>
@@ -14,7 +22,7 @@
             class="fixed inset-0 flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded shadow w-full max-w-md">
                 <h2 class="text-xl font-bold mb-4">Crear Nuevo Proyecto</h2>
-                <form action="{{ route('school.projects.store') }}" method="POST">
+                <form action="{{ route('school.projects.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <label>Título:</label>
@@ -34,6 +42,12 @@
 
                     <label>Categoría general:</label>
                     <input type="text" name="general_category"><br>
+
+                    <label class="block text-sm">Imagen destacada</label>
+                    <input type="file" name="image" accept="image/*" class="mb-2">
+
+                    <label class="block text-sm">Archivos adicionales</label>
+                    <input type="file" name="files[]" multiple class="mb-4">
 
                     <div class="mt-4">
                         <button type="submit">Guardar</button>
@@ -63,7 +77,8 @@
                 </div>
 
                 <div x-show="showEdit">
-                    <form action="{{ route('school.projects.update', $project->id) }}" method="POST">
+                    <form action="{{ route('school.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data"
+                    >
                         @csrf
                         @method('PUT')
 
@@ -82,8 +97,19 @@
                         <label>Tags:</label>
                         <input type="text" name="tags" value="{{ $project->tags }}"><br>
 
+
                         <label>Categoría general:</label>
                         <input type="text" name="general_category" value="{{ $project->general_category }}"><br>
+
+                        <label class="block text-sm">Enlace (opcional)</label>
+                        <input type="url" name="link" class="w-full border rounded px-3 py-2 mb-2"
+                            value="{{ old('link', $project->link) }}">
+
+                        <label class="block text-sm">Imagen destacada</label>
+                        <input type="file" name="image" accept="image/*" class="mb-2">
+
+                        <label class="block text-sm">Archivos adicionales</label>
+                        <input type="file" name="files[]" multiple class="mb-4">
 
                         <button type="submit">Guardar cambios</button>
                         <button type="button" @click="showEdit = false">Cancelar</button>

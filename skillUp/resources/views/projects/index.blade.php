@@ -113,8 +113,8 @@
                 <label>Imagen destacada:</label>
                 <input type="file" name="image" accept="image/*"><br>
 
-                <label>Imágenes adicionales:</label>
-                <input type="file" name="project_images[]" multiple accept="image/*"><br>
+                <label>Archivos adicionalaes:</label>
+                <input type="file" name="files[]" multiple accept="image/*"><br>
 
                 <button type="submit">Guardar</button>
                 <button type="button" @click="showModal = false">Cancelar</button>

@@ -18,9 +18,12 @@ class SchoolProject extends Model
         'general_category',
         'sector_category',
         'image',
-        'file',
         'link',
     ];
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class);
+    }
 
     public function user()
     {

@@ -5,6 +5,9 @@
 @section('content')
     <h1>{{ $schoolProject->name }}</h1>
 
+    
+    
+
     @if ($schoolProject->image)
         <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto" style="max-width: 400px;">
     @endif
@@ -17,6 +20,34 @@
 
     @if ($schoolProject->link)
         <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
+    @endif
+
+    <h2>Arcvhivos destacados------------</h2>
+
+    @if ($schoolProject->images && $schoolProject->images->count())
+        <div style="margin-bottom: 1.5rem;">
+            <strong>Archivos del proyecto:</strong>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                @foreach ($schoolProject->images as $img)
+                    @php
+                        $extension = pathinfo($img->path, PATHINFO_EXTENSION);
+                        $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                    @endphp
+
+                    <div style="flex: 1 0 120px;">
+                        @if ($isImage)
+                            <img src="{{ asset('storage/' . $img->path) }}" alt="Imagen del proyecto"
+                                style="width: 100%; max-width: 200px; border-radius: 8px; object-fit: cover;">
+                        @else
+                            <a href="{{ asset('storage/' . $img->path) }}" download
+                                class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                📄 Descargar archivo ({{ $extension }})
+                            </a>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
     @endif
 
     <p class="text-sm text-gray-500">👁️ {{ $schoolProject->views }} visitas</p>
