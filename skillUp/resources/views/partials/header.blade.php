@@ -51,6 +51,8 @@
             @elseif($role === 'empresa')
                 <a href="{{ route('applications.index') }}">Gestión de candidaturas</a>
                 <a href="{{ route('job.offers.company.index') }}">Tus ofertas</a>
+            @elseif($role === 'admin')
+                <a href="{{ route('admin.dashboard') }}">Panel de administrador</a>
             @endif
 
             <a href="{{ route('profile.index') }}">

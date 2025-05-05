@@ -26,6 +26,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
 
     public function detail()
     {
@@ -55,8 +60,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(SchoolProject::class);
     }
-public function notifications()
-{
-    return $this->hasMany(Notification::class);
-}
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             
-            $table->enum('role', ['usuario', 'alumno', 'profesor', 'empresa']);
+            $table->enum('role', ['usuario', 'alumno', 'profesor', 'empresa', 'admin']);
 
             $table->string('avatar')->nullable();
             $table->string('cv')->nullable(); // Route to the CV in storage

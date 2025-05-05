@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
@@ -32,6 +33,19 @@ Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name(
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/panel-administador', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/panel-administador/projectos', [AdminController::class, 'projectsShow'])->name('admin.projects');
+
+    Route::get('/panel-administador/proyectos-escolares', [AdminController::class, 'projectsSchoolShow'])->name('admin.school_projects');
+
+    Route::get('/panel-administador/usuarios', [AdminController::class, 'showUsers'])->name('admin.users');
+    Route::put('/panel-administador/usuarios/editar/{id}', [AdminController::class, 'updateUser'])->name('admin.user.update');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.user.destroy');
+
+
+    Route::get('/panel-administador/ofertas', [AdminController::class, 'showOffers'])->name('admin.offers');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/perfil', [DashboardController::class, 'profile'])->name('profile.index');
 

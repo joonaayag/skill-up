@@ -152,6 +152,17 @@ class DatabaseSeeder extends Seeder
             
         ]);
 
+        User::create([
+            'name' => 'Admin',
+            'last_name' => 'Master',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin'),
+            'role' => 'admin',
+            'avatar' => null,
+            'cv' => null,
+            'foto_perfil' => null,
+            'banner' => null,
+        ]);
 
 
     }
