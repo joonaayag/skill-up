@@ -82,13 +82,35 @@ class JobOfferController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:40',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'sector_category' => 'required|string',
             'general_category' => 'required|string',
             'state' => 'required|in:abierta,cerrada',
             'logo' => 'nullable|string|max:255',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+
+            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
+            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'sector_category.required' => 'La categoría del sector es obligatoria.',
+            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+
+            'general_category.required' => 'La categoría general es obligatoria.',
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+
+            'state.required' => 'El estado es obligatorio.',
+            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+
+            'logo.string' => 'El logo debe ser una cadena de texto.',
+            'logo.max' => 'La URL del logo no puede superar los 255 caracteres.',
         ]);
 
         $jobOffer = JobOffer::create([
@@ -155,13 +177,35 @@ class JobOfferController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:40',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'sector_category' => 'required|string',
             'general_category' => 'required|string',
             'state' => 'required|in:abierta,cerrada',
             'logo' => 'nullable|string|max:255',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+
+            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
+            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'sector_category.required' => 'La categoría del sector es obligatoria.',
+            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+
+            'general_category.required' => 'La categoría general es obligatoria.',
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+
+            'state.required' => 'El estado es obligatorio.',
+            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+
+            'logo.string' => 'El logo debe ser una cadena de texto.',
+            'logo.max' => 'La URL del logo no puede superar los 255 caracteres.',
         ]);
 
         $jobOffer->update([
@@ -196,7 +240,7 @@ class JobOfferController extends Controller
     public function show($id)
     {
         $offer = JobOffer::findOrFail($id);
-        $offer->increment('views'); 
+        $offer->increment('views');
         return view('job_offers.offer_details', compact('offer'));
     }
 

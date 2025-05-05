@@ -40,12 +40,32 @@ class SchoolProjectController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
+            'title' => 'required|string|max:40',
+            'author' => 'required|string|max:50',
             'creation_date' => 'required|date',
             'description' => 'required|string',
-            'tags' => 'nullable|string|max:255',
-            'general_category' => 'nullable|string|max:255',
+            'tags' => 'nullable|string|max:50',
+            'general_category' => 'nullable|string|max:40',
+        ], [
+            'title.required' => 'El título es obligatorio.',
+            'title.string' => 'El título debe ser una cadena de texto.',
+            'title.max' => 'El título no puede tener más de 40 caracteres.',
+        
+            'author.required' => 'El autor es obligatorio.',
+            'author.string' => 'El autor debe ser una cadena de texto.',
+            'author.max' => 'El autor no puede tener más de 50 caracteres.',
+        
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser una fecha válida.',
+        
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+        
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden tener más de 50 caracteres.',
+        
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.max' => 'La categoría general no puede tener más de 40 caracteres.',
         ]);
 
         $project = SchoolProject::findOrFail($id);
@@ -83,12 +103,32 @@ class SchoolProjectController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
+            'title' => 'required|string|max:40',
+            'author' => 'required|string|max:50',
             'creation_date' => 'required|date',
             'description' => 'required|string',
-            'tags' => 'nullable|string|max:255',
-            'general_category' => 'nullable|string|max:255',
+            'tags' => 'nullable|string|max:50',
+            'general_category' => 'nullable|string|max:40',
+        ], [
+            'title.required' => 'El título es obligatorio.',
+            'title.string' => 'El título debe ser una cadena de texto.',
+            'title.max' => 'El título no puede tener más de 40 caracteres.',
+        
+            'author.required' => 'El autor es obligatorio.',
+            'author.string' => 'El autor debe ser una cadena de texto.',
+            'author.max' => 'El autor no puede tener más de 50 caracteres.',
+        
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser una fecha válida.',
+        
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+        
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden tener más de 50 caracteres.',
+        
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.max' => 'La categoría general no puede tener más de 40 caracteres.',
         ]);
 
         $project = new SchoolProject();

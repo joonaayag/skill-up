@@ -15,6 +15,12 @@ class CommentController extends Controller
         $request->validate([
             'content' => 'required|string|max:1000',
             'parent_id' => 'nullable|exists:comments,id'
+        ], [
+            'content.required' => 'El contenido del comentario es obligatorio.',
+            'content.string' => 'El contenido debe ser una cadena de texto.',
+            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
+        
+            'parent_id.exists' => 'El comentario padre seleccionado no existe.',
         ]);
 
         $comment = new Comment([
@@ -33,6 +39,12 @@ class CommentController extends Controller
         $request->validate([
             'content' => 'required|string|max:1000',
             'parent_id' => 'nullable|exists:comments,id'
+        ], [
+            'content.required' => 'El contenido del comentario es obligatorio.',
+            'content.string' => 'El contenido debe ser una cadena de texto.',
+            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
+        
+            'parent_id.exists' => 'El comentario padre seleccionado no existe.',
         ]);
 
         $comment = new Comment([
@@ -63,6 +75,10 @@ class CommentController extends Controller
 
         $request->validate([
             'content' => 'required|string|max:1000',
+        ], [
+            'content.required' => 'El contenido es obligatorio.',
+            'content.string' => 'El contenido debe ser una cadena de texto.',
+            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
         ]);
 
         $comment->update([

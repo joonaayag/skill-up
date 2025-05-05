@@ -15,10 +15,28 @@ class ApplicationController extends Controller
     {
         $request->validate([
             'offer_id' => 'required|exists:job_offers,id',
-            'candidate_name' => 'required|string|max:255',
-            'position_applied' => 'required|string|max:255',
+            'candidate_name' => 'required|string|max:50',
+            'position_applied' => 'required|string|max:40',
             'application_reason' => 'required|string',
             'cv' => 'nullable|file|mimes:pdf|max:2048',
+        ], [
+            'offer_id.required' => 'La oferta de trabajo es obligatoria.',
+            'offer_id.exists' => 'La oferta seleccionada no existe.',
+        
+            'candidate_name.required' => 'El nombre del candidato es obligatorio.',
+            'candidate_name.string' => 'El nombre debe ser una cadena de texto.',
+            'candidate_name.max' => 'El nombre no puede tener más de 50 caracteres.',
+        
+            'position_applied.required' => 'El puesto al que se postula es obligatorio.',
+            'position_applied.string' => 'El puesto debe ser una cadena de texto.',
+            'position_applied.max' => 'El puesto no puede tener más de 40 caracteres.',
+        
+            'application_reason.required' => 'Debe indicar el motivo de la candidatura.',
+            'application_reason.string' => 'El motivo debe ser una cadena de texto.',
+        
+            'cv.file' => 'El archivo del currículum debe ser un archivo válido.',
+            'cv.mimes' => 'El currículum debe estar en formato PDF.',
+            'cv.max' => 'El currículum no puede superar los 2MB.',
         ]);
 
         if ($request->hasFile('cv')) {
@@ -101,6 +119,9 @@ class ApplicationController extends Controller
     {
         $request->validate([
             'state' => 'required|in:nueva,en revisión,aceptado,rechazado',
+        ], [
+            'state.required' => 'El estado es obligatorio.',
+            'state.in' => 'El estado debe ser uno de los siguientes: nueva, en revisión, aceptado o rechazado.',
         ]);
 
         $application = Application::where('id', $id)

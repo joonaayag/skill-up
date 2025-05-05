@@ -58,6 +58,12 @@ class FavoriteController extends Controller
         $request->validate([
             'type' => 'required|in:proyecto,oferta',
             'reference_id' => 'required|integer',
+        ], [
+            'type.required' => 'El tipo es obligatorio.',
+            'type.in' => 'El tipo debe ser "proyecto" u "oferta".',
+        
+            'reference_id.required' => 'El identificador de referencia es obligatorio.',
+            'reference_id.integer' => 'El identificador de referencia debe ser un número entero.',
         ]);
 
         Favorite::firstOrCreate([

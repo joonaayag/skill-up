@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\UserDetail;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -31,7 +31,15 @@ class AuthController extends Controller
             'name' => 'required|string|max:20',
             'lastName' => 'nullable|string|max:50',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols(),
+            ],
             'role' => 'required|in:usuario,alumno,profesor,empresa',
             'g-recaptcha-response' => 'required',
         ];
@@ -62,9 +70,66 @@ class AuthController extends Controller
                 break;
         }
 
-        $request->validate($rules,  [
-            'g-recaptcha-response.required' => 'Por favor, confirma que no eres un robot.',
-        ]);
+        $messages = [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no puede tener más de 20 caracteres.',
+
+            'lastName.string' => 'El apellido debe ser una cadena de texto.',
+            'lastName.max' => 'El apellido no puede tener más de 50 caracteres.',
+
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.string' => 'El correo electrónico debe ser una cadena de texto.',
+            'email.email' => 'El formato del correo electrónico no es válido.',
+            'email.max' => 'El correo electrónico no puede tener más de 255 caracteres.',
+            'email.unique' => 'Este correo electrónico ya está registrado.',
+
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.*' => 'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos.',
+
+
+
+            'role.required' => 'El rol es obligatorio.',
+            'role.in' => 'El rol seleccionado no es válido.',
+
+            'g-recaptcha-response.required' => 'Por favor, verifica que no eres un robot.',
+
+            'birthDate.required' => 'La fecha de nacimiento es obligatoria.',
+            'birthDate.date' => 'La fecha de nacimiento debe ser válida.',
+            'currentCourse.required' => 'El curso actual es obligatorio.',
+            'currentCourse.string' => 'El curso actual debe ser una cadena de texto.',
+            'currentCourse.max' => 'El curso actual no puede tener más de 50 caracteres.',
+            'educationalCenter.required' => 'El centro educativo es obligatorio.',
+            'educationalCenter.string' => 'El centro educativo debe ser una cadena de texto.',
+            'educationalCenter.max' => 'El centro educativo no puede tener más de 100 caracteres.',
+
+            'specialization.required' => 'La especialización es obligatoria.',
+            'specialization.string' => 'La especialización debe ser una cadena de texto.',
+            'specialization.max' => 'La especialización no puede tener más de 100 caracteres.',
+            'department.required' => 'El departamento es obligatorio.',
+            'department.string' => 'El departamento debe ser una cadena de texto.',
+            'department.max' => 'El departamento no puede tener más de 100 caracteres.',
+            'validationDocument.required' => 'El documento de validación es obligatorio.',
+            'validationDocument.string' => 'El documento de validación debe ser una cadena de texto.',
+            'validationDocument.max' => 'El documento de validación no puede tener más de 255 caracteres.',
+
+            'cif.required' => 'El CIF es obligatorio.',
+            'cif.string' => 'El CIF debe ser una cadena de texto.',
+            'cif.max' => 'El CIF no puede tener más de 50 caracteres.',
+            'address.required' => 'La dirección es obligatoria.',
+            'address.string' => 'La dirección debe ser una cadena de texto.',
+            'address.max' => 'La dirección no puede tener más de 255 caracteres.',
+            'sector.required' => 'El sector es obligatorio.',
+            'sector.string' => 'El sector debe ser una cadena de texto.',
+            'sector.max' => 'El sector no puede tener más de 100 caracteres.',
+            'website.url' => 'La página web debe tener un formato de URL válido.',
+            'website.max' => 'La página web no puede tener más de 255 caracteres.',
+        ];
+
+        $request->validate($rules, $messages);
+
 
         $user = User::create([
             'name' => $request->name,
