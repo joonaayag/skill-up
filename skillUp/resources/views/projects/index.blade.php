@@ -114,7 +114,7 @@
                 <input type="file" name="image" accept="image/*"><br>
 
                 <label>Archivos adicionalaes:</label>
-                <input type="file" name="files[]" multiple accept="image/*"><br>
+                <input type="file" name="files[]" multiple accept="file/*"><br>
 
                 <button type="submit">Guardar</button>
                 <button type="button" @click="showModal = false">Cancelar</button>

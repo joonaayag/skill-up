@@ -33,20 +33,25 @@ Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name(
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/panel-administador', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('/panel-administador/projectos', [AdminController::class, 'projectsShow'])->name('admin.projects');
+    Route::get('/admin/projectos', [AdminController::class, 'projectsShow'])->name('admin.projects');
+    Route::get('/admin/proyectos/{id}', [AdminController::class, 'detailsProject'])->name('admin.project.details');
+    Route::put('/admin/proyectos/{id}/editar', [AdminController::class, 'updateProject'])->name('admin.project.update');
+    Route::delete('/admin/proyectos/{id}', [AdminController::class, 'destroyProject'])->name('admin.project.destroy');
 
-    Route::get('/panel-administador/proyectos-escolares', [AdminController::class, 'projectsSchoolShow'])->name('admin.school_projects');
 
-    Route::get('/panel-administador/usuarios', [AdminController::class, 'showUsers'])->name('admin.users');
-    Route::put('/panel-administador/usuarios/editar/{id}', [AdminController::class, 'updateUser'])->name('admin.user.update');
+
+    Route::get('/admin/proyectos-escolares', [AdminController::class, 'projectsSchoolShow'])->name('admin.school_projects');
+
+    Route::get('/admin/usuarios', [AdminController::class, 'showUsers'])->name('admin.users');
+    Route::put('/admin/usuarios/editar/{id}', [AdminController::class, 'updateUser'])->name('admin.user.update');
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.user.destroy');
 
 
-    Route::get('/panel-administador/ofertas', [AdminController::class, 'showOffers'])->name('admin.offers');
-    Route::put('/panel-administador/ofertas/{id}', [AdminController::class, 'updateOffer'])->name('admin.offers.update');
-    Route::delete('/panel-administador/ofertas/{id}', [AdminController::class, 'destroyOffer'])->name('admin.offers.destroy');
+    Route::get('/admin/ofertas', [AdminController::class, 'showOffers'])->name('admin.offers');
+    Route::put('/admin/ofertas/{id}', [AdminController::class, 'updateOffer'])->name('admin.offers.update');
+    Route::delete('/admin/ofertas/{id}', [AdminController::class, 'destroyOffer'])->name('admin.offers.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/perfil', [DashboardController::class, 'profile'])->name('profile.index');

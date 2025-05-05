@@ -255,6 +255,7 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('files')) {
+            
             foreach ($request->file('files') as $file) {
                 $path = $file->store('project_images', 'public');
                 $project->images()->create([

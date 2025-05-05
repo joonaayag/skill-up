@@ -241,11 +241,122 @@ class AdminController extends Controller
         $schoolProjects = SchoolProject::all();
         return view('admin.school_projects', compact('schoolProjects'));
     }
+
     public function ProjectsShow()
     {
         if (auth()->user()->role !== 'admin') {
             abort(403, 'Acceso denegado');
         }
+        $projects = Project::all();
+        return view('admin.projects', compact('projects'));
+    }
+    public function detailsProject($id)
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Acceso denegado');
+        }
+        $project = Project::with(['author', 'images', 'ratings', 'comments'])->findOrFail($id);
+        return view('admin.project_details', compact('project'));
+    }
+    public function updateProject(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:40',
+            'description' => 'required|string',
+            'tags' => 'required|string|max:50',
+            'sector_category' => 'required|string|max:40',
+            'creation_date' => 'required|date',
+            'link' => 'nullable|url|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'files.*' => 'nullable|file|max:4096',
+        ], [
+            'name.required' => 'El nombre del proyecto es obligatorio.',
+            'name.string' => 'El nombre del proyecto debe ser una cadena de texto.',
+            'name.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'tags.required' => 'Las etiquetas son obligatorias.',
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+
+            'sector_category.required' => 'La categoría del sector es obligatoria.',
+            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser válida.',
+
+            'link.url' => 'El enlace debe tener un formato de URL válido.',
+            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+
+            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
+            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
+            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+
+            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
+            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($project->image && Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
+            }
+
+            $imagePath = $request->file('image')->store('project_images', 'public');
+            $project->image = $imagePath;
+        }
+
+        $project->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'tags' => $request->tags,
+            'sector_category' => $request->sector_category,
+            'creation_date' => $request->creation_date,
+            'link' => $request->link,
+        ]);
+
+        if ($request->hasFile('files')) {
+            foreach ($project->images as $image) {
+                if (Storage::disk('public')->exists($image->path)) {
+                    Storage::disk('public')->delete($image->path);
+                }
+                $image->delete();
+            }
+
+            foreach ($request->file('files') as $file) {
+                $path = $file->store('project_images', 'public');
+                $project->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.project.details', $project->id);
+    }
+    public function destroyProject($id)
+    {
+        $project = Project::findOrFail($id);
+
+        if ($project->image) {
+            $path = $project->image;
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+        }
+
+        foreach ($project->images as $image) {
+            $path = $image->path;
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+            $image->delete();
+        }
+
+        $project->delete();
         $projects = Project::all();
         return view('admin.projects', compact('projects'));
     }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('project_images', function (Blueprint $table) {
             $table->unsignedBigInteger('project_id')->nullable()->change();
+            $table->unsignedBigInteger('school_project_id')->nullable()->change();
         });
         
     }
