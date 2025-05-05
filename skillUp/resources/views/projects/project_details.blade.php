@@ -23,27 +23,41 @@
     <p><strong>Descripción:</strong><br>{{ $project->description }}</p>
     <p><strong>Link:</strong> <a href="{{ $project->link ?? '#' }}">{{ $project->link ?? '-' }}</a></p>
 
-    <h2>IMAGENES DESTACADAS------------</h2>
+    <h2>Arcvhivos destacados------------</h2>
 
     @if ($project->images && $project->images->count())
         <div style="margin-bottom: 1.5rem;">
-            <strong>Galería de imágenes:</strong>
+            <strong>Archivos del proyecto:</strong>
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
                 @foreach ($project->images as $img)
+                    @php
+                        $extension = pathinfo($img->path, PATHINFO_EXTENSION);
+                        $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                    @endphp
+
                     <div style="flex: 1 0 120px;">
-                        <img src="{{ asset('storage/' . $img->path) }}" alt="Imagen del proyecto"
-                            style="width: 100%; max-width: 200px; border-radius: 8px; object-fit: cover;">
+                        @if ($isImage)
+                            <img src="{{ asset('storage/' . $img->path) }}" alt="Imagen del proyecto"
+                                style="width: 100%; max-width: 200px; border-radius: 8px; object-fit: cover;">
+                        @else
+                            <a href="{{ asset('storage/' . $img->path) }}" download
+                                class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                📄 Descargar archivo ({{ $extension }})
+                            </a>
+                        @endif
                     </div>
                 @endforeach
             </div>
         </div>
     @endif
 
+
     <p class="text-sm text-gray-500">👁️ {{ $project->views }} visitas</p>
 
     <h3>Valorar este proyecto</h3>
     <p>Calificación actual:
-        {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}</p>
+        {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
+    </p>
 
     @auth
         <form action="{{ route('projects.rate', $project->id) }}" method="POST">

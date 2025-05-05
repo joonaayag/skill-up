@@ -33,15 +33,126 @@
     </form>
     <ul>
         @forelse ($userProjects as $project)
-            <a href="{{ route('projects.show', $project->id) }}">
-                <li>
-                    <strong>{{ $project->name }}</strong><br>
-                    <span><em>Categoría:</em> {{ $project->category }} | <em>Fecha:</em>
-                        {{ $project->creation_date }}</span><br>
-                    <p>{{ $project->description }}</p>
-                    <hr>
-                </li>
-            </a>
+            <div>
+                <a href="{{ route('projects.show', $project->id) }}">
+                    <li>
+                        <strong>{{ $project->name }}</strong><br>
+                        <span><em>Categoría:</em> {{ $project->category }} | <em>Fecha:</em>
+                            {{ $project->creation_date }}</span><br>
+                        <p>{{ $project->description }}</p>
+                        <hr>
+                    </li>
+                </a>
+
+                <div x-data="{ showEdit_{{ $project->id }}: false }">
+                    <!-- Botón para abrir modal -->
+                    <button @click="showEdit_{{ $project->id }} = true" class="bg-yellow-500 text-white px-3 py-1 rounded">
+                        Editar
+                    </button>
+
+                    <!-- Modal de edición -->
+                    <div x-show="showEdit_{{ $project->id }}"
+                        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                        style="display: none;">
+                        <div class="bg-white w-full max-w-lg p-6 rounded shadow relative"
+                            @click.outside="showEdit_{{ $project->id }} = false">
+                            <h3 class="text-xl font-bold mb-4">Editar Proyecto</h3>
+
+                            <form action="{{ route('projects.update', $project->id) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+
+                                <label class="block text-sm">Título</label>
+                                <input type="text" name="name" class="w-full border rounded px-3 py-2 mb-2"
+                                    value="{{ old('name', $project->name) }}" required>
+
+                                <label class="block text-sm">Descripción</label>
+                                <textarea name="description" class="w-full border rounded px-3 py-2 mb-2"
+                                    required>{{ old('description', $project->description) }}</textarea>
+
+                                <label class="block text-sm">Etiquetas (tags)</label>
+                                <input type="text" name="tags" class="w-full border rounded px-3 py-2 mb-2"
+                                    value="{{ old('tags', $project->tags) }}" required>
+
+                                <label class="block text-sm">Categoría</label>
+                                <select name="sector_category" class="w-full border rounded px-3 py-2 mb-2" required>
+                                    @php
+                                        $categorias = [
+                                            'Tecnología y desarrollo',
+                                            'Diseño y comunicación',
+                                            'Administración y negocio',
+                                            'Comunicación',
+                                            'Educación',
+                                            'Ciencia y salud',
+                                            'Industria',
+                                            'Otro'
+                                        ];
+                                    @endphp
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{ $categoria }}" {{ old('sector_category', $project->sector_category) == $categoria ? 'selected' : '' }}>
+                                            {{ $categoria }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <label class="block text-sm">Fecha de creación</label>
+                                <input type="date" name="creation_date" class="w-full border rounded px-3 py-2 mb-2"
+                                    value="{{ old('creation_date', \Carbon\Carbon::parse($project->creation_date)->format('Y-m-d')) }}"
+                                    required>
+
+                                <label class="block text-sm">Enlace (opcional)</label>
+                                <input type="url" name="link" class="w-full border rounded px-3 py-2 mb-2"
+                                    value="{{ old('link', $project->link) }}">
+
+                                <label class="block text-sm">Imagen destacada</label>
+                                <input type="file" name="image" accept="image/*" class="mb-2">
+
+                                <label class="block text-sm">Archivos adicionales</label>
+                                <input type="file" name="files[]" multiple class="mb-4">
+
+                                <div class="flex justify-end space-x-3 mt-4">
+                                    <button type="button" @click="showEdit_{{ $project->id }} = false"
+                                        class="border px-4 py-2 rounded">Cancelar</button>
+                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Guardar
+                                        cambios</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div x-data="{ confirmDelete_{{ $project->id }}: false }">
+                    <button @click="confirmDelete_{{ $project->id }} = true" class="bg-red-600 text-white px-3 py-1 rounded">
+                        Eliminar
+                    </button>
+
+                    <!-- Modal de confirmación -->
+                    <div x-show="confirmDelete_{{ $project->id }}"
+                        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                        style="display: none;">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+                            @click.outside="confirmDelete_{{ $project->id }} = false">
+                            <h2 class="text-lg font-semibold mb-4">¿Eliminar este proyecto?</h2>
+                            <p class="mb-6">Esta acción no se puede deshacer.</p>
+
+                            <div class="flex justify-end gap-3">
+                                <button @click="confirmDelete_{{ $project->id }} = false" class="px-4 py-2 bg-gray-300 rounded">
+                                    Cancelar
+                                </button>
+                                <form method="POST" action="{{ route('projects.destroy', $project->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">
+                                        Confirmar eliminación
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         @empty
             <p>No tienes proyectos disponibles.</p>
         @endforelse

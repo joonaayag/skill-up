@@ -46,7 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/proyectos', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/proyectos/{id}', [ProjectController::class, 'show'])->name('projects.show');
     Route::get('/tus-proyectos', [ProjectController::class, 'ownProjects'])->name('projects.ownProjects');
-    
+    Route::delete('/tus-proyectos/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::put('/tus-proyectos/{id}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('/imagen-proyecto/{project}', [ProjectController::class, 'deleteMainImage'])->name('projects.deleteMainImage');
+
+
     Route::put('/perfil/{id}', [UserController::class, 'update'])->name('user.update');
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
