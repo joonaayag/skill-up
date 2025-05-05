@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/panel-administador/ofertas', [AdminController::class, 'showOffers'])->name('admin.offers');
+    Route::put('/panel-administador/ofertas/{id}', [AdminController::class, 'updateOffer'])->name('admin.offers.update');
+    Route::delete('/panel-administador/ofertas/{id}', [AdminController::class, 'destroyOffer'])->name('admin.offers.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/perfil', [DashboardController::class, 'profile'])->name('profile.index');
