@@ -46,12 +46,15 @@
 
             @if(in_array($role, ['usuario', 'alumno']))
                 <a href="{{ route('projects.ownProjects') }}">Tus proyectos</a>
-            @elseif($role === 'profesor')
+            @endif
+            @if($role === 'profesor')
                 <a href="{{ route('school.projects.index') }}">Gestión de proyectos escolares</a>
-            @elseif($role === 'empresa')
+            @endif
+            @if(in_array($role, ['profesor', 'empresa']))
                 <a href="{{ route('applications.index') }}">Gestión de candidaturas</a>
                 <a href="{{ route('job.offers.company.index') }}">Tus ofertas</a>
-            @elseif($role === 'admin')
+            @endif
+            @if($role === 'admin')
                 <a href="{{ route('admin.dashboard') }}">Panel de administrador</a>
             @endif
 

@@ -51,7 +51,7 @@
             $role = auth()->user()->role;
         @endphp
 
-        @if(in_array($role, ['usuario', 'alumno', 'profesor']))
+        @if(in_array($role, ['usuario', 'alumno']))
             <div x-data="{ showApply: false }" style="margin-top: 1rem;">
                 <button @click="showApply = true">Aplicar</button>
 

@@ -105,9 +105,9 @@ class ApplicationController extends Controller
 
         Notification::create([
             'user_id' => $application->user->id,
-            'type' => 'candidatura_eliminada',
+            'type' => 'candidatura',
             'title' => 'Tu candidatura ha sido retirada',
-            'message' => 'Tu candidatura para la oferta "' . $application->jobOffer->name . '" ha sido retirada por la empresa.',
+            'message' => 'Tu candidatura para la oferta "' . $application->jobOffer->name . '" ha sido retirada por ' . (auth()->user()->role === 'empresa' ? 'la empresa' : 'el profesor') . '.',
         ]);
 
         $application->delete();

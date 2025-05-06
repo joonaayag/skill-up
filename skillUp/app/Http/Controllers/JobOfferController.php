@@ -77,7 +77,7 @@ class JobOfferController extends Controller
 
     public function store(Request $request)
     {
-        if (auth()->user()->role !== 'empresa') {
+        if ((auth()->user()->role !== 'empresa' && auth()->user()->role !== 'profesor')) {
             abort(403, 'Acceso denegado');
         }
 
@@ -143,7 +143,7 @@ class JobOfferController extends Controller
     {
         $jobOffer = JobOffer::findOrFail($id);
 
-        if (auth()->user()->role !== 'empresa' || $jobOffer->company_id !== auth()->id()) {
+        if ((auth()->user()->role !== 'empresa' && auth()->user()->role !== 'profesor') || $jobOffer->company_id !== auth()->id()) {
             abort(403, 'Acceso denegado');
         }
 
@@ -155,7 +155,7 @@ class JobOfferController extends Controller
                 'user_id' => $application->user->id,
                 'type' => 'oferta',
                 'title' => 'Oferta retirada',
-                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por la empresa.',
+                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por ' . (auth()->user()->role === 'empresa' ? 'la empresa' : 'el profesor') . '.',
             ]);
         }
 
@@ -172,7 +172,7 @@ class JobOfferController extends Controller
     {
         $jobOffer = JobOffer::findOrFail($id);
 
-        if (auth()->user()->role !== 'empresa' || $jobOffer->company_id !== auth()->id()) {
+        if ((auth()->user()->role !== 'empresa' && auth()->user()->role !== 'profesor') || $jobOffer->company_id !== auth()->id()) {
             abort(403, 'Acceso denegado');
         }
 
