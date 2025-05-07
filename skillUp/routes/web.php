@@ -12,8 +12,12 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SchoolProjectController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +33,116 @@ Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkE
 
 Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
+
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::firstOrCreate([
+        'email' => $googleUser->getEmail(),
+    ], [
+        'name' => explode(' ', $googleUser->getName())[0],
+        'last_name' => explode(' ', $googleUser->getName())[1] ?? null,
+        'password' => bcrypt(uniqid()),
+        'role' => 'pendiente',
+    ]);
+
+    if (!$user->userDetail) {
+        UserDetail::create(['user_id' => $user->id]);
+    }
+
+    Auth::login($user);
+
+    if ($user->role === 'pendiente') {
+        return redirect('/elegir-rol');
+    }
+
+    return redirect('/dashboard');
+});
+
+Route::get('/elegir-rol', function () {
+    return view('auth.choose_role');
+});
+
+Route::post('/elegir-rol', function (Request $request) {
+    $request->validate([
+        'role' => 'required|in:usuario,alumno,profesor,empresa',
+    ]);
+
+    $user = Auth::user();
+    $user->role = $request->role;
+    $user->save();
+
+    return redirect('/completar-perfil');
+});
+
+Route::get('/completar-perfil', function () {
+    $user = Auth::user();
+    if ($user->role === 'usuario') {
+        return redirect('/dashboard');
+    }
+
+    return view('auth.complete_profile', [
+        'role' => $user->role,
+        'userDetail' => $user->userDetail
+    ]);
+});
+
+Route::post('/completar-perfil', function (Request $request) {
+    $user = Auth::user();
+    $detail = $user->userDetail;
+
+    if (!$detail) {
+        $detail = UserDetail::create(['user_id' => $user->id]);
+    }
+
+    if ($user->role === 'alumno' || $user->role === 'usuario') {
+        $request->validate([
+            'birth_date' => 'required|date',
+            'current_course' => 'required|string',
+            'specialization' => 'required|string',
+            'educational_center' => 'required|string',
+        ]);
+        $detail->update($request->only([
+            'birth_date',
+            'current_course',
+            'specialization',
+            'educational_center'
+        ]));
+    }
+
+    if ($user->role === 'profesor') {
+        $request->validate([
+            'department' => 'required|string',
+            'educational_center' => 'required|string',
+        ]);
+        $detail->update($request->only([
+            'department',
+            'educational_center'
+        ]));
+    }
+
+    if ($user->role === 'empresa') {
+        $request->validate([
+            'cif' => 'required|string',
+            'address' => 'required|string',
+            'sector' => 'required|string',
+            'website' => 'nullable|url',
+        ]);
+        $detail->update($request->only([
+            'cif',
+            'address',
+            'sector',
+            'website'
+        ]));
+    }
+
+    return redirect('/dashboard');
+});
+
 
 
 

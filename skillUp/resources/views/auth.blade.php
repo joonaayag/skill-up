@@ -28,6 +28,10 @@
         </a>
     </p>
 
+    <a href="/auth/google/redirect">
+        <button>Continuar con Google</button>
+    </a>
+
     <hr>
 
     <h2>Registrarse</h2>

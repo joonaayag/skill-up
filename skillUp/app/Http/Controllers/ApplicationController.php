@@ -53,7 +53,7 @@ class ApplicationController extends Controller
             'candidate_name' => $request->candidate_name,
             'position_applied' => $request->position_applied,
             'application_reason' => $request->application_reason,
-            'cv' => $cvPath,
+            'cv' => $request->hasFile('cv') ? $cvPath : null,
             'state' => 'nueva',
             'application_date' => now(),
         ]);
