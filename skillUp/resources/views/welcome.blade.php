@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>SkillUp</title>
+    <title>Skill Up</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 </head>

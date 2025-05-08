@@ -3,9 +3,35 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <h1>Bienvenido al Dashboard</h1>
-    <p>Este es el panel principal tras iniciar sesión.</p>
 
+    <x-heading level="h1" class="mb-10">Hola, {{ auth()->user()->name }}</x-heading>
+
+    <div
+        class="grid grid-cols-3 [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg gap-14 ">
+        <div class="py-3 px-4">
+            <x-heading level="h3" class="mb-8">Proyectos destacados</x-heading>
+
+            <div class="flex flex-col gap-3">
+                @if ($combined->isNotEmpty())
+                    @foreach($combined as $project)
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-blue-100 p-2 rounded-md">
+                                <x-icon name="project" />
+                            </div>
+                            <div>
+                                <strong>{{ $project->title }}</strong>
+                                <p class="text-xs text-gray-600">{{ $project->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="mt-6 text-gray-500">No existen proyectos destacados por el momento.</p>
+                @endif
+            </div>
+        </div>
+        <div>hola</div>
+        <div>hola</div>
+    </div>
 
     @if($notifications->count())
         <h2 class="mt-6 text-lg font-semibold">Tus notificaciones recientes</h2>
@@ -21,6 +47,7 @@
     @else
         <p class="mt-6 text-gray-500">No tienes notificaciones por el momento.</p>
     @endif
+
 
     <div x-data="chatbot()" class="fixed bottom-4 right-4 z-50">
 

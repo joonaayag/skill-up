@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
         Project::insert([
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Amail la cuquis',
+                'title' => 'Amail la cuquis',
                 'image' => null,
                 'description' => 'Me cago en la puta.',
                 'author_id' => $user->id,
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -106,7 +106,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -128,7 +128,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
@@ -139,7 +139,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gestor de tareas colaborativo',
+                'title' => 'Gestor de tareas colaborativo',
                 'image' => null,
                 'description' => 'Aplicación web para asignación y seguimiento de tareas entre equipos.',
                 'author_id' => $user->id,
