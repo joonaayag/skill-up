@@ -62,7 +62,7 @@
                         @foreach($jobOffers as $offer)
                             <div class="flex items-start space-x-4">
                                 <div class="bg-blue-100 p-2 rounded-md">
-                                    <x-icon name="briefcase" class="w-8 h-auto" />
+                                    <x-icon name="briefcase" class="w-8 h-auto dark:text-black" />
                                 </div>
                                 <div class="[&>p]:mt-1">
                                     <strong>{{ $offer->name }}</strong>
