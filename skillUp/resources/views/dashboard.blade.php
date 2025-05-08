@@ -14,32 +14,75 @@
                     @foreach($combined as $project)
                         <div class="flex items-start space-x-4">
                             <div class="bg-blue-100 p-2 rounded-md">
-                                <x-icon name="project" />
+                                <x-icon name="project" class="w-8 h-auto" />
                             </div>
                             <div>
                                 <strong>{{ $project->title }}</strong>
-                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ $project->description }}</p>
+                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                    {{ $project->description }}
+                                </p>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No existen proyectos destacados por el momento.</p>
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No existen proyectos
+                        destacados por el momento.</p>
                 @endif
             </div>
         </x-card>
 
         <div class="grid grid-rows-5 gap-8">
             <x-card class="row-span-2 h-full">
-                <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+                <x-heading level="h3" class="mb-8">Tus proyectos</x-heading>
+                <div class="flex flex-col gap-3">
+                    @if ($ownProjects->isNotEmpty())
+                        @foreach($ownProjects as $project)
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-blue-100 p-2 rounded-md">
+                                    <x-icon name="project" class="w-8 h-auto" />
+                                </div>
+                                <div>
+                                    <strong>{{ $project->title }}</strong>
+                                    <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                        {{ $project->description }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes proyectos
+                            propios por el momento.</p>
+                    @endif
+                </div>
             </x-card>
             <x-card class="row-span-3 h-full">
-                <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+                <x-heading level="h3" class="mb-8">Últimas ofertas de empleo</x-heading>
+                <div class="flex flex-col gap-3">
+                    @if ($jobOffers->isNotEmpty())
+                        @foreach($jobOffers as $offer)
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-blue-100 p-2 rounded-md">
+                                    <x-icon name="briefcase" class="w-8 h-auto" />
+                                </div>
+                                <div class="[&>p]:mt-1">
+                                    <strong>{{ $offer->name }}</strong>
+                                    <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                        {{ $offer->created_at->diffForHumans() }} - {{ $offer->company->name }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No hay ofertas
+                            disponibles por el momento.</p>
+                    @endif
+                </div>
             </x-card>
         </div>
 
         <div class="grid grid-rows-7 gap-8 -mt-20">
             <x-card class="row-span-3 h-full">
-                <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+                <div class="">Fila 1 (1/3)</div>
             </x-card>
             <x-card class="row-span-4 h-full">
                 @if($notifications->count())
@@ -47,16 +90,19 @@
                     @foreach($notifications as $notification)
                         <div class="flex items-start space-x-4 leading-card mb-2.5">
                             <div class="bg-themeGrape text-white p-2 rounded-full">
-                                <x-icon name="bell" />
+                                <x-icon name="bell" class="w-8 h-auto" />
                             </div>
                             <div class="[&>p]:mt-1">
                                 <strong>{{ $notification->message }}</strong>
-                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ $notification->created_at->diffForHumans() }}</p>
+                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                    {{ $notification->created_at->diffForHumans() }}
+                                </p>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes notificaciones por el momento.</p>
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes notificaciones
+                        por el momento.</p>
                 @endif
             </x-card>
         </div>

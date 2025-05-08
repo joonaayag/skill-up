@@ -4,7 +4,7 @@
     id="main-header">
 
     <div class="flex flex-grow basis-0">
-        <x-icon name="skill-up-logo" class="w-48 h-auto -translate-x-5" />
+        <x-icon name="skill-up-logo" class="w-48 h-auto fill-current -translate-x-5" />
 
     </div>
 
@@ -64,8 +64,8 @@
                 </ul>
             </div>
         </div>
-        <button id="theme-toggle" @click="darkMode = !darkMode" class="rounded-full cursor-pointer">
-        <x-icon name="dark-light" />
+        <button id="theme-toggle" @click="darkMode = !darkMode" class="rounded-full ml-4 cursor-pointer">
+        <x-icon name="dark-light" class="w-6 h-auto " />
         </button>
 
     </nav>
