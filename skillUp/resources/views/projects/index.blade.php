@@ -32,6 +32,16 @@
         <button type="submit">Buscar</button>
     </form>
 
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 p-4 mb-6 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <ul>
         @forelse ($projects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
@@ -84,7 +94,7 @@
                 @csrf
 
                 <label>Título:</label>
-                <input type="text" name="name" required><br>
+                <input type="text" name="title" required><br>
 
                 <label>Descripción:</label>
                 <textarea name="description" required></textarea><br>

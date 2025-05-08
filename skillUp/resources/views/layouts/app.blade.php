@@ -9,7 +9,7 @@
     @vite('resources/js/app.js')
 </head>
 
-<body class="bg-no-repeat bg-cover bg-center flex flex-col min-h-screen transition-all duration-500 text-themeBgDark dark:text-themeLightGray">
+<body class="bg-no-repeat bg-cover bg-center flex flex-col min-h-screen transition-all duration-500 text-themeBgDark dark:text-white">
     <style>
         body {
             background-image: url({{ asset('images/app-bg.jpg') }});

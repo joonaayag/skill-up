@@ -6,11 +6,9 @@
 
     <x-heading level="h1" class="mb-10">Hola, {{ auth()->user()->name }}</x-heading>
 
-    <div
-        class="grid grid-cols-3 [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg gap-14 ">
-        <div class="py-3 px-4">
+    <div class="grid grid-cols-3 gap-14 h-full mb-24">
+        <x-card>
             <x-heading level="h3" class="mb-8">Proyectos destacados</x-heading>
-
             <div class="flex flex-col gap-3">
                 @if ($combined->isNotEmpty())
                     @foreach($combined as $project)
@@ -20,36 +18,50 @@
                             </div>
                             <div>
                                 <strong>{{ $project->title }}</strong>
-                                <p class="text-xs text-gray-600">{{ $project->description }}</p>
+                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ $project->description }}</p>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    <p class="mt-6 text-gray-500">No existen proyectos destacados por el momento.</p>
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No existen proyectos destacados por el momento.</p>
                 @endif
             </div>
-        </div>
-        <div class="grid grid-rows-3 gap-8">
-            <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
-            <div class="bg-blue-400 row-span-2">Fila 2 (2/3)</div>
-        </div>
-        <div>hola</div>
-    </div>
+        </x-card>
 
-    @if($notifications->count())
-        <h2 class="mt-6 text-lg font-semibold">Tus notificaciones recientes</h2>
-        <ul class="mt-2 space-y-2">
-            @foreach($notifications as $notification)
-                <li class="p-4 border rounded-lg {{ $notification->is_read ? 'bg-gray-100' : 'bg-white' }}">
-                    <strong>{{ $notification->title }}</strong>
-                    <p class="text-sm text-gray-600">{{ $notification->message }}</p>
-                    <span class="text-xs text-gray-400">{{ $notification->created_at->diffForHumans() }}</span>
-                </li>
-            @endforeach
-        </ul>
-    @else
-        <p class="mt-6 text-gray-500">No tienes notificaciones por el momento.</p>
-    @endif
+        <div class="grid grid-rows-5 gap-8">
+            <x-card class="row-span-2 h-full">
+                <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+            </x-card>
+            <x-card class="row-span-3 h-full">
+                <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+            </x-card>
+        </div>
+
+        <div class="grid grid-rows-7 gap-8 -mt-20">
+            <x-card class="row-span-3 h-full">
+                <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+            </x-card>
+            <x-card class="row-span-4 h-full">
+                @if($notifications->count())
+                    <x-heading level="h3" class="mb-8">Tus notificaciones recientes</x-heading>
+                    @foreach($notifications as $notification)
+                        <div class="flex items-start space-x-4 leading-card mb-2.5">
+                            <div class="bg-themeGrape text-white p-2 rounded-full">
+                                <x-icon name="bell" />
+                            </div>
+                            <div class="[&>p]:mt-1">
+                                <strong>{{ $notification->message }}</strong>
+                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ $notification->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes notificaciones por el momento.</p>
+                @endif
+            </x-card>
+        </div>
+
+    </div>
 
 
     <div x-data="chatbot()" class="fixed bottom-4 right-4 z-50">

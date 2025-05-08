@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $notifications = auth()->user()
             ->notifications()
             ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
 
         // Load top-rated projects  

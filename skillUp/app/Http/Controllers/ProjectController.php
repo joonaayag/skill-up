@@ -118,9 +118,9 @@ class ProjectController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El nombre del proyecto es obligatorio.',
-            'title.string' => 'El nombre del proyecto debe ser una cadena de texto.',
-            'title.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
+            'title.required' => 'El título del proyecto es obligatorio.',
+            'title.string' => 'El título del proyecto debe ser una cadena de texto.',
+            'title.max' => 'El título del proyecto no puede tener más de 40 caracteres.',
 
             'description.required' => 'La descripción es obligatoria.',
             'description.string' => 'La descripción debe ser una cadena de texto.',

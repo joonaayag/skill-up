@@ -4,7 +4,7 @@
 
 @section('content')
     <form method="GET" action="{{ route('projects.ownProjects') }}" class="mb-6 space-y-2">
-        <input type="text" name="name" placeholder="Título" value="{{ request('name') }}">
+        <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
 
         <select name="category">
@@ -64,8 +64,8 @@
                                 @method('PUT')
 
                                 <label class="block text-sm">Título</label>
-                                <input type="text" name="name" class="w-full border rounded px-3 py-2 mb-2"
-                                    value="{{ old('name', $project->name) }}" required>
+                                <input type="text" name="title" class="w-full border rounded px-3 py-2 mb-2"
+                                    value="{{ old('title', $project->title) }}" required>
 
                                 <label class="block text-sm">Descripción</label>
                                 <textarea name="description" class="w-full border rounded px-3 py-2 mb-2"
@@ -172,7 +172,7 @@
                     @csrf
 
                     <label class="block text-sm">Título</label>
-                    <input type="text" name="name" class="w-full border rounded px-3 py-2 mb-2" required>
+                    <input type="text" name="title" class="w-full border rounded px-3 py-2 mb-2" required>
 
                     <label class="block text-sm">Descripción</label>
                     <textarea name="description" class="w-full border rounded px-3 py-2 mb-2" required></textarea>

@@ -79,8 +79,8 @@
                         @method('PUT')
 
                         <label class="block text-sm">Título</label>
-                        <input type="text" name="name" class="w-full border rounded px-3 py-2 mb-2"
-                            value="{{ old('name', $project->name) }}" required>
+                        <input type="text" name="title" class="w-full border rounded px-3 py-2 mb-2"
+                            value="{{ old('title', $project->title) }}" required>
 
                         <label class="block text-sm">Descripción</label>
                         <textarea name="description" class="w-full border rounded px-3 py-2 mb-2"
