@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobOffer;
 use App\Models\Project;
 use App\Models\SchoolProject;
 use Illuminate\Http\Request;
@@ -61,8 +62,16 @@ class DashboardController extends Controller
             $combined = $combined->concat($moreProjects);
         }
 
+        $ownProjects = auth()->user()->projects()
+            ->take(2)
+            ->get();
 
-        return view('dashboard', compact('notifications', 'combined'));
+        $jobOffers = JobOffer::latest()
+            ->take(4)
+            ->get();
+
+
+        return view('dashboard', compact('notifications', 'combined', 'ownProjects', 'jobOffers'));
     }
 
     public function profile()

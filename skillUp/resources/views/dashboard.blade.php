@@ -29,7 +29,10 @@
                 @endif
             </div>
         </div>
-        <div>hola</div>
+        <div class="grid grid-rows-3 gap-8">
+            <div class="bg-blue-200 row-span-1">Fila 1 (1/3)</div>
+            <div class="bg-blue-400 row-span-2">Fila 2 (2/3)</div>
+        </div>
         <div>hola</div>
     </div>
 
