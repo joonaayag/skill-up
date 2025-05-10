@@ -58,7 +58,7 @@ class User extends Authenticatable
     }
     public function schoolProjects()
     {
-        return $this->hasMany(SchoolProject::class);
+        return $this->hasMany(SchoolProject::class, 'author_id');
     }
     public function notifications()
     {

@@ -13,7 +13,7 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('author');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
             $table->date('creation_date');
             $table->text('description');
 

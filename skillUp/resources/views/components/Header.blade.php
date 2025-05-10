@@ -64,7 +64,7 @@
                 </ul>
             </div>
         </div>
-        <button id="theme-toggle" @click="darkMode = !darkMode" class="rounded-full ml-4 cursor-pointer">
+        <button id="theme-toggle" @click="darkMode = !darkMode" class="rounded-full ml-4 cursor-pointer hover:transform hover:rotate-180 hover:transition-all">
             <x-icon name="dark-light" class="w-6 h-auto " />
         </button>
 

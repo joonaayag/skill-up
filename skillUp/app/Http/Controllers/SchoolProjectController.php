@@ -99,14 +99,14 @@ class SchoolProjectController extends Controller
             'creation_date' => $request->creation_date,
             'description' => $request->description,
             'tags' => $request->tags,
-            'user_id' => auth()->id(),
+            'teacher_id' => auth()->id(),
             'general_category' => $request->general_category,
             'link' => $request->link,
         ]);
 
-        if ($project->user_id !== auth()->id()) {
+        if ($project->teacher_id !== auth()->id()) {
             Notification::create([
-                'user_id' => $project->user_id,
+                'author_id' => $project->teacher_id,
                 'type' => 'proyecto',
                 'title' => 'Tu proyecto ha sido actualizado',
                 'message' => 'El proyecto "' . $project->title . '" ha sido actualizado por el profesorado.',
@@ -185,7 +185,7 @@ class SchoolProjectController extends Controller
 
         $project = new SchoolProject();
         $project->title = $validated['title'];
-        $project->user_id = auth()->id();
+        $project->teacher_id = auth()->id();
         $project->author = $validated['author'];
         $project->creation_date = $validated['creation_date'];
         $project->description = $validated['description'];

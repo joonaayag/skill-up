@@ -20,6 +20,10 @@ class SchoolProject extends Model
         'image',
         'link',
     ];
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
     public function images()
     {
         return $this->hasMany(ProjectImage::class);

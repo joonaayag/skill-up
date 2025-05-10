@@ -1,4 +1,4 @@
-<footer class="flex flex-col items-center gap-3 bg-themeBgDark w-full h-auto py-4 text-gray-300">
+<footer class="flex flex-col items-center gap-3 bg-themeBgDark w-full h-auto py-4 text-gray-300 mt-10">
     <a href="" class="pointer-events-none">
         <img src="{{ asset('icons/skill-up-logo.svg') }}" alt="Skill-Up" class="h-14">
     </a>

@@ -3,10 +3,13 @@
 @section('title', 'Proyectos')
 
 @section('content')
-    <h1>Proyectos</h1>
+    <x-heading level="h1" class="mb-10">Proyectos</x-heading>
 
-    <form method="GET" action="{{ route('projects.index') }}" class="mb-6 space-y-2">
-        <input type="text" name="name" placeholder="Título" value="{{ request('name') }}">
+    <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
+                                    [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+                                     [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0
+                                    ">
+        <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
         <input type="text" name="author" placeholder="Autor" value="{{ request('author') }}">
 
@@ -23,13 +26,11 @@
         </select>
 
         <select name="order">
-            <option value="">-- Ordenar por --</option>
-            <option value="name">Nombre</option>
+            <option value="">Ordenar por</option>
+            <option value="title">Titulo</option>
             <option value="creation_date">Fecha</option>
             <option value="general_category">Categoría</option>
         </select>
-
-        <button type="submit">Buscar</button>
     </form>
 
     @if ($errors->any())
@@ -42,42 +43,49 @@
         </div>
     @endif
 
-    <ul>
+    <ul class="grid grid-cols-3 gap-10">
         @forelse ($projects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
-                <li>
-                    <strong>{{ $project->name }}</strong><br>
-                    <span><em>Categoría:</em> {{ $project->general_category }} | <em>Fecha:</em>
-                        {{ $project->creation_date }}</span><br>
-                    <p>{{ $project->description }}</p>
+                <x-card class="h-full">
+                    <li class="flex flex-col h-full ">
+                        <x-tags class="mb-2">{{ $project->tags }}</x-tags>
+                        <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>
+                        <span>{{ $project->general_category }}</span>
+                        <p class=" text-sm mb-1.5">{{ Str::limit($project->description, 100) }}</p>
 
-                    @php
-                        $favorite = auth()->user()->favorites()
-                            ->where('type', 'proyecto')
-                            ->where('reference_id', $project->id)
-                            ->first();
-                    @endphp
+                        @php
+                            $favorite = auth()->user()->favorites()
+                                ->where('type', 'proyecto')
+                                ->where('reference_id', $project->id)
+                                ->first();
+                        @endphp
 
-                    @if ($favorite)
-                        <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">❌ Quitar de favoritos</button>
-                        </form>
-                    @else
-                        <form action="{{ route('favorites.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="type" value="proyecto">
-                            <input type="hidden" name="reference_id" value="{{ $project->id }}">
-                            <button type="submit">❤️ Añadir a favoritos</button>
-                        </form>
-                    @endif
-                    <p class="text-sm text-gray-500">👁️ {{ $project->views }} visitas</p>
+                        <div class="flex flex-row justify-between items-center  ">
+                            <div class="flex flex-row gap-3">
+                                @if ($favorite)
+                                    <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">❌</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('favorites.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="type" value="proyecto">
+                                        <input type="hidden" name="reference_id" value="{{ $project->id }}">
+                                        <button type="submit">❤️</button>
+                                    </form>
+                                @endif
+                                <p>👁️{{ $project->views }}</p>
+                                <p>
+                                    {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
+                                </p>
+                            </div>
+                            <span class="text-sm">{{ $project->author->name . ' ' . $project->author->last_name  }}</span>
+                        </div>
 
-                    <p>Calificación actual: {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}</p>
-    
-                    <hr>
-                </li>
+                    </li>
+                </x-card>
             </a>
         @empty
             <p>No hay proyectos disponibles.</p>
@@ -134,46 +142,81 @@
 
     <hr><br>
 
-    <h2>Proyectos Escolares</h2>
-    <ul>
+    <x-heading level="h1" class="mb-10">Proyectos de escolares</x-heading>
+    <ul class="grid grid-cols-3 gap-10">
         @forelse ($schoolProjects as $school)
             <a href="{{ route('school.projects.show', $school->id) }}">
-                <li>
-                    <strong>{{ $school->title }}</strong><br>
-                    <span><em>Categoría:</em> {{ $school->general_category }} | <em>Fecha:</em>
-                        {{ $school->creation_date }}</span><br>
-                    <p>{{ $school->description }}</p>
+                <x-card class="h-full">
+                    <li class="flex flex-col">
+                        <x-tags class="mb-2">{{ $school->tags }}</x-tags>
+                        <x-heading level="h3" class="mb-1">{{ $school->title }}</x-heading>
+                        <span>{{ $school->general_category }}</span>
+                        <p class=" text-sm mb-1.5">{{ Str::limit($school->description, 100) }}</p>
 
-                    @php
-                        $favorite = auth()->user()->favorites()
-                            ->where('type', 'proyecto')
-                            ->where('reference_id', $school->id)
-                            ->first();
-                    @endphp
+                        @php
+                            $favorite = auth()->user()->favorites()
+                                ->where('type', 'proyecto')
+                                ->where('reference_id', $school->id)
+                                ->first();
+                        @endphp
 
-                    @if ($favorite)
-                        <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">❌ Quitar de favoritos</button>
-                        </form>
-                    @else
-                        <form action="{{ route('favorites.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="type" value="proyecto">
-                            <input type="hidden" name="reference_id" value="{{ $school->id }}">
-                            <button type="submit">❤️ Añadir a favoritos</button>
-                        </form>
-                    @endif
-                    <p class="text-sm text-gray-500">👁️ {{ $school->views }} visitas</p>
+                        <div class="flex flex-row justify-between items-center  ">
+                            <div class="flex flex-row gap-3">
+                                @if ($favorite)
+                                    <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit">❌</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('favorites.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="type" value="proyecto">
+                                        <input type="hidden" name="reference_id" value="{{ $school->id }}">
+                                        <button type="submit">❤️</button>
+                                    </form>
+                                @endif
+                                <p>👁️{{ $school->views }}</p>
+                                <p>
+                                    {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}
+                                </p>
+                            </div>
+                            <span class="text-sm">
+                                {{ $school->teacher?->name . ' ' . $school->teacher?->last_name }}
+                            </span>
 
-                    <p>Calificación actual: {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}</p>
-    
-                    <hr>
+                        </div>
+
+                    </li>
+                </x-card>
                 </li>
             </a>
         @empty
             <p>No hay proyectos escolares disponibles.</p>
         @endforelse
     </ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('project-filter-form');
+
+            if (form) {
+                const inputs = form.querySelectorAll('input, select');
+
+                inputs.forEach(input => {
+                    input.addEventListener('change', () => {
+                        form.submit();
+                    });
+
+                    if (input.tagName === 'INPUT') {
+                        input.addEventListener('keyup', () => {
+                            clearTimeout(input._timeout);
+                            input._timeout = setTimeout(() => form.submit(), 1000);
+                        });
+                    }
+                });
+            }
+        });
+
+    </script>
+
 @endsection
