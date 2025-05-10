@@ -32,7 +32,7 @@ return new class extends Migration
                 'Educación', 'Ciencia y salud', 'Industria', 'Otro'
             ]);
 
-            $table->enum('state', ['abierta', 'cerrada']);
+            $table->enum('state', ['Abierta', 'Cerrada']);
 
             $table->foreignId('company_id')->constrained('users')->onDelete('cascade');
 

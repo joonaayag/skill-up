@@ -6,9 +6,10 @@
     <x-heading level="h1" class="mb-10">Proyectos</x-heading>
 
     <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-                                                        [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-                                                        [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-black dark:[&>input]:text-black
-                                                                                    ">
+      [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+        [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeDarkGray
+         dark:[&>input]:text-themeDarkGray [&>input]:placeholder:text-themeDarkGray [&>select]:placeholder:text-themeDarkGray">
+         
         <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
         <input type="text" name="author" placeholder="Autor" value="{{ request('author') }}">
@@ -105,7 +106,7 @@
             <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nuevo proyecto</x-heading>
 
             <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
-                class="space-y-4 [&>div>input]:outline-0 ">
+                class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
                 @csrf
 
                 <div>

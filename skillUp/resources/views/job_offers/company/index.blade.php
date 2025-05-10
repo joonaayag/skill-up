@@ -100,8 +100,8 @@
 
                         <label>Estado:</label>
                         <select name="state" required>
-                            <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>Abierta</option>
-                            <option value="cerrada" {{ $offer->state === 'cerrada' ? 'selected' : '' }}>Cerrada</option>
+                            <option value="Abierta" {{ $offer->state === 'Abierta' ? 'selected' : '' }}>Abierta</option>
+                            <option value="Cerrada" {{ $offer->state === 'Cerrada' ? 'selected' : '' }}>Cerrada</option>
                         </select><br>
 
                         <label>Logo:</label>
