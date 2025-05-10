@@ -173,11 +173,11 @@ class AuthController extends Controller
         $message = match ($user->role) {
             'alumno' => [
                 'title' => '¡Bienvenido a SkillUp!',
-                'message' => 'Ya puedes explorar ofertas y postularte a proyectos adaptados a tu perfil educativo.',
+                'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
             ],
             'usuario' => [
                 'title' => '¡Bienvenido a SkillUp!',
-                'message' => 'Ya puedes explorar ofertas y postularte a proyectos adaptados a tu perfil educativo.',
+                'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
             ],
             'empresa' => [
                 'title' => 'Tu cuenta de empresa está lista',

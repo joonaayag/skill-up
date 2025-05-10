@@ -1,6 +1,6 @@
 <header
     class="fixed top-0 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl flex items-center justify-between bg-red
-  dark:bg-themeBgDark bg-white text-black dark:text-[#e8e8e8] px-8 py-2 rounded-bl-4xl rounded-br-4xl shadow z-50"
+  dark:bg-themeBgDark bg-white text-black dark:text-[#e8e8e8] px-8 py-2 rounded-b-4xl shadow z-50 dark:border-2 dark:border-t-0 dark:border-themeBlue"
     id="main-header">
 
     <div class="flex flex-grow basis-0">
@@ -65,21 +65,24 @@
             </div>
         </div>
         <button id="theme-toggle" @click="darkMode = !darkMode" class="rounded-full ml-4 cursor-pointer">
-        <x-icon name="dark-light" class="w-6 h-auto " />
+            <x-icon name="dark-light" class="w-6 h-auto " />
         </button>
 
     </nav>
 
-    <nav class="flex flex-grow justify-end basis-0 [&>a]:inline-block">
+    <nav class="flex flex-grow justify-end basis-0 ">
         @auth
-            <a href="{{ route('profile.index') }}">
-                <span>Hola, {{ auth()->user()->name }}</span>
+            <a href="{{ route('profile.index') }}" class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
+            transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
+                <span>{{ auth()->user()->name }}</span>
+                <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                    alt="Perfil" id="profileImage"
+                    class="size-8 rounded-full border-2 border-themeBlue dark:border-white object-cover shadow-lg">
             </a>
         @endauth
     </nav>
 
-    <div id="menu-backdrop"
-        class="absolute bg-black/5 dark:bg-white/9 border-b-2 border-b-themeBlue backdrop-blur-lg rounded translate-x-[var(--left)] translate-y-[var(--top)] left-0 top-0 w-[var(--width)]
+    <div id="menu-backdrop" class="absolute bg-black/5 dark:bg-white/9 border-b-2 border-b-themeBlue backdrop-blur-lg rounded translate-x-[var(--left)] translate-y-[var(--top)] left-0 top-0 w-[var(--width)]
          h-[var(--height)] transition-all duration-200 ease-in-out opacity-0 -z-10">
     </div>
 

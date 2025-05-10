@@ -9,7 +9,7 @@
                 alt="Fondo" class="w-full h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
+                <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"
                     class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg">
             </div>
