@@ -6,15 +6,15 @@
     <x-heading level="h1" class="mb-10">Proyectos</x-heading>
 
     <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-                                    [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-                                     [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0
-                                    ">
+                                                        [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+                                                        [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-black dark:[&>input]:text-black
+                                                                                    ">
         <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
         <input type="text" name="author" placeholder="Autor" value="{{ request('author') }}">
 
         <select name="category">
-            <option value="">-- Categoría --</option>
+            <option value=""> Categoría </option>
             <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
             <option value="Diseño y comunicación">Diseño y comunicación</option>
             <option value="Administración y negocio">Administración y negocio</option>
@@ -60,8 +60,8 @@
                                 ->first();
                         @endphp
 
-                        <div class="flex flex-row justify-between items-center  ">
-                            <div class="flex flex-row gap-3">
+                        <div class="flex flex-row justify-between items-center mt-auto">
+                            <div class="flex flex-row gap-3 ">
                                 @if ($favorite)
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
@@ -92,53 +92,126 @@
         @endforelse
     </ul>
 
-    <div x-data="{ showModal: false }">
-        <button @click="showModal = true">Crear proyecto</button>
+    <div x-data="{ showModal: false }"
+        x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
-        <div x-show="showModal" style="margin-top: 1rem; border: 1px solid #ccc; padding: 1rem;">
-            <h2>Nuevo proyecto</h2>
+        <button @click="showModal = true"
+            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition">
+            <x-icon name="plus" />
+        </button>
 
-            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
+
+        <x-modal>
+            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nuevo proyecto</x-heading>
+
+            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-4 [&>div>input]:outline-0 ">
                 @csrf
 
-                <label>Título:</label>
-                <input type="text" name="title" required><br>
+                <div>
+                    <x-label for="title">Título:</x-label>
+                    <x-inputtext type="text" name="title" id="title" required />
+                </div>
 
-                <label>Descripción:</label>
-                <textarea name="description" required></textarea><br>
+                <div>
+                    <x-label for="title">Descripción:</x-label>
+                    <x-textarea name="description" id="description" required></x-textarea>
+                </div>
 
-                <label>Etiquetas (tags):</label>
-                <input type="text" name="tags" required><br>
+                <div>
+                    <x-label for="title">Etiquetas (tags)</x-label>
+                    <x-inputtext type="text" name="tags" id="tags" required />
+                </div>
 
-                <label>Categoría general:</label>
-                <select name="sector_category" required>
-                    <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
-                    <option value="Diseño y comunicación">Diseño y comunicación</option>
-                    <option value="Administración y negocio">Administración y negocio</option>
-                    <option value="Comunicación">Comunicación</option>
-                    <option value="Educación">Educación</option>
-                    <option value="Ciencia y salud">Ciencia y salud</option>
-                    <option value="Industria">Industria</option>
-                    <option value="Otro">Otro</option>
-                </select><br>
+                <div>
+                    <x-label for="title">Categoría general:</x-label>
+                    <select name="sector_category" required class="w-full px-3 py-2 rounded border border-themeLightGray">
+                        <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
+                        <option value="Diseño y comunicación">Diseño y comunicación</option>
+                        <option value="Administración y negocio">Administración y negocio</option>
+                        <option value="Comunicación">Comunicación</option>
+                        <option value="Educación">Educación</option>
+                        <option value="Ciencia y salud">Ciencia y salud</option>
+                        <option value="Industria">Industria</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
 
-                <label>Fecha de creación:</label>
-                <input type="date" name="creation_date" required><br>
+                <div>
+                    <x-label for="title">Fecha de creación:</x-label>
+                    <x-inputdate name="creation_date" id="creation_date" required />
+                </div>
 
-                <label>Enlace (opcional):</label>
-                <input type="url" name="link"><br>
+                <div>
+                    <x-label for="title">Enlace (Opcional):</x-label>
+                    <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
+                </div>
 
-                <label>Imagen destacada:</label>
-                <input type="file" name="image" accept="image/*"><br>
+                <div>
+                    <x-label for="title">Imagen destacada:</x-label>
+                    <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                        <label for="image-upload"
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            🖼️ Subir imagen destacada
+                            <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
+                        fileName = $event.target.files[0]?.name || '';
+                        if ($event.target.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = e => previewUrl = e.target.result;
+                            reader.readAsDataURL($event.target.files[0]);
+                        }" />
+                        </label>
 
-                <label>Archivos adicionalaes:</label>
-                <input type="file" name="files[]" multiple accept="file/*"><br>
+                        <template x-if="fileName">
+                            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">📄 <span x-text="fileName"></span></p>
+                        </template>
 
-                <button type="submit">Guardar</button>
-                <button type="button" @click="showModal = false">Cancelar</button>
+                        <template x-if="previewUrl">
+                            <img :src="previewUrl" alt="Vista previa"
+                                class="mt-3 max-h-48 rounded border border-gray-300 shadow" />
+                        </template>
+                    </div>
+
+                </div>
+
+                <div>
+                    <x-label for="title">Archivos adicionales</x-label>
+                    <div x-data="{ fileNames: [] }" class="w-full">
+                        <label for="file-upload"
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            📎 Subir archivos
+                            <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
+                                @change="fileNames = [...$event.target.files].map(f => f.name)" />
+                        </label>
+
+                        <template x-if="fileNames.length > 0">
+                            <ul class="mt-2 text-sm text-black dark:text-themeLightGray space-y-1 list-disc list-inside">
+                                <template x-for="name in fileNames" :key="name">
+                                    <li x-text="name"></li>
+                                </template>
+                            </ul>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-4">
+                    <button type="submit"
+                        class="px-4 py-2 bg-themeGrape/80 text-white rounded hover:bg-themeGrape transition cursor-pointer">
+                        Guardar
+                    </button>
+                    <button type="button" @click="showModal = false"
+                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        Cancelar
+                    </button>
+                </div>
             </form>
-        </div>
+            </form>
+        </x-modal>
+
     </div>
+
+
+
 
     <hr><br>
 
@@ -160,7 +233,7 @@
                                 ->first();
                         @endphp
 
-                        <div class="flex flex-row justify-between items-center  ">
+                        <div class="flex flex-row justify-between items-center mt-auto">
                             <div class="flex flex-row gap-3">
                                 @if ($favorite)
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
