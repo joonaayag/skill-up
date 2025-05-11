@@ -6,7 +6,7 @@
 
     <x-heading level="h1" class="mb-10">Hola, {{ auth()->user()->name }}</x-heading>
 
-    <div class="grid grid-cols-3 gap-14 h-full mb-24">
+    <div class="grid grid-cols-3 gap-14 h-full mb-24 ">
         <x-card>
             <x-heading level="h3" class="mb-8">Proyectos destacados</x-heading>
             <div class="flex flex-col gap-3">
@@ -81,9 +81,26 @@
         </div>
 
         <div class="grid grid-rows-7 gap-8 -mt-20">
-            <x-card class="row-span-3 h-full">
-                <div class="">Fila 1 (1/3)</div>
-            </x-card>
+            <div class="row-span-3 h-full [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
+                <div class="relative">
+                    <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://i.pinimg.com/736x/b6/ef/40/b6ef40f2cd4436568d718f150abefca6.jpg' }}"
+                        alt="Fondo" class="w-full h-30 object-cover" id="bannerImage">
+                    <div class="absolute top-20 left-1/6 transform -translate-x-1/2">
+                        <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                            alt="Perfil" id="profileImage"
+                            class="h-18 w-18 rounded-full border-4 border-white object-cover shadow-lg">
+                    </div>
+                    <div class="px-3 mt-8">
+                        <x-heading level="h3">{{ ucfirst(auth()->user()->name) . ' ' . ucfirst(auth()->user()->last_name) }}</x-heading>
+                        @if (auth()->user()->role === 'alumno')
+                            <p>Estudiante de {{ auth()->user()->detail->educational_center }}</p>
+                        @else
+                            <p>{{ auth()->user()->role }}</p>
+                        @endif
+                        <p>Preferencias</p>
+                    </div>
+                </div>
+            </div>
             <x-card class="row-span-4 h-full">
                 @if($notifications->count())
                     <x-heading level="h3" class="mb-8">Tus notificaciones recientes</x-heading>

@@ -3,12 +3,17 @@
 @section('title', 'Tus proyectos')
 
 @section('content')
-    <form method="GET" action="{{ route('projects.ownProjects') }}" class="mb-6 space-y-2">
+    <x-heading level="h1" class="mb-10">Tus proyectos</x-heading>
+    <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}"
+        class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
+          [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeDarkGray
+             dark:[&>input]:text-themeDarkGray [&>input]:placeholder:text-themeDarkGray [&>select]:placeholder:text-themeDarkGray dark:[&>input]:bg-themeBgDark dark:[&>select]:bg-themeBgDark">
         <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
 
         <select name="category">
-            <option value="">-- Categoría --</option>
+            <option value="">Categoría</option>
             <option value="Tecnología y desarrollo" @selected(request('category') == 'Tecnología y desarrollo')>Tecnología y
                 desarrollo</option>
             <option value="Diseño y comunicación" @selected(request('category') == 'Diseño y comunicación')>Diseño y
@@ -23,165 +28,76 @@
         </select>
 
         <select name="order">
-            <option value="">-- Ordenar por --</option>
+            <option value="">Ordenar por</option>
             <option value="name" @selected(request('order') == 'name')>Nombre</option>
             <option value="creation_date" @selected(request('order') == 'creation_date')>Fecha</option>
             <option value="general_category" @selected(request('order') == 'general_category')>Categoría</option>
         </select>
-
-        <button type="submit">Filtrar</button>
     </form>
-    <ul>
+
+    <ul class="grid grid-cols-3 gap-10">
+
         @forelse ($userProjects as $project)
-            <div>
-                <a href="{{ route('projects.show', $project->id) }}">
-                    <li>
-                        <strong>{{ $project->name }}</strong><br>
-                        <span><em>Categoría:</em> {{ $project->category }} | <em>Fecha:</em>
-                            {{ $project->creation_date }}</span><br>
-                        <p>{{ $project->description }}</p>
-                        <hr>
-                    </li>
-                </a>
+            <a href="{{ route('projects.show', $project->id) }}">
+                <x-card class="h-full">
+                    <li class="flex flex-col h-full ">
+                        <x-tags class="mb-2">{{ $project->tags }}</x-tags>
+                        <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>
+                        <span>{{ $project->general_category }}</span>
+                        <p class=" text-sm mb-1.5">{{ Str::limit($project->description, 100) }}</p>
 
-                <div x-data="{ showEdit_{{ $project->id }}: false }">
-                    <!-- Botón para abrir modal -->
-                    <button @click="showEdit_{{ $project->id }} = true" class="bg-yellow-500 text-white px-3 py-1 rounded">
-                        Editar
-                    </button>
-
-                    <!-- Modal de edición -->
-                    <div x-show="showEdit_{{ $project->id }}"
-                        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-                        style="display: none;">
-                        <div class="bg-white w-full max-w-lg p-6 rounded shadow relative"
-                            @click.outside="showEdit_{{ $project->id }} = false">
-                            <h3 class="text-xl font-bold mb-4">Editar Proyecto</h3>
-
-                            <form action="{{ route('projects.update', $project->id) }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-
-                                <label class="block text-sm">Título</label>
-                                <input type="text" name="title" class="w-full border rounded px-3 py-2 mb-2"
-                                    value="{{ old('title', $project->title) }}" required>
-
-                                <label class="block text-sm">Descripción</label>
-                                <textarea name="description" class="w-full border rounded px-3 py-2 mb-2"
-                                    required>{{ old('description', $project->description) }}</textarea>
-
-                                <label class="block text-sm">Etiquetas (tags)</label>
-                                <input type="text" name="tags" class="w-full border rounded px-3 py-2 mb-2"
-                                    value="{{ old('tags', $project->tags) }}" required>
-
-                                <label class="block text-sm">Categoría</label>
-                                <select name="sector_category" class="w-full border rounded px-3 py-2 mb-2" required>
-                                    @php
-                                        $categorias = [
-                                            'Tecnología y desarrollo',
-                                            'Diseño y comunicación',
-                                            'Administración y negocio',
-                                            'Comunicación',
-                                            'Educación',
-                                            'Ciencia y salud',
-                                            'Industria',
-                                            'Otro'
-                                        ];
-                                    @endphp
-                                    @foreach ($categorias as $categoria)
-                                        <option value="{{ $categoria }}" {{ old('sector_category', $project->sector_category) == $categoria ? 'selected' : '' }}>
-                                            {{ $categoria }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                <label class="block text-sm">Fecha de creación</label>
-                                <input type="date" name="creation_date" class="w-full border rounded px-3 py-2 mb-2"
-                                    value="{{ old('creation_date', \Carbon\Carbon::parse($project->creation_date)->format('Y-m-d')) }}"
-                                    required>
-
-                                <label class="block text-sm">Enlace (opcional)</label>
-                                <input type="url" name="link" class="w-full border rounded px-3 py-2 mb-2"
-                                    value="{{ old('link', $project->link) }}">
-
-                                <label class="block text-sm">Imagen destacada</label>
-                                <input type="file" name="image" accept="image/*" class="mb-2">
-
-                                <label class="block text-sm">Archivos adicionales</label>
-                                <input type="file" name="files[]" multiple class="mb-4">
-
-                                <div class="flex justify-end space-x-3 mt-4">
-                                    <button type="button" @click="showEdit_{{ $project->id }} = false"
-                                        class="border px-4 py-2 rounded">Cancelar</button>
-                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Guardar
-                                        cambios</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div x-data="{ confirmDelete_{{ $project->id }}: false }">
-                    <button @click="confirmDelete_{{ $project->id }} = true" class="bg-red-600 text-white px-3 py-1 rounded">
-                        Eliminar
-                    </button>
-
-                    <!-- Modal de confirmación -->
-                    <div x-show="confirmDelete_{{ $project->id }}"
-                        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-                        style="display: none;">
-                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
-                            @click.outside="confirmDelete_{{ $project->id }} = false">
-                            <h2 class="text-lg font-semibold mb-4">¿Eliminar este proyecto?</h2>
-                            <p class="mb-6">Esta acción no se puede deshacer.</p>
-
-                            <div class="flex justify-end gap-3">
-                                <button @click="confirmDelete_{{ $project->id }} = false" class="px-4 py-2 bg-gray-300 rounded">
-                                    Cancelar
-                                </button>
-                                <form method="POST" action="{{ route('projects.destroy', $project->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">
-                                        Confirmar eliminación
-                                    </button>
-                                </form>
+                        <div class="flex flex-row justify-between items-center mt-auto">
+                            <div class="flex flex-row gap-3">
+                                <p>👁️{{ $project->views }}</p>
+                                <p>
+                                    {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
+                                </p>
                             </div>
+                            <span class="text-sm">{{ $project->author->name . ' ' . $project->author->last_name  }}</span>
                         </div>
-                    </div>
-                </div>
 
-            </div>
+                    </li>
+                </x-card>
+            </a>
         @empty
-            <p>No tienes proyectos disponibles.</p>
+            <p>No hay proyectos disponibles.</p>
         @endforelse
     </ul>
 
-    <div x-data="{ showModal: false }" class="mb-6">
-        <button @click="showModal = true" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-            + Crear nuevo proyecto
+    <div x-data="{ showModal: false }"
+        x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
+
+        <button @click="showModal = true"
+            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition">
+            <x-icon name="plus" />
         </button>
 
-        <!-- Modal -->
-        <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div class="bg-white w-full max-w-lg p-6 rounded shadow relative" @click.away="showModal = false">
-                <h3 class="text-xl font-bold mb-4">Nuevo Proyecto</h3>
 
-                <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+        <x-modal>
+            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nuevo proyecto</x-heading>
 
-                    <label class="block text-sm">Título</label>
-                    <input type="text" name="title" class="w-full border rounded px-3 py-2 mb-2" required>
+            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
+                @csrf
 
-                    <label class="block text-sm">Descripción</label>
-                    <textarea name="description" class="w-full border rounded px-3 py-2 mb-2" required></textarea>
+                <div>
+                    <x-label for="title">Título:</x-label>
+                    <x-inputtext type="text" name="title" id="title" required />
+                </div>
 
-                    <label class="block text-sm">Etiquetas (tags)</label>
-                    <input type="text" name="tags" class="w-full border rounded px-3 py-2 mb-2" required>
+                <div>
+                    <x-label for="title">Descripción:</x-label>
+                    <x-textarea name="description" id="description" required></x-textarea>
+                </div>
 
-                    <label class="block text-sm">Categoría</label>
-                    <select name="sector_category" class="w-full border rounded px-3 py-2 mb-2" required>
+                <div>
+                    <x-label for="title">Etiquetas (tags)</x-label>
+                    <x-inputtext type="text" name="tags" id="tags" required />
+                </div>
+
+                <div>
+                    <x-label for="title">Categoría general:</x-label>
+                    <select name="sector_category" required class="w-full px-3 py-2 rounded border border-themeLightGray">
                         <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
                         <option value="Diseño y comunicación">Diseño y comunicación</option>
                         <option value="Administración y negocio">Administración y negocio</option>
@@ -191,27 +107,100 @@
                         <option value="Industria">Industria</option>
                         <option value="Otro">Otro</option>
                     </select>
+                </div>
 
-                    <label class="block text-sm">Fecha de creación</label>
-                    <input type="date" name="creation_date" class="w-full border rounded px-3 py-2 mb-2" required>
+                <div>
+                    <x-label for="title">Fecha de creación:</x-label>
+                    <x-inputdate name="creation_date" id="creation_date" required />
+                </div>
 
-                    <label class="block text-sm">Enlace (opcional)</label>
-                    <input type="url" name="link" class="w-full border rounded px-3 py-2 mb-2">
+                <div>
+                    <x-label for="title">Enlace (Opcional):</x-label>
+                    <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
+                </div>
 
-                    <label class="block text-sm">Imagen destacada</label>
-                    <input type="file" name="image" accept="image/*" class="mb-2">
+                <div>
+                    <x-label for="title">Imagen destacada:</x-label>
+                    <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                        <label for="image-upload"
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            🖼️ Subir imagen destacada
+                            <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
+                            fileName = $event.target.files[0]?.name || '';
+                            if ($event.target.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = e => previewUrl = e.target.result;
+                                reader.readAsDataURL($event.target.files[0]);
+                            }" />
+                        </label>
 
-                    <label class="block text-sm">Archivos adicionales</label>
-                    <input type="file" name="files[]" multiple class="mb-4">
+                        <template x-if="fileName">
+                            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">📄 <span x-text="fileName"></span></p>
+                        </template>
 
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" @click="showModal = false" class="border px-4 py-2 rounded">Cancelar</button>
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Guardar</button>
+                        <template x-if="previewUrl">
+                            <img :src="previewUrl" alt="Vista previa"
+                                class="mt-3 max-h-48 rounded border border-gray-300 shadow" />
+                        </template>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
+                </div>
 
+                <div>
+                    <x-label for="title">Archivos adicionales</x-label>
+                    <div x-data="{ fileNames: [] }" class="w-full">
+                        <label for="file-upload"
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            📎 Subir archivos
+                            <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
+                                @change="fileNames = [...$event.target.files].map(f => f.name)" />
+                        </label>
+
+                        <template x-if="fileNames.length > 0">
+                            <ul class="mt-2 text-sm text-black dark:text-themeLightGray space-y-1 list-disc list-inside">
+                                <template x-for="name in fileNames" :key="name">
+                                    <li x-text="name"></li>
+                                </template>
+                            </ul>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-4">
+                    <button type="submit"
+                        class="px-4 py-2 bg-themeGrape/80 text-white rounded hover:bg-themeGrape transition cursor-pointer">
+                        Guardar
+                    </button>
+                    <button type="button" @click="showModal = false"
+                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+            </form>
+        </x-modal>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('own-projects-filter-form');
+
+                if (form) {
+                    const inputs = form.querySelectorAll('input, select');
+
+                    inputs.forEach(input => {
+                        input.addEventListener('change', () => {
+                            form.submit();
+                        });
+
+                        if (input.tagName === 'INPUT') {
+                            input.addEventListener('keyup', () => {
+                                clearTimeout(input._timeout);
+                                input._timeout = setTimeout(() => form.submit(), 1000);
+                            });
+                        }
+                    });
+                }
+            });
+
+        </script>
 @endsection
