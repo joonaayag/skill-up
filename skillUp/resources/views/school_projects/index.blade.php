@@ -16,7 +16,7 @@
     @endif
 
     <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
-        <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow p-4 space-y-4">
+        <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
             <div>
                 <x-heading level="h3" class="mb-2.5">Curso académico</x-heading>
                 <ul class="space-y-1">
