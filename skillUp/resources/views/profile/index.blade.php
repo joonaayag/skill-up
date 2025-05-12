@@ -6,7 +6,7 @@
     <x-heading level="h1" class="mb-10">Tu perfil</x-heading>
     <div x-data="{ showModal: false }"
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
-        class="relative z-10 max-w-xl mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
+        class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
 
         <div class="relative">
             <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://i.pinimg.com/736x/b6/ef/40/b6ef40f2cd4436568d718f150abefca6.jpg' }}"
@@ -15,39 +15,38 @@
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                 <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"
-                    class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg">
+                    class="h-24 w-24 rounded-full border-4 border-themeBlue dark:border-white object-cover shadow-lg">
             </div>
         </div>
 
-        <div class="pt-12 pb-6 px-6 text-center">
+        <div class="pt-12 pb-6 px-6 text-center ">
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
             <span
                 class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ ucfirst(auth()->user()->role) }}</span>
-
             @php
                 $details = auth()->user()->detail;
             @endphp
 
-            <div class="mt-6 text-left space-y-4">
+            <div class="mt-6 text-left space-y-4 dark:[&>div>div>div]:text-themeLightGray">
                 <div class="flex">
                     <div class="w-1/2">
                         <label for="name" class="text-md font-bold">Nombre</label>
-                        <div class=" text-gray-900 ml-2">{{ auth()->user()->name }}</div>
+                        <div class=" text-dark ml-2">{{ auth()->user()->name }}</div>
                     </div>
                     <div class="w-1/2">
                         <label for="name" class="text-md font-bold">Apellido</label>
-                        <div class=" text-gray-900 ml-2">{{ auth()->user()->last_name }}</div>
+                        <div class=" text-dark ml-2">{{ auth()->user()->last_name }}</div>
                     </div>
                 </div>
                 <div class="flex">
                     <div class="w-1/2">
                         <label for="email" class="text-md font-bold">Email</label>
-                        <div class="text-gray-900 ml-2">{{ auth()->user()->email }}</div>
+                        <div class="text-dark ml-2">{{ auth()->user()->email }}</div>
                     </div>
                 </div>
                 <div>
                     <label for="email" class="text-md font-bold">Descripcion</label>
-                    <div class="text-gray-900 text-sm mt-1 ml-2">
+                    <div class="text-dark text-sm mt-1 ml-2">
                         {{ auth()->user()->description ?? 'No has especificado ninguna descripcion' }}
                     </div>
                 </div>
@@ -55,26 +54,26 @@
                     <div class="flex">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Fecha de nacimiento</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->birth_date ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->birth_date ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Curso actual</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->current_course ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->current_course ?? 'No especificado' }}</div>
                         </div>
                     </div>
                     <div class="flex">
                         <label for="email" class="text-md font-bold">Centro educativo</label>
-                        <div class="w-1/2 text-gray-900">{{ $details?->educational_center ?? 'No especificado' }}</div>
+                        <div class="w-1/2 text-dark">{{ $details?->educational_center ?? 'No especificado' }}</div>
                     </div>
                 @elseif (auth()->user()->role === 'profesor')
                     <div class="flex">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Especialización</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->specialization ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->specialization ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Departamento</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->department ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->department ?? 'No especificado' }}</div>
                         </div>
                     </div>
                     <div class="flex">
@@ -84,28 +83,28 @@
                     <div class="flex">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">CIF</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->cif ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->cif ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Dirección</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->address ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->address ?? 'No especificado' }}</div>
                         </div>
                     </div>
                     <div class="flex">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Sector</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->sector ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->sector ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Sitio web</label>
-                            <div class="w-1/2 text-gray-900">{{ $details?->website ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark">{{ $details?->website ?? 'No especificado' }}</div>
                         </div>
                     </div>
                 @endif
 
                 <label for="email" class="text-md font-bold">Curriculum</label>
                 @if(auth()->user()->cv)
-                    <div class="text-gray-900 text-sm mt-1">
+                    <div class="text-dark text-sm mt-1">
                         <p>📄 <a href="{{ asset('storage/' . auth()->user()->cv) }}" target="_blank"
                                 class="underline text-blue-600">
                                 Ver mi CV
@@ -115,7 +114,7 @@
                     <p class="text-gray-500 ml-2">No has subido ningún CV aún.</p>
                 @endif
             </div>
-            
+
             <button @click="showModal = true"
                 class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
                 Editar perfil
@@ -125,7 +124,7 @@
             <x-modal>
                 <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar perfil</x-heading>
                 <form action="{{ route('user.update', auth()->id()) }}" method="POST" enctype="multipart/form-data"
-                    class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+                    class="max-w-2xl mx-auto p-6 rounded shadow [&>div>div>input]:border-themeLightGray [&>div>input]:border-themeLightGray [&>div>textarea]:border-themeLightGray">
                     @csrf
                     @method('PUT')
 
@@ -228,14 +227,29 @@
                         </div>
                     @endif
 
-                    <div class="mt-4">
+                    <div class="mt-4" x-data="{ cvName: '' }">
                         <label class="block text-sm font-medium">Subir Cv</label>
-                        <input type="file" name="cv" accept=".pdf">
+
+                        <label for="cv-upload"
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            📄 Subir CV
+                            <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
+                                @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
+                        </label>
+
+                        <template x-if="cvName">
+                            <p class="mt-2 text-sm text-black dark:text-themeLightGray" x-text="cvName"></p>
+                        </template>
                     </div>
 
-                    <div class="mt-6 flex justify-end">
+
+                    <div class="mt-6 flex justify-end gap-4">
                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                             Guardar cambios
+                        </button>
+                        <button type="button" @click="showModal = false"
+                            class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                            Cancelar
                         </button>
                     </div>
                 </form>

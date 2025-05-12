@@ -7,7 +7,7 @@
     <div
         x-show="{{ $show ?? 'showModal' }}"
         x-transition
-        class="bg-white dark:bg-[#1e1e1e] rounded-xl shadow-xl max-w-2xl w-full mx-auto mt-24 mb-10 p-6"
+        class="bg-white dark:bg-themeBgDark rounded-xl shadow-xl max-w-2xl w-full mx-auto mt-24 mb-10 p-6"
     >
         {{ $slot }}
     </div>
