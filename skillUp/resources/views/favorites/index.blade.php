@@ -9,8 +9,8 @@
     <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}"
         class="mb-9 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
       [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-        [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray
-        dark:[&>input]:text-themeLightGray [&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
+        [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
+        dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
         <select name="type">
             <option value=""> Tipo </option>
             <option value="proyecto" @selected(request('type') == 'proyecto')>Proyectos</option>

@@ -12,7 +12,7 @@
             <div class="flex flex-col gap-3">
                 @if ($combined->isNotEmpty())
                     @foreach($combined as $project)
-                        <div class="flex items-start space-x-4">
+                        <div class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
                             <div class="bg-blue-100 p-2 rounded-md">
                                 <x-icon name="project" class="w-8 h-auto" />
                             </div>
@@ -37,7 +37,7 @@
                 <div class="flex flex-col gap-3">
                     @if ($ownProjects->isNotEmpty())
                         @foreach($ownProjects as $project)
-                            <div class="flex items-start space-x-4">
+                            <div class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
                                 <div class="bg-blue-100 p-2 rounded-md">
                                     <x-icon name="project" class="w-8 h-auto" />
                                 </div>
@@ -60,7 +60,7 @@
                 <div class="flex flex-col gap-3">
                     @if ($jobOffers->isNotEmpty())
                         @foreach($jobOffers as $offer)
-                            <div class="flex items-start space-x-4">
+                            <div class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
                                 <div class="bg-blue-100 p-2 rounded-md">
                                     <x-icon name="briefcase" class="w-8 h-auto dark:text-black" />
                                 </div>
@@ -95,9 +95,9 @@
                         @if (auth()->user()->role === 'alumno')
                             <p>Estudiante de {{ auth()->user()->detail->educational_center }}</p>
                         @else
-                            <p>{{ auth()->user()->role }}</p>
+                            <p>{{ ucfirst(auth()->user()->role) }}</p>
                         @endif
-                        <p>Preferencias</p>
+                        <p>Ciudad</p>
                     </div>
                 </div>
             </div>
@@ -105,12 +105,12 @@
                 @if($notifications->count())
                     <x-heading level="h3" class="mb-8">Tus notificaciones recientes</x-heading>
                     @foreach($notifications as $notification)
-                        <div class="flex items-start space-x-4 leading-card mb-2.5">
+                        <div class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
                             <div class="bg-themeGrape text-white p-2 rounded-full">
                                 <x-icon name="bell" class="w-8 h-auto" />
                             </div>
                             <div class="[&>p]:mt-1">
-                                <strong>{{ $notification->message }}</strong>
+                                <p class="font-semibold">{{ $notification->message }}</p>
                                 <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
                                     {{ $notification->created_at->diffForHumans() }}
                                 </p>
@@ -129,17 +129,17 @@
 
     <div x-data="chatbot()" class="fixed bottom-4 right-4 z-50">
 
-        <button @click="toggle" class="bg-blue-600 text-white rounded-full p-3 shadow-lg hover:bg-blue-700">
+        <button @click.outside="open = false" @click="toggle" class="bg-themeBlue text-white rounded-full p-3 shadow-lg hover:bg-blue-700 cursor-pointer transition">
             💬
         </button>
 
 
-        <div x-show="open" x-transition class="mt-2 w-72 bg-white border rounded-lg shadow-xl p-4">
+        <div x-show="open" x-transition class="mt-2 w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
             <h2 class="text-sm font-semibold mb-2">Asistente SkillUp</h2>
             <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
                 <template x-for="msg in messages" :key="msg . id">
-                    <div :class="msg . from === 'bot' ? 'text-left text-gray-700' : 'text-right text-blue-600'">
-                        <span x-text="msg.text"></span>
+                    <div :class="msg . from === 'bot' ? 'text-left text-gray-700' : 'text-right text-themebg-themeBlue'">
+                        <span class="text-themeLightGray" x-text="msg.text"></span>
                     </div>
                 </template>
             </div>

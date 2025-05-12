@@ -36,22 +36,24 @@
 
         <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
             class="relative inline-block">
-            <button class="relative px-3 py-2">
+            <button class="relative px-3 py-2 cursor-pointer">
                 🔔
                 @if(auth()->user()->notifications->count() > 0)
-                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">
+                    <span class="absolute -top-0 right-1 bg-red-500 text-white text-xs rounded-full px-1">
                         {{ auth()->user()->notifications->count() }}
                     </span>
                 @endif
             </button>
 
             <div x-show="open" x-transition
-                class="absolute left-0 mt-2 w-72 bg-white border border-gray-300 shadow-xl rounded-md z-50">
-                <ul class="max-h-64 overflow-y-auto divide-y">
+                class="absolute left-0 mt-2 w-72 dark:bg-themeBgDark bg-white border border-gray-300 shadow-xl rounded-md z-50">
+                <ul class="max-h-64 overflow-y-auto">
                     @forelse(auth()->user()->notifications as $notification)
-                        <li class="flex justify-between items-start p-3 hover:bg-gray-100">
-                            <span class="text-sm text-gray-800">{{ $notification->title ?? 'Notificación' }}</span>
-                            <span class="text-sm text-gray-800">{{ $notification->message ?? 'Mensaje' }}</span>
+                        <li class="flex flex-row justify-between items-start p-3 hover:bg-themeLightGray/20 [&>div>span]text-themeLightGray cursor-pointer transition">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold">{{ $notification->title ?? 'Notificación' }}</span>
+                                <span class="text-sm">{{ $notification->message ?? 'Mensaje' }}</span>
+                            </div>
                             <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}">
                                 @csrf
                                 @method('DELETE')
@@ -64,7 +66,8 @@
                 </ul>
             </div>
         </div>
-        <button id="theme-toggle" @click="darkMode = !darkMode" class="rounded-full ml-4 cursor-pointer hover:transform hover:rotate-180 hover:transition-all">
+        <button id="theme-toggle" @click="darkMode = !darkMode"
+            class="rounded-full ml-4 cursor-pointer hover:transform hover:rotate-180 hover:transition-all">
             <x-icon name="dark-light" class="w-6 h-auto " />
         </button>
 
@@ -73,7 +76,7 @@
     <nav class="flex flex-grow justify-end basis-0 ">
         @auth
             <a href="{{ route('profile.index') }}" class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
-            transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
+                transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
                 <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"

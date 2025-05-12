@@ -1,34 +1,34 @@
 {{-- Uso: @include('comments.comment-section', ['commentable' => $project, 'type' => 'project']) --}}
 {{-- O: @include('comments.comment-section', ['commentable' => $schoolProject, 'type' => 'school-project']) --}}
 
-<div class="comment_section mt-5">
-    <h3 class="mb-4">Comentarios ({{ $commentable->comments->count() }})</h3>
-    
+<div class="comment_section mt-10 max-w-4xl ">
+    <h3 class="text-2xl font-semibold mb-6 text-black dark:text-themeLightGray">
+        Comentarios ({{ $commentable->comments->count() }})
+    </h3>
+
     @auth
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Añadir comentario</h5>
-                <form action="{{ $type === 'project' ? route('projects.comments.store', $commentable->id) : route('school-projects.comments.store', $commentable->id) }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <textarea name="content" class="form-control" rows="3" placeholder="Escribe tu comentario aquí..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-2">Publicar comentario</button>
-                </form>
-            </div>
-        </div>
-    @else
-        <div class="alert alert-info">
-            <a href="{{ route('login') }}">Inicia sesión</a> para dejar un comentario.
+        <div class="bg-white dark:bg-themeDarkGray rounded-lg shadow-md p-6 mb-8">
+            <h4 class="text-lg font-semibold mb-3 text-gray-700 dark:text-themeLightGray">Añadir comentario</h4>
+            <form action="{{ $type === 'project' ? route('projects.comments.store', $commentable->id) : route('school-projects.comments.store', $commentable->id) }}" method="POST">
+                @csrf
+                <textarea name="content" rows="2" 
+                    class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-800 focus:ring-2 focus:ring-themeBlue focus:outline-none dark:bg-themeDark focus:text-white"
+                    placeholder="Escribe tu comentario aquí..." required></textarea>
+                <button type="submit"
+                    class="mt-4 px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeHoverBlue transition">
+                    Publicar comentario
+                </button>
+            </form>
         </div>
     @endauth
-    
-    <div class="comments-list">
+
+    <div class="comments-list space-y-6">
         @foreach($commentable->mainComments()->orderBy('created_at', 'desc')->get() as $comment)
             @include('comments.single_comment', ['comment' => $comment, 'type' => $type, 'commentable' => $commentable])
         @endforeach
     </div>
 </div>
+
 
 {{-- Estilos para comentarios anidados --}}
 <style>
