@@ -48,12 +48,12 @@
     <ul class="grid grid-cols-3 gap-10">
         @forelse ($projects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
-                <x-card class="h-full">
+                <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
                     <li class="flex flex-col h-full ">
                         <x-tags class="mb-2">{{ $project->tags }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>
                         <span>{{ $project->general_category }}</span>
-                        <p class=" text-sm mb-1.5">{{ Str::limit($project->description, 100) }}</p>
+                        <p class="break-words text-sm mb-1.5">{{ Str::limit($project->description, 100) }}</p>
 
                         @php
                             $favorite = auth()->user()->favorites()
@@ -212,18 +212,18 @@
 
     </div>
 
-    <hr><br>
+    <br>
 
     <x-heading level="h1" class="mb-10">Proyectos de escolares</x-heading>
     <ul class="grid grid-cols-3 gap-10">
         @forelse ($schoolProjects as $school)
             <a href="{{ route('school.projects.show', $school->id) }}">
-                <x-card class="h-full">
+                <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
                     <li class="flex flex-col">
                         <x-tags class="mb-2">{{ $school->tags }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $school->title }}</x-heading>
                         <span>{{ $school->general_category }}</span>
-                        <p class=" text-sm mb-1.5">{{ Str::limit($school->description, 100) }}</p>
+                        <p class=" text-sm break-words mb-1.5">{{ Str::limit($school->description, 100) }}</p>
 
                         @php
                             $favorite = auth()->user()->favorites()

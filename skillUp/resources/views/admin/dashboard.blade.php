@@ -12,28 +12,28 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
             <a href="{{ route('admin.projects') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-[1.02]">
+                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
                 <h4 class="text-lg font-semibold text-themeBlue mb-2">Gestionar Proyectos</h4>
                 <p class="text-sm text-gray-600 dark:text-themeLightGray">Visualiza y administra los proyectos generales.
                 </p>
             </a>
 
             <a href="{{ route('admin.school_projects') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-[1.02]">
+                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
                 <h4 class="text-lg font-semibold text-themeBlue mb-2">Gestionar Proyectos Escolares</h4>
                 <p class="text-sm text-gray-600 dark:text-themeLightGray">Administra los proyectos realizados en centros
                     educativos.</p>
             </a>
 
             <a href="{{ route('admin.users') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-[1.02]">
+                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
                 <h4 class="text-lg font-semibold text-themeBlue mb-2">Gestionar Usuarios</h4>
                 <p class="text-sm text-gray-600 dark:text-themeLightGray">Gestiona perfiles de estudiantes, profesores y
                     empresas.</p>
             </a>
 
             <a href="{{ route('admin.offers') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-[1.02]">
+                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
                 <h4 class="text-lg font-semibold text-themeBlue mb-2">Gestionar Ofertas</h4>
                 <p class="text-sm text-gray-600 dark:text-themeLightGray">Controla las ofertas laborales publicadas por
                     empresas.</p>
