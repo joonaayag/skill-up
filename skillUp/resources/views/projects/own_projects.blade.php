@@ -7,8 +7,8 @@
     <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}"
         class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
           [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeDarkGray
-             dark:[&>input]:text-themeDarkGray [&>input]:placeholder:text-themeDarkGray [&>select]:placeholder:text-themeDarkGray dark:[&>input]:bg-themeBgDark dark:[&>select]:bg-themeBgDark">
+            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray
+             dark:[&>input]:text-themeLightGray [&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark dark:[&>select]:bg-themeBgDark">
         <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
 
