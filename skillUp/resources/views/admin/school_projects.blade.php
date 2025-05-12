@@ -1,54 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4">
-    <h1 class="text-2xl font-bold mb-6">Proyectos Escolares</h1>
+<div class="container mx-auto px-6 py-10">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Proyectos Escolares</h1>
 
-    <table class="w-full table-auto border border-gray-300 text-left text-sm">
-        <thead class="bg-gray-100">
-            <tr>
-                <th class="p-2 border">ID</th>
-                <th class="p-2 border">Nombre</th>
-                <th class="p-2 border">Autor</th>
-                <th class="p-2 border">Categoría</th>
-                <th class="p-2 border">Sector</th>
-                <th class="p-2 border">Tags</th>
-                <th class="p-2 border">Fecha</th>
-                <th class="p-2 border">Enlace</th>
-                <th class="p-2 border">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($schoolProjects as $project)
-                <tr class="hover:bg-gray-50">
-                    <td class="p-2 border">{{ $project->id }}</td>
-                    <td class="p-2 border">{{ $project->title }}</td>
-                    <td class="p-2 border">{{ $project->author }}</td>
-                    <td class="p-2 border">{{ $project->general_category ?? '-' }}</td>
-                    <td class="p-2 border">{{ $project->sector_category ?? '-' }}</td>
-                    <td class="p-2 border">{{ $project->tags ?? '-' }}</td>
-                    <td class="p-2 border">
-                        {{ $project->creation_date ? \Carbon\Carbon::parse($project->creation_date)->format('d/m/Y') : '-' }}
-                    </td>
-                    <td class="p-2 border">
-                        @if ($project->link)
-                            <a href="{{ $project->link }}" target="_blank" class="text-blue-500 hover:underline">Ver</a>
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td class="p-2 border">
-                        <a href="{{ route('admin.school_project.details', $project->id) }}" class="text-blue-600 hover:underline">
-                            Ver detalles
-                        </a>
-                    </td>
-                </tr>
-            @empty
+    <div class="overflow-x-auto rounded-lg shadow">
+        <table class="min-w-full bg-white dark:bg-themeDarkGray text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
+            <thead class="bg-gray-100 dark:bg-gray-800 text-xs uppercase text-gray-600 dark:text-gray-300">
                 <tr>
-                    <td colspan="9" class="p-4 text-center">No hay proyectos escolares registrados.</td>
+                    <th class="px-4 py-3 border dark:border-gray-700">ID</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Nombre</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Autor</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Categoría</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Tags</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Fecha</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Enlace</th>
+                    <th class="px-4 py-3 border dark:border-gray-700">Acciones</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse ($schoolProjects as $project)
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->id }}</td>
+                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->title }}</td>
+                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->author }}</td>
+                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->general_category ?? '-' }}</td>
+                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->tags ?? '-' }}</td>
+                        <td class="px-4 py-3 border dark:border-gray-700">
+                            {{ $project->creation_date ? \Carbon\Carbon::parse($project->creation_date)->format('d/m/Y') : '-' }}
+                        </td>
+                        <td class="px-4 py-3 border dark:border-gray-700">
+                            @if ($project->link)
+                                <a href="{{ $project->link }}" target="_blank" class="text-themeBlue hover:underline">Ver</a>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td class="px-4 py-3 border dark:border-gray-700">
+                            <a href="{{ route('admin.school_project.details', $project->id) }}"
+                               class="text-themeBlue hover:underline font-medium">Ver detalles</a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="9" class="px-4 py-5 text-center text-gray-500 dark:text-gray-300">
+                            No hay proyectos escolares registrados.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
