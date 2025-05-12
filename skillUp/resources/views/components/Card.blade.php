@@ -1,8 +1,5 @@
 @props(['class' => ''])
 
-<div
-    class="[&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark {{ $class }}">
-    <div class="py-3 px-4">
-        {{ $slot }}
-    </div>
+<div class="bg-white dark:bg-themeBgDark border-2 border-themeLightGray rounded-lg py-3 px-4 {{ $class }}">
+    {{ $slot }}
 </div>

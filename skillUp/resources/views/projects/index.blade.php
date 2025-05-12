@@ -212,9 +212,6 @@
 
     </div>
 
-
-
-
     <hr><br>
 
     <x-heading level="h1" class="mb-10">Proyectos de escolares</x-heading>

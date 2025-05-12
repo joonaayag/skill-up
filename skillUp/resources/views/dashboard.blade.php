@@ -18,8 +18,8 @@
                             </div>
                             <div>
                                 <strong>{{ $project->title }}</strong>
-                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                    {{ $project->description }}
+                                <p class=" text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                    {{ $project->general_category }}
                                 </p>
                             </div>
                         </div>
