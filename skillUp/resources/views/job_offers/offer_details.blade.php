@@ -6,7 +6,7 @@
     <x-heading level="h1" class="mb-10">Oferta de empleo </x-heading>
 
     <x-card class="mb-12 flex gap-8 ">
-        <div class="w-2/3 ">
+        <div class="w-2/3">
             <div class="flex gap-4 items-center ">
                 <x-tags>{{ $offer->general_category }}</x-tags>
                 <span
@@ -23,7 +23,7 @@
 
             <p class="mb-9"><strong>Descripción:</strong><br>{{ $offer->description }}</p>
 
-            <div class=" flex items-center gap-4 mb-6">
+            <div class="flex items-center gap-4 mb-6 mt-auto">
                 @php
                     $favorite = auth()->user()->favorites()
                         ->where('type', 'proyecto')
@@ -115,16 +115,12 @@
                 </div>
             @endif
         </div>
-        <div class="w-1/3">
-            @if ($offer->logo)
-                <p><strong>Logo:</strong><br><img src="{{ asset('storage/' . $offer->company->foto_perfil) }}" alt="Logo"
-                        class="w-full h-auto"></p>
-            @endif
+        <div class="w-1/3 flex justify-end">
             <ul>
                 <li class="mb-5">
                     <img src="{{ $offer->company->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                         alt="Perfil" id="profileImage"
-                        class="w-full h-auto  object-cover">
+                        class="size-40 object-cover">
                 </li>
                 <li><strong>Publicado: </strong>{{ $offer->created_at }}</li>
                 <li><strong>Empresa: </strong>{{ $offer->company->name }}</li>

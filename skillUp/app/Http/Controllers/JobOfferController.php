@@ -10,36 +10,38 @@ use Illuminate\Http\Request;
 class JobOfferController extends Controller
 {
 
-    public function index(Request $request)
-    {
-        $query = JobOffer::query();
+public function index(Request $request)
+{
+    $query = JobOffer::query();
 
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('description')) {
-            $query->where('description', 'like', '%' . $request->description . '%');
-        }
-
-        if ($request->filled('author')) {
-            $query->whereHas('company', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->author . '%');
-            });
-        }
-
-        if ($request->filled('general_category')) {
-            $query->whereIn('general_category', $request->general_category);
-        }
-
-        if ($request->filled('sector_category')) {
-            $query->whereIn('sector_category', $request->sector_category);
-        }
-
-        $offers = $query->latest()->get();
-
-        return view('job_offers.index', compact('offers'));
+    if ($request->filled('title')) {
+        $query->where('name', 'like', '%' . $request->title . '%');
     }
+
+    if ($request->filled('author')) {
+        $query->whereHas('company', function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->author . '%');
+        });
+    }
+
+    if ($request->filled('general_category')) {
+        $query->whereIn('general_category', $request->general_category);
+    }
+
+    $order = $request->get('order');
+    $direction = $request->get('direction', 'asc');
+
+    if ($order && in_array($order, ['name', 'general_category', 'created_at'])) {
+        $query->orderBy($order, $direction);
+    } else {
+        $query->orderBy('created_at', 'desc');
+    }
+
+    $offers = $query->get();
+
+    return view('job_offers.index', compact('offers'));
+}
+
 
 
     public function companyIndex(Request $request)

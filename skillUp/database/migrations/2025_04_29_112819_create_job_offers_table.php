@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('job_offers', function (Blueprint $table) {
@@ -16,20 +15,54 @@ return new class extends Migration
             $table->text('description');
 
             $table->enum('sector_category', [
-                'Desarrollo software', 'Ciberseguridad', 'Datos y analíticas', 'IA', 'Redes y sistemas',
-                'Publicidad', 'Diseño gráfico', 'Fotografía/Video', 'Finanzas y contabilidad', 'RRHH',
-                'Ventas', 'Logística', 'Legal/Jurídico', 'Periodismo', 'Traducción', 'SEO/SEM',
-                'Community Manager', 'Profesorado', 'Coordinación educativa', 'Orientación',
-                'Medicina/Enfermería', 'Psicología', 'Farmacia', 'Investigación/Laboratorio',
-                'Terapias/Rehabilitación', 'Nutrición', 'Construcción', 'Electricidad/Fontanería',
-                'Mecánica', 'Operario industrial', 'Energía/Renovables', 'Automoción',
-                'Agricultura/Medioambiente', 'Hostelería/Turismo', 'Arte/Cultura', 'Transporte/Reparto', 'Seguridad'
+                'Agricultura/Medioambiente',
+                'Arte/Cultura',
+                'Automoción',
+                'Ciberseguridad',
+                'Community Manager',
+                'Construcción',
+                'Coordinación educativa',
+                'Diseño gráfico',
+                'Datos y analíticas',
+                'Desarrollo software',
+                'Electricidad/Fontanería',
+                'Energía/Renovables',
+                'Farmacia',
+                'Finanzas y contabilidad',
+                'Fotografía/Video',
+                'Hostelería/Turismo',
+                'IA',
+                'Investigación/Laboratorio',
+                'Legal/Jurídico',
+                'Logística',
+                'Mecánica',
+                'Medicina/Enfermería',
+                'Nutrición',
+                'Operario industrial',
+                'Orientación',
+                'Periodismo',
+                'Profesorado',
+                'Publicidad',
+                'Psicología',
+                'Redes y sistemas',
+                'RRHH',
+                'Seguridad',
+                'SEO/SEM',
+                'Terapias/Rehabilitación',
+                'Traducción',
+                'Transporte/Reparto',
+                'Ventas',
             ]);
 
             $table->enum('general_category', [
-                'Tecnología y desarrollo', 'Diseño y comunicación',
-                'Administración y negocio', 'Comunicación',
-                'Educación', 'Ciencia y salud', 'Industria', 'Otro'
+                'Administración y negocio',
+                'Ciencia y salud',
+                'Comunicación',
+                'Diseño y comunicación',
+                'Educación',
+                'Industria',
+                'Otro',
+                'Tecnología y desarrollo',
             ]);
 
             $table->enum('state', ['Abierta', 'Cerrada']);

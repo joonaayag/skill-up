@@ -5,10 +5,11 @@
 @section('content')
     <h1>Ofertas de empleo</h1>
 
-    <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
-        <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
-            <form method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
-                <p>Categorias generales</p>
+    <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
+        <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
+            <aside
+                class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
+                <x-heading level="h4"><strong>Categorias generales</strong></x-heading>
                 @php
                     $generalCategories = [
                         'Tecnología y desarrollo',
@@ -21,15 +22,17 @@
                         'Otro'
                     ];
                 @endphp
-                @foreach ($generalCategories as $cat)
-                    <label class="block">
-                        <input type="checkbox" name="general_category[]" value="{{ $cat }}"
-                            @checked(is_array(request('general_category')) && in_array($cat, request('general_category')))>
-                        {{ $cat }}
-                    </label>
-                @endforeach
+                <div class="space-y-1">
+                    @foreach ($generalCategories as $cat)
+                        <label class="block">
+                            <input type="checkbox" name="general_category[]" value="{{ $cat }}"
+                                @checked(is_array(request('general_category')) && in_array($cat, request('general_category')))>
+                            {{ $cat }}
+                        </label>
+                    @endforeach
+                </div>
 
-                <p>Sector</p>
+                <x-heading level="h4" class="mt-4"><strong>Sector</strong></x-heading>
                 @php
                     $sectorCategories = [
                         'Desarrollo software',
@@ -71,86 +74,93 @@
                         'Seguridad'
                     ];
                 @endphp
-                @foreach ($sectorCategories as $sector)
-                    <label class="block">
-                        <input type="checkbox" name="sector_category[]" value="{{ $sector }}"
-                            @checked(is_array(request('sector_category')) && in_array($sector, request('sector_category')))>
-                        {{ $sector }}
-                    </label>
-                @endforeach
-            </form>
-        </aside>
+                <div class="space-y-1">
+                    @foreach ($sectorCategories as $sector)
+                        <label class="block">
+                            <input type="checkbox" name="sector_category[]" value="{{ $sector }}"
+                                @checked(is_array(request('sector_category')) && in_array($sector, request('sector_category')))>
+                            {{ $sector }}
+                        </label>
+                    @endforeach
+                </div>
+            </aside>
 
-        <main class="space-y-4">
-            <form method="GET" action="{{ route('job.offers.index') }}" class="space-y-4">
+            <main class="space-y-4">
                 <div
                     class="flex flex-wrap gap-2 h-12 [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                                                                                         [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
-                    <input type="text" placeholder="Buscar por título..." class="input" />
-                    <input type="text" placeholder="Buscar por descripción..." class="input" />
-                    <input type="text" placeholder="Buscar por autor..." class="input" />
-                    <select class="input">
-                        <option>Ordenar por</option>
-                        <option value="puesto" @selected(request('order') == 'puesto')>Puesto</option>
-                        <option value="general_category" @selected(request('order') == 'name')>Categoria</option>
+                                         [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                    <input type="text" name="name" placeholder="Buscar por título..." value="{{ request('name') }}"
+                        class="input" />
+                    <input type="text" name="author" placeholder="Buscar por autor..." value="{{ request('author') }}"
+                        class="input" />
+                    <select name="order">
+                        <option value="">Ordenar por</option>
+                        <option value="name" @selected(request('order') == 'name')>Título</option>
+                        <option value="general_category" @selected(request('order') == 'general_category')>Categoría</option>
                         <option value="created_at" @selected(request('order') == 'created_at')>Fecha de creación</option>
                     </select>
+
+                    <select name="direction">
+                        <option value="asc" @selected(request('direction') == 'asc')>Ascendente</option>
+                        <option value="desc" @selected(request('direction') == 'desc')>Descendente</option>
+                    </select>
+
                 </div>
-                <button type="submit" class="mt-2">Buscar</button>
-            </form>
+                <ul class="grid grid-cols-3 gap-10">
+                    @forelse ($offers as $offer)
+                        <a href="{{ route('job.offers.show', $offer->id) }}">
+                            <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
+                                <li class="flex flex-col h-full ">
+                                    <x-tags class="mb-1">{{ $offer->general_category }}</x-tags>
+                                    <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
+                                    <x-heading level="h4" class="mb-1">{{ $offer->sector_category }}</x-heading>
+                                    @if($offer->subtitle)
+                                        <p><strong>{{ Str::limit($offer->subtitle, 20) }}</strong></p>
+                                    @endif
 
-            <ul class="grid grid-cols-3 gap-10">
-                @forelse ($offers as $offer)
-                    <a href="{{ route('job.offers.show', $offer->id) }}">
-                        <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
-                            <li class="flex flex-col h-full ">
-                                <x-tags class="mb-1">{{ $offer->sector_category }}</x-tags>
-                                <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
-                                <x-heading level="h4" class="mb-1">{{ $offer->general_category }}</x-heading>
-                                @if($offer->subtitle)
-                                    <p><strong>{{ Str::limit($offer->subtitle, 20) }}</strong></p>
-                                @endif
+                                    @php
+                                        $favorite = auth()->user()->favorites()
+                                            ->where('type', 'oferta')
+                                            ->where('reference_id', $offer->id)
+                                            ->first();
+                                    @endphp
 
-                                @php
-                                    $favorite = auth()->user()->favorites()
-                                        ->where('type', 'oferta')
-                                        ->where('reference_id', $offer->id)
-                                        ->first();
-                                @endphp
-
-                                <div class="flex flex-row justify-between items-center mt-auto">
-                                    <div class="flex flex-row gap-3 ">
-                                        <p>{{ $offer->state }}</p>
-                                        @if ($favorite)
-                                            <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">❌</button>
-                                            </form>
-                                        @else
-                                            <form action="{{ route('favorites.store') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="type" value="oferta">
-                                                <input type="hidden" name="reference_id" value="{{ $offer->id }}">
-                                                <button type="submit">❤️</button>
-                                            </form>
-                                        @endif
-                                        <p>👁️{{ $offer->views }}</p>
+                                    <div class="flex flex-row justify-between items-center mt-auto">
+                                        <div class="flex flex-row gap-3 ">
+                                            <p>{{ $offer->state }}</p>
+                                            @if ($offer->company_id !== auth()->id())
+                                                @if ($favorite)
+                                                    <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit">❌</button>
+                                                    </form>
+                                                @else
+                                                    <form action="{{ route('favorites.store') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="type" value="oferta">
+                                                        <input type="hidden" name="reference_id" value="{{ $offer->id }}">
+                                                        <button type="submit">❤️</button>
+                                                    </form>
+                                                @endif
+                                            @endif
+                                            <p>👁️{{ $offer->views }}</p>
+                                        </div>
+                                        <span
+                                            class="text-sm">{{ $offer->company->name . ' ' . $offer->company->last_name  }}</span>
                                     </div>
-                                    <span
-                                        class="text-sm">{{ $offer->company->name . ' ' . $offer->company->last_name  }}</span>
-                                </div>
 
-                            </li>
-                        </x-card>
-                    </a>
-                @empty
-                    <p>No hay proyectos disponibles.</p>
-                @endforelse
-            </ul>
+                                </li>
+                            </x-card>
+                        </a>
+                    @empty
+                        <p>No hay proyectos disponibles.</p>
+                    @endforelse
+                </ul>
 
-        </main>
-    </div>
+            </main>
+        </div>
+    </form>
 
     <div x-data="{ showModal: false }"
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
@@ -162,7 +172,8 @@
 
         <x-modal>
             <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nuevo proyecto</x-heading>
-            <form action="{{ route('job.offers.store') }}" method="POST" class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
+            <form action="{{ route('job.offers.store') }}" method="POST"
+                class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
 
                 <x-label for="title">Título:</x-label>
@@ -181,10 +192,11 @@
                 <x-inputtext type="text" name="general_category" id="general_category" required />
 
                 <x-label for="state">Estado:</x-label>
-                <select name="state" required>
+                <select name="state" required
+                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
                     <option value="abierta">Abierta</option>
                     <option value="cerrada">Cerrada</option>
-                </select><br>
+                </select>
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="submit"
@@ -201,5 +213,30 @@
 
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('filters-input');
+
+            if (form) {
+                const inputs = form.querySelectorAll('input, select');
+
+                inputs.forEach(input => {
+                    input.addEventListener('change', () => {
+                        form.submit();
+                    });
+
+                    if (input.tagName === 'INPUT') {
+                        input.addEventListener('keyup', () => {
+                            clearTimeout(input._timeout);
+                            input._timeout = setTimeout(() => form.submit(), 1000);
+                        });
+                    }
+                });
+            }
+        });
+
+    </script>
+
+
 
 @endsection
