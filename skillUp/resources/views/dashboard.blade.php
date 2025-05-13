@@ -12,17 +12,20 @@
             <div class="flex flex-col gap-3">
                 @if ($combined->isNotEmpty())
                     @foreach($combined as $project)
-                        <div class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
-                            <div class="bg-blue-100 p-2 rounded-md">
-                                <x-icon name="project" class="w-8 h-auto" />
+                        <a href="{{ route('projects.show', $project->id) }}">
+                            <div
+                                class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
+                                <div class="bg-blue-100 p-2 rounded-md">
+                                    <x-icon name="project" class="w-8 h-auto" />
+                                </div>
+                                <div>
+                                    <strong>{{ $project->title }}</strong>
+                                    <p class=" text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                        {{ $project->general_category }}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <strong>{{ $project->title }}</strong>
-                                <p class=" text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                    {{ $project->general_category }}
-                                </p>
-                            </div>
-                        </div>
+                        </a>
                     @endforeach
                 @else
                     <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No existen proyectos
@@ -37,17 +40,20 @@
                 <div class="flex flex-col gap-3">
                     @if ($ownProjects->isNotEmpty())
                         @foreach($ownProjects as $project)
-                            <div class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
-                                <div class="bg-blue-100 p-2 rounded-md">
-                                    <x-icon name="project" class="w-8 h-auto" />
+                            <a href="{{ route('projects.show', $project->id) }}">
+                                <div
+                                    class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
+                                    <div class="bg-blue-100 p-2 rounded-md">
+                                        <x-icon name="project" class="w-8 h-auto" />
+                                    </div>
+                                    <div>
+                                        <strong>{{ $project->title }}</strong>
+                                        <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                            {{ $project->description }}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <strong>{{ $project->title }}</strong>
-                                    <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                        {{ $project->description }}
-                                    </p>
-                                </div>
-                            </div>
+                            </a>
                         @endforeach
                     @else
                         <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes proyectos
@@ -60,17 +66,20 @@
                 <div class="flex flex-col gap-3">
                     @if ($jobOffers->isNotEmpty())
                         @foreach($jobOffers as $offer)
-                            <div class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
-                                <div class="bg-blue-100 p-2 rounded-md">
-                                    <x-icon name="briefcase" class="w-8 h-auto dark:text-black" />
+                            <a href="{{ route('job.offers.show', $offer->id) }}">
+                                <div
+                                    class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
+                                    <div class="bg-blue-100 p-2 rounded-md">
+                                        <x-icon name="briefcase" class="w-8 h-auto dark:text-black" />
+                                    </div>
+                                    <div class="[&>p]:mt-1">
+                                        <strong>{{ $offer->name }}</strong>
+                                        <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                            {{ $offer->created_at->diffForHumans() }} - {{ $offer->company->name }}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="[&>p]:mt-1">
-                                    <strong>{{ $offer->name }}</strong>
-                                    <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                        {{ $offer->created_at->diffForHumans() }} - {{ $offer->company->name }}
-                                    </p>
-                                </div>
-                            </div>
+                            </a>
                         @endforeach
                     @else
                         <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No hay ofertas
@@ -81,7 +90,8 @@
         </div>
 
         <div class="grid grid-rows-7 gap-8 -mt-20">
-            <div class="row-span-3 h-full [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
+            <div
+                class="row-span-3 h-full [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
                 <div class="relative">
                     <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://i.pinimg.com/736x/b6/ef/40/b6ef40f2cd4436568d718f150abefca6.jpg' }}"
                         alt="Fondo" class="w-full h-30 object-cover" id="bannerImage">
@@ -91,7 +101,8 @@
                             class="h-18 w-18 rounded-full border-4 border-white object-cover shadow-lg">
                     </div>
                     <div class="px-3 mt-8">
-                        <x-heading level="h3">{{ ucfirst(auth()->user()->name) . ' ' . ucfirst(auth()->user()->last_name) }}</x-heading>
+                        <x-heading
+                            level="h3">{{ ucfirst(auth()->user()->name) . ' ' . ucfirst(auth()->user()->last_name) }}</x-heading>
                         @if (auth()->user()->role === 'alumno')
                             <p>Estudiante de {{ auth()->user()->detail->educational_center }}</p>
                         @else
@@ -105,7 +116,8 @@
                 @if($notifications->count())
                     <x-heading level="h3" class="mb-8">Tus notificaciones recientes</x-heading>
                     @foreach($notifications as $notification)
-                        <div class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
+                        <div
+                            class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
                             <div class="bg-themeGrape text-white p-2 rounded-full">
                                 <x-icon name="bell" class="w-8 h-auto" />
                             </div>
@@ -129,7 +141,8 @@
 
     <div x-data="chatbot()" class="fixed bottom-4 right-4 z-50">
 
-        <button @click.outside="open = false" @click="toggle" class="bg-themeBlue text-white rounded-full p-3 shadow-lg hover:bg-blue-700 cursor-pointer transition">
+        <button @click.outside="open = false" @click="toggle"
+            class="bg-themeBlue text-white rounded-full p-3 shadow-lg hover:bg-blue-700 cursor-pointer transition">
             💬
         </button>
 

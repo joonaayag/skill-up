@@ -85,7 +85,7 @@
                                             @method('PUT')
 
                                             <label for="state">Cambiar estado:</label>
-                                            <select name="state" required>
+                                            <select name="state" required class="dark:bg-themeBgDark">
                                                 <option value="nueva" {{ $app->state === 'nueva' ? 'selected' : '' }}>Nueva
                                                 </option>
                                                 <option value="en revisión" {{ $app->state === 'en revisión' ? 'selected' : '' }}>
@@ -117,8 +117,8 @@
                                 </button>
 
                                 <x-modal :show="'showDelete'">
-                                    <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Seguro
-                                        deses eliminar esta mierda</x-heading>
+                                    <x-heading level="h3" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Seguro
+                                        deses eliminar a {{ $app->candidate_name }} de la oferta {{ $app->position_applied }}?</x-heading>
                                     <form action="{{ route('applications.destroy', $app->id) }}" method="POST"
                                         class="flex justify-center gap-3">
                                         @csrf
