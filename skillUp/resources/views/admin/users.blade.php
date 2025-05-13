@@ -15,7 +15,7 @@
             </div>
         @endif
 
-        <div class="overflow-x-auto rounded-lg shadow">
+        <div class="rounded-lg shadow">
             <table
                 class="min-w-full bg-white dark:bg-themeDarkGray text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
                 <thead class="bg-gray-100 dark:bg-gray-800 text-xs uppercase text-gray-600 dark:text-gray-300">
@@ -42,15 +42,15 @@
                                     <button @click="openEdit = true"
                                         class="text-themeBlue hover:underline font-medium">Editar</button>
 
-                                    <div x-show="openEdit" @click.outside="openEdit = false" x-cloak
+                                    <div x-show="openEdit" x-cloak
                                         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div class="bg-white dark:bg-themeBgDark p-6 rounded-lg shadow-lg w-full max-w-3xl overflow-auto max-h-[90vh] relative">
+                                        <div
+                                            class="bg-white dark:bg-themeBgDark p-6 rounded-lg shadow-lg w-full max-w-3xl overflow-auto max-h-[90vh] relative" @click.outside="openEdit = false">
 
-                                            <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Editar Usuario
-                                            </h2>
+                                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar usuario</x-heading>
                                             <form action="{{ route('admin.user.update', auth()->id()) }}" method="POST"
                                                 enctype="multipart/form-data"
-                                                class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+                                                class="max-w-2xl mx-auto dark:bg-themeBgDark bg-white p-6 rounded shadow ">
                                                 @csrf
                                                 @method('PUT')
 
@@ -160,15 +160,30 @@
                                                     </div>
                                                 @endif
 
-                                                <div class="mt-4">
+                                                <div class="mt-4" x-data="{ cvName: '' }">
                                                     <label class="block text-sm font-medium">Subir Cv</label>
-                                                    <input type="file" name="cv" accept=".pdf">
+
+                                                    <label for="cv-upload"
+                                                        class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                                                        📄 Subir CV
+                                                        <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
+                                                            @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
+                                                    </label>
+
+                                                    <template x-if="cvName">
+                                                        <p class="mt-2 text-sm text-black dark:text-themeLightGray"
+                                                            x-text="cvName"></p>
+                                                    </template>
                                                 </div>
 
-                                                <div class="mt-6 flex justify-end">
+                                                <div class="mt-6 flex justify-end gap-4">
                                                     <button type="submit"
                                                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                                                         Guardar cambios
+                                                    </button>
+                                                    <button type="button" @click="openEdit = false"
+                                                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                                        Cancelar
                                                     </button>
                                                 </div>
                                             </form>
@@ -183,10 +198,9 @@
 
                                     <div x-show="open" x-cloak
                                         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md">
-                                            <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">¿Estás seguro?
-                                            </h2>
-                                            <p class="mb-4 text-gray-600 dark:text-gray-300">
+                                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md" @click.outside="open = false">
+                                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás seguro?</x-heading>
+                                            <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
                                                 Esta acción eliminará al usuario <strong>{{ $user->name }}
                                                     {{ $user->last_name }}</strong> de forma permanente.
                                             </p>
