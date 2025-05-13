@@ -88,7 +88,6 @@ class JobOfferController extends Controller
             'sector_category' => 'required|string',
             'general_category' => 'required|string',
             'state' => 'required|in:abierta,cerrada',
-            'logo' => 'nullable|string|max:255',
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
@@ -109,8 +108,6 @@ class JobOfferController extends Controller
             'state.required' => 'El estado es obligatorio.',
             'state.in' => 'El estado debe ser "abierta" o "cerrada".',
 
-            'logo.string' => 'El logo debe ser una cadena de texto.',
-            'logo.max' => 'La URL del logo no puede superar los 255 caracteres.',
         ]);
 
         $jobOffer = JobOffer::create([
@@ -121,7 +118,6 @@ class JobOfferController extends Controller
             'general_category' => $request->general_category,
             'state' => $request->state,
             'company_id' => auth()->id(),
-            'logo' => $request->logo,
         ]);
 
         $usuarios = User::where('id', '!=', auth()->id())->get();
@@ -136,7 +132,7 @@ class JobOfferController extends Controller
         }
 
 
-        return redirect()->route('job.offers.company.index');
+        return back();
     }
 
     public function destroy($id)
@@ -183,7 +179,6 @@ class JobOfferController extends Controller
             'sector_category' => 'required|string',
             'general_category' => 'required|string',
             'state' => 'required|in:abierta,cerrada',
-            'logo' => 'nullable|string|max:255',
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
@@ -204,8 +199,6 @@ class JobOfferController extends Controller
             'state.required' => 'El estado es obligatorio.',
             'state.in' => 'El estado debe ser "abierta" o "cerrada".',
 
-            'logo.string' => 'El logo debe ser una cadena de texto.',
-            'logo.max' => 'La URL del logo no puede superar los 255 caracteres.',
         ]);
 
         $jobOffer->update([
@@ -215,7 +208,6 @@ class JobOfferController extends Controller
             'sector_category' => $request->sector_category,
             'general_category' => $request->general_category,
             'state' => $request->state,
-            'logo' => $request->logo,
         ]);
 
         $jobOffer->update($request->all());

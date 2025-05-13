@@ -101,7 +101,7 @@
 
                         @php
                             $favorite = auth()->user()->favorites()
-                                ->where('type', 'proyecto')
+                                ->where('type', 'oferta')
                                 ->where('reference_id', $item->id)
                                 ->first();
                         @endphp
@@ -121,7 +121,7 @@
                                 @else
                                     <form action="{{ route('favorites.store') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="type" value="proyecto">
+                                        <input type="hidden" name="type" value="oferta">
                                         <input type="hidden" name="reference_id" value="{{ $item->id }}">
                                         <button type="submit">❤️</button>
                                     </form>

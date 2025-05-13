@@ -116,17 +116,17 @@
                 </div>
 
                 <div>
-                    <x-label for="title">Descripción:</x-label>
+                    <x-label for="description">Descripción:</x-label>
                     <x-textarea name="description" id="description" required></x-textarea>
                 </div>
 
                 <div>
-                    <x-label for="title">Etiquetas (tags)</x-label>
+                    <x-label for="tags">Etiquetas (tags)</x-label>
                     <x-inputtext type="text" name="tags" id="tags" required />
                 </div>
 
                 <div>
-                    <x-label for="title">Categoría general:</x-label>
+                    <x-label for="general_category">Categoría general:</x-label>
                     <select name="sector_category" required class="w-full px-3 py-2 rounded border border-themeLightGray">
                         <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
                         <option value="Diseño y comunicación">Diseño y comunicación</option>
