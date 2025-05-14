@@ -46,7 +46,7 @@
                     </form>
                 @endif
 
-                <p class="text-sm text-gray-500">👁️ {{ $offer->views }} visitas</p>
+                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $offer->views }}</p>
             </div>
 
             @if (in_array(auth()->user()->role, ['Usuario', 'Alumno']) && $offer->state === 'Abierta')

@@ -25,7 +25,7 @@
             <div class="flex justify-between mt-16">
                 <div class="flex gap-4 items-center justify-center">
                     <p>Autor: <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong></p>
-                    <p class="text-sm text-gray-500">👁️ {{ $project->views }}</p>
+                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>
                     <p>
                         <label>★</label>
                         {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}

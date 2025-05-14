@@ -50,7 +50,7 @@
         </div>
     @endif
 
-    <p class="text-sm text-gray-500">👁️ {{ $schoolProject->views }} visitas</p>
+    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $schoolProject->views }}</p>
     <h3>Valorar este proyecto</h3>
     <p>Calificación actual:
         {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'Sin calificaciones' }}</p>

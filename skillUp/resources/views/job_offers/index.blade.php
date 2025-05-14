@@ -126,7 +126,7 @@
                                     @endphp
 
                                     <div class="flex flex-row justify-between items-center mt-auto">
-                                        <div class="flex flex-row gap-3 ">
+                                        <div class="flex flex-row gap-4 ">
                                             <p>{{ $offer->state }}</p>
                                             @if ($offer->company_id !== auth()->id())
                                                 @if ($favorite)
@@ -144,7 +144,7 @@
                                                     </form>
                                                 @endif
                                             @endif
-                                            <p>👁️{{ $offer->views }}</p>
+                                            <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $offer->views }}</p>
                                         </div>
                                         <span
                                             class="text-sm">{{ $offer->company->name . ' ' . $offer->company->last_name  }}</span>

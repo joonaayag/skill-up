@@ -69,7 +69,7 @@
                                             <button type="submit">❤️</button>
                                         </form>
                                     @endif
-                                    <p>👁️{{ $item->views }}</p>
+                                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $item->views }}</p>
                                     <p>
                                         {{ $item->averageRating() ? number_format($item->averageRating(), 1) : 'Sin calificaciones' }}
                                     </p>
@@ -126,7 +126,7 @@
                                         <button type="submit">❤️</button>
                                     </form>
                                 @endif
-                                <p>👁️{{ $item->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $item->views }}</p>
                             </div>
                             <span class="text-sm">{{ $item->company->name . ' ' . $item->company->last_name  }}</span>
                         </div>

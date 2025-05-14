@@ -95,7 +95,7 @@
                                         <button type="submit">❤️</button>
                                     </form>
                                 @endif
-                                <p>👁️{{ $project->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>
                                 <p>
                                     {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
                                 </p>
@@ -111,7 +111,7 @@
         @endforelse
     </ul>
 
-    <div x-data="{ showModal: false }"
+    <div x-cloak x-data="{ showModal: false }"
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
@@ -265,7 +265,7 @@
                                         <button type="submit">❤️</button>
                                     </form>
                                 @endif
-                                <p>👁️{{ $school->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $school->views }}</p>
                                 <p>
                                     {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}
                                 </p>

@@ -143,7 +143,7 @@
                                             @endif
 
 
-                                            <p>👁️{{ $offer->views }}</p>
+                                            <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $offer->views }}</p>
                                         </div>
                                         <span class="text-sm">Tú</span>
                                     </div>
