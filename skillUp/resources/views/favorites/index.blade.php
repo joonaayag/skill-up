@@ -90,7 +90,7 @@
             @foreach ($ofertas as $fav)
                 @php $item = $fav->item(); @endphp
                 <x-card class="h-full relative">
-                    <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                    <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                         alt="Perfil" id="profileImage"
                         class="h-20 w-20 rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
                     <li class="flex flex-col h-full ">

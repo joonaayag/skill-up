@@ -160,7 +160,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'avatar' => null,
             'cv' => null,
-            'foto_perfil' => null,
+            'profile' => null,
             'banner' => null,
         ]);
 

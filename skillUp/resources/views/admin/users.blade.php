@@ -63,10 +63,10 @@
 
                                                     <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                                                         <img id="fotoPerfilPreview"
-                                                            src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
+                                                            src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
                                                             class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
                                                             alt="Foto de perfil">
-                                                        <input type="file" name="foto_perfil" id="fotoPerfilInput"
+                                                        <input type="file" name="profile" id="fotoPerfilInput"
                                                             accept="image/*" class="hidden">
                                                     </div>
                                                 </div>

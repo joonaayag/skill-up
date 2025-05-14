@@ -49,7 +49,7 @@ class AdminController extends Controller
             'last_name' => 'required|string|max:40',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'description' => 'nullable|string|max:300',
-            'foto_perfil' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ], [
@@ -65,9 +65,9 @@ class AdminController extends Controller
 
             'description.max' => 'La descripción no puede superar los 300 caracteres.',
 
-            'foto_perfil.image' => 'La foto de perfil debe ser una imagen.',
-            'foto_perfil.mimes' => 'La foto de perfil debe ser un archivo JPG, JPEG o PNG.',
-            'foto_perfil.max' => 'La foto de perfil no puede superar los 2MB.',
+            'profile.image' => 'La foto de perfil debe ser una imagen.',
+            'profile.mimes' => 'La foto de perfil debe ser un archivo JPG, JPEG o PNG.',
+            'profile.max' => 'La foto de perfil no puede superar los 2MB.',
 
             'banner.image' => 'El banner debe ser una imagen.',
             'banner.mimes' => 'El banner debe ser un archivo JPG, JPEG o PNG.',
@@ -93,9 +93,9 @@ class AdminController extends Controller
         $user->description = $validated['description'];
 
 
-        if ($request->hasFile('foto_perfil')) {
-            $path = $request->file('foto_perfil')->store('perfil', 'public');
-            $user->foto_perfil = $path;
+        if ($request->hasFile('profile')) {
+            $path = $request->file('profile')->store('perfil', 'public');
+            $user->profile = $path;
         }
 
         if ($request->hasFile('banner')) {

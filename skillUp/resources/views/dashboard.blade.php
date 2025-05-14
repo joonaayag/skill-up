@@ -93,12 +93,12 @@
             <div
                 class="row-span-3 h-full [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
                 <div class="relative">
-                    <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://i.pinimg.com/736x/b6/ef/40/b6ef40f2cd4436568d718f150abefca6.jpg' }}"
+                    <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg')  }}"
                         alt="Fondo" class="w-full h-30 object-cover" id="bannerImage">
                     <div class="absolute top-20 left-1/6 transform -translate-x-1/2">
-                        <img src="{{ auth()->user()->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
-                            alt="Perfil" id="profileImage"
+                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}" alt="Perfil" id="profileImage"
                             class="h-18 w-18 rounded-full border-4 border-white object-cover shadow-lg">
+
                     </div>
                     <div class="px-3 mt-8">
                         <x-heading

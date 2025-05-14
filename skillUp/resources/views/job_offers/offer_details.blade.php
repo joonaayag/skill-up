@@ -118,7 +118,7 @@
         <div class="w-1/3 flex justify-end">
             <ul>
                 <li class="mb-5">
-                    <img src="{{ $offer->company->foto_perfil ? asset('storage/' . auth()->user()->foto_perfil) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                    <img src="{{ $offer->company->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                         alt="Perfil" id="profileImage"
                         class="size-40 object-cover">
                 </li>

@@ -18,7 +18,7 @@ class User extends Authenticatable
         'role',
         'avatar',
         'cv',
-        'foto_perfil',
+        'profile',
         'banner'
     ];
 
