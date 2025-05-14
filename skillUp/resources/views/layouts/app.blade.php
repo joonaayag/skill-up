@@ -18,7 +18,7 @@
 </head>
 
 <body class="bg-no-repeat bg-cover bg-center flex flex-col min-h-screen transition-all duration-500 text-themeBgDark dark:text-white"
-:style="darkMode ? 'background-image: url(/images/app-dark-bg.png)' : 'background-image: url(/images/app-bg.jpg)'">
+:style="darkMode ? 'background-image: url(/images/app-dark-bg.jpg)' : 'background-image: url(/images/app-bg.jpg)'">
     <x-header/>
 
     <main class="mt-32 mx-24 flex-grow">
