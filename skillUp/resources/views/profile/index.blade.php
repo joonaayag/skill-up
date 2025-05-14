@@ -9,7 +9,7 @@
         class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
 
         <div class="relative">
-            <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg.png') }}"
+            <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
                 alt="Fondo" class="w-full h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
@@ -130,7 +130,7 @@
 
                     <div class="relative mb-8">
                         <img id="bannerPreview"
-                            src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg.png') }}"
+                            src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
                             class="w-full h-40 object-cover cursor-pointer" alt="Banner">
                         <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden">
 
