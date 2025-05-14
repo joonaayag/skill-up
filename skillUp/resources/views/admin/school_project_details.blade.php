@@ -54,7 +54,7 @@
         <button @click="showDelete = true">Eliminar</button>
         <button @click="showEdit = true">Editar</button>
 
-        <div x-show="showDelete">
+        <div x-cloak x-show="showDelete">
             <p>¿Seguro que deseas eliminar este proyecto?</p>
             <form action="{{ route('admin.school_project.destroy', $schoolProject->id) }}" method="POST">
                 @csrf
@@ -64,7 +64,7 @@
             </form>
         </div>
 
-        <div x-show="showEdit">
+        <div x-cloak x-show="showEdit">
             <form action="{{ route('admin.school_project.update', $schoolProject->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

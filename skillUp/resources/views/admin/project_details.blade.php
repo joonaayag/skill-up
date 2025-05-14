@@ -68,8 +68,8 @@
             </button>
 
             <!-- Modal de edición -->
-            <div x-show="showEdit_{{ $project->id }}"
-                class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" style="display: none;">
+            <div x-cloak x-show="showEdit_{{ $project->id }}"
+                class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                 <div class="bg-white w-full max-w-lg p-6 rounded shadow relative"
                     @click.outside="showEdit_{{ $project->id }} = false">
                     <h3 class="text-xl font-bold mb-4">Editar Proyecto</h3>

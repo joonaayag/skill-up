@@ -45,7 +45,7 @@
                 @endif
             </button>
 
-            <div x-show="open" x-transition
+            <div x-cloak x-show="open" x-transition
                 class="absolute left-0 mt-2 w-72 dark:bg-themeBgDark bg-white border border-gray-300 shadow-xl rounded-md z-50">
                 <ul class="max-h-64 overflow-y-auto">
                     @forelse(auth()->user()->notifications as $notification)
