@@ -28,8 +28,8 @@
             @endphp
 
             <div class="mt-6 text-left space-y-4 dark:[&>div>div>div]:text-themeLightGray">
-                <div class="flex">
-                    <div class="w-1/2">
+                <div class="flex gap-2">
+                    <div class="w-1/2 ">
                         <label for="name" class="text-md font-bold">Nombre</label>
                         <div class=" text-dark ml-2">{{ auth()->user()->name }}</div>
                     </div>
@@ -45,64 +45,64 @@
                     </div>
                 </div>
                 <div>
-                    <label for="email" class="text-md font-bold">Descripcion</label>
+                    <label for="email" class="text-md font-bold">Descripción</label>
                     <div class="text-dark text-sm mt-1 ml-2">
-                        {{ auth()->user()->description ?? 'No has especificado ninguna descripcion' }}
+                        {{ auth()->user()->description ?? 'No has especificado ninguna descripción' }}
                     </div>
                 </div>
                 @if (auth()->user()->role === 'alumno')
-                    <div class="flex">
+                    <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Fecha de nacimiento</label>
-                            <div class="w-1/2 text-dark">{{ $details?->birth_date ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->birth_date ?? 'No especificado' }}</div>
                         </div>
-                        <div class="w-1/2">
+                        <div class="w-1/2 gap-2">
                             <label for="email" class="text-md font-bold">Curso actual</label>
-                            <div class="w-1/2 text-dark">{{ $details?->current_course ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->current_course ?? 'No especificado' }}</div>
                         </div>
                     </div>
-                    <div class="flex">
+                    <div class="">
                         <label for="email" class="text-md font-bold">Centro educativo</label>
-                        <div class="w-1/2 text-dark">{{ $details?->educational_center ?? 'No especificado' }}</div>
+                        <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? 'No especificado' }}</div>
                     </div>
                 @elseif (auth()->user()->role === 'profesor')
-                    <div class="flex">
+                    <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Especialización</label>
-                            <div class="w-1/2 text-dark">{{ $details?->specialization ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->specialization ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Departamento</label>
-                            <div class="w-1/2 text-dark">{{ $details?->department ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->department ?? 'No especificado' }}</div>
                         </div>
                     </div>
                     <div class="flex">
 
                     </div>
                 @elseif (auth()->user()->role === 'empresa')
-                    <div class="flex">
+                    <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">CIF</label>
-                            <div class="w-1/2 text-dark">{{ $details?->cif ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->cif ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Dirección</label>
-                            <div class="w-1/2 text-dark">{{ $details?->address ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->address ?? 'No especificado' }}</div>
                         </div>
                     </div>
-                    <div class="flex">
+                    <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Sector</label>
-                            <div class="w-1/2 text-dark">{{ $details?->sector ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->sector ?? 'No especificado' }}</div>
                         </div>
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Sitio web</label>
-                            <div class="w-1/2 text-dark">{{ $details?->website ?? 'No especificado' }}</div>
+                            <div class="w-1/2 text-dark ml-2">{{ $details?->website ?? 'No especificado' }}</div>
                         </div>
                     </div>
                 @endif
 
-                <label for="email" class="text-md font-bold">Curriculum</label>
+                <label for="email" class="text-md font-bold">Currículum</label>
                 @if(auth()->user()->cv)
                     <div class="text-dark text-sm mt-1">
                         <p>📄 <a href="{{ asset('storage/' . auth()->user()->cv) }}" target="_blank"
