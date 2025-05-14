@@ -7,12 +7,16 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
-            url: process.env.APP_URL || 'https://skill-up-production-7fdb.up.railway.app',
-            buildDirectory: 'build',
+            url:'https://skill-up-production-7fdb.up.railway.app',
+            https: true,
         }),
         tailwindcss(),
     ],
     server: {
         https: true,
+    },
+    build: {
+        assetsDir: 'build/assets',
+        manifest: true,
     },
 });
