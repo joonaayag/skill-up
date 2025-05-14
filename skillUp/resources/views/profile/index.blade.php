@@ -9,7 +9,7 @@
         class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
 
         <div class="relative">
-            <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://i.pinimg.com/736x/b6/ef/40/b6ef40f2cd4436568d718f150abefca6.jpg' }}"
+            <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg.png') }}"
                 alt="Fondo" class="w-full h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
@@ -130,13 +130,13 @@
 
                     <div class="relative mb-8">
                         <img id="bannerPreview"
-                            src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
+                            src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg.png') }}"
                             class="w-full h-40 object-cover cursor-pointer" alt="Banner">
                         <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden">
 
                         <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                             <img id="fotoPerfilPreview"
-                                src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
+                                src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                                 class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
                                 alt="Foto de perfil">
                             <input type="file" name="profile" id="fotoPerfilInput" accept="image/*" class="hidden">
