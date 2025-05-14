@@ -3,7 +3,7 @@
 @section('title', 'Ofertas de Empleo')
 
 @section('content')
-    <h1>Ofertas de empleo</h1>
+    <x-heading level="h1" class="mb-10">Ofertas de Empleo</x-heading>
 
     <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
         <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
@@ -125,9 +125,9 @@
                                             ->first();
                                     @endphp
 
-                                    <div class="flex flex-row justify-between items-center mt-auto">
-                                        <div class="flex flex-row gap-4 ">
-                                            <p>{{ $offer->state }}</p>
+                                    <div class="flex flex-row justify-between items-center mt-2">
+                                        <div class="flex flex-row gap-4">
+                                            <p class="px-3 py-1 rounded-full {{ $offer->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">{{ $offer->state }}</p>
                                             @if ($offer->company_id !== auth()->id())
                                                 @if ($favorite)
                                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
