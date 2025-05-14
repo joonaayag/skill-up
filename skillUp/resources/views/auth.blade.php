@@ -21,6 +21,8 @@
         <input type="email" name="email" required><br>
         <label>Contraseña:</label>
         <input type="password" name="password" required><br>
+        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+        <span>Recordarme</span>
         <button type="submit">Entrar</button>
     </form>
     <p class="text-sm text-center mt-4">

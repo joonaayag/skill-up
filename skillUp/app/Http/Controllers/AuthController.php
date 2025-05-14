@@ -13,12 +13,21 @@ class AuthController extends Controller
 {
     public function show()
     {
+        if (auth()->check()) {
+            return redirect('/dashboard');
+        }
         return view('auth');
     }
 
     public function login(Request $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (auth()->check()) {
+            return redirect('/dashboard');
+        }
+
+        $remember = $request->has('remember');
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials, $remember)) {
             return redirect('/dashboard');
         }
 
@@ -27,6 +36,9 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        if (auth()->check()) {
+            return redirect('/dashboard');
+        }
         $rules = [
             'name' => 'required|string|max:20',
             'lastName' => 'nullable|string|max:50',
@@ -204,7 +216,7 @@ class AuthController extends Controller
         return redirect('/dashboard');
     }
 
-    
+
     public function logout(Request $request)
     {
         Auth::logout();

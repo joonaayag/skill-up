@@ -20,6 +20,9 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect('/dashboard');
+    }
     return view('welcome');
 });
 
