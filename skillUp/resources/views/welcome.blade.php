@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Skill Up</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 <body class="flex flex-col min-h-screen bg-cover bg-center"
     style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">
