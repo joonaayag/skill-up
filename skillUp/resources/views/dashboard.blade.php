@@ -147,7 +147,7 @@
         </button>
 
 
-        <div x-cloak x-show="open" @ @click.outside="open = false" x-transition
+        <div x-cloak x-show="open" @click.outside="open = false" x-transition
             class="mt-2 w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
             <x-heading level="h3" class="mb-8">Asistente SkillUp</x-heading>
             <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
