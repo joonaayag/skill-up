@@ -130,14 +130,14 @@
                                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit">❌</button>
+                                                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer" /></button>
                                                     </form>
                                                 @else
                                                     <form action="{{ route('favorites.store') }}" method="POST">
                                                         @csrf
                                                         <input type="hidden" name="type" value="oferta">
                                                         <input type="hidden" name="reference_id" value="{{ $offer->id }}">
-                                                        <button type="submit">❤️</button>
+                                                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
                                                     </form>
                                                 @endif
                                             @endif

@@ -85,14 +85,14 @@
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit">❌</button>
+                                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer" /></button>
                                     </form>
                                 @else
                                     <form action="{{ route('favorites.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type" value="proyecto">
                                         <input type="hidden" name="reference_id" value="{{ $project->id }}">
-                                        <button type="submit">❤️</button>
+                                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
                                     </form>
                                 @endif
                                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>
@@ -250,19 +250,19 @@
                         @endphp
 
                         <div class="flex flex-row justify-between items-center mt-auto">
-                            <div class="flex flex-row gap-3">
+                            <div class="flex flex-row gap-3 items-center justify-center">
                                 @if ($favorite)
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit">❌</button>
+                                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer " /></button>
                                     </form>
                                 @else
                                     <form action="{{ route('favorites.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type" value="proyecto">
                                         <input type="hidden" name="reference_id" value="{{ $school->id }}">
-                                        <button type="submit">❤️</button>
+                                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
                                     </form>
                                 @endif
                                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $school->views }}</p>
