@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::get('/auth', [AuthController::class, 'show'])->name('auth');
 Route::post('/auth', [AuthController::class, 'show'])->name('auth');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
@@ -146,7 +147,7 @@ Route::post('/completar-perfil', function (Request $request) {
 
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'session.timeout'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/projectos', [AdminController::class, 'projectsShow'])->name('admin.projects');
@@ -192,6 +193,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('/perfil/{id}', [UserController::class, 'update'])->name('user.update');
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
     
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)

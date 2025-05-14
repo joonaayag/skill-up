@@ -26,6 +26,23 @@
     </main>
 
     <x-footer/>
+<script>
+    let logoutTimer;
+
+    function resetLogoutTimer() {
+        clearTimeout(logoutTimer);
+        logoutTimer = setTimeout(() => {
+            window.location.href = "{{ route('user.logout') }}";
+        }, 2 * 60 * 1000); 
+    }
+
+    ['mousemove', 'keydown', 'click', 'scroll'].forEach(evt => {
+        document.addEventListener(evt, resetLogoutTimer);
+    });
+
+    resetLogoutTimer();
+</script>
+
 </body>
 
 

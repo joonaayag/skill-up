@@ -121,7 +121,7 @@
                     Editar perfil
                 </button>
                 <div x-cloak x-data="{ open: false }" class="inline-block">
-                    <button @click="open = true" class="mt-6 bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
+                    <button @click="open = true" class="mt-6 bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Cerrar sesión</button>
 
                     <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                         <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
