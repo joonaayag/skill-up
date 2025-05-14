@@ -7,16 +7,20 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
-            url:'https://skill-up-production-7fdb.up.railway.app',
-            https: true,
+            // Configuración para producción
+            buildDirectory: 'build', // Asegura que se construya en public/build
         }),
         tailwindcss(),
     ],
-    server: {
-        https: true,
-    },
     build: {
-        assetsDir: 'build/assets',
+        // Asegura que el manifest se genere correctamente
         manifest: true,
+        outDir: 'public/build', // Directorio de salida explícito
+        rollupOptions: {
+            // Asegúrate de que las importaciones se resuelvan correctamente
+            output: {
+                manualChunks: undefined,
+            },
+        },
     },
 });
