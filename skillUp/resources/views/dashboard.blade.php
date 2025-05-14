@@ -141,13 +141,13 @@
 
     <div x-data="chatbot()" class="fixed bottom-4 right-4 z-50">
 
-        <button @click.outside="open = false" @click="toggle"
+        <button  @click="toggle"
             class="bg-themeBlue text-white rounded-full p-3 shadow-lg hover:bg-blue-700 cursor-pointer transition">
             💬
         </button>
 
 
-        <div x-show="open" x-transition class="mt-2 w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
+        <div x-show="open" @click.outside="open = false" x-transition class="mt-2 w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
             <h2 class="text-sm font-semibold mb-2">Asistente SkillUp</h2>
             <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
                 <template x-for="msg in messages" :key="msg . id">
