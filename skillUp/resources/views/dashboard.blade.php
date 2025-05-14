@@ -139,10 +139,10 @@
     </div>
 
 
-    <div x-data="chatbot()" class="fixed bottom-4 right-4 z-50">
+    <div x-data="chatbot()" class="fixed bottom-6 right-6 z-50">
 
         <button @click="toggle"
-            class="bg-themeBlue text-white rounded-full p-3 shadow-lg hover:bg-blue-700 cursor-pointer transition">
+            class="bg-themeBlue text-white rounded-full p-4 shadow-lg hover:bg-blue-700 cursor-pointer transition">
             💬
         </button>
 

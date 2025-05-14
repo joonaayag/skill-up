@@ -6,9 +6,9 @@
     <x-heading level="h1" class="mb-10">Tus proyectos</x-heading>
     <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}"
         class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-          [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-             dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark dark:[&>select]:bg-themeBgDark">
+              [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+                [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
+                 dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark dark:[&>select]:bg-themeBgDark">
         <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
         <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
 
@@ -123,15 +123,15 @@
                     <x-label for="title">Imagen destacada:</x-label>
                     <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
                         <label for="image-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             🖼️ Subir imagen destacada
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                            fileName = $event.target.files[0]?.name || '';
-                            if ($event.target.files[0]) {
-                                const reader = new FileReader();
-                                reader.onload = e => previewUrl = e.target.result;
-                                reader.readAsDataURL($event.target.files[0]);
-                            }" />
+                                fileName = $event.target.files[0]?.name || '';
+                                if ($event.target.files[0]) {
+                                    const reader = new FileReader();
+                                    reader.onload = e => previewUrl = e.target.result;
+                                    reader.readAsDataURL($event.target.files[0]);
+                                }" />
                         </label>
 
                         <template x-if="fileName">
@@ -150,7 +150,7 @@
                     <x-label for="title">Archivos adicionales</x-label>
                     <div x-data="{ fileNames: [] }" class="w-full">
                         <label for="file-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             📎 Subir archivos
                             <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                 @change="fileNames = [...$event.target.files].map(f => f.name)" />
@@ -167,13 +167,13 @@
                 </div>
 
                 <div class="flex justify-end gap-3 mt-4">
-                    <button type="submit"
-                        class="px-4 py-2 bg-themeGrape/80 text-white rounded hover:bg-themeGrape transition cursor-pointer">
-                        Guardar
-                    </button>
                     <button type="button" @click="showModal = false"
                         class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         Cancelar
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        Guardar
                     </button>
                 </div>
             </form>

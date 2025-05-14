@@ -34,12 +34,14 @@ class ProjectController extends Controller
         }
 
         if ($request->filled('order')) {
-            $query->orderBy($request->order, 'asc');
+            $direction = $request->input('direction', 'asc');
+            $query->orderBy($request->order, $direction);
         } else {
             $query->latest();
         }
 
         $projects = $query->get();
+
 
         $schoolQuery = SchoolProject::query();
 
@@ -60,7 +62,8 @@ class ProjectController extends Controller
         }
 
         if ($request->filled('order')) {
-            $schoolQuery->orderBy($request->order, 'asc');
+            $direction = $request->input('direction', 'asc');
+            $schoolQuery->orderBy($request->order, $direction);
         } else {
             $schoolQuery->latest();
         }
@@ -69,6 +72,7 @@ class ProjectController extends Controller
 
         return view('projects.index', compact('projects', 'schoolProjects'));
     }
+
 
 
     public function ownProjects(Request $request)
@@ -255,7 +259,7 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('files')) {
-            
+
             foreach ($request->file('files') as $file) {
                 $path = $file->store('project_images', 'public');
                 $project->images()->create([

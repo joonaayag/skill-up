@@ -191,6 +191,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::put('/perfil/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+    
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
     Route::get('/tus-ofertas', [JobOfferController::class, 'companyIndex'])->name('job.offers.company.index');

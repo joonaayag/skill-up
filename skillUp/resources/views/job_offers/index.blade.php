@@ -88,7 +88,7 @@
             <main class="space-y-4">
                 <div
                     class="flex flex-wrap gap-2 h-12 [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                                         [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                                             [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
                     <input type="text" name="name" placeholder="Buscar por título..." value="{{ request('name') }}"
                         class="input" />
                     <input type="text" name="author" placeholder="Buscar por autor..." value="{{ request('author') }}"
@@ -166,12 +166,12 @@
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
-            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition cursor-pointer">
+            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeBlue/80 transition cursor-pointer">
             <x-icon size="6" name="plus" />
         </button>
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nuevo proyecto</x-heading>
+            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themebg-themeGrape">Nuevo proyecto</x-heading>
             <form action="{{ route('job.offers.store') }}" method="POST"
                 class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
@@ -199,13 +199,13 @@
                 </select>
 
                 <div class="flex justify-end gap-3 mt-4">
-                    <button type="submit"
-                        class="px-4 py-2 bg-themeGrape/80 text-white rounded hover:bg-themeGrape transition cursor-pointer">
-                        Guardar
-                    </button>
                     <button type="button" @click="showModal = false"
                         class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         Cancelar
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        Guardar
                     </button>
                 </div>
             </form>

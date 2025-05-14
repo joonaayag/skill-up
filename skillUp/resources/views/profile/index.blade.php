@@ -115,12 +115,41 @@
                 @endif
             </div>
 
-            <button @click="showModal = true"
-                class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                Editar perfil
-            </button>
+            <div>
+                <button @click="showModal = true"
+                    class="mt-6 bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">
+                    Editar perfil
+                </button>
+                <div x-cloak x-data="{ open: false }" class="inline-block">
+                    <button @click="open = true" class="mt-6 bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
+
+                    <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
+                            @click.outside="open = false">
+                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Cerrar sesión</x-heading>
+                            <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                ¿Estás seguro de que deseas cerrar sesión, <strong>{{ auth()->user()->name }} {{ auth()->user()->last_name }}</strong>?
+                            </p>
+                            <div class="flex justify-end gap-4">
+                                <button @click="open = false"
+                                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                    Cancelar
+                                </button>
+
+                                <form action="{{ route('user.logout', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))">
+        <div x-cloak x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))">
             <x-modal>
                 <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar perfil</x-heading>
                 <form action="{{ route('user.update', auth()->id()) }}" method="POST" enctype="multipart/form-data"
@@ -231,7 +260,7 @@
                         <label class="block text-sm font-medium">Subir Cv</label>
 
                         <label for="cv-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             📄 Subir CV
                             <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
                                 @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
@@ -244,12 +273,12 @@
 
 
                     <div class="mt-6 flex justify-end gap-4">
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                            Guardar cambios
-                        </button>
                         <button type="button" @click="showModal = false"
                             class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                             Cancelar
+                        </button>
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Guardar cambios
                         </button>
                     </div>
                 </form>
