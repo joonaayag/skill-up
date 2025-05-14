@@ -79,7 +79,7 @@ public function index(Request $request)
 
     public function store(Request $request)
     {
-        if ((auth()->user()->role !== 'empresa' && auth()->user()->role !== 'profesor')) {
+        if ((auth()->user()->role !== 'Empresa' && auth()->user()->role !== 'Profesor')) {
             abort(403, 'Acceso denegado');
         }
 
@@ -141,7 +141,7 @@ public function index(Request $request)
     {
         $jobOffer = JobOffer::findOrFail($id);
 
-        if ((auth()->user()->role !== 'empresa' && auth()->user()->role !== 'profesor') || $jobOffer->company_id !== auth()->id()) {
+        if ((auth()->user()->role !== 'Empresa' && auth()->user()->role !== 'Profesor') || $jobOffer->company_id !== auth()->id()) {
             abort(403, 'Acceso denegado');
         }
 
@@ -153,7 +153,7 @@ public function index(Request $request)
                 'user_id' => $application->user->id,
                 'type' => 'oferta',
                 'title' => 'Oferta retirada',
-                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por ' . (auth()->user()->role === 'empresa' ? 'la empresa' : 'el profesor') . '.',
+                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por ' . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
             ]);
         }
 
@@ -170,7 +170,7 @@ public function index(Request $request)
     {
         $jobOffer = JobOffer::findOrFail($id);
 
-        if ((auth()->user()->role !== 'empresa' && auth()->user()->role !== 'profesor') || $jobOffer->company_id !== auth()->id()) {
+        if ((auth()->user()->role !== 'Empresa' && auth()->user()->role !== 'Profesor') || $jobOffer->company_id !== auth()->id()) {
             abort(403, 'Acceso denegado');
         }
 

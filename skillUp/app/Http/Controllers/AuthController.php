@@ -40,19 +40,19 @@ class AuthController extends Controller
                     ->numbers()
                     ->symbols(),
             ],
-            'role' => 'required|in:usuario,alumno,profesor,empresa',
+            'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
             'g-recaptcha-response' => 'required',
         ];
 
         switch ($request->role) {
-            case 'alumno':
+            case 'Alumno':
                 $rules = array_merge($rules, [
                     'birthDate' => 'required|date',
                     'currentCourse' => 'required|string|max:50',
                     'educationalCenter' => 'required|string|max:100',
                 ]);
                 break;
-            case 'profesor':
+            case 'Profesor':
                 $rules = array_merge($rules, [
                     'birthDate' => 'required|date',
                     'specialization' => 'required|string|max:100',
@@ -60,7 +60,7 @@ class AuthController extends Controller
                     'validationDocument' => 'required|string|max:255',
                 ]);
                 break;
-            case 'empresa':
+            case 'Empresa':
                 $rules = array_merge($rules, [
                     'cif' => 'required|string|max:50',
                     'address' => 'required|string|max:255',
@@ -132,9 +132,9 @@ class AuthController extends Controller
 
 
         $user = User::create([
-            'name' => $request->name,
-            'last_name' => $request->lastName,
-            'email' => $request->email,
+            'name' => ucfirst($request->name),
+            'last_name' => ucfirst($request->lastName),
+            'email' => ucfirst($request->email),
             'password' => bcrypt($request->password),
             'role' => $request->role,
             'profile' => null,
@@ -144,26 +144,26 @@ class AuthController extends Controller
         $details = ['user_id' => $user->id];
 
         switch ($user->role) {
-            case 'alumno':
+            case 'Alumno':
                 $details += [
                     'birth_date' => $request->birthDate,
-                    'current_course' => $request->currentCourse,
-                    'educational_center' => $request->educationalCenter,
+                    'current_course' => ucfirst($request->currentCourse),
+                    'educational_center' => ucfirst($request->educationalCenter),
                 ];
                 break;
-            case 'profesor':
+            case 'Profesor':
                 $details += [
                     'birth_date' => $request->birthDate,
-                    'specialization' => $request->specialization,
-                    'department' => $request->department,
+                    'specialization' => ucfirst($request->specialization),
+                    'department' => ucfirst($request->department),
                     'validation_document' => $request->validationDocument,
                 ];
                 break;
-            case 'empresa':
+            case 'Empresa':
                 $details += [
-                    'cif' => $request->cif,
-                    'address' => $request->address,
-                    'sector' => $request->sector,
+                    'cif' => ucfirst($request->cif),
+                    'address' => ucfirst($request->address),
+                    'sector' => ucfirst($request->sector),
                     'website' => $request->website,
                 ];
                 break;
@@ -173,19 +173,19 @@ class AuthController extends Controller
         Auth::login($user);
 
         $message = match ($user->role) {
-            'alumno' => [
+            'Alumno' => [
                 'title' => '¡Bienvenido a SkillUp!',
                 'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
             ],
-            'usuario' => [
+            'Usuario' => [
                 'title' => '¡Bienvenido a SkillUp!',
                 'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
             ],
-            'empresa' => [
+            'Empresa' => [
                 'title' => 'Tu cuenta de empresa está lista',
                 'message' => 'Ahora puedes publicar ofertas y recibir candidaturas de estudiantes.',
             ],
-            'profesor' => [
+            'Profesor' => [
                 'title' => 'Perfil de profesor creado',
                 'message' => 'Puedes gestionar y validar proyectos académicos desde tu panel.',
             ],

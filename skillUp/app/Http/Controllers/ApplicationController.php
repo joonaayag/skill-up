@@ -107,7 +107,7 @@ class ApplicationController extends Controller
             'user_id' => $application->user->id,
             'type' => 'candidatura',
             'title' => 'Tu candidatura ha sido retirada',
-            'message' => 'Tu candidatura para la oferta "' . $application->jobOffer->name . '" ha sido retirada por ' . (auth()->user()->role === 'empresa' ? 'la empresa' : 'el profesor') . '.',
+            'message' => 'Tu candidatura para la oferta "' . $application->jobOffer->name . '" ha sido retirada por ' . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
         ]);
 
         $application->delete();

@@ -47,7 +47,7 @@ Route::get('/auth/google/callback', function () {
         'name' => explode(' ', $googleUser->getName())[0],
         'last_name' => explode(' ', $googleUser->getName())[1] ?? null,
         'password' => bcrypt(uniqid()),
-        'role' => 'pendiente',
+        'role' => 'Pendiente',
     ]);
 
     if (!$user->userDetail) {
@@ -56,7 +56,7 @@ Route::get('/auth/google/callback', function () {
 
     Auth::login($user);
 
-    if ($user->role === 'pendiente') {
+    if ($user->role === 'Pendiente') {
         return redirect('/elegir-rol');
     }
 
@@ -69,7 +69,7 @@ Route::get('/elegir-rol', function () {
 
 Route::post('/elegir-rol', function (Request $request) {
     $request->validate([
-        'role' => 'required|in:usuario,alumno,profesor,empresa',
+        'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
     ]);
 
     $user = Auth::user();
@@ -99,7 +99,7 @@ Route::post('/completar-perfil', function (Request $request) {
         $detail = UserDetail::create(['user_id' => $user->id]);
     }
 
-    if ($user->role === 'alumno' || $user->role === 'usuario') {
+    if ($user->role === 'Alumno' || $user->role === 'Usuario') {
         $request->validate([
             'birth_date' => 'required|date',
             'current_course' => 'required|string',
@@ -114,7 +114,7 @@ Route::post('/completar-perfil', function (Request $request) {
         ]));
     }
 
-    if ($user->role === 'profesor') {
+    if ($user->role === 'Profesor') {
         $request->validate([
             'department' => 'required|string',
             'educational_center' => 'required|string',
@@ -125,7 +125,7 @@ Route::post('/completar-perfil', function (Request $request) {
         ]));
     }
 
-    if ($user->role === 'empresa') {
+    if ($user->role === 'Empresa') {
         $request->validate([
             'cif' => 'required|string',
             'address' => 'required|string',

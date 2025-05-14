@@ -2,10 +2,10 @@
     @csrf
     <label for="role">¿Cuál es tu perfil para la aplicación?</label>
     <select name="role" id="role" required>
-        <option value="usuario">Usuario</option>
-        <option value="alumno">Alumno</option>
-        <option value="profesor">Profesor</option>
-        <option value="empresa">Empresa</option>
+        <option value="Usuario">Usuario</option>
+        <option value="Alumno">Alumno</option>
+        <option value="Profesor">Profesor</option>
+        <option value="Empresa">Empresa</option>
     </select>
     <button type="submit">Continuar</button>
 </form>

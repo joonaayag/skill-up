@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Autenticación</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('icons/logo.svg') }}">
 </head>
 
 <body>
@@ -56,10 +57,10 @@
 
         <select name="role" id="role" required class="w-full p-3 border rounded">
             <option value="">Selecciona tu rol</option>
-            <option value="usuario">Usuario</option>
-            <option value="alumno">Estudiante</option>
-            <option value="profesor">Profesor</option>
-            <option value="empresa">Empresa</option>
+            <option value="Usuario">Usuario</option>
+            <option value="Alumno">Estudiante</option>
+            <option value="Profesor">Profesor</option>
+            <option value="Empresa">Empresa</option>
         </select>
 
         <!-- Dynamic fields based on role -->
@@ -79,20 +80,20 @@
             container.innerHTML = '';
             const role = this.value;
 
-            if (role === 'alumno') {
+            if (role === 'Alumno') {
                 container.innerHTML = `
                 <input type="date" name="birthDate" placeholder="Fecha de nacimiento" required>
                 <input type="text" name="currentCourse" placeholder="Curso actual" required>
                 <input type="text" name="educationalCenter" placeholder="Centro educativo" required>
             `;
-            } else if (role === 'profesor') {
+            } else if (role === 'Profesor') {
                 container.innerHTML = `
                 <input type="date" name="birthDate" placeholder="Fecha de nacimiento" required>
                 <input type="text" name="specialization" placeholder="Especialización" required>
                 <input type="text" name="department" placeholder="Departmento" required>
                 <input type="text" name="validationDocument" placeholder="Documento que lo valide" required>
             `;
-            } else if (role === 'empresa') {
+            } else if (role === 'Empresa') {
                 container.innerHTML = `
                 <input type="text" name="cif" placeholder="CIF" required>
                 <input type="text" name="address" placeholder="Dirección" required>

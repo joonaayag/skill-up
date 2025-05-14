@@ -49,7 +49,7 @@
                 <p class="text-sm text-gray-500">👁️ {{ $offer->views }} visitas</p>
             </div>
 
-            @if (in_array(auth()->user()->role, ['usuario', 'alumno']) && $offer->state === 'Abierta')
+            @if (in_array(auth()->user()->role, ['Usuario', 'Alumno']) && $offer->state === 'Abierta')
                 <div x-data="{ showModal: false }"
                     x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
                     class="relative z-10">

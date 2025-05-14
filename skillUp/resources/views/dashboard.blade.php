@@ -102,11 +102,11 @@
                     </div>
                     <div class="px-3 mt-8">
                         <x-heading
-                            level="h3">{{ ucfirst(auth()->user()->name) . ' ' . ucfirst(auth()->user()->last_name) }}</x-heading>
-                        @if (auth()->user()->role === 'alumno')
+                            level="h3">{{ auth()->user()->name . ' ' . auth()->user()->last_name }}</x-heading>
+                        @if (auth()->user()->role === 'Alumno')
                             <p>Estudiante de {{ auth()->user()->detail->educational_center }}</p>
                         @else
-                            <p>{{ ucfirst(auth()->user()->role) }}</p>
+                            <p>{{ auth()->user()->role }}</p>
                         @endif
                         <p>Ciudad</p>
                     </div>

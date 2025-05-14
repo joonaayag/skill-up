@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Jonay',
                 'password' => Hash::make('password'),
-                'role' => 'usuario',
+                'role' => 'Usuario',
             ]
         );
         User::firstOrCreate(
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'James',
                 'password' => Hash::make('password'),
-                'role' => 'empresa',
+                'role' => 'Empresa',
             ]
         );
         User::firstOrCreate(
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Alberto',
                 'password' => Hash::make('password'),
-                'role' => 'profesor',
+                'role' => 'Profesor',
             ]
         );
 
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Pedro',
                 'password' => Hash::make('password'),
-                'role' => 'usuario',
+                'role' => 'Usuario',
             ]
         );
 
@@ -157,7 +157,7 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Master',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
-            'role' => 'admin',
+            'role' => 'Admin',
             'avatar' => null,
             'cv' => null,
             'profile' => null,

@@ -97,7 +97,7 @@
                                                         rows="4">{{ old('description', $user->description) }}</textarea>
                                                 </div>
 
-                                                @if ($user->role === 'alumno')
+                                                @if ($user->role === 'Alumno')
                                                     <div class="mt-4">
                                                         <label class="block text-sm font-medium">Fecha de nacimiento</label>
                                                         <input type="date" name="birth_date"
@@ -118,7 +118,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if ($user->role === 'profesor')
+                                                @if ($user->role === 'Profesor')
                                                     <div class="mt-4">
                                                         <label class="block text-sm font-medium">Especialización</label>
                                                         <input type="text" name="specialization"
@@ -133,7 +133,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if ($user->role === 'empresa')
+                                                @if ($user->role === 'Empresa')
                                                     <div class="mt-4">
                                                         <label class="block text-sm font-medium">CIF</label>
                                                         <input type="text" name="cif"

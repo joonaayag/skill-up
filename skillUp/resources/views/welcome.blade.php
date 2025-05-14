@@ -6,6 +6,7 @@
     <title>Skill Up</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    <link rel="icon" type="image/x-icon" href="{{ asset('icons/logo.svg') }}">
 </head>
 <body class="flex flex-col min-h-screen bg-cover bg-center"
     style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">

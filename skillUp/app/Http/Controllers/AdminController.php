@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         return view('admin.dashboard');
@@ -23,7 +23,7 @@ class AdminController extends Controller
 
     public function showUsers()
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $users = User::all();
@@ -32,7 +32,7 @@ class AdminController extends Controller
 
     public function destroyUser($id)
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $user = User::findOrFail($id);
@@ -108,18 +108,18 @@ class AdminController extends Controller
         $detail = $user->detail ?? new UserDetail(['user_id' => $user->id]);
 
 
-        if ($user->role === 'alumno') {
+        if ($user->role === 'Alumno') {
             $detail->birth_date = $request->birth_date;
             $detail->current_course = $request->current_course;
             $detail->educational_center = $request->educational_center;
         }
 
-        if ($user->role === 'profesor') {
+        if ($user->role === 'Profesor') {
             $detail->specialization = $request->specialization;
             $detail->department = $request->department;
         }
 
-        if ($user->role === 'empresa') {
+        if ($user->role === 'Empresa') {
             $detail->cif = $request->cif;
             $detail->address = $request->address;
             $detail->sector = $request->sector;
@@ -133,7 +133,7 @@ class AdminController extends Controller
 
     public function showOffers()
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $offers = JobOffer::all();
@@ -143,7 +143,7 @@ class AdminController extends Controller
     {
         $jobOffer = JobOffer::findOrFail($id);
 
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
 
@@ -211,7 +211,7 @@ class AdminController extends Controller
     {
         $jobOffer = JobOffer::findOrFail($id);
 
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
 
@@ -235,7 +235,7 @@ class AdminController extends Controller
 
     public function showSchoolProjects()
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $schoolProjects = SchoolProject::all();
@@ -343,7 +343,7 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $project = SchoolProject::findOrFail($id);
@@ -365,7 +365,7 @@ class AdminController extends Controller
 
     public function ProjectsShow()
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $projects = Project::all();
@@ -373,7 +373,7 @@ class AdminController extends Controller
     }
     public function detailsProject($id)
     {
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role !== 'Admin') {
             abort(403, 'Acceso denegado');
         }
         $project = Project::with(['author', 'images', 'ratings', 'comments'])->findOrFail($id);

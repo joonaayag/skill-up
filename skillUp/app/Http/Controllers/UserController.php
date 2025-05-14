@@ -56,10 +56,10 @@ class UserController extends Controller
             $user->cv = $cvPath;
         }
 
-        $user->name = $validated['name'];
-        $user->last_name = $validated['last_name'];
-        $user->email = $validated['email'];
-        $user->description = $validated['description'];
+        $user->name = ucfirst($validated['name']);
+        $user->last_name = ucfirst($validated['last_name']);
+        $user->email = ucfirst($validated['email']);
+        $user->description = ucfirst($validated['description']);
 
 
         if ($request->hasFile('profile')) {
@@ -76,21 +76,21 @@ class UserController extends Controller
 
         $detail = $user->detail;
 
-        if ($user->role === 'alumno') {
+        if ($user->role === 'Alumno') {
             $detail->birth_date = $request->birth_date;
-            $detail->current_course = $request->current_course;
-            $detail->educational_center = $request->educational_center;
+            $detail->current_course = ucfirst($request->current_course);
+            $detail->educational_center = ucfirst($request->educational_center);
         }
 
-        if ($user->role === 'profesor') {
-            $detail->specialization = $request->specialization;
-            $detail->department = $request->department;
+        if ($user->role === 'Profesor') {
+            $detail->specialization = ucfirst($request->specialization);
+            $detail->department = ucfirst($request->department);
         }
 
-        if ($user->role === 'empresa') {
-            $detail->cif = $request->cif;
-            $detail->address = $request->address;
-            $detail->sector = $request->sector;
+        if ($user->role === 'Empresa') {
+            $detail->cif = ucfirst($request->cif);
+            $detail->address = ucfirst($request->address);
+            $detail->sector = ucfirst($request->sector);
             $detail->website = $request->website;
         }
 

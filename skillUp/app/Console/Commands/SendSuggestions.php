@@ -19,10 +19,10 @@ class SendSuggestions extends Command
 
         foreach ($usuarios as $user) {
             match ($user->role) {
-                'alumno' => $this->sugerenciasAlumno($user),
-                'usuario' => $this->sugerenciasAlumno($user),
-                'profesor' => $this->sugerenciasProfesor($user),
-                'empresa' => $this->sugerenciasEmpresa($user),
+                'Alumno' => $this->sugerenciasAlumno($user),
+                'Usuario' => $this->sugerenciasAlumno($user),
+                'Profesor' => $this->sugerenciasProfesor($user),
+                'Empresa' => $this->sugerenciasEmpresa($user),
                 default => null,
             };
         }

@@ -19,17 +19,17 @@
                 $role = auth()->user()->role;
             @endphp
 
-            @if(in_array($role, ['usuario', 'alumno']))
+            @if(in_array($role, ['Usuario', 'Alumno']))
                 <a href="{{ route('projects.ownProjects') }}">Tus proyectos</a>
             @endif
-            @if($role === 'profesor')
+            @if($role === 'Profesor')
                 <a href="{{ route('school.projects.index') }}">Proyectos escolares</a>
             @endif
-            @if(in_array($role, ['profesor', 'empresa']))
+            @if(in_array($role, ['Profesor', 'Empresa']))
                 <a href="{{ route('applications.index') }}">Candidaturas</a>
                 <a href="{{ route('job.offers.company.index') }}">Tus ofertas</a>
             @endif
-            @if($role === 'admin')
+            @if($role === 'Admin')
                 <a href="{{ route('admin.dashboard') }}">Panel de administrador</a>
             @endif
         @endauth

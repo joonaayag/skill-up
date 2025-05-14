@@ -22,7 +22,7 @@
         <div class="pt-12 pb-6 px-6 text-center ">
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
             <span
-                class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ ucfirst(auth()->user()->role) }}</span>
+                class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ auth()->user()->role }}</span>
             @php
                 $details = auth()->user()->detail;
             @endphp
@@ -50,7 +50,7 @@
                         {{ auth()->user()->description ?? 'No has especificado ninguna descripción' }}
                     </div>
                 </div>
-                @if (auth()->user()->role === 'alumno')
+                @if (auth()->user()->role === 'Alumno')
                     <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Fecha de nacimiento</label>
@@ -65,7 +65,7 @@
                         <label for="email" class="text-md font-bold">Centro educativo</label>
                         <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? 'No especificado' }}</div>
                     </div>
-                @elseif (auth()->user()->role === 'profesor')
+                @elseif (auth()->user()->role === 'Profesor')
                     <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">Especialización</label>
@@ -79,7 +79,7 @@
                     <div class="flex">
 
                     </div>
-                @elseif (auth()->user()->role === 'empresa')
+                @elseif (auth()->user()->role === 'Empresa')
                     <div class="flex gap-2">
                         <div class="w-1/2">
                             <label for="email" class="text-md font-bold">CIF</label>
@@ -168,7 +168,7 @@
                             rows="4">{{ old('description', $user->description) }}</textarea>
                     </div>
 
-                    @if ($user->role === 'alumno')
+                    @if ($user->role === 'Alumno')
                         <div class="mt-4">
                             <label class="block text-sm font-medium">Fecha de nacimiento</label>
                             <input type="date" name="birth_date"
@@ -189,7 +189,7 @@
                         </div>
                     @endif
 
-                    @if ($user->role === 'profesor')
+                    @if ($user->role === 'Profesor')
                         <div class="mt-4">
                             <label class="block text-sm font-medium">Especialización</label>
                             <input type="text" name="specialization"
@@ -204,7 +204,7 @@
                         </div>
                     @endif
 
-                    @if ($user->role === 'empresa')
+                    @if ($user->role === 'Empresa')
                         <div class="mt-4">
                             <label class="block text-sm font-medium">CIF</label>
                             <input type="text" name="cif" value="{{ old('cif', $user->detail->cif ?? '') }}"

@@ -11,7 +11,7 @@ class SchoolProjectController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role !== 'profesor') {
+        if (auth()->user()->role !== 'Profesor') {
             abort(403, 'Acceso denegado');
         }
         $projects = SchoolProject::all();
@@ -19,7 +19,7 @@ class SchoolProjectController extends Controller
     }
     public function destroy($id)
     {
-        if (auth()->user()->role !== 'profesor') {
+        if (auth()->user()->role !== 'Profesor') {
             abort(403, 'Acceso denegado');
         }
         $project = SchoolProject::findOrFail($id);

@@ -12,6 +12,8 @@
     <title>@yield('title', 'Dashboard')</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    <link rel="icon" type="image/x-icon" href="{{ asset('icons/logo.svg') }}">
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
