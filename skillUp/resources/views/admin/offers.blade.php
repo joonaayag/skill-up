@@ -30,7 +30,7 @@
                             <td class="px-4 py-3 border dark:border-gray-700 whitespace-nowrap space-x-3">
 
                                 {{-- Editar --}}
-                                <div x-data="{ openEdit: false }" class="inline-block">
+                                <div x-data="{ openEdit: false }" class="inline-block" x-cloak>
                                     <button @click="openEdit = true"
                                         class="bg-themeBlue/80 border-2 border-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Editar</button>
 
@@ -114,7 +114,7 @@
                                 </div>
 
                                 {{-- Eliminar --}}
-                                <div x-data="{ openDelete: false }" class="inline-block">
+                                <div x-data="{ openDelete: false }" class="inline-block" x-cloak>
                                     <button @click="openDelete = true"
                                         class="bg-red-500 border-2 border-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
@@ -155,7 +155,7 @@
             </table>
         </div>
 
-        <div x-data="{ showCreateSchoolProject: false }" class="inline-block mt-5">
+        <div x-data="{ showCreateSchoolProject: false }" class="inline-block mt-5" x-cloak>
             <button @click="showCreateSchoolProject = true"
                 class="flex  gap-2 items-center bg-themeBlue/80 border-2 border-themeBlbg-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer"><x-icon
                     name="plus" class="w-5 h-auto" /> Crear</button>

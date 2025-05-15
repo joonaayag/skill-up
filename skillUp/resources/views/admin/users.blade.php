@@ -38,7 +38,7 @@
                             <td class="px-4 py-3 border dark:border-gray-700">{{ ucfirst($user->role) }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700 space-x-2 whitespace-nowrap">
 
-                                <div x-data="{ openEdit: false, role: '{{ $user->role }}' }" class="inline-block">
+                                <div x-data="{ openEdit: false, role: '{{ $user->role }}' }" class="inline-block" x-cloak>
                                     <button @click="openEdit = true"
                                         class="bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Editar</button>
 
@@ -156,7 +156,7 @@
                                                 </div>
                                             @endif
 
-                                            <div class="mt-4" x-data="{ cvName: '' }">
+                                            <div class="mt-4" x-data="{ cvName: '' }" x-cloak>
                                                 <label class="block text-sm font-medium">Subir Cv</label>
 
                                                 <label for="cv-upload"
@@ -187,7 +187,7 @@
 
                                 </div>
 
-                                <div x-data="{ open: false }" class="inline-block">
+                                <div x-data="{ open: false }" x-cloak class="inline-block">
                                     <button @click="open = true"
                                         class="bg-red-500 border-2 border-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
@@ -231,7 +231,7 @@
 
         </div>
 
-        <div x-data="{ showCreateUser: false }" class="inline-block mt-5">
+        <div x-data="{ showCreateUser: false }" x-cloak class="inline-block mt-5">
             <button @click="showCreateUser = true"
                 class="flex  gap-2 items-center bg-themeBlue/80 border-2 border-themeBlbg-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer"><x-icon
                     name="plus" class="w-5 h-auto" /> Crear</button>

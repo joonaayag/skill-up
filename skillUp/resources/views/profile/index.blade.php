@@ -120,7 +120,7 @@
                     class="mt-6 bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">
                     Editar perfil
                 </button>
-                <div x-cloak x-data="{ open: false }" class="inline-block">
+                <div x-cloak x-data="{ open: false }" class="inline-block" x-cloak>
                     <button @click="open = true" class="mt-6 dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Cerrar sesión</button>
 
                     <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -256,7 +256,7 @@
                         </div>
                     @endif
 
-                    <div class="mt-4" x-data="{ cvName: '' }">
+                    <div class="mt-4" x-data="{ cvName: '' }" x-cloak>
                         <label class="block text-sm font-medium">Subir Cv</label>
 
                         <label for="cv-upload"

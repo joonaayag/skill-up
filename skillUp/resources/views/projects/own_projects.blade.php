@@ -64,7 +64,7 @@
         @endforelse
     </ul>
 
-    <div x-data="{ showModal: false }"
+    <div x-data="{ showModal: false }" x-cloak
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
@@ -121,7 +121,7 @@
 
                 <div>
                     <x-label for="title">Imagen destacada:</x-label>
-                    <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                    <div x-data="{ fileName: '', previewUrl: '' }" class="w-full" x-cloak>
                         <label for="image-upload"
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             🖼️ Subir imagen destacada
@@ -148,7 +148,7 @@
 
                 <div>
                     <x-label for="title">Archivos adicionales</x-label>
-                    <div x-data="{ fileNames: [] }" class="w-full">
+                    <div x-data="{ fileNames: [] }" class="w-full" x-cloak>
                         <label for="file-upload"
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             📎 Subir archivos

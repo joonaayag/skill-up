@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div x-data="{ selectedImage: null }">
+    <div x-data="{ selectedImage: null }" x-cloak>
 
         <x-heading level="h1" class="mb-10">Detalles del proyecto </x-heading>
 

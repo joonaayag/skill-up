@@ -55,7 +55,7 @@
             </tbody>
         </table>
 
-        <div x-data="{ showCreateUser: false }" class="inline-block mt-5">
+        <div x-data="{ showCreateUser: false }" class="inline-block mt-5" x-cloak>
             <button @click="showCreateUser = true"
                 class="flex  gap-2 items-center bg-themeBlue/80 border-2 border-themeBlbg-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer"><x-icon
                     name="plus" class="w-5 h-auto" /> Crear</button>
@@ -108,7 +108,7 @@
 
                     <div>
                         <x-label for="title">Imagen destacada:</x-label>
-                        <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                        <div x-data="{ fileName: '', previewUrl: '' }" class="w-full" x-cloak>
                             <label for="image-upload"
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ Subir imagen destacada
@@ -136,7 +136,7 @@
 
                     <div>
                         <x-label for="title">Archivos adicionales</x-label>
-                        <div x-data="{ fileNames: [] }" class="w-full">
+                        <div x-data="{ fileNames: [] }" class="w-full" x-cloak>
                             <label for="file-upload"
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 📎 Subir archivos

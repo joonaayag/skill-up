@@ -175,7 +175,7 @@
             </div>
         </form>
 
-        <div x-data="{ showModal: false }"
+        <div x-data="{ showModal: false }" x-cloak
             x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
             <button @click="showModal = true"

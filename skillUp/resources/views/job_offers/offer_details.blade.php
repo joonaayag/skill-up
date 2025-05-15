@@ -48,7 +48,7 @@
                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                         class="w-4 h-auto" />{{ $offer->views }}</p>
                 @if (auth()->id() === $offer->company_id)
-                    <div x-data="{ open: false }" class="inline-block">
+                    <div x-data="{ open: false }" class="inline-block" x-cloak>
                         <button @click="open = true" class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
                         <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -84,7 +84,7 @@
             </div>
 
             @if (in_array(auth()->user()->role, ['Usuario', 'Alumno']) && $offer->state === 'Abierta')
-                <div x-data="{ showModal: false }"
+                <div x-data="{ showModal: false }" x-cloak
                     x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
                     class="relative z-10">
                     <button @click="showModal = true"
@@ -116,7 +116,7 @@
                                     required></textarea><br>
 
 
-                                <div class="mt-4 mb-8" x-data="{ cvName: '' }">
+                                <div class="mt-4 mb-8" x-data="{ cvName: '' }" x-cloak>
                                     <x-label for="curriculum">Curriculum:</x-label>
 
                                     <label for="cv-upload"

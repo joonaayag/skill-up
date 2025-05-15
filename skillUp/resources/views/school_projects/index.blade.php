@@ -110,7 +110,7 @@
                                 </td>
                                 <td class="py-2">{{ $project->creation_date }}</td>
                                 <td class="py-2">{{ $project->created_at }}</td>
-                                <td class="py-2 space-x-2" x-data="{ showDelete: false, showEdit: false }" x-init="
+                                <td class="py-2 space-x-2" x-data="{ showDelete: false, showEdit: false }" x-cloak x-init="
                                      $watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
                                      $watch('showEdit', val => document.body.classList.toggle('overflow-hidden', val));">
 
@@ -186,7 +186,7 @@
                                                         class="w-full mb-2 border px-2 py-1 rounded">
 
                                                     <x-label for="title">Imagen destacada:</x-label>
-                                                    <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                                                    <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
                                                         <label for="image-upload-{{ $project->id }}"
                                                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
                                                             🖼️ Subir imagen destacada
@@ -212,7 +212,7 @@
                                                     </div>
 
                                                     <x-label for="title">Archivos adicionales</x-label>
-                                                    <div x-data="{ fileNames: [] }" class="w-full">
+                                                    <div x-data="{ fileNames: [] }" x-cloak class="w-full">
                                                         <label for="file-upload-{{ $project->id }}"
                                                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
                                                             📎 Subir archivos
@@ -255,7 +255,7 @@
         </main>
     </div>
 
-    <div x-data="{ showModal: false }"
+    <div x-data="{ showModal: false }" x-cloak
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
@@ -317,7 +317,7 @@
 
                 <div>
                     <x-label for="title">Imagen destacada:</x-label>
-                    <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                    <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
                         <label for="image-upload"
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
                             🖼️ Subir imagen destacada
@@ -344,7 +344,7 @@
 
                 <div>
                     <x-label for="title">Archivos adicionales</x-label>
-                    <div x-data="{ fileNames: [] }" class="w-full">
+                    <div x-data="{ fileNames: [] }" x-cloak class="w-full">
                         <label for="file-upload"
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
                             📎 Subir archivos

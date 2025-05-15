@@ -29,7 +29,7 @@
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $comment->created_at }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700 whitespace-nowrap space-x-3">
 
-                                <div x-data="{ openEdit: false }" class="inline-block">
+                                <div x-data="{ openEdit: false }" class="inline-block" x-cloak>
                                     <button @click="openEdit = true"
                                         class="bg-themeBlue/80 border-2 border-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Editar</button>
 
@@ -61,7 +61,7 @@
                                     </x-modal>
                                 </div>
 
-                                <div x-data="{ openDelete: false }" class="inline-block">
+                                <div x-data="{ openDelete: false }" class="inline-block" x-cloak>
                                     <button @click="openDelete = true"
                                         class="bg-red-500 border-2 border-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 

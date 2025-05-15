@@ -51,7 +51,7 @@
                             <td class="py-2">{{ ucfirst($app->state) }}</td>
                             <td class="py-2">{{ $app->application_date }}</td>
 
-                            <td class="py-2 space-x-2 relative z-10" x-data="{ showDelete: false, showDetails: false }"
+                            <td class="py-2 space-x-2 relative z-10" x-data="{ showDelete: false, showDetails: false }" x-cloak
                                 x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
                                                                                                             $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
                                 <button @click="showDetails = true"
