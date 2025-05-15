@@ -81,6 +81,8 @@
                         @endforeach
                     </div>
                 </div>
+            @else
+                <p class="mb-6">No hay archivos por el momento</p>
             @endif
 
             <!-- Image Modal -->

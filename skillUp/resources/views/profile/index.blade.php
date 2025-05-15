@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="pt-12 pb-6 px-6 text-center ">
+        <div class="pt-8 pb-6 px-6 text-center ">
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
             <span
                 class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">{{ auth()->user()->role }}</span>

@@ -85,14 +85,16 @@
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer" /></button>
+                                        <button type="submit" class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer"><x-icon name="filled-heart" class="w-5 h-auto" /></button>
                                     </form>
                                 @else
                                     <form action="{{ route('favorites.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type" value="proyecto">
                                         <input type="hidden" name="reference_id" value="{{ $project->id }}">
-                                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
+                                        <button type="submit" class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                            <x-icon name="heart" class="w-5 h-auto" />
+                                        </button>
                                     </form>
                                 @endif
                                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>

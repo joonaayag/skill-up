@@ -4,8 +4,9 @@
     id="main-header">
 
     <div class="flex flex-grow basis-0">
-        <x-icon name="skill-up-logo" class="w-48 h-auto fill-current -translate-x-5" />
-
+        <a href="{{ route('dashboard') }}">
+            <x-icon name="skill-up-logo" class="w-48 h-auto fill-current -translate-x-5" />
+        </a>
     </div>
 
     <nav class="flex [&>a]:inline-block [&>a]:px-3 [&>a]:py-2" id="main-navigation">
@@ -37,7 +38,7 @@
         <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
             class="relative inline-block">
             <button class="relative px-3 py-2 cursor-pointer">
-                🔔
+                <x-icon name="bell" class="w-6 h-auto fill-none" />
                 @if(auth()->user()->notifications->count() > 0)
                     <span class="absolute -top-0 right-1 bg-red-500 text-white text-xs rounded-full px-1">
                         {{ auth()->user()->notifications->count() }}
@@ -49,7 +50,8 @@
                 class="absolute left-0 mt-2 w-72 dark:bg-themeBgDark bg-white border border-gray-300 shadow-xl rounded-md z-50">
                 <ul class="max-h-64 overflow-y-auto">
                     @forelse(auth()->user()->notifications as $notification)
-                        <li class="flex flex-row justify-between items-start p-3 hover:bg-themeLightGray/20 [&>div>span]text-themeLightGray cursor-pointer transition">
+                        <li
+                            class="flex flex-row justify-between items-start p-3 hover:bg-themeLightGray/20 [&>div>span]text-themeLightGray cursor-default transition">
                             <div class="flex flex-col">
                                 <span class="text-sm font-semibold">{{ $notification->title ?? 'Notificación' }}</span>
                                 <span class="text-sm">{{ $notification->message ?? 'Mensaje' }}</span>
@@ -57,7 +59,8 @@
                             <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-500 text-sm">❌</button>
+                                <button type="submit"><x-icon name="x"
+                                        class="w-6 h-auto text-themeRed cursor-pointer" /></button>
                             </form>
                         </li>
                     @empty
@@ -76,7 +79,7 @@
     <nav class="flex flex-grow justify-end basis-0 ">
         @auth
             <a href="{{ route('profile.index') }}" class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
-                transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
+                    transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
                 <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"
