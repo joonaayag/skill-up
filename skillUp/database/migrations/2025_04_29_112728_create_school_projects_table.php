@@ -23,9 +23,10 @@ return new class extends Migration
             ]);
 
             $table->enum('general_category', [
-                'Tecnología y desarrollo', 'Diseño y comunicación',
-                'Administración y negocio', 'Comunicación',
-                'Educación', 'Ciencia y salud', 'Industria', 'Otro'
+                'Administración y negocio', 'Ciencia y salud',
+                'Comunicación', 'Diseño y comunicación',
+                'Educación', 'Industria', 'Otro',
+                'Tecnología y desarrollo'
             ]);
 
             $table->string('image')->nullable();

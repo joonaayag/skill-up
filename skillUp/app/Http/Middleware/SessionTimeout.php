@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class SessionTimeout
 {
-    protected $timeout = 120;
+    protected $timeout = 300;
 
     public function handle(Request $request, Closure $next)
     {
