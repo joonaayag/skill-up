@@ -69,8 +69,7 @@
                     <li class="flex flex-col h-full ">
                         <x-tags class="mb-2">{{ $project->tags }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>
-                        <span>{{ $project->general_category }}</span>
-                        <p class="break-words text-sm mb-1.5">{{ Str::limit($project->description, 100) }}</p>
+                        <span class="mb-6">{{ $project->general_category }}</span>
 
                         @php
                             $favorite = auth()->user()->favorites()

@@ -25,21 +25,26 @@
             <div class="flex justify-between mt-16">
                 <div class="flex gap-4 items-center justify-center">
                     <p>Autor: <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong></p>
-                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>
-                    <p>
-                        <label>★</label>
-                        {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
+                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                            class="w-4 h-auto" />{{ $project->views }}</p>
+                    <p class="flex items-center justify-center gap-1">
+                        <label><x-icon name="star" class="w-4 h-auto" /></label>
+                        {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}
                     </p>
                     @auth
-                        <form id="rating-form" action="{{ route('projects.rate', $project->id) }}" method="POST">
+                        <form id="rating-form" action="{{ route('projects.rate', $project->id) }}" method="POST"
+                            class="flex gap-1">
                             @csrf
-                            <div class="rating-stars">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating == $i ? 'checked' : '' }}>
-                                    <label for="star{{ $i }}">★</label>
-                                @endfor
-                            </div>
+                            @for ($i = 1; $i <= 5; $i++)
+                                    <button type="submit" name="rating" value="{{ $i }}"
+                                        class="text-3xl focus:outline-none transition transform hover:scale-105 cursor-pointer hover:text-yellow-400
+                                {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                        aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
+                                        <x-icon name="star" class="w-4 h-auto" />
+                                    </button>
+                            @endfor
                         </form>
+
                     @endauth
                 </div>
                 <div class="flex flex-col justify-end [&>p]:text-black dark:[&>p]:text-themeLightGray">
@@ -102,7 +107,8 @@
             @include('comments.comment_section', ['commentable' => $project, 'type' => 'project'])
         </x-card>
 
-        <a href="{{ route('projects.index') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+        <a href="{{ route('projects.index') }}"
+            class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
             <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
 
     </div>
