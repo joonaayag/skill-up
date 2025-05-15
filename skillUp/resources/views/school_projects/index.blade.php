@@ -92,6 +92,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($projects->count())
                         @foreach($projects as $project)
                             <tr class="border-b">
                                 <td class="py-2">
@@ -233,8 +234,12 @@
                                                     </div>
                                     </x-modal>
                                 </td>
-                            </tr>
                         @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" class="py-4 text-center">No hay proyectos disponibles</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
