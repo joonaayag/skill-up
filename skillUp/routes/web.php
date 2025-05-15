@@ -155,6 +155,8 @@ Route::middleware(['auth', 'session.timeout'])->group(function () {
 
     Route::get('/admin/projectos', [AdminController::class, 'projectsShow'])->name('admin.projects');
     Route::get('/admin/proyectos/{id}', [AdminController::class, 'detailsProject'])->name('admin.project.details');
+    Route::put('/admin/proyectos/{id}', [AdminController::class, 'detailsProject'])->name('admin.project.details');
+    Route::get('/admin/proyectos/{id}/editar', [AdminController::class, 'updateProject'])->name('admin.project.update');
     Route::put('/admin/proyectos/{id}/editar', [AdminController::class, 'updateProject'])->name('admin.project.update');
     Route::delete('/admin/proyectos/{id}', [AdminController::class, 'destroyProject'])->name('admin.project.destroy');
 

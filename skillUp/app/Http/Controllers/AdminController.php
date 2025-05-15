@@ -384,7 +384,7 @@ class AdminController extends Controller
         $project = Project::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:40',
+            'title' => 'required|string|max:40',
             'description' => 'required|string',
             'tags' => 'required|string|max:50',
             'sector_category' => 'required|string|max:40',
@@ -393,9 +393,9 @@ class AdminController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'name.required' => 'El nombre del proyecto es obligatorio.',
-            'name.string' => 'El nombre del proyecto debe ser una cadena de texto.',
-            'name.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
+            'title.required' => 'El nombre del proyecto es obligatorio.',
+            'title.string' => 'El nombre del proyecto debe ser una cadena de texto.',
+            'title.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
 
             'description.required' => 'La descripción es obligatoria.',
             'description.string' => 'La descripción debe ser una cadena de texto.',
@@ -432,7 +432,7 @@ class AdminController extends Controller
         }
 
         $project->update([
-            'name' => $request->name,
+            'title' => $request->title,
             'description' => $request->description,
             'tags' => $request->tags,
             'sector_category' => $request->sector_category,
