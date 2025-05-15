@@ -15,7 +15,7 @@
                     <th class="px-4 py-3 border dark:border-gray-700">Tags</th>
                     <th class="px-4 py-3 border dark:border-gray-700">Fecha creación</th>
                     <th class="px-4 py-3 border dark:border-gray-700">Enlace</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">Valoración media</th>
+                    <th class="pl-4 py-3 border dark:border-gray-700">Valoración media</th>
                     <th class="px-4 py-3 border dark:border-gray-700">Acciones</th>
                 </tr>
             </thead>

@@ -159,7 +159,7 @@ class SchoolProjectController extends Controller
 
         if ($project->teacher_id !== auth()->id()) {
             Notification::create([
-                'author_id' => $project->teacher_id,
+                'user_id' => $project->teacher_id,
                 'type' => 'proyecto',
                 'title' => 'Tu proyecto ha sido actualizado',
                 'message' => 'El proyecto "' . $project->title . '" ha sido actualizado por el profesorado.',
@@ -199,9 +199,9 @@ class SchoolProjectController extends Controller
             'author' => 'required|string|max:50',
             'creation_date' => 'required|date',
             'description' => 'required|string',
-            'tags' => 'nullable|string|max:50',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
             'general_category' => 'nullable|string|max:40',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
             'title.required' => 'El título es obligatorio.',
@@ -236,16 +236,17 @@ class SchoolProjectController extends Controller
             ? $request->file('image')->store('project_images', 'public')
             : null;
 
-        $project = new SchoolProject();
-        $project->title = $validated['title'];
-        $project->teacher_id = auth()->id();
-        $project->author = $validated['author'];
-        $project->creation_date = $validated['creation_date'];
-        $project->description = $validated['description'];
-        $project->tags = $validated['tags'] ?? null;
-        $project->general_category = $validated['general_category'] ?? null;
-        $project->image = $imagePath;
-        $project->save();
+        // Crear un nuevo proyecto utilizando el método create
+        $project = SchoolProject::create([
+            'title' => $validated['title'],
+            'teacher_id' => auth()->id(),
+            'author' => $validated['author'],
+            'creation_date' => $validated['creation_date'],
+            'description' => $validated['description'],
+            'tags' => $validated['tags'] ?? null,
+            'general_category' => $validated['general_category'] ?? null,
+            'image' => $imagePath,
+        ]);
 
         Notification::create([
             'user_id' => auth()->id(),

@@ -15,7 +15,6 @@
         </div>
     @endif
 
-    <!-- Aquí está el cambio principal: envolvemos solo los filtros en el formulario, no todo el contenido -->
     <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
         <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
             <form id="filters" action="{{ route('school.projects.index') }}" method="get">
@@ -82,6 +81,16 @@
         <main>
             
             <div class="bg-white border-2 border-themeLightGray dark:bg-themeBgDark rounded-lg shadow p-4">
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <strong class="font-bold">Error!</strong>
+                        <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b">
@@ -105,12 +114,12 @@
                                      $watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
                                      $watch('showEdit', val => document.body.classList.toggle('overflow-hidden', val));">
 
-                                    <button @click="showDelete = true" @click.outside="showDelete = false"
+                                    <button @click="showDelete = true" 
                                         class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
                                         Eliminar
                                     </button>
 
-                                    <x-modal :show="'showDelete'">
+                                    <x-modal @click.outside="showDelete = false" :show="'showDelete'">
                                         <x-heading level="h2"
                                                     class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
                                                     Seguro deseas eliminar este proyecto
@@ -132,12 +141,12 @@
                                                 </form>
                                     </x-modal>
 
-                                    <button @click="showEdit = true"  @click.outside="showEdit = false"
+                                    <button @click="showEdit = true"  
                                         class="px-4 py-2 bg-themeBlue/80 hover:bg-themeBlue text-white rounded transition cursor-pointer">
                                         Editar
                                     </button>
 
-                                    <x-modal :show="'showEdit'">
+                                    <x-modal @click.outside="showEdit = false" :show="'showEdit'">
                                                 <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
                                                     Editar proyecto
                                                 </x-heading>

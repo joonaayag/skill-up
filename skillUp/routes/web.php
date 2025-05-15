@@ -181,10 +181,10 @@ Route::middleware(['auth', 'session.timeout'])->group(function () {
     Route::get('/perfil', [DashboardController::class, 'profile'])->name('profile.index');
 
     Route::get('/gestion-proyectos-escolares', [SchoolProjectController::class, 'index'])->name('school.projects.index');
-    Route::put('/school-projects/{id}', [SchoolProjectController::class, 'update'])->name('school.projects.update');
-    Route::delete('/proyecto-escolar/{id}', [SchoolProjectController::class, 'destroy'])->name('school.projects.destroy');
+    Route::put('/school-projects/editar/{id}', [SchoolProjectController::class, 'update'])->name('school.projects.update');
+    Route::delete('/school-projects/eliminar/{id}', [SchoolProjectController::class, 'destroy'])->name('school.projects.destroy');
     Route::get('/proyectos-escolares/{id}', [SchoolProjectController::class, 'show'])->name('school.projects.show');
-    Route::post('/school-projects', [SchoolProjectController::class, 'store'])->name('school.projects.store');
+    Route::post('/school-projects/creear', [SchoolProjectController::class, 'store'])->name('school.projects.store');
 
 
     Route::get('/proyectos', [ProjectController::class, 'index'])->name('projects.index');
@@ -199,7 +199,7 @@ Route::middleware(['auth', 'session.timeout'])->group(function () {
     Route::put('/perfil/{id}', [UserController::class, 'update'])->name('user.update');
     Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
     Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
-    
+
 
     // companyIndex because it's only the job offers from the company (different as normal index, from everyone)
     Route::get('/tus-ofertas', [JobOfferController::class, 'companyIndex'])->name('job.offers.company.index');
