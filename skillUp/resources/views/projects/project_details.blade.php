@@ -37,7 +37,7 @@
                             @csrf
                             @for ($i = 1; $i <= 5; $i++)
                                     <button type="submit" name="rating" value="{{ $i }}"
-                                        class="text-3xl focus:outline-none transition transform hover:scale-105 cursor-pointer hover:text-yellow-400
+                                        class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
                                 {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
                                         aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
                                         <x-icon name="star" class="w-4 h-auto" />
