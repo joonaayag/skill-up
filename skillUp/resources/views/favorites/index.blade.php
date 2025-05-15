@@ -8,9 +8,9 @@
 
     <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}"
         class="mb-9 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-          [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-            dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
+              [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+                [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
+                dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
         <select name="type">
             <option value=""> Tipo </option>
             <option value="proyecto" @selected(request('type') == 'proyecto')>Proyectos</option>
@@ -59,17 +59,24 @@
                                         <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer" /></button>
+                                            <button type="submit"
+                                                class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                                <x-icon name="filled-heart" class="w-5 h-auto" />
+                                            </button>
                                         </form>
                                     @else
                                         <form action="{{ route('favorites.store') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="type" value="proyecto">
                                             <input type="hidden" name="reference_id" value="{{ $item->id }}">
-                                            <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
+                                            <button type="submit"
+                                                class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                                <x-icon name="heart" class="w-5 h-auto" />
+                                            </button>
                                         </form>
                                     @endif
-                                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $item->views }}</p>
+                                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                            class="w-4 h-auto" />{{ $item->views }}</p>
                                     <p>
                                         {{ $item->averageRating() ? number_format($item->averageRating(), 1) : 'Sin calificaciones' }}
                                     </p>
@@ -109,24 +116,31 @@
                         <div class="flex flex-row justify-between items-center mt-auto">
                             <div class="flex flex-row gap-3 items-cente mt-2">
                                 <p class="px-3 py-1 rounded-full text-white text-sm font-medium
-                                                {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
+                                                            {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
                                     {{ $item->state }}
                                 </p>
                                 @if ($favorite)
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer" /></button>
+                                        <button type="submit"
+                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                            <x-icon name="filled-heart" class="w-5 h-auto" />
+                                        </button>
                                     </form>
                                 @else
                                     <form action="{{ route('favorites.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type" value="oferta">
                                         <input type="hidden" name="reference_id" value="{{ $item->id }}">
-                                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
+                                        <button type="submit"
+                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                            <x-icon name="heart" class="w-5 h-auto" />
+                                        </button>
                                     </form>
                                 @endif
-                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $item->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                        class="w-4 h-auto" />{{ $item->views }}</p>
                             </div>
                             <span class="text-sm">{{ $item->company->name . ' ' . $item->company->last_name  }}</span>
                         </div>
