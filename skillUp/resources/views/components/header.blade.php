@@ -1,5 +1,5 @@
 <header
-    class="fixed top-0 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl flex items-center justify-between bg-red
+    class="fixed top-0 left-1/2 -translate-x-1/2 {{ auth()->user()?->role === 'Profesor' ? 'w-[95%]' : 'w-[90%]' }} flex items-center justify-between bg-red
   dark:bg-themeBgDark bg-white text-black dark:text-[#e8e8e8] px-8 py-2 rounded-b-4xl shadow z-50 dark:border-2 dark:border-t-0 dark:border-themeBlue"
     id="main-header">
 
@@ -10,10 +10,10 @@
     </div>
 
     <nav class="flex [&>a]:inline-block [&>a]:px-3 [&>a]:py-2" id="main-navigation">
-        <a href="{{ route('dashboard') }}">Inicio</a>
-        <a href="{{ route('projects.index') }}">Proyectos</a>
-        <a href="{{ route('job.offers.index') }}">Ofertas de empleo</a>
-        <a href="{{ route('favorites.index') }}">Favoritos</a>
+        <a href="{{ route('dashboard') }}">{{ __('messages.navbar.home') }}</a>
+        <a href="{{ route('projects.index') }}">{{ __('messages.navbar.projects') }}</a>
+        <a href="{{ route('job.offers.index') }}">{{ __('messages.navbar.job-offers') }}</a>
+        <a href="{{ route('favorites.index') }}">{{ __('messages.navbar.favorites') }}</a>
 
         @auth
             @php
@@ -24,14 +24,14 @@
                 <a href="{{ route('projects.ownProjects') }}">Tus proyectos</a>
             @endif
             @if($role === 'Profesor')
-                <a href="{{ route('school.projects.index') }}">Proyectos escolares</a>
+                <a href="{{ route('school.projects.index') }}">{{ __('messages.navbar.school-projects') }}</a>
             @endif
             @if(in_array($role, ['Profesor', 'Empresa']))
-                <a href="{{ route('applications.index') }}">Candidaturas</a>
-                <a href="{{ route('job.offers.company.index') }}">Tus ofertas</a>
+                <a href="{{ route('applications.index') }}">{{ __('messages.navbar.applications') }}</a>
+                <a href="{{ route('job.offers.company.index') }}">{{ __('messages.navbar.my-job-offers') }}</a>
             @endif
             @if($role === 'Admin')
-                <a href="{{ route('admin.dashboard') }}">Panel de administrador</a>
+                <a href="{{ route('admin.dashboard') }}">{{ __('messages.navbar.admin-panel') }}</a>
             @endif
         @endauth
 
@@ -53,8 +53,8 @@
                         <li
                             class="flex flex-row justify-between items-start p-3 hover:bg-themeLightGray/20 [&>div>span]text-themeLightGray cursor-default transition">
                             <div class="flex flex-col">
-                                <span class="text-sm font-semibold">{{ $notification->title ?? 'Notificación' }}</span>
-                                <span class="text-sm">{{ $notification->message ?? 'Mensaje' }}</span>
+                                <span class="text-sm font-semibold">{{ $notification->title }}</span>
+                                <span class="text-sm">{{ $notification->message}}</span>
                             </div>
                             <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}">
                                 @csrf
@@ -64,7 +64,7 @@
                             </form>
                         </li>
                     @empty
-                        <li class="p-3 text-sm text-gray-500">Sin notificaciones</li>
+                        <li class="p-3 text-sm text-gray-500">{{ __('messages.navbar.no-notifications') }}</li>
                     @endforelse
                 </ul>
             </div>
@@ -74,12 +74,43 @@
             <x-icon name="dark-light" class="w-6 h-auto " />
         </button>
 
+
+        @php
+            $languages = [
+                'en' => ['label' => 'English', 'icon' => asset('icons/england.svg')],
+                'es' => ['label' => 'Español', 'icon' => asset('icons/spain.svg')],
+                'fr' => ['label' => 'Français', 'icon' => asset('icons/french.svg')],
+            ];
+        @endphp
+
+        <div x-data="{ open: false }" class="relative inline-block translate-y-1.5 ml-2 text-left z-50">
+            <button @click="open = !open"
+                class="flex items-center gap-2 px-3 py-1 rounded dark:bg-themeDark dark:text-white cursor-pointer">
+                <img src="{{ $languages[App::getLocale()]['icon'] }}" alt="Bandera" class="w-5 h-5">
+                <span class="text-sm">{{ $languages[App::getLocale()]['label'] }}</span>
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <div x-show="open" @click.outside="open = false"
+                class="absolute right-0 mt-2 w-40 dark:bg-themeBgDark bg-white dark:bg-themeDark border border-gray-200 dark:border-gray-600 rounded shadow">
+                @foreach ($languages as $locale => $info)
+                    <a href="{{ LaravelLocalization::getLocalizedURL($locale, null, [], true) }}" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700
+                        {{ App::getLocale() === $locale ? 'font-semibold' : '' }}">
+                        <img src="{{ $info['icon'] }}" alt="{{ $info['label'] }}" class="w-5 h-5">
+                        {{ $info['label'] }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
     </nav>
 
     <nav class="flex flex-grow justify-end basis-0 ">
         @auth
             <a href="{{ route('profile.index') }}" class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
-                    transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
+                        transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
                 <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"

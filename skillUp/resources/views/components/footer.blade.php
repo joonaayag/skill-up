@@ -3,7 +3,7 @@
         <img src="{{ asset('icons/skill-up-logo.svg') }}" alt="Skill-Up" class="h-14">
     </a>
 
-    <p class="text-sm mb-3">&copy; {{ date('Y') }} Skill-Up. Todos los derechos reservados.</p>
+    <p class="text-sm mb-3">&copy; {{ date('Y') }} {{ __('messages.footer.credits') }}</p>
     <ul class="flex gap-4">
         <div class="flex gap-3  [&>a]:px-1 [&>a]:py-1 [&>a]:h-auto [&>a]:bg-themeDarkGray [&>a]:rounded-full [&>a]:hover:bg-themeLightGray [&>a]:transition-all [&>a]:duration-300 [&>a]:hover:text-themeBlue ">
             <a href="https://github.com/joonaayag/skill-up">

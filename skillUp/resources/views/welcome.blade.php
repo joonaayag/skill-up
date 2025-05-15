@@ -16,10 +16,9 @@
             <div class="col-span-3 ml-16 mt-11">
                 <x-icon name="skill-up-logo" class="w-72 h-auto -translate-x-8 mb-7" />
 
-                <x-heading level="h1" class="mb-7">Descubre proyectos TFG y oportunidades de trabajo</x-heading>
-                <p class="leading-5 mb-7">Explora una variedad de proyectos académicos y ofertas de trabajo adaptadas
-                    para estudiantes y empresas. Conéctate, colabora y haz avanzar tu carrera con facilidad.</p>
-                <x-button href="{{ route('auth') }}">Empezar ahora</x-button>
+                <x-heading level="h1" class="mb-7">{{ __('messages.welcome.title') }}</x-heading>
+                <p class="leading-5 mb-7">{{ __('messages.welcome.subtitle') }}</p>
+                <x-button href="{{ route('auth') }}">{{ __('messages.welcome.button') }}</x-button>
 
             </div>
             <div class="col-span-2 flex items-center justify-center">
