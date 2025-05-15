@@ -10,37 +10,37 @@ use Illuminate\Http\Request;
 class JobOfferController extends Controller
 {
 
-public function index(Request $request)
-{
-    $query = JobOffer::query();
+    public function index(Request $request)
+    {
+        $query = JobOffer::query();
 
-    if ($request->filled('title')) {
-        $query->where('name', 'like', '%' . $request->title . '%');
+        if ($request->filled('title')) {
+            $query->where('name', 'like', '%' . $request->title . '%');
+        }
+
+        if ($request->filled('author')) {
+            $query->whereHas('company', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->author . '%');
+            });
+        }
+
+        if ($request->filled('general_category')) {
+            $query->whereIn('general_category', $request->general_category);
+        }
+
+        $order = $request->get('order');
+        $direction = $request->get('direction', 'asc');
+
+        if ($order && in_array($order, ['name', 'general_category', 'created_at'])) {
+            $query->orderBy($order, $direction);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $offers = $query->get();
+
+        return view('job_offers.index', compact('offers'));
     }
-
-    if ($request->filled('author')) {
-        $query->whereHas('company', function ($q) use ($request) {
-            $q->where('name', 'like', '%' . $request->author . '%');
-        });
-    }
-
-    if ($request->filled('general_category')) {
-        $query->whereIn('general_category', $request->general_category);
-    }
-
-    $order = $request->get('order');
-    $direction = $request->get('direction', 'asc');
-
-    if ($order && in_array($order, ['name', 'general_category', 'created_at'])) {
-        $query->orderBy($order, $direction);
-    } else {
-        $query->orderBy('created_at', 'desc');
-    }
-
-    $offers = $query->get();
-
-    return view('job_offers.index', compact('offers'));
-}
 
 
 
@@ -65,9 +65,15 @@ public function index(Request $request)
         }
 
         if ($request->filled('order')) {
-            $query->orderBy($request->order, 'asc');
+            $direction = $request->input('direction', 'asc');
+            $query->orderBy($request->order, $direction);
         } else {
             $query->latest();
+        }
+
+
+        if ($request->filled('state')) {
+            $query->where('state', $request->state);
         }
 
         $offers = $query->get();
