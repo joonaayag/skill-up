@@ -228,7 +228,117 @@
                     @endforelse
                 </tbody>
             </table>
+
         </div>
+
+        <div x-data="{ showCreateUser: false }" class="inline-block mt-5">
+            <button @click="showCreateUser = true"
+                class="flex  gap-2 items-center bg-themeBlue/80 border-2 border-themeBlbg-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer"><x-icon
+                    name="plus" class="w-5 h-auto" /> Crear</button>
+
+            <x-modal :show="'showCreateUser'" @close="showCreateUser = false">
+                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Crear usuario</x-heading>
+                <form method="POST" action="{{ route('admin.register') }}" class="space-y-4"
+                    x-data="{ role: '{{ old('role') }}' }">
+                    @csrf
+
+                    <input type="text" name="name" placeholder="Nombre"  required>
+                    <input type="text" name="lastName" placeholder="Apellido"  required>
+                    <input type="email" name="email" placeholder="Correo electrónico"  required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password_confirmation" placeholder="Confirmar contraseña" required>
+
+                    <select name="role" x-model="role" required>
+                        <option value="">Selecciona tu rol</option>
+                        <option value="Usuario">Usuario</option>
+                        <option value="Alumno">Estudiante</option>
+                        <option value="Profesor">Profesor</option>
+                        <option value="Empresa">Empresa</option>
+                    </select>
+
+                    <!-- Campos adicionales según rol -->
+                    <template x-if="role === 'Alumno'">
+                        <div class="space-y-2">
+                            <input type="date" name="birthDate" 
+                                placeholder="Fecha de nacimiento" required>
+                            <input type="text" name="currentCourse" 
+                                placeholder="Curso actual" required>
+                            <input type="text" name="educationalCenter" 
+                                placeholder="Centro educativo" required>
+                        </div>
+                    </template>
+
+                    <template x-if="role === 'Profesor'">
+                        <div class="space-y-2">
+                            <input type="date" name="birthDate" 
+                                placeholder="Fecha de nacimiento" required>
+                            <input type="text" name="specialization" 
+                                placeholder="Especialización" required>
+                            <input type="text" name="department"  placeholder="Departamento"
+                                required>
+                            <input type="text" name="validationDocument" 
+                                placeholder="Documento que lo valide" required>
+                        </div>
+                    </template>
+
+                    <template x-if="role === 'Empresa'">
+                        <div class="space-y-2">
+                            <input type="text" name="cif"  placeholder="CIF" required>
+                            <input type="text" name="address"  placeholder="Dirección" required>
+                            <input type="text" name="sector"  placeholder="Sector" required>
+                            <input type="url" name="website"  placeholder="Sitio web">
+                        </div>
+                    </template>
+
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+                        Register
+                    </button>
+
+                </form>
+            </x-modal>
+
+        </div>
+
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const bannerImage = document.getElementById('bannerImage');
+            const profileImage = document.getElementById('profileImage');
+
+            const bannerInput = document.getElementById('bannerInput');
+            const bannerPreview = document.getElementById('bannerPreview');
+
+            const fotoPerfilInput = document.getElementById('fotoPerfilInput');
+            const fotoPerfilPreview = document.getElementById('fotoPerfilPreview');
+
+            bannerPreview.addEventListener('click', () => bannerInput.click());
+            fotoPerfilPreview.addEventListener('click', () => fotoPerfilInput.click());
+
+            bannerInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        bannerPreview.src = e.target.result;
+                        bannerImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            fotoPerfilInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        fotoPerfilPreview.src = e.target.result;
+                        profileImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 
 @endsection
