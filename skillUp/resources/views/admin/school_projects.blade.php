@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto px-6 py-10">
-    <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Proyectos Escolares</h1>
+    <x-heading level="h1" class="mb-10">Proyectos Escolares</x-heading>
 
     <div class="overflow-x-auto rounded-lg shadow">
         <table class="min-w-full bg-white dark:bg-themeDarkGray text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">

@@ -308,14 +308,13 @@ class AdminController extends Controller
             'creation_date' => $request->creation_date,
             'description' => $request->description,
             'tags' => $request->tags,
-            'user_id' => auth()->id(),
             'general_category' => $request->general_category,
             'link' => $request->link,
         ]);
 
-        if ($project->user_id !== auth()->id()) {
+        if ($project->teacher_id !== auth()->id()) {
             Notification::create([
-                'user_id' => $project->user_id,
+                'user_id' => $project->teacher_id,
                 'type' => 'proyecto',
                 'title' => 'Tu proyecto ha sido actualizado',
                 'message' => 'El proyecto "' . $project->title . '" ha sido actualizado por el administrador.',
@@ -479,6 +478,30 @@ class AdminController extends Controller
 
         $project->delete();
         $projects = Project::all();
+        return view('admin.projects', compact('projects'));
+    }
+
+    public function destroySchoolProject($id)
+    {
+        $project = SchoolProject::findOrFail($id);
+
+        if ($project->image) {
+            $path = $project->image;
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+        }
+
+        foreach ($project->images as $image) {
+            $path = $image->path;
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+            $image->delete();
+        }
+
+        $project->delete();
+        $projects = SchoolProject::all();
         return view('admin.projects', compact('projects'));
     }
 

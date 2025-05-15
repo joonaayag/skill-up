@@ -1,132 +1,277 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>{{ $schoolProject->title }}</h1>
+
+    <div x-data="{ selectedImage: null }">
+
+        <x-heading level="h1" class="mb-10">Detalles del proyecto </x-heading>
+
+        @if ($errors->any())
+            <div class="mb-6">
+                <ul class="list-disc list-inside text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        
+
+        <x-card class="mb-12">
+            <x-tags>{{ $schoolProject->tags }}</x-tags>
+
+            <x-heading level="h2" class="mt-6 mb-3">{{ $schoolProject->title }}</x-heading>
+            <x-heading level="h4" class="mb-4">{{ $schoolProject->general_category }}</x-heading>
 
 
+            <p class="mb-9 break-words">{{ $schoolProject->description }}</p>
 
 
-    @if ($schoolProject->image)
-        <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto" style="max-width: 400px;">
-    @endif
+            @if($schoolProject->image)
+                <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto"
+                    class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
+            @endif
 
-    <p><strong>Descripción:</strong><br>{{ $schoolProject->description }}</p>
+            <div class="flex justify-between mt-16">
+                <div class="flex gap-4 items-center justify-center">
+                    <p>Autor: <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong></p>
+                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                            class="w-4 h-auto" />{{ $schoolProject->views }}</p>
+                    <p>
+                        <label>★</label>
+                        {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'Sin calificaciones' }}
+                    </p>
+                </div>
+                <div class="flex flex-col justify-end [&>p]:text-black dark:[&>p]:text-themeLightGray">
+                    <p class="text-sm text-gray-500">Publicado el: {{ $schoolProject->created_at }}</p>
+                    <p class="text-sm text-gray-500">Realizado el: {{ $schoolProject->creation_date }}</p>
+                </div>
+            </div>
 
-    <p><strong>Etiquetas:</strong> {{ $schoolProject->tags }}</p>
-    <p><strong>Categoría:</strong> {{ $schoolProject->sector_category }}</p>
-    <p><strong>Fecha de creación:</strong> {{ $schoolProject->creation_date }}</p>
+        </x-card>
 
-    @if ($schoolProject->link)
-        <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
-    @endif
 
-    <h2>Arcvhivos destacados------------</h2>
+        <x-card>
+            @if($schoolProject->link)
+                <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
+            @endif
 
-    @if ($schoolProject->images && $schoolProject->images->count())
-        <div style="margin-bottom: 1.5rem;">
-            <strong>Archivos del proyecto:</strong>
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
-                @foreach ($schoolProject->images as $img)
-                    @php
-                        $extension = pathinfo($img->path, PATHINFO_EXTENSION);
-                        $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
-                    @endphp
-
-                    <div style="flex: 1 0 120px;">
-                        @if ($isImage)
-                            <img src="{{ asset('storage/' . $img->path) }}" alt="Imagen del proyecto"
-                                style="width: 100%; max-width: 200px; border-radius: 8px; object-fit: cover;">
-                        @else
-                            <a href="{{ asset('storage/' . $img->path) }}" download
-                                class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
-                                📄 Descargar archivo ({{ $extension }})
-                            </a>
-                        @endif
+            <x-heading level="h2" class="mt-2 mb-3">Archivos del proyecto</x-heading>
+            @if ($schoolProject->images && $schoolProject->images->count())
+                <div class="mb-6">
+                    <div class="flex flex-wrap gap-2.5 mt-2.5">
+                        @foreach ($schoolProject->images as $img)
+                            @php
+                                $extension = pathinfo($img->path, PATHINFO_EXTENSION);
+                                $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                            @endphp
+                            <div class="flex-1 min-w-28">
+                                @if ($isImage)
+                                    <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
+                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        Ver imagen
+                                    </a>
+                                @else
+                                    <a href="{{ asset('storage/' . $img->path) }}" download
+                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                        📄 Descargar archivo ({{ $extension }})
+                                    </a>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
-            </div>
-        </div>
-    @endif
+                </div>
+            @else
+                <p class="mb-6">No hay archivos por el momento</p>
+            @endif
 
-    <li x-data="{ showDelete: false, showEdit: false }">
-        <strong>{{ $schoolProject->title }}</strong> - {{ $schoolProject->author }} ({{ $schoolProject->creation_date }})
+            <!-- Image Modal -->
+            <template x-if="selectedImage">
+                <div x-transition class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 p-4"
+                    @click.self="selectedImage = null">
+                    <div class="max-w-full max-h-full relative">
+                        <img :src="selectedImage" class="max-w-full max-h-[90vh] object-contain" alt="Selected Image" />
+                        <button @click="selectedImage = null"
+                            class="absolute top-2 right-2 bg-white rounded-full p-2 text-black hover:bg-gray-200">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            </template>
 
-        <button @click="showDelete = true">Eliminar</button>
-        <button @click="showEdit = true">Editar</button>
+            @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'project'])
+        </x-card>
 
-        <div x-cloak x-show="showDelete">
-            <p>¿Seguro que deseas eliminar este proyecto?</p>
-            <form action="{{ route('admin.school_project.destroy', $schoolProject->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Sí, eliminar</button>
-                <button type="button" @click="showDelete = false">Cancelar</button>
-            </form>
-        </div>
+    </div>
 
-        <div x-cloak x-show="showEdit">
-            <form action="{{ route('admin.school_project.update', $schoolProject->id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+    <div class="flex mt-3 gap-3">
+        <div x-cloak x-data="{ showModal: false }"
+            x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
+            class="relative z-10">
 
-                <label>Título:</label>
-                <input type="text" name="title" value="{{ $schoolProject->title }}" required><br>
-
-                <label>Autor:</label>
-                <input type="text" name="author" value="{{ $schoolProject->author }}" required><br>
-
-                <label>Fecha de creación:</label>
-                <input type="date" name="creation_date" value="{{ $schoolProject->creation_date }}" required><br>
-
-                <label>Descripción:</label>
-                <textarea name="description" required>{{ $schoolProject->description }}</textarea><br>
-
-                <label>Tags:</label>
-                <input type="text" name="tags" value="{{ $schoolProject->tags }}"><br>
-
-
-                <label>Categoría general:</label>
-                <input type="text" name="general_category" value="{{ $schoolProject->general_category }}"><br>
-
-                <label class="block text-sm">Enlace (opcional)</label>
-                <input type="url" name="link" class="w-full border rounded px-3 py-2 mb-2"
-                    value="{{ old('link', $schoolProject->link) }}">
-
-                <label class="block text-sm">Imagen destacada</label>
-                <input type="file" name="image" accept="image/*" class="mb-2">
-
-                <label class="block text-sm">Archivos adicionales</label>
-                <input type="file" name="files[]" multiple class="mb-4">
-
-                <button type="submit">Guardar cambios</button>
-                <button type="button" @click="showEdit = false">Cancelar</button>
-            </form>
-        </div>
-    </li>
-    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $schoolProject->views }}</p>
-    <h3>Valorar este proyecto</h3>
-    <p>Calificación actual:
-        {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'Sin calificaciones' }}
-    </p>
-
-    @auth
-        <form action="{{ route('school-projects.rate', $schoolProject->id) }}" method="POST">
-            @csrf
-            <div class="rating-stars">
-                @for ($i = 1; $i <= 5; $i++)
-                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" {{ $schoolProject->getRatingByUser(auth()->id()) && $schoolProject->getRatingByUser(auth()->id())->rating == $i ? 'checked' : '' }}>
-                    <label for="star{{ $i }}">★</label>
-                @endfor
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                {{ $schoolProject->getRatingByUser(auth()->id()) ? 'Actualizar valoración' : 'Enviar valoración' }}
+            <button @click="showModal = true"
+                class=" p-2 bg-yellow-400 text-black shadow-lg hover:bg-yellow-500 transition cursor-pointer">
+                Editar
             </button>
-        </form>
-    @endauth
 
-    <p><a href="{{ route('admin.school_projects') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a></p>
 
-    @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'school-project'])
+            <x-modal>
+                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar
+                    proyecto</x-heading>
+
+                <form action="{{ route('admin.school_project.update', $schoolProject->id) }}" enctype="multipart/form-data"
+                    class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
+                    @method('PUT')
+                    @csrf
+
+                    <div>
+                        <x-label for="title">Título:</x-label>
+                        <x-inputtext type="text" name="title" id="title" value="{{ old('title', $schoolProject->title) }}"
+                            required />
+                    </div>
+
+                    <div>
+                        <x-label for="description">Descripción:</x-label>
+                        <x-textarea name="description" id="description"
+                            required>{{ old('description', $schoolProject->description) }}</x-textarea>
+                    </div>
+
+                    <div>
+                        <x-label for="author">Autor:</x-label>
+                        <x-inputtext type="text" name="author" id="author" value="{{ old('author', $schoolProject->author) }}" required />
+                    </div>
+
+                    <div>
+                        <x-label for="tags">Etiquetas (tags)</x-label>
+                        <x-inputtext type="text" name="tags" id="tags" value="{{ old('tags', $schoolProject->tags) }}" required />
+                    </div>
+
+                    <div>
+                        <x-label for="general_category">Categoría general:</x-label>
+                        <select name="general_category" required
+                            class="w-full px-3 py-2 rounded border border-themeLightGray">
+                            <option value="Administración y negocio" {{ old('general_category', $schoolProject->general_category) == 'Administración y negocio' ? 'selected' : '' }}>Administración
+                                y negocio</option>
+                            <option value="Ciencia y salud" {{ old('general_category', $schoolProject->general_category) == 'Ciencia y salud' ? 'selected' : '' }}>Ciencia y salud</option>
+                            <option value="Comunicación" {{ old('general_category', $schoolProject->general_category) == 'Comunicación' ? 'selected' : '' }}>Comunicación</option>
+                            <option value="Diseño y comunicación" {{ old('general_category', $schoolProject->general_category) == 'Diseño y comunicación' ? 'selected' : '' }}>Diseño y
+                                comunicación</option>
+                            <option value="Educación" {{ old('general_category', $schoolProject->general_category) == 'Educación' ? 'selected' : '' }}>Educación</option>
+                            <option value="Industria" {{ old('general_category', $schoolProject->general_category) == 'Industria' ? 'selected' : '' }}>Industria</option>
+                            <option value="Otro" {{ old('general_category', $schoolProject->general_category) == 'Otro' ? 'selected' : '' }}>Otro</option>
+                            <option value="Tecnología y desarrollo" {{ old('general_category', $schoolProject->general_category) == 'Tecnología y desarrollo' ? 'selected' : '' }}>Tecnología y
+                                desarrollo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <x-label for="title">Fecha de creación:</x-label>
+                        <x-inputdate name="creation_date" id="creation_date"
+                            value="{{ old('creation_date', $schoolProject->creation_date) }}" required />
+                    </div>
+
+                    <div>
+                        <x-label for="title">Enlace (Opcional):</x-label>
+                        <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray"
+                            value="{{ old('link', $schoolProject->link) }}" />
+                    </div>
+
+                    <div>
+                        <x-label for="title">Imagen destacada:</x-label>
+                        <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
+                            <label for="image-upload"
+                                class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
+                                🖼️ Subir imagen destacada
+                                <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
+                                                        fileName = $event.target.files[0]?.name || '';
+                                                        if ($event.target.files[0]) {
+                                                            const reader = new FileReader();
+                                                            reader.onload = e => previewUrl = e.target.result;
+                                                            reader.readAsDataURL($event.target.files[0]);
+                                                        }" />
+                            </label>
+
+                            <template x-if="fileName">
+                                <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">📄 <span x-text="fileName"></span>
+                                </p>
+                            </template>
+
+                            <template x-if="previewUrl">
+                                <img :src="previewUrl" alt="Vista previa"
+                                    class="mt-3 max-h-48 rounded border border-gray-300 shadow" />
+                            </template>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <x-label for="title">Archivos adicionales</x-label>
+                        <div x-data="{ fileNames: [] }" class="w-full">
+                            <label for="file-upload"
+                                class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
+                                📎 Subir archivos
+                                <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
+                                    @change="fileNames = [...$event.target.files].map(f => f.name)" />
+                            </label>
+
+                            <template x-if="fileNames.length > 0">
+                                <ul
+                                    class="mt-2 text-sm text-black dark:text-themeLightGray space-y-1 list-disc list-inside">
+                                    <template x-for="name in fileNames" :key="name">
+                                        <li x-text="name"></li>
+                                    </template>
+                                </ul>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end gap-3 mt-4">
+                        <button type="button" @click="showModal = false"
+                            class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </x-modal>
+
+        </div>
+
+        <div x-cloak x-data="{ showDelete: false }"
+            x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val))"
+            >
+
+            <button @click="showDelete = true"
+                class=" p-2 bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">
+                Eliminar
+            </button>
+
+            <x-modal :show="'showDelete'">
+                <x-heading level="h3" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Seguro
+                    deses eliminar {{ $schoolProject->title }} de {{ $schoolProject->teacher->name }}?</x-heading>
+                <form action="{{ route('admin.school_project.destroy', $schoolProject->id) }}" method="POST"
+                    class="flex justify-center gap-3">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="p-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
+                    <button type="button"
+                        class="px-4 py-2 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
+                        @click="showDelete = false">Cancelar</button>
+                </form>
+
+            </x-modal>
+        </div>
+
+        <a href="{{ route('admin.school_projects') }}"
+            class=" px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            <x-icon name="arrow-left" class="w-5 h-auto" />
+            Volver
+        </a>
+    </div>
+
+    </div>
 @endsection
