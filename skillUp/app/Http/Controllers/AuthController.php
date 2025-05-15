@@ -31,7 +31,7 @@ class AuthController extends Controller
             return redirect('/dashboard');
         }
 
-        return back()->withErrors(['email' => 'Credenciales incorrectas.']);
+        return back()->withErrors(['email' => 'Credenciales incorrectas.'])->withInput();
     }
 
     public function register(Request $request)

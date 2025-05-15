@@ -172,25 +172,25 @@
                 @csrf
 
                 <x-label for="title">Título:</x-label>
-                <x-inputtext type="text" name="name" id="name" required />
+                <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
 
                 <x-label for="subtitle">Subtitulo:</x-label>
-                <x-inputtext type="text" name="subtitle" id="subtitle" required />
+                <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
 
                 <x-label for="description">Descripción:</x-label>
-                <x-textarea name="description" id="description" required></x-textarea>
+                <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
 
                 <x-label for="sector_category">Categoría del sector:</x-label>
-                <x-inputtext type="text" name="sector_category" id="sector_category" required />
+                <x-inputtext type="text" name="sector_category" id="sector_category" value="{{ old('sector_category') }}" required />
 
                 <x-label for="general_category">Categoría general:</x-label>
-                <x-inputtext type="text" name="general_category" id="general_category" required />
+                <x-inputtext type="text" name="general_category" id="general_category" value="{{ old('general_category') }}" required />
 
                 <x-label for="state">Estado:</x-label>
                 <select name="state" required
                     class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
-                    <option value="abierta">Abierta</option>
-                    <option value="cerrada">Cerrada</option>
+                    <option value="abierta" @selected(old('state') == 'abierta')>Abierta</option>
+                    <option value="cerrada" @selected(old('state') == 'cerrada')>Cerrada</option>
                 </select>
 
                 <div class="flex justify-end gap-3 mt-4">

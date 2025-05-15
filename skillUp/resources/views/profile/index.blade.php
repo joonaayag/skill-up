@@ -121,7 +121,7 @@
                     Editar perfil
                 </button>
                 <div x-cloak x-data="{ open: false }" class="inline-block">
-                    <button @click="open = true" class="mt-6 bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Cerrar sesión</button>
+                    <button @click="open = true" class="mt-6 dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Cerrar sesión</button>
 
                     <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                         <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
@@ -132,15 +132,15 @@
                             </p>
                             <div class="flex justify-end gap-4">
                                 <button @click="open = false"
-                                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition cursor-pointer">
                                     Cancelar
                                 </button>
 
                                 <form action="{{ route('user.logout', $user->id) }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
-                                        Eliminar
+                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition cursor-pointer">
+                                        Cerrar sesión
                                     </button>
                                 </form>
                             </div>
