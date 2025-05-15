@@ -142,7 +142,7 @@ class AdminController extends Controller
         return redirect()->route('admin.users');
     }
 
-    public function updateComment(Request $request, $comment)
+    public function updateComment(Request $request, $id)
     {
         $request->validate([
             'content' => 'required|string|max:1000',
@@ -152,7 +152,7 @@ class AdminController extends Controller
             'content.max' => 'El contenido no puede superar los 1000 caracteres.',
         ]);
 
-        $comment = Comment::findOrFail($comment);
+        $comment = Comment::findOrFail($id);
 
         $comment->update([
             'content' => $request->content
@@ -161,8 +161,9 @@ class AdminController extends Controller
 
     }
 
-    public function destroyComment($comment)
+    public function destroyComment($id)
     {
+        $comment = Comment::findOrFail($id);
         if ($comment->user_id !== Auth::id() && !Auth::user()->isAdmin()) {
             return back()->with('error', 'No tienes permiso para eliminar este comentario.');
         }

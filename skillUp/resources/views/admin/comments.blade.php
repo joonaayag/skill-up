@@ -94,7 +94,7 @@
                     @empty
                         <tr>
                             <td colspan="7" class="px-4 py-5 text-center text-gray-500 dark:text-gray-300">
-                                No hay ofertas registradas.
+                                No hay comentarios registrados.
                             </td>
                         </tr>
                     @endforelse
