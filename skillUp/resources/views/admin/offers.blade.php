@@ -32,122 +32,114 @@
                                 {{-- Editar --}}
                                 <div x-data="{ openEdit: false }" class="inline-block">
                                     <button @click="openEdit = true"
-                                        class="text-themeBlue hover:underline font-medium">Editar</button>
+                                        class="bg-themeBlue/80 border-2 border-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Editar</button>
 
                                     {{-- Modal Editar --}}
-                                    <div x-show="openEdit" x-cloak
-                                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div
-                                            class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-2xl max-h-[90vh] overflow-auto relative" @click.outside="openEdit = false">
+                                    <x-modal :show="'openEdit'" @click.outside="openEdit = false">
+                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar
+                                            oferta</x-heading>
 
-                                            <x-heading level="h2"
-                                                class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar
-                                                oferta</x-heading>
+                                        <form action="{{ route('admin.offers.update', $offer->id) }}" method="POST"
+                                            class="space-y-4">
+                                            @csrf
+                                            @method('PUT')
 
-                                            <form action="{{ route('admin.offers.update', $offer->id) }}" method="POST"
-                                                class="space-y-4">
-                                                @csrf
-                                                @method('PUT')
+                                            <div>
+                                                <label class="block text-sm font-medium">Título</label>
+                                                <input type="text" name="name" value="{{ $offer->name }}"
+                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
+                                                    required>
+                                            </div>
 
+                                            <div>
+                                                <label class="block text-sm font-medium">Subtítulo</label>
+                                                <input type="text" name="subtitle" value="{{ $offer->subtitle }}"
+                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600">
+                                            </div>
+
+                                            <div>
+                                                <label class="block text-sm font-medium">Descripción</label>
+                                                <textarea name="description" rows="4"
+                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
+                                                    required>{{ $offer->description }}</textarea>
+                                            </div>
+
+                                            <div class="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <label class="block text-sm font-medium">Título</label>
-                                                    <input type="text" name="name" value="{{ $offer->name }}"
+                                                    <label class="block text-sm font-medium">Categoría del sector</label>
+                                                    <input type="text" name="sector_category"
+                                                        value="{{ $offer->sector_category }}"
                                                         class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
                                                         required>
                                                 </div>
-
                                                 <div>
-                                                    <label class="block text-sm font-medium">Subtítulo</label>
-                                                    <input type="text" name="subtitle" value="{{ $offer->subtitle }}"
-                                                        class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600">
-                                                </div>
-
-                                                <div>
-                                                    <label class="block text-sm font-medium">Descripción</label>
-                                                    <textarea name="description" rows="4"
-                                                        class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
-                                                        required>{{ $offer->description }}</textarea>
-                                                </div>
-
-                                                <div class="grid grid-cols-2 gap-4">
-                                                    <div>
-                                                        <label class="block text-sm font-medium">Categoría del sector</label>
-                                                        <input type="text" name="sector_category"
-                                                            value="{{ $offer->sector_category }}"
-                                                            class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
-                                                            required>
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-sm font-medium">Categoría general</label>
-                                                        <input type="text" name="general_category"
-                                                            value="{{ $offer->general_category }}"
-                                                            class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
-                                                            required>
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <label class="block text-sm font-medium">Estado</label>
-                                                    <select name="state"
+                                                    <label class="block text-sm font-medium">Categoría general</label>
+                                                    <input type="text" name="general_category"
+                                                        value="{{ $offer->general_category }}"
                                                         class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
                                                         required>
-                                                        <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>Abierta</option>
-                                                        <option value="cerrada" {{ $offer->state === 'cerrada' ? 'selected' : '' }}>Cerrada</option>
-                                                    </select>
                                                 </div>
+                                            </div>
 
-                                                <div>
-                                                    <label class="block text-sm font-medium">Logo (URL)</label>
-                                                    <input type="text" name="logo" value="{{ $offer->logo }}"
-                                                        class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600">
-                                                </div>
+                                            <div>
+                                                <label class="block text-sm font-medium">Estado</label>
+                                                <select name="state"
+                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
+                                                    required>
+                                                    <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>
+                                                        Abierta</option>
+                                                    <option value="cerrada" {{ $offer->state === 'cerrada' ? 'selected' : '' }}>
+                                                        Cerrada</option>
+                                                </select>
+                                            </div>
 
-                                                <div class="mt-6 flex justify-end gap-4">
-                                                    <button type="submit"
-                                                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                                                        Guardar cambios
-                                                    </button>
-                                                    <button type="button" @click="openEdit = false"
-                                                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                                                        Cancelar
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                                            <div>
+                                                <label class="block text-sm font-medium">Logo (URL)</label>
+                                                <input type="text" name="logo" value="{{ $offer->logo }}"
+                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600">
+                                            </div>
+
+                                            <div class="mt-6 flex justify-end gap-4">
+                                                <button type="button" @click="openEdit = false"
+                                                    class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                                    Cancelar
+                                                </button>
+                                                <button type="submit"
+                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                                    Guardar cambios
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </x-modal>
                                 </div>
 
                                 {{-- Eliminar --}}
                                 <div x-data="{ openDelete: false }" class="inline-block">
                                     <button @click="openDelete = true"
-                                        class="text-red-600 hover:underline font-medium">Eliminar</button>
+                                        class="bg-red-500 border-2 border-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
-                                    {{-- Modal Eliminar --}}
-                                    <div x-show="openDelete" x-cloak 
-                                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md" @click.outside="openDelete = false">
-                                            <x-heading level="h2"
-                                                class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás
-                                                seguro?</x-heading>
-                                            <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
-                                                Esta acción eliminará la oferta <strong>{{ $offer->name }}</strong>.
-                                            </p>
-                                            <div class="flex justify-end gap-4">
-                                                <button @click="openDelete = false"
-                                                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
-                                                    Cancelar
+                                    <x-modal :show="'openDelete'" @click.outside="openDelete = false">
+                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás
+                                            seguro?</x-heading>
+                                        <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                            Esta acción eliminará la oferta <strong>{{ $offer->name }}</strong>.
+                                        </p>
+                                        <div class="flex justify-end gap-4">
+                                            <button @click="openDelete = false"
+                                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                                Cancelar
+                                            </button>
+                                            <form action="{{ route('admin.offers.destroy', $offer->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                                                    Eliminar
                                                 </button>
-                                                <form action="{{ route('admin.offers.destroy', $offer->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
-                                                        Eliminar
-                                                    </button>
-                                                </form>
-                                            </div>
+                                            </form>
                                         </div>
-                                    </div>
+                                    </x-modal>
+
                                 </div>
 
                             </td>
