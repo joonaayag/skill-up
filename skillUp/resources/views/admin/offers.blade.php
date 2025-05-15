@@ -105,7 +105,7 @@
                                                     Cancelar
                                                 </button>
                                                 <button type="submit"
-                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
                                                     Guardar cambios
                                                 </button>
                                             </div>
@@ -126,14 +126,14 @@
                                         </p>
                                         <div class="flex justify-end gap-4">
                                             <button @click="openDelete = false"
-                                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
                                                 Cancelar
                                             </button>
                                             <form action="{{ route('admin.offers.destroy', $offer->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 cursor-pointer">
                                                     Eliminar
                                                 </button>
                                             </form>
@@ -154,5 +154,54 @@
                 </tbody>
             </table>
         </div>
+
+        <div x-data="{ showCreateSchoolProject: false }" class="inline-block mt-5">
+            <button @click="showCreateSchoolProject = true"
+                class="flex  gap-2 items-center bg-themeBlue/80 border-2 border-themeBlbg-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer"><x-icon
+                    name="plus" class="w-5 h-auto" /> Crear</button>
+
+            <x-modal :show="'showCreateSchoolProject'" @close="showCreateSchoolProject = false">
+                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Crear oferta de trabajo</x-heading>
+                <form action="{{ route('admin.job.offers.store') }}" method="POST"
+                class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
+                @csrf
+
+                <x-label for="title">Título:</x-label>
+                <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
+
+                <x-label for="subtitle">Subtitulo:</x-label>
+                <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
+
+                <x-label for="description">Descripción:</x-label>
+                <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
+
+                <x-label for="sector_category">Categoría del sector:</x-label>
+                <x-inputtext type="text" name="sector_category" id="sector_category" value="{{ old('sector_category') }}" required />
+
+                <x-label for="general_category">Categoría general:</x-label>
+                <x-inputtext type="text" name="general_category" id="general_category" value="{{ old('general_category') }}" required />
+
+                <x-label for="state">Estado:</x-label>
+                <select name="state" required
+                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
+                    <option value="abierta" @selected(old('state') == 'abierta')>Abierta</option>
+                    <option value="cerrada" @selected(old('state') == 'cerrada')>Cerrada</option>
+                </select>
+
+                <div class="flex justify-end gap-3 mt-4">
+                    <button type="button" @click="showModal = false"
+                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+            </x-modal>
+
+        </div>
+
     </div>
 @endsection

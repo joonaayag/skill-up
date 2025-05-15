@@ -400,6 +400,138 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function createJobOffer(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:40',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'sector_category' => 'required|string',
+            'general_category' => 'required|string',
+            'state' => 'required|in:abierta,cerrada',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+
+            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
+            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'sector_category.required' => 'La categoría del sector es obligatoria.',
+            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+
+            'general_category.required' => 'La categoría general es obligatoria.',
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+
+            'state.required' => 'El estado es obligatorio.',
+            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+
+        ]);
+
+        $jobOffer = JobOffer::create([
+            'name' => $request->name,
+            'subtitle' => $request->subtitle,
+            'description' => $request->description,
+            'sector_category' => $request->sector_category,
+            'general_category' => $request->general_category,
+            'state' => $request->state,
+            'company_id' => auth()->id(),
+        ]);
+
+        $usuarios = User::where('id', '!=', auth()->id())->get();
+
+        foreach ($usuarios as $usuario) {
+            Notification::create([
+                'user_id' => $usuario->id,
+                'type' => 'oferta',
+                'title' => '¡Nueva oferta disponible!',
+                'message' => 'Se ha publicado una nueva oferta: "' . $jobOffer->name . '".',
+            ]);
+        }
+
+
+        return back();
+    }
+
+    public function createSchoolProject(Request $request)
+    {
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:40',
+            'author' => 'required|string|max:50',
+            'creation_date' => 'required|date',
+            'description' => 'required|string',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
+            'general_category' => 'nullable|string|max:40',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'files.*' => 'nullable|file|max:4096',
+        ], [
+            'title.required' => 'El título es obligatorio.',
+            'title.string' => 'El título debe ser una cadena de texto.',
+            'title.max' => 'El título no puede tener más de 40 caracteres.',
+
+            'author.required' => 'El autor es obligatorio.',
+            'author.string' => 'El autor debe ser una cadena de texto.',
+            'author.max' => 'El autor no puede tener más de 50 caracteres.',
+
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser una fecha válida.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden tener más de 50 caracteres.',
+
+            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.max' => 'La categoría general no puede tener más de 40 caracteres.',
+
+            'images.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
+            'images.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
+            'images.*.max' => 'Cada imagen no puede superar los 4MB.',
+
+            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
+            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+        ]);
+
+        $imagePath = $request->hasFile('image')
+            ? $request->file('image')->store('project_images', 'public')
+            : null;
+
+        $project = SchoolProject::create([
+            'title' => $validated['title'],
+            'teacher_id' => auth()->id(),
+            'author' => $validated['author'],
+            'creation_date' => $validated['creation_date'],
+            'description' => $validated['description'],
+            'tags' => $validated['tags'] ?? null,
+            'general_category' => $validated['general_category'] ?? null,
+            'image' => $imagePath,
+        ]);
+
+        Notification::create([
+            'user_id' => auth()->id(),
+            'type' => 'proyecto',
+            'title' => 'Proyecto escolar publicado',
+            'message' => 'Tu proyecto "' . $project->title . '" ha sido registrado correctamente.',
+        ]);
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $imageFile) {
+                $path = $imageFile->store('project_images', 'public');
+                $project->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
+
+        return back();
+    }
+
+
     public function showOffers()
     {
         if (auth()->user()->role !== 'Admin') {

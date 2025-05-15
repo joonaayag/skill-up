@@ -154,7 +154,9 @@ Route::middleware(['auth', 'session.timeout'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
     Route::post('/admin/crear-usuario', [AdminController::class, 'userRegister'])->name('admin.register');
-    Route::post('/admin/crear-usuario', [AdminController::class, 'createProject'])->name('admin.create.project');
+    Route::post('/admin/crear-proyecto', [AdminController::class, 'createProject'])->name('admin.create.project');
+    Route::post('/admin/crear-proyecto-escolar', [AdminController::class, 'createSchoolProject'])->name('admin.create.school.project');
+    Route::post('/admin/crear-oferta', [AdminController::class, 'createJobOffer'])->name('admin.job.offers.store');
     
     Route::get('/admin/projectos', [AdminController::class, 'projectsShow'])->name('admin.projects');
     Route::get('/admin/proyectos/{id}', [AdminController::class, 'detailsProject'])->name('admin.project.details');
