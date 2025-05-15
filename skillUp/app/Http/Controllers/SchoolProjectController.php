@@ -9,14 +9,67 @@ use Storage;
 
 class SchoolProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->role !== 'Profesor') {
             abort(403, 'Acceso denegado');
         }
-        $projects = SchoolProject::all();
+
+        $schoolQuery = SchoolProject::query();
+
+        if ($request->filled('title')) {
+            $schoolQuery->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        if ($request->filled('description')) {
+            $schoolQuery->where('description', 'like', '%' . $request->description . '%');
+        }
+
+        if ($request->filled('author')) {
+            $schoolQuery->where('author', 'like', '%' . $request->author . '%');
+        }
+
+        if ($request->filled('tags')) {
+            $categories = $request->input('tags');
+
+            if (is_array($categories)) {
+                $schoolQuery->whereIn('tags', $categories);
+            } else {
+                $schoolQuery->where('tags', $categories);
+            }
+        }
+
+        if ($request->filled('academic_year')) {
+            $years = $request->input('academic_year');
+
+            $schoolQuery->where(function ($query) use ($years) {
+                foreach ($years as $yearRange) {
+                    [$startYear, $endYear] = explode('-', $yearRange);
+                    $startDate = "$startYear-09-01";
+                    $endDate = "$endYear-06-30";
+
+                    $query->orWhereBetween('creation_date', [$startDate, $endDate]);
+                }
+            });
+        }
+
+        if ($request->filled('order')) {
+            $direction = $request->input('direction', 'asc');
+            $orderField = $request->input('order');
+
+            $allowedFields = ['title', 'created_at', 'author', 'creation_date'];
+            if (in_array($orderField, $allowedFields)) {
+                $schoolQuery->orderBy($orderField, $direction);
+            }
+        } else {
+            $schoolQuery->latest();
+        }
+
+        $projects = $schoolQuery->get();
+
         return view('school_projects.index', compact('projects'));
     }
+
     public function destroy($id)
     {
         if (auth()->user()->role !== 'Profesor') {
@@ -119,7 +172,7 @@ class SchoolProjectController extends Controller
                 Storage::disk('public')->delete($img->path);
                 $img->delete();
             }
-            
+
             foreach ($request->file('files') as $file) {
                 $path = $file->store('project_images', 'public');
                 $project->images()->create([

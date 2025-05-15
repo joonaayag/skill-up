@@ -101,8 +101,8 @@
                     </select>
 
                     <select name="direction">
-                        <option value="asc" @selected(request('direction') == 'asc')>Ascendente</option>
-                        <option value="desc" @selected(request('direction') == 'desc')>Descendente</option>
+                        <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
+                        <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>
 
                 </div>
