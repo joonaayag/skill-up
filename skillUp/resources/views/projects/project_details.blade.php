@@ -102,7 +102,8 @@
             @include('comments.comment_section', ['commentable' => $project, 'type' => 'project'])
         </x-card>
 
-        <a href="{{ route('projects.index') }}">← Volver</a>
+        <a href="{{ route('projects.index') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
 
     </div>
 

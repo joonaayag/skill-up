@@ -62,7 +62,7 @@
             @endif
         </div>
         <div class="flex justify-end gap-4 mb-6" x-data="{ showDelete: false, showEdit_{{ $project->id }}: false }">
-            
+
             <button @click="showEdit_{{ $project->id }} = true" class="bg-yellow-500 text-white px-3 py-1 rounded">
                 Editar
             </button>
@@ -74,7 +74,8 @@
                     @click.outside="showEdit_{{ $project->id }} = false">
                     <h3 class="text-xl font-bold mb-4">Editar Proyecto</h3>
 
-                    <form action="{{ route('admin.project.update', $project->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.project.update', $project->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -161,6 +162,11 @@
         </div>
 
 
-        <a href="{{ route('admin.projects') }}" class="text-blue-600 hover:underline">← Volver al listado</a>
+        <a href="{{ route('admin.projects') }}"
+            class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            <x-icon name="arrow-left" class="w-5 h-auto" />
+            Volver
+        </a>
+
     </div>
 @endsection

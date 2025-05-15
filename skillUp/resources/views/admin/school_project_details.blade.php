@@ -125,7 +125,8 @@
         </form>
     @endauth
 
-    <p><a href="{{ route('projects.index') }}">← Volver</a></p>
+    <p><a href="{{ route('admin.school_projects') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a></p>
 
     @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'school-project'])
 @endsection
