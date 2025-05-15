@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\JobOffer;
 use App\Models\Notification;
 use App\Models\Project;
@@ -30,6 +31,14 @@ class AdminController extends Controller
         }
         $users = User::all();
         return view('admin.users', compact('users'));
+    }
+    public function showComments()
+    {
+        if (auth()->user()->role !== 'Admin') {
+            abort(403, 'Acceso denegado');
+        }
+        $comments = Comment::all();
+        return view('admin.comments', compact('comments'));
     }
 
     public function destroyUser($id)
@@ -131,6 +140,37 @@ class AdminController extends Controller
         $detail->save();
 
         return redirect()->route('admin.users');
+    }
+
+    public function updateComment(Request $request, $comment)
+    {
+        $request->validate([
+            'content' => 'required|string|max:1000',
+        ], [
+            'content.required' => 'El contenido es obligatorio.',
+            'content.string' => 'El contenido debe ser una cadena de texto.',
+            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
+        ]);
+
+        $comment = Comment::findOrFail($comment);
+
+        $comment->update([
+            'content' => $request->content
+        ]);
+        return back();
+
+    }
+
+    public function destroyComment($comment)
+    {
+        if ($comment->user_id !== Auth::id() && !Auth::user()->isAdmin()) {
+            return back()->with('error', 'No tienes permiso para eliminar este comentario.');
+        }
+
+        $comment->delete();
+
+        return back();
+
     }
 
     public function userRegister(Request $request)

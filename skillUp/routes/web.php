@@ -178,6 +178,9 @@ Route::middleware(['auth', 'session.timeout'])->group(function () {
     Route::put('/admin/usuarios/editar/{id}', [AdminController::class, 'updateUser'])->name('admin.user.update');
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.user.destroy');
 
+    Route::get('/admin/comentarios', [AdminController::class, 'showComments'])->name('admin.comments');
+    Route::put('/admin/comentarios/{id}/editar', [AdminController::class, 'updateComment'])->name('admin.comments.update');
+    Route::delete('/admin/comentarios/{id}/eliminar', [AdminController::class, 'destroyComment'])->name('admin.comment.destroy');
 
     Route::get('/admin/ofertas', [AdminController::class, 'showOffers'])->name('admin.offers');
     Route::put('/admin/ofertas/{id}', [AdminController::class, 'updateOffer'])->name('admin.offers.update');

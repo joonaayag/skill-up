@@ -38,6 +38,12 @@
                 <p class="text-sm text-gray-600 dark:text-themeLightGray">Controla las ofertas laborales publicadas por
                     empresas.</p>
             </a>
+            <a href="{{ route('admin.comments') }}"
+                class="col-span-2 text-center block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                <h4 class="text-lg font-semibold text-themeBlue mb-2">Gestionar Comentarios</h4>
+                <p class="text-sm text-gray-600 dark:text-themeLightGray">Controla los comentarios en los proyectos, ofertas
+                    laborales y demás secciones del sitio.</p>
+            </a>
         </div>
     </div>
 
