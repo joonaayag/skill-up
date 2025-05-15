@@ -109,14 +109,8 @@
                                         Eliminar
                                     </button>
 
-                                    <!-- Modal Delete -->
-                                    <div x-show="showDelete"  class="fixed inset-0 z-50 overflow-y-auto"
-                                        style="display: none;">
-                                        <div class="flex items-center justify-center min-h-screen p-4">
-                                            <div class="fixed inset-0 bg-black opacity-50"></div>
-                                            <div
-                                                class="relative bg-white dark:bg-themeBgDark rounded-lg max-w-md w-full p-6 mx-auto shadow-xl z-50">
-                                                <x-heading level="h2"
+                                    <x-modal :show="'showDelete'">
+                                        <x-heading level="h2"
                                                     class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
                                                     Seguro deseas eliminar este proyecto
                                                 </x-heading>
@@ -126,33 +120,24 @@
                                                     @method('DELETE')
 
                                                     <button type="submit"
-                                                        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                                                        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
                                                         Sí, eliminar
                                                     </button>
 
                                                     <button type="button" @click="showDelete = false"
-                                                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition">
+                                                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition cursor-pointer">
                                                         Cancelar
                                                     </button>
                                                 </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </x-modal>
 
                                     <button @click="showEdit = true"  @click.outside="showEdit = false"
                                         class="px-4 py-2 bg-themeBlue/80 hover:bg-themeBlue text-white rounded transition cursor-pointer">
                                         Editar
                                     </button>
 
-                                    <!-- Modal Edit -->
-                                    <div x-show="showEdit"  class="fixed inset-0 z-50 overflow-y-auto"
-                                        style="display: none;">
-                                        <div class="flex items-center justify-center min-h-screen p-4">
-                                            <div class="fixed inset-0 bg-black opacity-50"></div>
-                                            <div
-                                                class="relative bg-white dark:bg-themeBgDark rounded-lg max-w-2xl w-full p-6 mx-auto shadow-xl z-50">
-                                                <x-heading level="h2"
-                                                    class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
+                                    <x-modal :show="'showEdit'">
+                                                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
                                                     Editar proyecto
                                                 </x-heading>
                                                 <form action="{{ route('school.projects.update', $project->id) }}"
@@ -246,10 +231,7 @@
                                                             Guardar
                                                         </button>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </x-modal>
                                 </td>
                             </tr>
                         @endforeach
@@ -263,7 +245,7 @@
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
-            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition">
+            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition cursor-pointer" >
             <x-icon name="plus" />
         </button>
 

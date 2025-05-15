@@ -166,7 +166,7 @@
         </button>
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themebg-themeGrape">Nuevo proyecto</x-heading>
+            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nueva oferta de trabajo</x-heading>
             <form action="{{ route('job.offers.store') }}" method="POST"
                 class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
