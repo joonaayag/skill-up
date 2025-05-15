@@ -313,6 +313,93 @@ class AdminController extends Controller
         return redirect()->route('admin.users');
     }
 
+    public function createProject(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:40',
+            'description' => 'required|string',
+            'tags' => 'required|string|max:50',
+            'sector_category' => 'required|string|max:40',
+            'creation_date' => 'required|date',
+            'link' => 'nullable|url|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'files.*' => 'nullable|file|max:4096',
+        ], [
+            'title.required' => 'El título del proyecto es obligatorio.',
+            'title.string' => 'El título del proyecto debe ser una cadena de texto.',
+            'title.max' => 'El título del proyecto no puede tener más de 40 caracteres.',
+
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+
+            'tags.required' => 'Las etiquetas son obligatorias.',
+            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
+            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+
+            'sector_category.required' => 'La categoría del sector es obligatoria.',
+            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+
+            'creation_date.required' => 'La fecha de creación es obligatoria.',
+            'creation_date.date' => 'La fecha de creación debe ser válida.',
+
+            'link.url' => 'El enlace debe tener un formato de URL válido.',
+            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+
+            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
+            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
+            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+
+            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
+            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+        ]);
+
+        $imagePath = $request->hasFile('image')
+            ? $request->file('image')->store('project_images', 'public')
+            : null;
+
+
+        $project = Project::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'tags' => $request->tags,
+            'sector_category' => $request->sector_category,
+            'creation_date' => $request->creation_date,
+            'link' => $request->link,
+            'image' => $imagePath,
+            'author_id' => auth()->id(),
+        ]);
+
+        Notification::create([
+            'user_id' => auth()->id(),
+            'type' => 'proyecto',
+            'title' => 'Proyecto registrado',
+            'message' => 'Tu proyecto "' . $project->title . '" ha sido creado correctamente.',
+        ]);
+        $otrosUsuarios = User::where('id', '!=', auth()->id())->get();
+
+        foreach ($otrosUsuarios as $usuario) {
+            Notification::create([
+                'user_id' => $usuario->id,
+                'type' => 'proyecto',
+                'title' => 'Nuevos proyectos disponible',
+                'message' => 'Se han publicado nuevos proyectos recientemente, ve a descubrirlos! ',
+            ]);
+        }
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $imageFile) {
+                $path = $imageFile->store('project_images', 'public');
+                $project->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
+
+
+        return redirect()->back();
+    }
+
     public function showOffers()
     {
         if (auth()->user()->role !== 'Admin') {
