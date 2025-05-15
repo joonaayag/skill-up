@@ -112,9 +112,6 @@
                                     <x-tags class="mb-1">{{ $offer->general_category }}</x-tags>
                                     <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
                                     <x-heading level="h4" class="mb-1">{{ $offer->sector_category }}</x-heading>
-                                    @if($offer->subtitle)
-                                        <p><strong>{{ Str::limit($offer->subtitle, 20) }}</strong></p>
-                                    @endif
 
                                     @php
                                         $favorite = auth()->user()->favorites()

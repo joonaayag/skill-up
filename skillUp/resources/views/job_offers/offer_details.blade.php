@@ -45,8 +45,42 @@
                         <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
                     </form>
                 @endif
+                <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                        class="w-4 h-auto" />{{ $offer->views }}</p>
+                @if (auth()->id() === $offer->company_id)
+                    <div x-data="{ open: false }" class="inline-block">
+                        <button @click="open = true" class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
-                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $offer->views }}</p>
+                        <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                            <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
+                                @click.outside="open = false">
+                                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás
+                                    seguro?</x-heading>
+                                <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                    Esta acción eliminará la oferta <strong>{{ $offer->name }},
+                                        {{ $offer->sector_category }}</strong> de forma permanente.
+                                </p>
+                                <div class="flex justify-end gap-4">
+                                    <button @click="open = false"
+                                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                        Cancelar
+                                    </button>
+
+                                    <form action="{{ route('job.offers.destroy', $offer->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+
             </div>
 
             @if (in_array(auth()->user()->role, ['Usuario', 'Alumno']) && $offer->state === 'Abierta')
@@ -119,12 +153,11 @@
             <ul>
                 <li class="mb-5">
                     <img src="{{ $offer->company->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
-                        alt="Perfil" id="profileImage"
-                        class="size-40 object-cover">
+                        alt="Perfil" id="profileImage" class="size-40 object-cover">
                 </li>
                 <li><strong>Publicado: </strong>{{ $offer->created_at }}</li>
                 <li><strong>Empresa: </strong>{{ $offer->company->name }}</li>
-                <li><strong>Ubicación: </strong>{{ $offer->company->detail->address }}</li>
+                <li><strong>Ubicación: </strong>{{ $offer->company->address }}</li>
                 <li><strong>Fecha límite: </strong> Fecha limite</li>
             </ul>
 
