@@ -40,187 +40,181 @@
 
                                 <div x-data="{ openEdit: false, role: '{{ $user->role }}' }" class="inline-block">
                                     <button @click="openEdit = true"
-                                        class="text-themeBlue hover:underline font-medium">Editar</button>
+                                        class="bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Editar</button>
 
-                                    <div x-show="openEdit" x-cloak
-                                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div
-                                            class="bg-white dark:bg-themeBgDark p-6 rounded-lg shadow-lg w-full max-w-3xl overflow-auto max-h-[90vh] relative" @click.outside="openEdit = false">
+                                    <x-modal :show="'openEdit'" @click.outside="openEdit = false">
+                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar
+                                            usuario</x-heading>
+                                        <form action="{{ route('admin.user.update', $user->id) }}" method="POST"
+                                            enctype="multipart/form-data"
+                                            class="max-w-2xl mx-auto dark:bg-themeBgDark bg-white p-6 rounded shadow ">
+                                            @csrf
+                                            @method('PUT')
 
-                                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar usuario</x-heading>
-                                            <form action="{{ route('admin.user.update', auth()->id()) }}" method="POST"
-                                                enctype="multipart/form-data"
-                                                class="max-w-2xl mx-auto dark:bg-themeBgDark bg-white p-6 rounded shadow ">
-                                                @csrf
-                                                @method('PUT')
+                                            <div class="relative mb-8">
+                                                <img id="bannerPreview"
+                                                    src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
+                                                    class="w-full h-40 object-cover cursor-pointer" alt="Banner">
+                                                <input type="file" name="banner" id="bannerInput" accept="image/*"
+                                                    class="hidden">
 
-                                                <div class="relative mb-8">
-                                                    <img id="bannerPreview"
-                                                        src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
-                                                        class="w-full h-40 object-cover cursor-pointer" alt="Banner">
-                                                    <input type="file" name="banner" id="bannerInput" accept="image/*"
+                                                <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
+                                                    <img id="fotoPerfilPreview"
+                                                        src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
+                                                        class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
+                                                        alt="Foto de perfil">
+                                                    <input type="file" name="profile" id="fotoPerfilInput" accept="image/*"
                                                         class="hidden">
-
-                                                    <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                                                        <img id="fotoPerfilPreview"
-                                                            src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
-                                                            class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
-                                                            alt="Foto de perfil">
-                                                        <input type="file" name="profile" id="fotoPerfilInput"
-                                                            accept="image/*" class="hidden">
-                                                    </div>
                                                 </div>
+                                            </div>
 
-                                                <div class="grid grid-cols-2 gap-4">
-                                                    <div>
-                                                        <label class="block text-sm font-medium">Nombre</label>
-                                                        <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                                                            class="w-full border rounded px-3 py-2" required>
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-sm font-medium">Apellidos</label>
-                                                        <input type="text" name="last_name"
-                                                            value="{{ old('last_name', $user->last_name) }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                </div>
-
-                                                <div class="mt-4">
-                                                    <label class="block text-sm font-medium">Email</label>
-                                                    <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium">Nombre</label>
+                                                    <input type="text" name="name" value="{{ old('name', $user->name) }}"
                                                         class="w-full border rounded px-3 py-2" required>
                                                 </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium">Apellidos</label>
+                                                    <input type="text" name="last_name"
+                                                        value="{{ old('last_name', $user->last_name) }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                            </div>
 
+                                            <div class="mt-4">
+                                                <label class="block text-sm font-medium">Email</label>
+                                                <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                                                    class="w-full border rounded px-3 py-2" required>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <label class="block text-sm font-medium">Descripción</label>
+                                                <textarea name="description" class="w-full border rounded px-3 py-2"
+                                                    rows="4">{{ old('description', $user->description) }}</textarea>
+                                            </div>
+
+                                            @if ($user->role === 'Alumno')
                                                 <div class="mt-4">
-                                                    <label class="block text-sm font-medium">Descripción</label>
-                                                    <textarea name="description" class="w-full border rounded px-3 py-2"
-                                                        rows="4">{{ old('description', $user->description) }}</textarea>
+                                                    <label class="block text-sm font-medium">Fecha de nacimiento</label>
+                                                    <input type="date" name="birth_date"
+                                                        value="{{ old('birth_date', $user->detail->birth_date ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
                                                 </div>
-
-                                                @if ($user->role === 'Alumno')
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Fecha de nacimiento</label>
-                                                        <input type="date" name="birth_date"
-                                                            value="{{ old('birth_date', $user->detail->birth_date ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Curso actual</label>
-                                                        <input type="text" name="current_course"
-                                                            value="{{ old('current_course', $user->detail->current_course ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Centro educativo</label>
-                                                        <input type="text" name="educational_center"
-                                                            value="{{ old('educational_center', $user->detail->educational_center ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                @endif
-
-                                                @if ($user->role === 'Profesor')
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Especialización</label>
-                                                        <input type="text" name="specialization"
-                                                            value="{{ old('specialization', $user->detail->specialization ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Departamento</label>
-                                                        <input type="text" name="department"
-                                                            value="{{ old('department', $user->detail->department ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                @endif
-
-                                                @if ($user->role === 'Empresa')
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">CIF</label>
-                                                        <input type="text" name="cif"
-                                                            value="{{ old('cif', $user->detail->cif ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Dirección</label>
-                                                        <input type="text" name="address"
-                                                            value="{{ old('address', $user->detail->address ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Sector</label>
-                                                        <input type="text" name="sector"
-                                                            value="{{ old('sector', $user->detail->sector ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <label class="block text-sm font-medium">Sitio web</label>
-                                                        <input type="url" name="website"
-                                                            value="{{ old('website', $user->detail->website ?? '') }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
-                                                @endif
-
-                                                <div class="mt-4" x-data="{ cvName: '' }">
-                                                    <label class="block text-sm font-medium">Subir Cv</label>
-
-                                                    <label for="cv-upload"
-                                                        class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
-                                                        📄 Subir CV
-                                                        <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
-                                                            @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
-                                                    </label>
-
-                                                    <template x-if="cvName">
-                                                        <p class="mt-2 text-sm text-black dark:text-themeLightGray"
-                                                            x-text="cvName"></p>
-                                                    </template>
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Curso actual</label>
+                                                    <input type="text" name="current_course"
+                                                        value="{{ old('current_course', $user->detail->current_course ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
                                                 </div>
-
-                                                <div class="mt-6 flex justify-end gap-4">
-                                                    <button type="submit"
-                                                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                                                        Guardar cambios
-                                                    </button>
-                                                    <button type="button" @click="openEdit = false"
-                                                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                                                        Cancelar
-                                                    </button>
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Centro educativo</label>
+                                                    <input type="text" name="educational_center"
+                                                        value="{{ old('educational_center', $user->detail->educational_center ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
                                                 </div>
-                                            </form>
+                                            @endif
 
-                                        </div>
-                                    </div>
+                                            @if ($user->role === 'Profesor')
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Especialización</label>
+                                                    <input type="text" name="specialization"
+                                                        value="{{ old('specialization', $user->detail->specialization ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Departamento</label>
+                                                    <input type="text" name="department"
+                                                        value="{{ old('department', $user->detail->department ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                            @endif
+
+                                            @if ($user->role === 'Empresa')
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">CIF</label>
+                                                    <input type="text" name="cif" value="{{ old('cif', $user->detail->cif ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Dirección</label>
+                                                    <input type="text" name="address"
+                                                        value="{{ old('address', $user->detail->address ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Sector</label>
+                                                    <input type="text" name="sector"
+                                                        value="{{ old('sector', $user->detail->sector ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                                <div class="mt-4">
+                                                    <label class="block text-sm font-medium">Sitio web</label>
+                                                    <input type="url" name="website"
+                                                        value="{{ old('website', $user->detail->website ?? '') }}"
+                                                        class="w-full border rounded px-3 py-2">
+                                                </div>
+                                            @endif
+
+                                            <div class="mt-4" x-data="{ cvName: '' }">
+                                                <label class="block text-sm font-medium">Subir Cv</label>
+
+                                                <label for="cv-upload"
+                                                    class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                                                    📄 Subir CV
+                                                    <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
+                                                        @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
+                                                </label>
+
+                                                <template x-if="cvName">
+                                                    <p class="mt-2 text-sm text-black dark:text-themeLightGray" x-text="cvName">
+                                                    </p>
+                                                </template>
+                                            </div>
+
+                                            <div class="mt-6 flex justify-end gap-4">
+                                                <button type="submit"
+                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                                    Guardar cambios
+                                                </button>
+                                                <button type="button" @click="openEdit = false"
+                                                    class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </x-modal>
+
                                 </div>
 
                                 <div x-data="{ open: false }" class="inline-block">
                                     <button @click="open = true"
-                                        class="text-red-600 hover:underline font-medium">Eliminar</button>
+                                        class="bg-red-500 border-2 border-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
-                                    <div x-show="open" x-cloak
-                                        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md" @click.outside="open = false">
-                                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás seguro?</x-heading>
-                                            <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
-                                                Esta acción eliminará al usuario <strong>{{ $user->name }}
-                                                    {{ $user->last_name }}</strong> de forma permanente.
-                                            </p>
-                                            <div class="flex justify-end gap-4">
-                                                <button @click="open = false"
-                                                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
-                                                    Cancelar
+                                    <x-modal :show="'open'" @close="open = false">
+                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás
+                                            seguro?</x-heading>
+                                        <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                            Esta acción eliminará al usuario <strong>{{ $user->name }}
+                                                {{ $user->last_name }}</strong> de forma permanente.
+                                        </p>
+                                        <div class="flex justify-end gap-4">
+                                            <button @click="open = false"
+                                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
+                                                Cancelar
+                                            </button>
+
+                                            <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 cursor-pointer">
+                                                    Eliminar
                                                 </button>
-
-                                                <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
-                                                        Eliminar
-                                                    </button>
-                                                </form>
-                                            </div>
+                                            </form>
                                         </div>
-                                    </div>
+                                    </x-modal>
+
                                 </div>
 
                             </td>
