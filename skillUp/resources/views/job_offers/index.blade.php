@@ -3,23 +3,23 @@
 @section('title', 'Ofertas de Empleo')
 
 @section('content')
-    <x-heading level="h1" class="mb-10">Ofertas de Empleo</x-heading>
+    <x-heading level="h1" class="mb-10">{{ __('messages.job-offers.title') }}</x-heading>
 
     <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
         <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
             <aside
                 class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
-                <x-heading level="h4"><strong>Categorias generales</strong></x-heading>
+                <x-heading level="h4"><strong>{{ __('messages.job-offers.category') }}</strong></x-heading>
                 @php
                     $generalCategories = [
-                        'Administración y negocio',
-                        'Ciencia y salud',
-                        'Comunicación',
-                        'Diseño y comunicación',
-                        'Educación',
-                        'Industria',
-                        'Otro',
-                        'Tecnología y desarrollo'
+                        __('messages.job-offers.category-admin'),
+                        __('messages.job-offers.category-science'),
+                        __('messages.job-offers.category-comunication'),
+                        __('messages.job-offers.category-design'),
+                        __('messages.job-offers.category-education'),
+                        __('messages.job-offers.category-industry'),
+                        __('messages.job-offers.category-other'),
+                        __('messages.job-offers.category-tec'),
                     ];
                 @endphp
                 <div class="space-y-1">
@@ -35,41 +35,42 @@
                 <x-heading level="h4" class="mt-4"><strong>Sector</strong></x-heading>
                 @php
                     $sectorCategories = [
-                        'Agricultura/Medioambiente',
-                        'Arte/Cultura',
-                        'Automoción',
-                        'Ciberseguridad',
-                        'Community Manager',
-                        'Construcción',
-                        'Coordinación educativa',
-                        'Diseño gráfico',
-                        'Electricidad/Fontanería',
-                        'Energía/Renovables',
-                        'Farmacia',
-                        'Finanzas y contabilidad',
-                        'Fotografía/Video',
-                        'Hostelería/Turismo',
-                        'IA',
-                        'Investigación/Laboratorio',
-                        'Legal/Jurídico',
-                        'Logística',
-                        'Mecánica',
-                        'Medicina/Enfermería',
-                        'Nutrición',
-                        'Operario industrial',
-                        'Orientación',
-                        'Periodismo',
-                        'Profesorado',
-                        'Psicología',
-                        'Publicidad',
-                        'Redes y sistemas',
-                        'RRHH',
-                        'Seguridad',
-                        'SEO/SEM',
-                        'Terapias/Rehabilitación',
-                        'Traducción',
-                        'Transporte/Reparto',
-                        'Ventas'
+                        __('messages.job-offers.sector-agri'),
+                        __('messages.job-offers.sector-art'),
+                        __('messages.job-offers.sector-aut'),
+                        __('messages.job-offers.sector-cyb'),
+                        __('messages.job-offers.sector-comm'),
+                        __('messages.job-offers.sector-cons'),
+                        __('messages.job-offers.sector-educ'),
+                        __('messages.job-offers.sector-grap'),
+                        __('messages.job-offers.sector-elec'),
+                        __('messages.job-offers.sector-ener'),
+                        __('messages.job-offers.sector-phar'),
+                        __('messages.job-offers.sector-fina'),
+                        __('messages.job-offers.sector-photo'),
+                        __('messages.job-offers.sector-hosp'),
+                        __('messages.job-offers.sector-ai'),
+                        __('messages.job-offers.sector-res'),
+                        __('messages.job-offers.sector-leg'),
+                        __('messages.job-offers.sector-log'),
+                        __('messages.job-offers.sector-mec'),
+                        __('messages.job-offers.sector-med'),
+                        __('messages.job-offers.sector-nut'),
+                        __('messages.job-offers.sector-ind'),
+                        __('messages.job-offers.sector-ori'),
+                        __('messages.job-offers.sector-jout'),
+                        __('messages.job-offers.sector-tea'),
+                        __('messages.job-offers.sector-psy'),
+                        __('messages.job-offers.sector-adv'),
+                        __('messages.job-offers.sector-net'),
+                        __('messages.job-offers.sector-hr'),
+                        __('messages.job-offers.sector-sec'),
+                        __('messages.job-offers.sector-seo'),
+                        __('messages.job-offers.sector-ther'),
+                        __('messages.job-offers.sector-trans'),
+                        __('messages.job-offers.sector-transp'),
+                        __('messages.job-offers.sector-sal'),
+
                     ];
                 @endphp
                 <div class="space-y-1">
@@ -86,16 +87,16 @@
             <main class="space-y-4">
                 <div
                     class="flex flex-wrap gap-2 h-12 [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                                             [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
-                    <input type="text" name="name" placeholder="Buscar por título..." value="{{ request('name') }}"
+                                                 [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                    <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}" value="{{ request('name') }}"
                         class="input" />
-                    <input type="text" name="author" placeholder="Buscar por autor..." value="{{ request('author') }}"
+                    <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}" value="{{ request('author') }}"
                         class="input" />
                     <select name="order">
-                        <option value="">Ordenar por</option>
-                        <option value="name" @selected(request('order') == 'name')>Título</option>
-                        <option value="general_category" @selected(request('order') == 'general_category')>Categoría</option>
-                        <option value="created_at" @selected(request('order') == 'created_at')>Fecha de creación</option>
+                        <option value="">{{ __('messages.job-offers.order-by') }}</option>
+                        <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}</option>
+                        <option value="general_category" @selected(request('order') == 'general_category')>{{ __('messages.job-offers.category') }}</option>
+                        <option value="created_at" @selected(request('order') == 'created_at')>{{ __('messages.job-offers.order-date') }}</option>
                     </select>
 
                     <select name="direction">
@@ -122,24 +123,29 @@
 
                                     <div class="flex flex-row justify-between items-center mt-2">
                                         <div class="flex flex-row gap-4">
-                                            <p class="px-3 py-1 rounded-full {{ $offer->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">{{ $offer->state }}</p>
+                                            <p
+                                                class="px-3 py-1 rounded-full {{ $offer->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">
+                                                {{ $offer->state }}</p>
                                             @if ($offer->company_id !== auth()->id())
                                                 @if ($favorite)
                                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer" /></button>
+                                                        <button type="submit"><x-icon name="filled-heart"
+                                                                class="w-5 h-auto cursor-pointer" /></button>
                                                     </form>
                                                 @else
                                                     <form action="{{ route('favorites.store') }}" method="POST">
                                                         @csrf
                                                         <input type="hidden" name="type" value="oferta">
                                                         <input type="hidden" name="reference_id" value="{{ $offer->id }}">
-                                                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
+                                                        <button type="submit"><x-icon name="heart"
+                                                                class="w-5 h-auto cursor-pointer" /></button>
                                                     </form>
                                                 @endif
                                             @endif
-                                            <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $offer->views }}</p>
+                                            <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                                    class="w-4 h-auto" />{{ $offer->views }}</p>
                                         </div>
                                         <span
                                             class="text-sm">{{ $offer->company->name . ' ' . $offer->company->last_name  }}</span>
@@ -149,7 +155,7 @@
                             </x-card>
                         </a>
                     @empty
-                        <p>No hay proyectos disponibles.</p>
+                        <p>{{ __('messages.job-offers.no-offers') }}.</p>
                     @endforelse
                 </ul>
 
@@ -166,41 +172,43 @@
         </button>
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nueva oferta de trabajo</x-heading>
+            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
             <form action="{{ route('job.offers.store') }}" method="POST"
                 class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
 
-                <x-label for="title">Título:</x-label>
+                <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
                 <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
 
-                <x-label for="subtitle">Subtitulo:</x-label>
+                <x-label for="subtitle">{{ __('messages.job-offers.label-subtitle') }}</x-label>
                 <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
 
-                <x-label for="description">Descripción:</x-label>
+                <x-label for="description">{{ __('messages.job-offers.label-description') }}</x-label>
                 <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
 
-                <x-label for="sector_category">Categoría del sector:</x-label>
-                <x-inputtext type="text" name="sector_category" id="sector_category" value="{{ old('sector_category') }}" required />
+                <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
+                <x-inputtext type="text" name="sector_category" id="sector_category" value="{{ old('sector_category') }}"
+                    required />
 
-                <x-label for="general_category">Categoría general:</x-label>
-                <x-inputtext type="text" name="general_category" id="general_category" value="{{ old('general_category') }}" required />
+                <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
+                <x-inputtext type="text" name="general_category" id="general_category" value="{{ old('general_category') }}"
+                    required />
 
-                <x-label for="state">Estado:</x-label>
+                <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
                 <select name="state" required
                     class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
-                    <option value="abierta" @selected(old('state') == 'abierta')>Abierta</option>
-                    <option value="cerrada" @selected(old('state') == 'cerrada')>Cerrada</option>
+                    <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.job-offers.state-open') }}</option>
+                    <option value="cerrada" @selected(old('state') == 'cerrada')>{{ __('messages.job-offers.state-close') }}</option>
                 </select>
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showModal = false"
                         class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                        Cancelar
+                        {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
                         class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
-                        Guardar
+                        {{ __('messages.button.save') }}
                     </button>
                 </div>
             </form>
