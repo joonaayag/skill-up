@@ -19,10 +19,6 @@ class ProjectController extends Controller
             $query->where('title', 'like', '%' . $request->title . '%');
         }
 
-        if ($request->filled('description')) {
-            $query->where('description', 'like', '%' . $request->description . '%');
-        }
-
         if ($request->filled('author')) {
             $query->whereHas('author', function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->author . '%');

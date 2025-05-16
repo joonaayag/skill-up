@@ -3,7 +3,7 @@
 @section('title', 'Proyectos')
 
 @section('content')
-    <x-heading level="h1" class="mb-10">Proyectos</x-heading>
+    <x-heading level="h1" class="mb-10">{{ __('messages.projects.title') }}</x-heading>
 
     <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
           [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
@@ -11,12 +11,11 @@
           dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark
           dark:[&>select]:bg-themeBgDark ">
 
-        <input type="text" name="title" placeholder="Título" value="{{ request('title') }}">
-        <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
-        <input type="text" name="author" placeholder="Autor" value="{{ request('author') }}">
+        <input type="text" name="title" placeholder="{{ __('messages.projects.placeholder-title') }}" value="{{ request('title') }}">
+        <input type="text" name="author" placeholder="{{ __('messages.projects.placeholder-author') }}" value="{{ request('author') }}">
 
         <select name="category">
-            <option value="">Categoría</option>
+            <option value="">{{ __('messages.projects.category') }}</option>
             @php
                 $categories = [
                     'Administración y negocio',
@@ -37,10 +36,10 @@
         </select>
 
         <select name="order">
-            <option value="">Ordenar por</option>
-            <option value="title" {{ request('order') === 'title' ? 'selected' : '' }}>Título</option>
-            <option value="creation_date" {{ request('order') === 'creation_date' ? 'selected' : '' }}>Fecha</option>
-            <option value="general_category" {{ request('order') === 'general_category' ? 'selected' : '' }}>Categoría
+            <option value="">{{ __('messages.projects.order-by') }}</option>
+            <option value="title" {{ request('order') === 'title' ? 'selected' : '' }}>{{ __('messages.projects.order-title') }}</option>
+            <option value="creation_date" {{ request('order') === 'creation_date' ? 'selected' : '' }}>{{ __('messages.projects.order-date') }}</option>
+            <option value="general_category" {{ request('order') === 'general_category' ? 'selected' : '' }}>{{ __('messages.projects.order-category') }}
             </option>
         </select>
 
@@ -108,7 +107,7 @@
                 </x-card>
             </a>
         @empty
-            <p>No hay proyectos disponibles.</p>
+            <p>{{ __('messages.projects.no-projects') }}.</p>
         @endforelse
     </ul>
 
@@ -122,57 +121,57 @@
 
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Nuevo proyecto</x-heading>
+            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.projects.new-project') }}</x-heading>
 
             <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
                 class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
                 @csrf
 
                 <div>
-                    <x-label for="title">Título:</x-label>
+                    <x-label for="title">{{ __('messages.projects.label-title') }}</x-label>
                     <x-inputtext type="text" name="title" id="title" required />
                 </div>
 
                 <div>
-                    <x-label for="description">Descripción:</x-label>
+                    <x-label for="description">{{ __('messages.projects.label-description') }}</x-label>
                     <x-textarea name="description" id="description" required></x-textarea>
                 </div>
 
                 <div>
-                    <x-label for="tags">Etiquetas (tags)</x-label>
+                    <x-label for="tags">{{ __('messages.projects.label-tags') }}</x-label>
                     <x-inputtext type="text" name="tags" id="tags" required />
                 </div>
 
                 <div>
-                    <x-label for="general_category">Categoría general:</x-label>
-                    <select name="sector_category" required class="w-full px-3 py-2 rounded border border-themeLightGray">
-                        <option value="Administración y negocio">Administración y negocio</option>
-                        <option value="Ciencia y salud">Ciencia y salud</option>
-                        <option value="Comunicación">Comunicación</option>
-                        <option value="Diseño y comunicación">Diseño y comunicación</option>
-                        <option value="Educación">Educación</option>
-                        <option value="Industria">Industria</option>
-                        <option value="Otro">Otro</option>
-                        <option value="Tecnología y desarrollo">Tecnología y desarrollo</option>
+                    <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
+                    <select name="sector_category" required class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                        <option value="Administración y negocio">{{ __('messages.projects.option-admin') }}</option>
+                        <option value="Ciencia y salud">{{ __('messages.projects.option-science') }}</option>
+                        <option value="Comunicación">{{ __('messages.projects.option-comunication') }}</option>
+                        <option value="Diseño y comunicación">{{ __('messages.projects.option-design') }}</option>
+                        <option value="Educación">{{ __('messages.projects.option-education') }}</option>
+                        <option value="Industria">{{ __('messages.projects.industry') }}</option>
+                        <option value="Otro">{{ __('messages.projects.option-other') }}</option>
+                        <option value="Tecnología y desarrollo">{{ __('messages.projects.option-tec') }}</option>
                     </select>
                 </div>
 
                 <div>
-                    <x-label for="title">Fecha de creación:</x-label>
+                    <x-label for="title">{{ __('messages.projects.label-date') }}</x-label>
                     <x-inputdate name="creation_date" id="creation_date" required />
                 </div>
 
                 <div>
-                    <x-label for="title">Enlace (Opcional):</x-label>
+                    <x-label for="title">{{ __('messages.projects.label-link') }}</x-label>
                     <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
                 </div>
 
                 <div>
-                    <x-label for="title">Imagen destacada:</x-label>
+                    <x-label for="title">{{ __('messages.projects.label-image') }}</x-label>
                     <div x-data="{ fileName: '', previewUrl: '' }" class="w-full" x-cloak>
                         <label for="image-upload"
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
-                            🖼️ Subir imagen destacada
+                            🖼️ {{ __('messages.projects.label-highlight') }}
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                 fileName = $event.target.files[0]?.name || '';
                                 if ($event.target.files[0]) {
@@ -195,11 +194,11 @@
                 </div>
 
                 <div>
-                    <x-label for="title">Archivos adicionales</x-label>
+                    <x-label for="title">{{ __('messages.projects.label-additional') }}</x-label>
                     <div x-data="{ fileNames: [] }" class="w-full" x-cloak>
                         <label for="file-upload"
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
-                            📎 Subir archivos
+                            📎 {{ __('messages.projects.label-upload') }}
                             <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                 @change="fileNames = [...$event.target.files].map(f => f.name)" />
                         </label>
@@ -217,11 +216,11 @@
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showModal = false"
                         class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                        Cancelar
+                        {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
                         class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
-                        Guardar
+                        {{ __('messages.button.save') }}
                     </button>
                 </div>
             </form>
@@ -232,7 +231,7 @@
 
     <br>
 
-    <x-heading level="h1" class="mb-10">Proyectos de escolares</x-heading>
+    <x-heading level="h1" class="mb-10">{{ __('messages.school-projects.title') }}</x-heading>
     <ul class="grid grid-cols-3 gap-10">
         @forelse ($schoolProjects as $school)
             <a href="{{ route('school.projects.show', $school->id) }}">
@@ -286,7 +285,7 @@
                 </li>
             </a>
         @empty
-            <p>No hay proyectos escolares disponibles.</p>
+            <p>{{ __('messages.school-projects.no-projects') }}.</p>
         @endforelse
     </ul>
     <script>
