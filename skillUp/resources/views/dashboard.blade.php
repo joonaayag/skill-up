@@ -4,11 +4,11 @@
 
 @section('content')
 
-    <x-heading level="h1" class="mb-10">Hola, {{ auth()->user()->name }}</x-heading>
+    <x-heading level="h1" class="mb-10">{{ __('messages.dashboard.hi') }}, {{ auth()->user()->name }}</x-heading>
 
     <div class="grid grid-cols-3 gap-14 h-full mb-24 ">
         <x-card>
-            <x-heading level="h3" class="mb-8">Proyectos destacados</x-heading>
+            <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.highlight-projects') }}</x-heading>
             <div class="flex flex-col gap-3">
                 @if ($combined->isNotEmpty())
                     @foreach($combined as $project)
@@ -28,15 +28,14 @@
                         </a>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No existen proyectos
-                        destacados por el momento.</p>
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ __('messages.dashboard.no-projects') }}.</p>
                 @endif
             </div>
         </x-card>
 
         <div class="grid grid-rows-5 gap-8">
             <x-card class="row-span-2 h-full">
-                <x-heading level="h3" class="mb-8">Tus proyectos</x-heading>
+                <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.your-projects') }}</x-heading>
                 <div class="flex flex-col gap-3">
                     @if ($ownProjects->isNotEmpty())
                         @foreach($ownProjects as $project)
@@ -56,13 +55,12 @@
                             </a>
                         @endforeach
                     @else
-                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes proyectos
-                            propios por el momento.</p>
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ __('messages.dashboard.no-own-projects') }}.</p>
                     @endif
                 </div>
             </x-card>
             <x-card class="row-span-3 h-full">
-                <x-heading level="h3" class="mb-8">Últimas ofertas de empleo</x-heading>
+                <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.last-offers') }}</x-heading>
                 <div class="flex flex-col gap-3">
                     @if ($jobOffers->isNotEmpty())
                         @foreach($jobOffers as $offer)
@@ -82,8 +80,7 @@
                             </a>
                         @endforeach
                     @else
-                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No hay ofertas
-                            disponibles por el momento.</p>
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ __('messages.dashboard.no-offers') }}.</p>
                     @endif
                 </div>
             </x-card>
@@ -104,7 +101,7 @@
                         <x-heading
                             level="h3">{{ auth()->user()->name . ' ' . auth()->user()->last_name }}</x-heading>
                         @if (auth()->user()->role === 'Alumno')
-                            <p>Estudiante de {{ auth()->user()->detail->educational_center }}</p>
+                            <p>{{ __('messages.dashboard.student-of') }} {{ auth()->user()->detail->educational_center }}</p>
                         @else
                             <p>{{ auth()->user()->role }}</p>
                         @endif
@@ -114,7 +111,7 @@
             </div>
             <x-card class="row-span-4 h-full">
                 @if($notifications->count())
-                    <x-heading level="h3" class="mb-8">Tus notificaciones recientes</x-heading>
+                    <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.recent-notifications') }}</x-heading>
                     @foreach($notifications as $notification)
                         <div
                             class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
@@ -130,8 +127,8 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">No tienes notificaciones
-                        por el momento.</p>
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">ç
+                        {{ __('messages.dashboard.no-notifications') }}.</p>
                 @endif
             </x-card>
         </div>
@@ -149,11 +146,11 @@
 
         <div x-cloak x-show="open" @click.outside="open = false" x-transition
             class="mt-2 w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
-            <x-heading level="h3" class="mb-8">Asistente SkillUp</x-heading>
+            <x-heading level="h3" class="mb-8">{{ __('messages.chatbot.skillup-assistant') }}</x-heading>
             <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
                 <template x-for="msg in messages" :key="msg . id">
                     <div :class="msg . from === 'bot' ? 'text-left' : 'text-right'">
-                        <span :class="msg . from === 'bot' ? 'text-black' : 'text-blue-600'" x-text="msg.text"></span>
+                        <span :class="msg . from === 'bot' ? 'dark:text-white text-black' : 'text-blue-600'" x-text="msg.text"></span>
                     </div>
                 </template>
             </div>
@@ -170,8 +167,8 @@
                 open: false,
                 input: '',
                 messages: [
-                    { id: 1, text: '¡Hola! Soy el asistente de SkillUp. Puedes preguntarme cosas como:', from: 'bot' },
-                    { id: 2, text: '• ¿Dónde veo los proyectos?\n• ¿Cómo aplico a una puesto de una empresa?\n• ¿Dónde están las ofertas de trabajo?', from: 'bot' }
+                    { id: 1, text: '{{ __('messages.chatbot.first-message') }}', from: 'bot' },
+                    { id: 2, text: '{{ __('messages.chatbot.second-message')}}', from: 'bot' }
                 ],
 
                 toggle() {
@@ -186,110 +183,92 @@
                     const userMsg = { id: Date.now(), text: this.input, from: 'user' };
                     this.messages.push(userMsg);
 
-                    let response = 'No entendí eso. ¿Puedes repetirlo?';
+                    let response = '{{ __('messages.chatbot.no-understand') }}';
                     const txt = this.input.toLowerCase();
 
                     if (
-                        txt.includes('proyecto') ||
-                        txt.includes('proyectos') ||
-                        txt.includes('ver proyectos') ||
-                        txt.includes('dónde están los proyectos') ||
-                        txt.includes('project')
+                        txt.includes('{{ __('messages.chatbot.text-project') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-projects') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-see-projects') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-where-projects') }}')
                     ) {
-                        response = 'Puedes ver los proyectos en la sección "Proyectos" del menú.';
+                        response = '{{ __('messages.chatbot.response-project') }}';
                     } else if (
-                        txt.includes('registrar') ||
-                        txt.includes('registro') ||
-                        txt.includes('crear cuenta') ||
-                        txt.includes('registrarse') ||
-                        txt.includes('cómo me registro')
+                        txt.includes('{{ __('messages.chatbot.text-offer') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-offers') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-job') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-vacancies') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-look-job') }}')
                     ) {
-                        response = 'Para registrarte, haz clic en "Registrarse" arriba a la derecha.';
+                        response = '{{ __('messages.chatbot.response-see-job-offers') }}.';
                     } else if (
-                        txt.includes('oferta') ||
-                        txt.includes('ofertas') ||
-                        txt.includes('trabajo') ||
-                        txt.includes('empleo') ||
-                        txt.includes('vacantes') ||
-                        txt.includes('buscar trabajo')
+                        txt.includes('{{ __('messages.chatbot.text-apply') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-register') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-how-apply') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-interested') }}')
                     ) {
-                        response = 'Puedes ver las ofertas laborales en la sección "Ofertas".';
+                        response = '{{ __('messages.chatbot.response-apply-job-offer') }}';
                     } else if (
-                        txt.includes('aplico') ||
-                        txt.includes('aplicar') ||
-                        txt.includes('inscribirme') ||
-                        txt.includes('puesto') ||
-                        txt.includes('cómo postularme') ||
-                        txt.includes('me interesa una oferta')
+                        txt.includes('{{ __('messages.chatbot.text-company') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-create-job-offer') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-im-company') }}') 
                     ) {
-                        response = 'Puedes aplicar a una oferta laboral accediendo a ella desde la sección "Ofertas".';
+                        response = '{{ __('messages.chatbot.response-create-job-offer') }}.';
                     } else if (
-                        txt.includes('empresa') ||
-                        txt.includes('subir oferta') ||
-                        txt.includes('publicar trabajo') ||
-                        txt.includes('soy empresa')
+                        txt.includes('{{ __('messages.chatbot.text-cannot-access') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-problem-access') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-forgot-password') }}')
                     ) {
-                        response = 'Si eres una empresa, puedes registrarte y luego publicar ofertas laborales desde tu panel.';
+                        response = '{{ __('messages.chatbot.response-password') }}.';
                     } else if (
-                        txt.includes('no puedo entrar') ||
-                        txt.includes('problema para entrar') ||
-                        txt.includes('olvidé mi contraseña') ||
-                        txt.includes('no recuerdo mi clave')
+                        txt.includes('{{ __('messages.chatbot.text-how-work') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-what-is') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-what-its-for') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-what-can-do') }}')
                     ) {
-                        response = 'Puedes restablecer tu contraseña haciendo clic en "¿Olvidaste tu contraseña?" en la página de login.';
+                        response = '{{ __('messages.chatbot.response-what-can-do') }}.';
                     } else if (
-                        txt.includes('cómo funciona') ||
-                        txt.includes('qué es esto') ||
-                        txt.includes('para qué sirve') ||
-                        txt.includes('qué puedo hacer aquí')
+                        txt.includes('{{ __('messages.chatbot.text-hi') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-hello') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-hey') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-how-are-you') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-greetings') }}')
                     ) {
-                        response = 'SkillUp es una plataforma para conectar estudiantes, profesorado y empresas a través de proyectos y oportunidades laborales.';
+                        response = '{{ __('messages.chatbot.response-welcome') }}';
                     } else if (
-                        txt.includes('hola') ||
-                        txt.includes('buenas') ||
-                        txt.includes('hey') ||
-                        txt.includes('qué tal') ||
-                        txt.includes('saludos')
+                        txt.includes('{{ __('messages.chatbot.text-thanks') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-thaks-much') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-appreciate') }}')
                     ) {
-                        response = '¡Hola! ¿En qué puedo ayudarte hoy? 😊';
+                        response = '{{ __('messages.chatbot.response-your-welcome') }}';
                     } else if (
-                        txt.includes('gracias') ||
-                        txt.includes('muchas gracias') ||
-                        txt.includes('te lo agradezco') ||
-                        txt.includes('mil gracias') ||
-                        txt.includes('thank you')
+                        txt.includes('{{ __('messages.chatbot.text-bye') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-goodbye') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-see-you-later') }}')
                     ) {
-                        response = '¡De nada! Estoy aquí para ayudarte. 🙌';
+                        response = '{{ __('messages.chatbot.response-goodbye') }}';
                     } else if (
-                        txt.includes('adiós') ||
-                        txt.includes('hasta luego') ||
-                        txt.includes('nos vemos') ||
-                        txt.includes('chao') ||
-                        txt.includes('bye')
+                        txt.includes('{{ __('messages.chatbot.text-here') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-listen') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-help-me') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-someone-answer') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-anyone') }}')
                     ) {
-                        response = '¡Hasta pronto! 👋 Que tengas un gran día.';
+                        response = '{{ __('messages.chatbot.response-help') }}.';
                     } else if (
-                        txt.includes('estás ahí') ||
-                        txt.includes('me escuchas') ||
-                        txt.includes('puedes ayudarme') ||
-                        txt.includes('alguien responde') ||
-                        txt.includes('hay alguien')
+                        txt.includes('{{ __('messages.chatbot.text-dk') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-lost') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-dont-understand') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-guide') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-what-I-do') }}')
                     ) {
-                        response = 'Sí, estoy aquí para ayudarte 🤖. Pregúntame lo que necesites.';
+                        response = '{{ __('messages.chatbot.response-lost') }}.';
                     } else if (
-                        txt.includes('no sé') ||
-                        txt.includes('estoy perdido') ||
-                        txt.includes('no entiendo') ||
-                        txt.includes('me puedes guiar') ||
-                        txt.includes('qué hago')
-                    ) {
-                        response = 'No te preocupes, dime qué estás buscando y te ayudo encantado.';
-                    } else if (
-                        txt.includes('que tal') ||
-                        txt.includes('como estas')
+                        txt.includes('{{ __('messages.chatbot.text-how-you') }}') ||
+                        txt.includes('{{ __('messages.chatbot.text-how-doing') }}')
 
                     ) {
-                        response = 'Estoy funcionando perfectamente, gracias por preguntar. Soy un asistente virtual sin sentimientos pero estoy aquí para ayudarte en lo que necesites.';
+                        response = '{{ __('messages.chatbot.response-chat-question') }}.';
                     }
 
 
