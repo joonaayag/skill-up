@@ -33,7 +33,7 @@ return [
         'recent-notifications' => 'Your recent notifications',
         'no-notifications' => 'You have no notifications at the moment',
     ],
-    'button' =>[
+    'button' => [
         'cancel' => 'Cancel',
         'save' => 'Save',
         'save-changes' => 'Save changes',
@@ -107,7 +107,7 @@ return [
         'sector-nut' => 'Nutrition',
         'sector-ind' => 'Industrial Operator',
         'sector-ori' => 'Orientation',
-        'sector-jout' => 'Journalism', 
+        'sector-jout' => 'Journalism',
         'sector-tea' => 'Teaching',
         'sector-psy' => 'Psychology',
         'sector-adv' => 'Advertising',
@@ -140,6 +140,19 @@ return [
         'state-close' => 'Close',
 
         'no-offers' => 'There are no job offers available',
+    ],
+    'favorites' => [
+        'title' => 'My favorites',
+        'type' => 'Type',
+        'projects' => 'Projects',
+        'offers' => 'Offers',
+        'placeholder-title' => 'Title',
+        'placeholder-description' => 'Description',
+        'placeholder-author' => 'Author or company',
+        'order-by' => 'Order by',
+        'order-title' => 'Title',
+        'order-date' => 'Date created',
+        'no-favorites' => 'You have no favorites at this time',
     ],
     'chatbot' => [
         'skillup-assistant' => 'SkillUp Assistant',

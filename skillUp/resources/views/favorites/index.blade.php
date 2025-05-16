@@ -4,27 +4,27 @@
 
 @section('content')
 
-    <x-heading level="h1" class="mb-10">Mis favoritos</x-heading>
+    <x-heading level="h1" class="mb-10">{{ __('messages.favorites.title') }}</x-heading>
 
     <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}"
         class="mb-9 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
               [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
                 [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
                 dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
-        <select name="type">
-            <option value=""> Tipo </option>
-            <option value="proyecto" @selected(request('type') == 'proyecto')>Proyectos</option>
-            <option value="oferta" @selected(request('type') == 'oferta')>Ofertas</option>
+        <select name="type" class="cursor-pointer">
+            <option value=""> {{ __('messages.favorites.type') }} </option>
+            <option value="proyecto" @selected(request('type') == 'proyecto')>{{ __('messages.favorites.projects') }}</option>
+            <option value="oferta" @selected(request('type') == 'oferta')>{{ __('messages.favorites.offers') }}</option>
         </select>
 
-        <input type="text" name="name" placeholder="Título" value="{{ request('name') }}">
-        <input type="text" name="description" placeholder="Descripción" value="{{ request('description') }}">
-        <input type="text" name="author" placeholder="Autor o empresa" value="{{ request('author') }}">
+        <input type="text" name="name" placeholder="{{ __('messages.favorites.placeholder-title') }}" value="{{ request('name') }}">
+        <input type="text" name="description" placeholder="{{ __('messages.favorites.placeholder-description') }}" value="{{ request('description') }}">
+        <input type="text" name="author" placeholder="{{ __('messages.favorites.placeholder-author') }}" value="{{ request('author') }}">
 
-        <select name="order">
-            <option value=""> Ordenar por </option>
-            <option value="name" @selected(request('order') == 'name')>Título</option>
-            <option value="created_at" @selected(request('order') == 'created_at')>Fecha de creación</option>
+        <select name="order" class="cursor-pointer">
+            <option value=""> {{ __('messages.favorites.order-by') }} </option>
+            <option value="name" @selected(request('order') == 'name')>{{ __('messages.favorites.order-title') }}</option>
+            <option value="created_at" @selected(request('order') == 'created_at')>{{ __('messages.favorites.order-date') }}</option>
         </select>
     </form>
 
@@ -34,7 +34,7 @@
     @endphp
 
     @if ($proyectos->isNotEmpty())
-        <x-heading level="h3" class="mb-4">Proyectos</x-heading>
+        <x-heading level="h3" class="mb-4">{{ __('messages.favorites.projects') }}</x-heading>
         <div class="grid grid-cols-3 gap-6 mb-9">
             @foreach ($proyectos as $fav)
                 @php $item = $fav->item(); @endphp
@@ -92,7 +92,7 @@
     @endif
 
     @if ($ofertas->isNotEmpty())
-        <x-heading level="h3" class="mb-4">Ofertas</x-heading>
+        <x-heading level="h3" class="mb-4">{{ __('messages.favorites.offers') }}</x-heading>
         <div class="grid grid-cols-3 gap-6 mb-9">
             @foreach ($ofertas as $fav)
                 @php $item = $fav->item(); @endphp
@@ -152,7 +152,7 @@
     @endif
 
     @if ($proyectos->isEmpty() && $ofertas->isEmpty())
-        <p>No tienes favoritos aún.</p>
+        <p>{{ __('messages.favorites.no-favorites') }}.</p>
     @endif
 
     <script>

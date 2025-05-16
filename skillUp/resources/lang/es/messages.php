@@ -139,6 +139,19 @@ return [
 
         'no-offers' => 'No hay ofertas de trabajo disponibles',
     ],
+    'favorites' => [
+        'title' => 'Mis favoritos',
+        'type' => 'Tipo',
+        'projects' => 'Proyectos',
+        'offers' => 'Ofertas',
+        'placeholder-title' => 'Título',
+        'placeholder-description' => 'Descripcion',
+        'placeholder-author' => 'Autor o empresa',
+        'order-by' => 'Ordenar por',
+        'order-title' => 'Título',
+        'order-date' => 'Fecha de creación',
+        'no-favorites' => 'No tienes favoritos en este momento',
+    ],
     'chatbot' => [
         'skillup-assistant' => 'Asistente SkillUp',
         'first-message' => '¡Hola! Soy el asistente de SkillUp. Puedes preguntarme cosas como:',
