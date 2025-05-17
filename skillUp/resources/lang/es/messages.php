@@ -504,5 +504,5 @@ return [
             'text-how-doing' => '¿cómo te va?',
             'response-chat-question' => 'Estoy funcionando perfectamente, gracias por preguntar. Soy un asistente virtual sin sentimientos pero estoy aquí para ayudarte en lo que necesites.',
         ],
-    ]
+    ],
 ];

@@ -80,6 +80,8 @@
                 'en' => ['label' => 'English', 'icon' => asset('icons/england.svg')],
                 'es' => ['label' => 'Español', 'icon' => asset('icons/spain.svg')],
                 'fr' => ['label' => 'Français', 'icon' => asset('icons/french.svg')],
+                'nb' => ['label' => 'Norsk', 'icon' => asset('icons/norway.svg')],
+                'zh-Hant' => ['label' => '中文', 'icon' => asset('icons/china.svg')],
             ];
         @endphp
 
