@@ -305,7 +305,7 @@ return [
         'label-website' => 'Website:',
         'upload-cv' => 'Upload CV',
     ],
-     'roles' => [
+    'roles' => [
         'student' => 'Student',
         'user' => 'User',
         'company' => 'Company',
@@ -365,7 +365,7 @@ return [
             'no-projects' => 'No school projects registered',
             'create-project' => 'Create school project',
         ],
-            'users' => [
+        'users' => [
             'title' => 'List of users',
             'table-name' => 'First name',
             'table-last-name' => 'Last name',
@@ -397,7 +397,33 @@ return [
             'ph-cif' => 'CIF',
             'ph-address' => 'Address',
             'ph-sector' => 'Sector',
-            'ph-website' => 'Web site', 
+            'ph-website' => 'Web site',
+        ],
+        'offers' => [
+            'title' => 'List of job offers',
+            'table-title' => 'Title',
+            'table-subtitle' => 'Subtitle',
+            'table-sector' => 'Sector',
+            'table-category' => 'Category',
+            'table-state' => 'State',
+            'table-actions' => 'Actions',
+            'edit' => 'Edit offer',
+            'label-title' => 'Title:',
+            'label-subtitle' => 'Subtitle:',
+            'label-description' => 'Description:',
+            'label-sector' => 'Sector:',
+            'label-category' => 'Category:',
+            'label-state' => 'State:',
+            'label-logo' => 'Logo:',
+            'status-open' => 'Open',
+            'status-close' => 'Closed',
+            'delete-confirm' => 'Are you sure?',
+            'delete-text-1' => 'This action will delete the offer',
+            'delete-text-2' => ' permanently',
+            'create' => 'Create job offer',
+
+            'no-offers' => 'There are no job offers registered',
+
         ],
     ],
     'chatbot' => [
