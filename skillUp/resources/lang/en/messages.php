@@ -423,7 +423,23 @@ return [
             'create' => 'Create job offer',
 
             'no-offers' => 'There are no job offers registered',
-
+        ],
+        'comments' => [
+            'title' => 'List of comments',
+            'table-name' => 'Name',
+            'table-project' => 'Project',
+            'table-school-project' => 'School project',
+            'table-content' => 'Content',
+            'table-date' => 'Date of publication',
+            'table-actions' => 'Actions',
+            'edit' => 'Edit comment',
+            'content' => 'Comment content',
+            'delete-confirm' => 'Are you sure?',
+            'delete-text-1' => 'This action will delete the comment',
+            'delete-text-2' => ' permanently.',
+            'no-projects' => 'Does not belong to a project',
+            'no-school-project' => 'Does not belong to a school project',
+            'no-comments' => 'No comments registered.'
         ],
     ],
     'chatbot' => [

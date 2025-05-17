@@ -423,6 +423,23 @@ return [
             'no-offers' => 'No hay ofertas de empleo registradas',
 
         ],
+        'comments' => [
+            'title' => 'Listado de comentarios',
+            'table-name' => 'Nombre',
+            'table-project' => 'Proyecto',
+            'table-school-project' => 'Proyecto escolar',
+            'table-content' => 'Contenido',
+            'table-date' => 'Fecha de publicación',
+            'table-actions' => 'Acciones',
+            'edit' => 'Editar comentario',
+            'content' => 'Contenido del comentario',
+            'delete-confirm' => '¿Estás seguro?',
+            'delete-text-1' => 'Esta accion eliminará el comentario',
+            'delete-text-2' => ' de forma permanente.',
+            'no-projects' => 'No pertenece a un proyecto',
+            'no-school-project' => 'No pertenece a un proyecto escolar',
+            'no-comments' => 'No hay comentarios registrados',
+        ],
         'chatbot' => [
             'skillup-assistant' => 'Asistente SkillUp',
             'first-message' => '¡Hola! Soy el asistente de SkillUp. Puedes preguntarme cosas como:',
