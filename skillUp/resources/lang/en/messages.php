@@ -251,6 +251,7 @@ return [
         'open' => 'Open',
         'close' => 'Close',
         'you' => 'You',
+        'status' => 'State',
         'no-offers' => 'You have no job offers at this time',
     ],
     'favorites' => [

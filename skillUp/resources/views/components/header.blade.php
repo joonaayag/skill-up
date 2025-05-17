@@ -83,7 +83,7 @@
             ];
         @endphp
 
-        <div x-data="{ open: false }" class="relative inline-block translate-y-1.5 ml-2 text-left z-50">
+        <div x-data="{ open: false }" @mouseleave="open = false" class="relative inline-block translate-y-1.5 ml-2 text-left z-50">
             <button @click="open = !open"
                 class="flex items-center gap-2 px-3 py-1 rounded dark:bg-themeDark dark:text-white cursor-pointer">
                 <img src="{{ $languages[App::getLocale()]['icon'] }}" alt="Bandera" class="w-5 h-5">

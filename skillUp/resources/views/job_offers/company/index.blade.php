@@ -107,7 +107,7 @@
                         </select>
 
                         <select name="state">
-                            <option value="">Estado</option>
+                            <option value="">{{ __('messages.company-offers.status') }}</option>
                             <option value="Abierta" @selected(request('state') == 'Abierta')>{{ __('messages.company-offers.open') }}</option>
                             <option value="Cerrada" @selected(request('state') == 'Cerrada')>{{ __('messages.company-offers.close') }}</option>
                         </select>

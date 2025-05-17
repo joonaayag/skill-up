@@ -79,7 +79,7 @@ return [
         'category' => 'Categoría',
         'option-admin' => 'Gestión y negocios',
         'option-science' => 'Ciencia y salud',
-        'option-comunication' => 'Comunicación',
+        'option-communication' => 'Comunicación',
         'option-design' => 'Diseño y comunicación',
         'option-education' => 'Educación',
         'option-industry' => 'Industria',
@@ -222,6 +222,7 @@ return [
         'open' => 'Abierta',
         'close' => 'Cerrada',
         'you' => 'Usted',
+        'status' => 'Estado',
         'no-offers' => 'No tienes ofertas de trabajo en este momento',
     ],
     'favorites' => [
