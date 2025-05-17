@@ -21,7 +21,7 @@
             @endphp
 
             @if(in_array($role, ['Usuario', 'Alumno']))
-                <a href="{{ route('projects.ownProjects') }}">Tus proyectos</a>
+                <a href="{{ route('projects.ownProjects') }}">{{ __('messages.navbar.my-projects') }}</a>
             @endif
             @if($role === 'Profesor')
                 <a href="{{ route('school.projects.index') }}">{{ __('messages.navbar.school-projects') }}</a>

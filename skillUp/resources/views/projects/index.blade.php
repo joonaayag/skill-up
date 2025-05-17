@@ -6,40 +6,44 @@
     <x-heading level="h1" class="mb-10">{{ __('messages.projects.title') }}</x-heading>
 
     <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-          [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-          [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-          dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark
-          dark:[&>select]:bg-themeBgDark ">
+              [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+              [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
+              dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark
+              dark:[&>select]:bg-themeBgDark ">
 
-        <input type="text" name="title" placeholder="{{ __('messages.projects.placeholder-title') }}" value="{{ request('title') }}">
-        <input type="text" name="author" placeholder="{{ __('messages.projects.placeholder-author') }}" value="{{ request('author') }}">
+        <input type="text" name="title" placeholder="{{ __('messages.projects.placeholder-title') }}"
+            value="{{ request('title') }}">
+        <input type="text" name="author" placeholder="{{ __('messages.projects.placeholder-author') }}"
+            value="{{ request('author') }}">
 
         <select name="category">
-            <option value="">{{ __('messages.projects.category') }}</option>
-            @php
-                $categories = [
-                    'Administración y negocio',
-                    'Ciencia y salud',
-                    'Comunicación',
-                    'Diseño y comunicación',
-                    'Educación',
-                    'Industria',
-                    'Otro',
-                    'Tecnología y desarrollo'
-                ];
-            @endphp
-            @foreach ($categories as $cat)
-                <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>
-                    {{ $cat }}
-                </option>
-            @endforeach
+            <option value="" {{ request('category') === null ? 'selected' : '' }}>{{ __('messages.projects.category') }}</option>
+            <option value="Administración y negocio" {{ request('category') === 'Administración y negocio' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-admin') }}</option>
+            <option value="Ciencia y salud" {{ request('category') === 'Ciencia y salud' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-science') }}</option>
+            <option value="Comunicación" {{ request('category') === 'Comunicación' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-comunication') }}</option>
+            <option value="Diseño y comunicación" {{ request('category') === 'Diseño y comunicación' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-design') }}</option>
+            <option value="Educación" {{ request('category') === 'Educación' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-education') }}</option>
+            <option value="Industria" {{ request('category') === 'Industria' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-industry') }}</option>
+            <option value="Otro" {{ request('category') === 'Otro' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-other') }}</option>
+            <option value="Tecnología y desarrollo" {{ request('category') === 'Tecnología y desarrollo' ? 'selected' : '' }}>
+                {{ __('messages.school-projects.option-tec') }}</option>
         </select>
 
         <select name="order">
             <option value="">{{ __('messages.projects.order-by') }}</option>
-            <option value="title" {{ request('order') === 'title' ? 'selected' : '' }}>{{ __('messages.projects.order-title') }}</option>
-            <option value="creation_date" {{ request('order') === 'creation_date' ? 'selected' : '' }}>{{ __('messages.projects.order-date') }}</option>
-            <option value="general_category" {{ request('order') === 'general_category' ? 'selected' : '' }}>{{ __('messages.projects.order-category') }}
+            <option value="title" {{ request('order') === 'title' ? 'selected' : '' }}>
+                {{ __('messages.projects.order-title') }}</option>
+            <option value="creation_date" {{ request('order') === 'creation_date' ? 'selected' : '' }}>
+                {{ __('messages.projects.order-date') }}</option>
+            <option value="general_category" {{ request('order') === 'general_category' ? 'selected' : '' }}>
+                {{ __('messages.projects.order-category') }}
             </option>
         </select>
 
@@ -83,19 +87,23 @@
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer"><x-icon name="filled-heart" class="w-5 h-auto" /></button>
+                                        <button type="submit"
+                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer"><x-icon
+                                                name="filled-heart" class="w-5 h-auto" /></button>
                                     </form>
                                 @else
                                     <form action="{{ route('favorites.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type" value="proyecto">
                                         <input type="hidden" name="reference_id" value="{{ $project->id }}">
-                                        <button type="submit" class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                        <button type="submit"
+                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
                                             <x-icon name="heart" class="w-5 h-auto" />
                                         </button>
                                     </form>
                                 @endif
-                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                        class="w-4 h-auto" />{{ $project->views }}</p>
                                 <p>
                                     {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
                                 </p>
@@ -111,7 +119,7 @@
         @endforelse
     </ul>
 
-    <div x-cloak x-data="{ showModal: false }" 
+    <div x-cloak x-data="{ showModal: false }"
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
@@ -121,7 +129,8 @@
 
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.projects.new-project') }}</x-heading>
+            <x-heading level="h2"
+                class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.projects.new-project') }}</x-heading>
 
             <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
                 class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
@@ -144,7 +153,8 @@
 
                 <div>
                     <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
-                    <select name="sector_category" required class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                    <select name="sector_category" required
+                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
                         <option value="Administración y negocio">{{ __('messages.projects.option-admin') }}</option>
                         <option value="Ciencia y salud">{{ __('messages.projects.option-science') }}</option>
                         <option value="Comunicación">{{ __('messages.projects.option-comunication') }}</option>
@@ -173,12 +183,12 @@
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                             🖼️ {{ __('messages.projects.label-highlight') }}
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                fileName = $event.target.files[0]?.name || '';
-                                if ($event.target.files[0]) {
-                                    const reader = new FileReader();
-                                    reader.onload = e => previewUrl = e.target.result;
-                                    reader.readAsDataURL($event.target.files[0]);
-                                }" />
+                                    fileName = $event.target.files[0]?.name || '';
+                                    if ($event.target.files[0]) {
+                                        const reader = new FileReader();
+                                        reader.onload = e => previewUrl = e.target.result;
+                                        reader.readAsDataURL($event.target.files[0]);
+                                    }" />
                         </label>
 
                         <template x-if="fileName">
@@ -255,7 +265,8 @@
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                        <button type="submit"
+                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
                                             <x-icon name="filled-heart" class="w-5 h-auto" />
                                         </button>
                                     </form>
@@ -264,12 +275,14 @@
                                         @csrf
                                         <input type="hidden" name="type" value="proyecto">
                                         <input type="hidden" name="reference_id" value="{{ $school->id }}">
-                                        <button type="submit" class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                        <button type="submit"
+                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
                                             <x-icon name="heart" class="w-5 h-auto" />
                                         </button>
                                     </form>
                                 @endif
-                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $school->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                        class="w-4 h-auto" />{{ $school->views }}</p>
                                 <p>
                                     {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}
                                 </p>
