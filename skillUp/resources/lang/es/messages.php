@@ -38,9 +38,9 @@ return [
         'cancel' => 'Cancelar',
         'save' => 'Guardar',
         'save-changes' => 'Guardar cambios',
-        'delete' => 'Delete',
-        'edit' => 'Edit',
-        'see' => 'See',
+        'delete' => 'Eliminar',
+        'edit' => 'Editar',
+        'see' => 'Ver',
     ],
     'projects' => [
         'title' => 'Proyectos',
@@ -183,6 +183,13 @@ return [
         'state-close' => 'Cerrar',
 
         'no-offers' => 'No hay ofertas de trabajo disponibles',
+    ],
+    'company-offers' => [
+        'title' => 'Mis ofertas de trabajo',
+        'open' => 'Abierta',
+        'close' => 'Cerrada',
+        'you' => 'Usted',
+        'no-offers' => 'No tienes ofertas de trabajo en este momento',
     ],
     'favorites' => [
         'title' => 'Mis favoritos',

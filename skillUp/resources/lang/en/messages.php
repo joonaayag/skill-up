@@ -213,6 +213,13 @@ return [
 
         'no-offers' => 'There are no job offers available',
     ],
+    'company-offers' => [
+        'title' => 'My job offers',
+        'open' => 'Open',
+        'close' => 'Close',
+        'you' => 'You',
+        'no-offers' => 'You have no job offers at this time',
+    ],
     'favorites' => [
         'title' => 'My favorites',
         'type' => 'Type',
