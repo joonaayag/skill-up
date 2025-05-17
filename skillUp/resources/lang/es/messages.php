@@ -308,6 +308,32 @@ return [
         'delete-confirm-2' => 'de la oferta',
         'no-applications' => 'No hay solicitudes disponibles',
     ],
+    'admin' => [
+        'dashboard' => [
+            'title' => 'Panel de administración',
+            'welcome' => 'Bienvenido',
+            'p-management' => [
+                'text' => 'Gestión de proyectos',
+                'description' => 'Ver y gestionar proyectos generales',
+            ],
+            'sp-management' => [
+                'text' => 'Gestión de proyectos escolares',
+                'description' => 'Gestiona proyectos realizados en centros educativos centros educativos',
+            ],
+            'u-management' => [
+                'text' => 'Gestión de usuarios',
+                'description' => 'Gestiona perfiles de alumnos, profesores y empresas',
+            ],
+            'o-management' => [
+                'text' => 'Gestión de ofertas de empleo',
+                'description' => 'Gestiona las ofertas de empleo publicadas por las empresas',
+            ],
+            'c-management' => [
+                'text' => 'Gestión de comentarios',
+                'description' => 'Gestionar comentarios en proyectos y otras secciones de la web',
+            ],
+        ],
+    ],
     'chatbot' => [
         'skillup-assistant' => 'Asistente SkillUp',
         'first-message' => '¡Hola! Soy el asistente de SkillUp. Puedes preguntarme cosas como:',

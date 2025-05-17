@@ -309,6 +309,32 @@ return [
         'company' => 'Company',
         'teacher' => 'Teacher',
     ],
+    'admin' => [
+        'dashboard' => [
+            'title' => 'Administration panel',
+            'welcome' => 'Welcome',
+            'p-management' => [
+                'text' => 'Project management',
+                'description' => 'View and manage general projects.',
+            ],
+            'sp-management' => [
+                'text' => 'School project management',
+                'description' => 'Manages projects carried out in educational centers educational centers',
+            ],
+            'u-management' => [
+                'text' => 'User management',
+                'description' => 'Manages profiles of students, teachers and companies.',
+            ],
+            'o-management' => [
+                'text' => 'Job offer management',
+                'description' => 'Manage job offers published by companies',
+            ],
+            'c-management' => [
+                'text' => 'Comments management',
+                'description' => 'Manage comments on projects and other sections of the site.',
+            ],
+        ],
+    ],
     'chatbot' => [
         'skillup-assistant' => 'SkillUp Assistant',
         'first-message' => 'Hi! Im the SkillUp assistant. You can ask me questions like:',
