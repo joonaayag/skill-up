@@ -236,7 +236,6 @@ class SchoolProjectController extends Controller
             ? $request->file('image')->store('project_images', 'public')
             : null;
 
-        // Crear un nuevo proyecto utilizando el método create
         $project = SchoolProject::create([
             'title' => $validated['title'],
             'teacher_id' => auth()->id(),

@@ -12,6 +12,7 @@ class SchoolProject extends Model
     protected $fillable = [
         'title',
         'author',
+        'teacher_id',
         'creation_date',
         'description',
         'tags',

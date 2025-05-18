@@ -19,17 +19,19 @@
         <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
             <form id="filters" action="{{ route('school.projects.index') }}" method="get">
                 <div class="flex flex-wrap gap-2 [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                     [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray
-                      [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 mb-2">
-                     <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.filters') }}</x-heading>
-                    <input type="text" name="title" placeholder="{{ __('messages.school-projects.placeholder-title') }}" value="{{ request('title') }}"
-                        class="input w-full py-2" />
-                    <input type="text" name="author" placeholder="{{ __('messages.school-projects.placeholder-author') }}" value="{{ request('author') }}"
-                        class="input w-full py-2" />
+                         [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray
+                          [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 mb-2">
+                    <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.filters') }}</x-heading>
+                    <input type="text" name="title" placeholder="{{ __('messages.school-projects.placeholder-title') }}"
+                        value="{{ request('title') }}" class="input w-full py-2" />
+                    <input type="text" name="author" placeholder="{{ __('messages.school-projects.placeholder-author') }}"
+                        value="{{ request('author') }}" class="input w-full py-2" />
                     <select name="order" class="input w-full py-2">
                         <option>{{ __('messages.school-projects.order-by') }}</option>
-                        <option value="title" @selected(request('order') == 'title')>{{ __('messages.school-projects.order-title') }}</option>
-                        <option value="created_at" @selected(request('order') == 'created_at')>{{ __('messages.school-projects.order-date') }}</option>
+                        <option value="title" @selected(request('order') == 'title')>
+                            {{ __('messages.school-projects.order-title') }}</option>
+                        <option value="created_at" @selected(request('order') == 'created_at')>
+                            {{ __('messages.school-projects.order-date') }}</option>
                     </select>
                     <select name="direction" class="w-full py-2">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
@@ -73,21 +75,21 @@
                             {{ __('messages.school-projects.engineering') }}</li>
                     </ul>
                 </div>
-            
-                
+
+
             </form>
         </aside>
 
         <main>
-            
+
             <div class="bg-white border-2 border-themeLightGray dark:bg-themeBgDark rounded-lg shadow p-4">
                 @if ($errors->any())
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                         <strong class="font-bold">Error!</strong>
                         <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
                         </ul>
                     </div>
                 @endif
@@ -102,153 +104,156 @@
                     </thead>
                     <tbody>
                         @if ($projects->count())
-                        @foreach($projects as $project)
-                            <tr class="border-b">
-                                <td class="py-2">
-                                    <div class="font-semibold">{{ $project->title }}</div>
-                                    <div class="text-sm text-gray-500">{{ $project->author }}</div>
-                                </td>
-                                <td class="py-2">{{ $project->creation_date }}</td>
-                                <td class="py-2">{{ $project->created_at }}</td>
-                                <td class="py-2 space-x-2" x-data="{ showDelete: false, showEdit: false }" x-cloak x-init="
-                                     $watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
-                                     $watch('showEdit', val => document.body.classList.toggle('overflow-hidden', val));">
+                            @foreach($projects as $project)
+                                <tr class="border-b">
+                                    <td class="py-2">
+                                        <div class="font-semibold">{{ $project->title }}</div>
+                                        <div class="text-sm text-gray-500">{{ $project->author }}</div>
+                                    </td>
+                                    <td class="py-2">{{ $project->creation_date }}</td>
+                                    <td class="py-2">{{ $project->created_at }}</td>
+                                    <td class="py-2 space-x-2" x-data="{ showDelete: false, showEdit: false }" x-cloak
+                                        x-init="
+                                                 $watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
+                                                 $watch('showEdit', val => document.body.classList.toggle('overflow-hidden', val));">
 
-                                    <button @click="showDelete = true" 
-                                        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
-                                        {{ __('messages.button.delete') }}
-                                    </button>
+                                        <button @click="showDelete = true"
+                                            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
+                                            {{ __('messages.button.delete') }}
+                                        </button>
 
-                                    <x-modal @click.outside="showDelete = false" :show="'showDelete'">
-                                        <x-heading level="h2"
-                                                    class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
-                                                    {{ __('messages.school-projects.delete-confirm') }}
-                                                </x-heading>
-                                                <form action="{{ route('school.projects.destroy', $project->id) }}"
-                                                    method="POST" class="flex justify-center gap-3">
-                                                    @csrf
-                                                    @method('DELETE')
+                                        <x-modal @click.outside="showDelete = false" :show="'showDelete'">
+                                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
+                                                {{ __('messages.school-projects.delete-confirm') }}
+                                            </x-heading>
+                                            <form action="{{ route('school.projects.destroy', $project->id) }}" method="POST"
+                                                class="flex justify-center gap-3">
+                                                @csrf
+                                                @method('DELETE')
 
-                                                    <button type="submit"
-                                                        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
-                                                        {{ __('messages.school-projects.delete-yes') }}
-                                                    </button>
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
+                                                    {{ __('messages.school-projects.delete-yes') }}
+                                                </button>
 
-                                                    <button type="button" @click="showDelete = false"
-                                                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition cursor-pointer">
+                                                <button type="button" @click="showDelete = false"
+                                                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition cursor-pointer">
+                                                    {{ __('messages.button.cancel') }}
+                                                </button>
+                                            </form>
+                                        </x-modal>
+
+                                        <button @click="showEdit = true"
+                                            class="px-4 py-2 bg-themeBlue/80 hover:bg-themeBlue text-white rounded transition cursor-pointer">
+                                            {{ __('messages.button.edit') }}
+                                        </button>
+
+                                        <x-modal @click.outside="showEdit = false" :show="'showEdit'">
+                                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
+                                                {{ __('messages.school-projects.edit-project') }}
+                                            </x-heading>
+                                            <form action="{{ route('school.projects.update', $project->id) }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+
+                                                <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
+                                                <x-inputtext type="text" name="title" id="title" value="{{ $project->title }}"
+                                                    required />
+
+                                                <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
+                                                <x-inputtext type="text" name="author" id="author" value="{{ $project->author }}"
+                                                    required />
+
+                                                <x-label
+                                                    for="date_created">{{ __('messages.school-projects.label-date') }}</x-label>
+                                                <input type="date" name="creation_date" value="{{ $project->creation_date }}"
+                                                    class="w-full mb-2 border px-2 py-1 rounded" required>
+
+                                                <x-label
+                                                    for="description">{{ __('messages.school-projects.label-description') }}</x-label>
+                                                <textarea name="description" class="w-full mb-2 border px-2 py-1 rounded"
+                                                    required>{{ $project->description }}</textarea>
+
+                                                <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
+                                                <x-inputtext type="text" name="tags" id="tags" value="{{ $project->tags }}"
+                                                    required />
+
+                                                <x-label
+                                                    for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
+                                                <x-inputtext type="text" name="general_category" id="general_category"
+                                                    value="{{ $project->general_category }}" required />
+
+                                                <x-label for="url">{{ __('messages.school-projects.label-link') }}</x-label>
+                                                <input type="url" name="link" value="{{ $project->link }}"
+                                                    class="w-full mb-2 border px-2 py-1 rounded">
+
+                                                <x-label for="title">{{ __('messages.school-projects.label-highlight') }}</x-label>
+                                                <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
+                                                    <label for="image-upload-{{ $project->id }}"
+                                                        class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
+                                                        {{ __('messages.school-projects.label-high-upload') }}
+                                                        <input id="image-upload-{{ $project->id }}" type="file" name="image"
+                                                            accept="image/*" class="hidden" @change="
+                                                                            fileName = $event.target.files[0]?.name || '';
+                                                                            if ($event.target.files[0]) {
+                                                                             const reader = new FileReader();
+                                                                             reader.onload = e => previewUrl = e.target.result;
+                                                                             reader.readAsDataURL($event.target.files[0]);
+                                                                             }" />
+                                                    </label>
+
+                                                    <template x-if="fileName">
+                                                        <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">📄
+                                                            <span x-text="fileName"></span>
+                                                        </p>
+                                                    </template>
+
+                                                    <template x-if="previewUrl">
+                                                        <img :src="previewUrl" alt="Vista previa"
+                                                            class="mt-3 max-h-48 rounded border border-gray-300 shadow" />
+                                                    </template>
+                                                </div>
+
+                                                <x-label for="title">{{ __('messages.school-projects.label-additional') }}</x-label>
+                                                <div x-data="{ fileNames: [] }" x-cloak class="w-full">
+                                                    <label for="file-upload-{{ $project->id }}"
+                                                        class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
+                                                        {{ __('messages.school-projects.label-upload') }}
+                                                        <input id="file-upload-{{ $project->id }}" name="files[]" type="file"
+                                                            multiple accept="file/*" class="hidden"
+                                                            @change="fileNames = [...$event.target.files].map(f => f.name)" />
+                                                    </label>
+
+                                                    <template x-if="fileNames.length > 0">
+                                                        <ul
+                                                            class="mt-2 text-sm text-black dark:text-themeLightGray space-y-1 list-disc list-inside">
+                                                            <template x-for="name in fileNames" :key="name">
+                                                                <li x-text="name"></li>
+                                                            </template>
+                                                        </ul>
+                                                    </template>
+                                                </div>
+
+                                                <div class="flex justify-end gap-3 mt-4">
+                                                    <button type="button" @click="showEdit = false"
+                                                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                                                         {{ __('messages.button.cancel') }}
                                                     </button>
-                                                </form>
-                                    </x-modal>
-
-                                    <button @click="showEdit = true"  
-                                        class="px-4 py-2 bg-themeBlue/80 hover:bg-themeBlue text-white rounded transition cursor-pointer">
-                                        {{ __('messages.button.edit') }}
-                                    </button>
-
-                                    <x-modal @click.outside="showEdit = false" :show="'showEdit'">
-                                                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
-                                                    {{ __('messages.school-projects.edit-project') }}
-                                                </x-heading>
-                                                <form action="{{ route('school.projects.update', $project->id) }}"
-                                                    method="POST" enctype="multipart/form-data">
-                                                    @csrf
-                                                    @method('PUT')
-
-                                                    <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
-                                                    <x-inputtext type="text" name="title" id="title"
-                                                        value="{{ $project->title }}" required />
-
-                                                    <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
-                                                    <x-inputtext type="text" name="author" id="author"
-                                                        value="{{ $project->author }}" required />
-
-                                                    <x-label for="date_created">{{ __('messages.school-projects.label-date') }}</x-label>
-                                                    <input type="date" name="creation_date"
-                                                        value="{{ $project->creation_date }}"
-                                                        class="w-full mb-2 border px-2 py-1 rounded" required>
-
-                                                    <x-label for="description">{{ __('messages.school-projects.label-description') }}</x-label>
-                                                    <textarea name="description"
-                                                        class="w-full mb-2 border px-2 py-1 rounded"
-                                                        required>{{ $project->description }}</textarea>
-
-                                                    <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
-                                                    <x-inputtext type="text" name="tags" id="tags"
-                                                        value="{{ $project->tags }}" required />
-
-                                                    <x-label for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
-                                                    <x-inputtext type="text" name="general_category" id="general_category"
-                                                        value="{{ $project->general_category }}" required />
-
-                                                    <x-label for="url">{{ __('messages.school-projects.label-link') }}</x-label>
-                                                    <input type="url" name="link" value="{{ $project->link }}"
-                                                        class="w-full mb-2 border px-2 py-1 rounded">
-
-                                                    <x-label for="title">{{ __('messages.school-projects.label-hihglight') }}</x-label>
-                                                    <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
-                                                        <label for="image-upload-{{ $project->id }}"
-                                                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
-                                                            {{ __('messages.school-projects.label-high-upload') }}
-                                                            <input id="image-upload-{{ $project->id }}" type="file"
-                                                                name="image" accept="image/*" class="hidden" @change="
-                                                                fileName = $event.target.files[0]?.name || '';
-                                                                if ($event.target.files[0]) {
-                                                                 const reader = new FileReader();
-                                                                 reader.onload = e => previewUrl = e.target.result;
-                                                                 reader.readAsDataURL($event.target.files[0]);
-                                                                 }" />
-                                                        </label>
-
-                                                        <template x-if="fileName">
-                                                            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">📄
-                                                                <span x-text="fileName"></span></p>
-                                                        </template>
-
-                                                        <template x-if="previewUrl">
-                                                            <img :src="previewUrl" alt="Vista previa"
-                                                                class="mt-3 max-h-48 rounded border border-gray-300 shadow" />
-                                                        </template>
-                                                    </div>
-
-                                                    <x-label for="title">{{ __('messages.school-projects.additional') }}</x-label>
-                                                    <div x-data="{ fileNames: [] }" x-cloak class="w-full">
-                                                        <label for="file-upload-{{ $project->id }}"
-                                                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
-                                                            {{ __('messages.school-projects.label-upload') }}
-                                                            <input id="file-upload-{{ $project->id }}" name="files[]"
-                                                                type="file" multiple accept="file/*" class="hidden"
-                                                                @change="fileNames = [...$event.target.files].map(f => f.name)" />
-                                                        </label>
-
-                                                        <template x-if="fileNames.length > 0">
-                                                            <ul
-                                                                class="mt-2 text-sm text-black dark:text-themeLightGray space-y-1 list-disc list-inside">
-                                                                <template x-for="name in fileNames" :key="name">
-                                                                    <li x-text="name"></li>
-                                                                </template>
-                                                            </ul>
-                                                        </template>
-                                                    </div>
-
-                                                    <div class="flex justify-end gap-3 mt-4">
-                                                        <button type="button" @click="showEdit = false"
-                                                            class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                                                            {{ __('messages.button.cancel') }}
-                                                        </button>
-                                                        <button type="submit"
-                                                            class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
-                                                            {{ __('messages.button.save') }}
-                                                        </button>
-                                                    </div>
-                                    </x-modal>
-                                </td>
-                        @endforeach
+                                                    <button type="submit"
+                                                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                                                        {{ __('messages.button.save') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </x-modal>
+                                    </td>
+                            @endforeach
                         @else
-                            <tr>
-                                <td colspan="4" class="py-4 text-center">{{ __('messages.school-projects.no-projects') }}</td>
-                            </tr>
-                        @endif
+                                <tr>
+                                    <td colspan="4" class="py-4 text-center">{{ __('messages.school-projects.no-projects') }}</td>
+                                </tr>
+                            @endif
                     </tbody>
                 </table>
             </div>
@@ -259,13 +264,14 @@
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
         <button @click="showModal = true"
-            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition cursor-pointer" >
+            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeHoverBlue transition cursor-pointer">
             <x-icon name="plus" />
         </button>
 
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.school-projects.heading-new-project') }}</x-heading>
+            <x-heading level="h2"
+                class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.school-projects.heading-new-project') }}</x-heading>
 
             <form action="{{ route('school.projects.store') }}" method="POST" enctype="multipart/form-data"
                 class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
@@ -322,12 +328,12 @@
                             class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
                             {{ __('messages.school-projects.label-high-upload') }}
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                    fileName = $event.target.files[0]?.name || '';
-                                    if ($event.target.files[0]) {
-                                    const reader = new FileReader();
-                                    reader.onload = e => previewUrl = e.target.result;
-                                    reader.readAsDataURL($event.target.files[0]);
-                                    }" />
+                                        fileName = $event.target.files[0]?.name || '';
+                                        if ($event.target.files[0]) {
+                                        const reader = new FileReader();
+                                        reader.onload = e => previewUrl = e.target.result;
+                                        reader.readAsDataURL($event.target.files[0]);
+                                        }" />
                         </label>
 
                         <template x-if="fileName">
