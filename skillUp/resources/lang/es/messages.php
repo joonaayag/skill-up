@@ -251,7 +251,7 @@ return [
         'current-course' => 'Curso actual',
         'educational-center' => 'Centro educativo',
         'specialization' => 'Especialidad',
-        'departamento' => 'Departamento',
+        'department' => 'Departamento',
         'cif' => 'CIF',
         'address' => 'Dirección',
         'sector' => 'Sector',
