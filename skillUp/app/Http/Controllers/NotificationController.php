@@ -13,7 +13,13 @@ class NotificationController extends Controller
         $notification = auth()->user()->notifications()->findOrFail($id);
         $notification->delete();
 
-        return back();
+        $notificationCount = auth()->user()->notifications()->count();
+
+        if (request()->ajax()) {
+            return response()->json(['ok' => true, 'notificationCount' => $notificationCount]);
+        }
+
+        return back()->with('notificationCount', $notificationCount);
     }
     public function check()
     {

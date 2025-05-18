@@ -40,7 +40,8 @@
             <button class="relative px-3 py-2 cursor-pointer">
                 <x-icon name="bell" class="w-6 h-auto fill-none" />
                 @if(auth()->user()->notifications->count() > 0)
-                    <span class="absolute -top-0 right-1 bg-red-500 text-white text-xs rounded-full px-1">
+                    <span id="notification-count"
+                        class="absolute -top-0 right-1 bg-red-500 text-white text-xs rounded-full px-1">
                         {{ auth()->user()->notifications->count() }}
                     </span>
                 @endif
@@ -48,7 +49,7 @@
 
             <div x-cloak x-show="open" x-transition
                 class="absolute left-0 mt-2 w-72 dark:bg-themeBgDark bg-white border border-gray-300 shadow-xl rounded-md z-50">
-                <ul class="max-h-64 overflow-y-auto">
+                <ul class="max-h-64 overflow-y-auto" data-notification-list>
                     @forelse(auth()->user()->notifications as $notification)
                         <li
                             class="flex flex-row justify-between items-start p-3 hover:bg-themeLightGray/20 [&>div>span]text-themeLightGray cursor-default transition">
@@ -56,12 +57,15 @@
                                 <span class="text-sm font-semibold">{{ $notification->title }}</span>
                                 <span class="text-sm">{{ $notification->message}}</span>
                             </div>
-                            <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}">
+                            <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}"
+                                class="form-eliminar-notificacion" data-id="{{ $notification->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"><x-icon name="x"
-                                        class="w-6 h-auto text-themeRed cursor-pointer" /></button>
+                                <button type="submit" class="btn-eliminar">
+                                    <x-icon name="x" class="w-6 h-auto text-themeRed cursor-pointer" />
+                                </button>
                             </form>
+
                         </li>
                     @empty
                         <li class="p-3 text-sm text-gray-500">{{ __('messages.navbar.no-notifications') }}</li>
@@ -86,7 +90,8 @@
             ];
         @endphp
 
-        <div x-data="{ open: false }" @mouseleave="open = false" class="relative inline-block translate-y-1.5 ml-2 text-left z-50">
+        <div x-data="{ open: false }" @mouseleave="open = false"
+            class="relative inline-block translate-y-1.5 ml-2 text-left z-50">
             <button @click="open = !open"
                 class="flex items-center gap-2 px-3 py-1 rounded dark:bg-themeDark dark:text-white cursor-pointer">
                 <img src="{{ $languages[App::getLocale()]['icon'] }}" alt="Bandera" class="w-5 h-5">
@@ -100,7 +105,7 @@
                 class="absolute right-0 mt-2 w-40 dark:bg-themeBgDark bg-white dark:bg-themeDark border border-gray-200 dark:border-gray-600 rounded shadow">
                 @foreach ($languages as $locale => $info)
                     <a href="{{ LaravelLocalization::getLocalizedURL($locale, null, [], true) }}" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700
-                        {{ App::getLocale() === $locale ? 'font-semibold' : '' }}">
+                                    {{ App::getLocale() === $locale ? 'font-semibold' : '' }}">
                         <img src="{{ $info['icon'] }}" alt="{{ $info['label'] }}" class="w-5 h-5">
                         {{ $info['label'] }}
                     </a>
@@ -112,8 +117,9 @@
 
     <nav class="flex flex-grow justify-end basis-0 ">
         @auth
-            <a href="{{ route('profile.index') }}" class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
-                        transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
+            <a href="{{ route('profile.index') }}"
+                class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
+                                    transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
                 <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"
@@ -161,4 +167,49 @@
             menuBackdrop.style.visibility = 'hidden'
         })
     })
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.form-eliminar-notificacion').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const id = this.dataset.id;
+                const action = this.getAttribute('action');
+
+                fetch(action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': this.querySelector('input[name="_token"]').value,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ _method: 'DELETE' })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Quitar la notificación del DOM
+                        this.closest('li')?.remove();
+
+                        // Actualizar el contador
+                        const contador = document.getElementById('notification-count');
+                        if (contador) {
+                            if (data.notificationCount > 0) {
+                                contador.textContent = data.notificationCount;
+                                contador.classList.remove('hidden');
+                            } else {
+                                contador.classList.add('hidden');
+                            }
+                        }
+
+                        // ✅ Si ya no quedan notificaciones visibles, mostrar mensaje vacío
+                        const lista = document.querySelector('[data-notification-list]');
+                        if (lista && lista.querySelectorAll('li').length === 0) {
+                            lista.innerHTML = `<li class="p-3 text-sm text-gray-500">{{ __('messages.navbar.no-notifications') }}</li>`;
+                        }
+                    });
+
+            });
+        });
+    });
+
 </script>
