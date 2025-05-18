@@ -50,19 +50,15 @@
                                             @method('PUT')
 
                                             <div class="relative mb-8">
-                                                <img id="bannerPreview"
-                                                    src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e' }}"
-                                                    class="w-full h-40 object-cover cursor-pointer" alt="Banner">
-                                                <input type="file" name="banner" id="bannerInput" accept="image/*"
-                                                    class="hidden">
+                                                <img src="{{ $user->banner ? asset('storage/' . $user->banner) : asset('images/defaultBanner.jpg') }}"
+                                                    class="w-full h-40 object-cover cursor-pointer banner-preview" alt="Banner">
+                                                <input type="file" name="banner" accept="image/*" class="hidden banner-input">
 
                                                 <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                                                    <img id="fotoPerfilPreview"
-                                                        src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://randomuser.me/api/portraits/men/32.jpg' }}"
-                                                        class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
+                                                    <img src="{{ $user->profile ? asset('storage/' . $user->profile) : asset('images/defaultProfile.png') }}"
+                                                        class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer profile-preview"
                                                         alt="Foto de perfil">
-                                                    <input type="file" name="profile" id="fotoPerfilInput" accept="image/*"
-                                                        class="hidden">
+                                                    <input type="file" name="profile" accept="image/*" class="hidden profile-input">
                                                 </div>
                                             </div>
 
@@ -307,42 +303,37 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const bannerImage = document.getElementById('bannerImage');
-            const profileImage = document.getElementById('profileImage');
-
-            const bannerInput = document.getElementById('bannerInput');
-            const bannerPreview = document.getElementById('bannerPreview');
-
-            const fotoPerfilInput = document.getElementById('fotoPerfilInput');
-            const fotoPerfilPreview = document.getElementById('fotoPerfilPreview');
-
-            bannerPreview.addEventListener('click', () => bannerInput.click());
-            fotoPerfilPreview.addEventListener('click', () => fotoPerfilInput.click());
-
-            bannerInput.addEventListener('change', function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        bannerPreview.src = e.target.result;
-                        bannerImage.src = e.target.result;
+            document.querySelectorAll('.banner-preview').forEach((bannerImg, index) => {
+                const bannerInput = bannerImg.parentElement.querySelector('.banner-input');
+                bannerImg.addEventListener('click', () => bannerInput.click());
+                bannerInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            bannerImg.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
                     }
-                    reader.readAsDataURL(file);
-                }
+                });
             });
 
-            fotoPerfilInput.addEventListener('change', function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        fotoPerfilPreview.src = e.target.result;
-                        profileImage.src = e.target.result;
+            document.querySelectorAll('.profile-preview').forEach((profileImg, index) => {
+                const profileInput = profileImg.parentElement.querySelector('.profile-input');
+                profileImg.addEventListener('click', () => profileInput.click());
+                profileInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            profileImg.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
                     }
-                    reader.readAsDataURL(file);
-                }
+                });
             });
         });
     </script>
+
 
 @endsection

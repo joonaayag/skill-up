@@ -20,6 +20,17 @@
         </div>
 
         <div class="pt-8 pb-6 px-6 text-center ">
+
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                <ul class="mt-3 list-disc list-inside text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
             <span
                 class="inline-block mt-2 px-3 py-1 text-sm text-white bg-green-500 rounded-full">
