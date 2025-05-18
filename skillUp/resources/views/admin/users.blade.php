@@ -21,10 +21,12 @@
                     <tr>
                         <th class="px-4 py-3 border dark:border-gray-700">ID</th>
                         <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-name') }}</th>
-                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-last-name') }}</th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-last-name') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-email') }}</th>
                         <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-role') }}</th>
-                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-actions') }}</th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.users.table-actions') }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +44,8 @@
                                         class="bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">{{ __('messages.button.edit') }}</button>
 
                                     <x-modal :show="'openEdit'" @click.outside="openEdit = false">
-                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.edit') }}</x-heading>
+                                        <x-heading level="h2"
+                                            class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.edit') }}</x-heading>
                                         <form action="{{ route('admin.user.update', $user->id) }}" method="POST"
                                             enctype="multipart/form-data"
                                             class="max-w-2xl mx-auto dark:bg-themeBgDark bg-white p-6 rounded shadow ">
@@ -58,7 +61,8 @@
                                                     <img src="{{ $user->profile ? asset('storage/' . $user->profile) : asset('images/defaultProfile.png') }}"
                                                         class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer profile-preview"
                                                         alt="Foto de perfil">
-                                                    <input type="file" name="profile" accept="image/*" class="hidden profile-input">
+                                                    <input type="file" name="profile" accept="image/*"
+                                                        class="hidden profile-input">
                                                 </div>
                                             </div>
 
@@ -200,7 +204,8 @@
                                         class="bg-red-500 border-2 border-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition cursor-pointer">{{ __('messages.button.delete') }}</button>
 
                                     <x-modal :show="'open'" @close="open = false">
-                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.heading-confirm') }}</x-heading>
+                                        <x-heading level="h2"
+                                            class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.heading-confirm') }}</x-heading>
                                         <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
                                             {{ __('messages.admin.users.text-confirm-1') }} <strong>{{ $user->name }}
                                                 {{ $user->last_name }}</strong> {{ __('messages.admin.users.text-confirm-2') }}
@@ -244,57 +249,184 @@
                     name="plus" class="w-5 h-auto" /> {{ __('messages.button.create') }}</button>
 
             <x-modal :show="'showCreateUser'" @close="showCreateUser = false">
-                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.create-user') }}</x-heading>
-                <form method="POST" action="{{ route('admin.register') }}" class="space-y-4"
+                <x-heading level="h2"
+                    class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.create-user') }}</x-heading>
+                <form method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data"
+                    class="max-w-2xl mx-auto dark:bg-themeBgDark bg-white p-6 rounded shadow space-y-6"
                     x-data="{ role: '{{ old('role') }}' }">
                     @csrf
 
-                    <input type="text" name="name" placeholder="{{ __('messages.admin.users.ph-name') }}" required>
-                    <input type="text" name="lastName" placeholder="{{ __('messages.admin.users.ph-last-name') }}" required>
-                    <input type="email" name="email" placeholder="{{ __('messages.admin.users.ph-email') }}" required>
-                    <input type="password" name="password" placeholder="{{ __('messages.admin.users.ph-password') }}" required>
-                    <input type="password" name="password_confirmation" placeholder="{{ __('messages.admin.users.ph-password-confirmation') }}" required>
+                    {{-- Imagen de banner y perfil --}}
+                    <div class="relative mb-8">
+                        <img src="{{ asset('images/defaultBanner.jpg') }}"
+                            class="w-full h-40 object-cover cursor-pointer banner-preview" alt="Banner">
+                        <input type="file" name="banner" accept="image/*" class="hidden banner-input">
 
-                    <select name="role" x-model="role" required>
-                        <option value="">{{ __('messages.admin.users.select-role') }}</option>
-                        <option value="Usuario">{{ __('messages.admin.users.user') }}</option>
-                        <option value="Alumno">{{ __('messages.admin.users.student') }}</option>
-                        <option value="Profesor">{{ __('messages.admin.users.teacher') }}</option>
-                        <option value="Empresa">{{ __('messages.admin.users.company') }}</option>
-                    </select>
+                        <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
+                            <img src="{{ asset('images/defaultProfile.png') }}"
+                                class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer profile-preview"
+                                alt="Foto de perfil">
+                            <input type="file" name="profile" accept="image/*" class="hidden profile-input">
+                        </div>
+                    </div>
 
-                    <!-- Campos adicionales según rol -->
+                    {{-- Nombre y apellido --}}
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium">{{ __('messages.profile.label-name') }}</label>
+                            <input type="text" name="name" placeholder="{{ __('messages.admin.users.ph-name') }}"
+                                value="{{ old('name') }}" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium">{{ __('messages.profile.label-last-name') }}</label>
+                            <input type="text" name="lastName" placeholder="{{ __('messages.admin.users.ph-last-name') }}"
+                                value="{{ old('lastName') }}" required class="w-full border rounded px-3 py-2">
+                        </div>
+                    </div>
+
+                    {{-- Email --}}
+                    <div>
+                        <label class="block text-sm font-medium">{{ __('messages.profile.label-email') }}</label>
+                        <input type="email" name="email" placeholder="{{ __('messages.admin.users.ph-email') }}"
+                            value="{{ old('email') }}" required class="w-full border rounded px-3 py-2">
+                    </div>
+
+                    {{-- Contraseña --}}
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium">{{ __('messages.admin.users.ph-password') }}</label>
+                            <input type="password" name="password" required class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-medium">{{ __('messages.admin.users.ph-password-confirmation') }}</label>
+                            <input type="password" name="password_confirmation" required
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                    </div>
+
+                    {{-- Rol --}}
+                    <div>
+                        <label class="block text-sm font-medium">{{ __('messages.admin.users.select-role') }}</label>
+                        <select name="role" x-model="role" required class="w-full border rounded px-3 py-2">
+                            <option value="">{{ __('messages.admin.users.select-role') }}</option>
+                            <option value="Usuario">Usuario</option>
+                            <option value="Alumno">Alumno</option>
+                            <option value="Profesor">Profesor</option>
+                            <option value="Empresa">Empresa</option>
+                        </select>
+                    </div>
+
+                    {{-- Alumno --}}
                     <template x-if="role === 'Alumno'">
-                        <div class="space-y-2">
-                            <input type="date" name="birthDate" placeholder="{{ __('messages.admin.users.ph-birth-date') }}" required>
-                            <input type="text" name="currentCourse" placeholder="{{ __('messages.admin.users.ph-current-course') }}" required>
-                            <input type="text" name="educationalCenter" placeholder="{{ __('messages.admin.users.ph-educational-center') }}" required>
+                        <div class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
+                                <input type="date" name="birthDate" value="{{ old('birthDate') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-current-course') }}</label>
+                                <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-current-course') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                                <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
                         </div>
                     </template>
 
+                    {{-- Profesor --}}
                     <template x-if="role === 'Profesor'">
-                        <div class="space-y-2">
-                            <input type="date" name="birthDate" placeholder="{{ __('messages.admin.users.ph-birth-date') }}" required>
-                            <input type="text" name="specialization" placeholder="{{ __('messages.admin.users.ph-specialization') }}" required>
-                            <input type="text" name="department" placeholder="{{ __('messages.admin.users.ph-department') }}" required>
-                            <input type="text" name="validationDocument" placeholder="{{ __('messages.admin.users.ph-validation-document') }}" required>
+                        <div class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
+                                <input type="date" name="birthDate" value="{{ old('birthDate') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-specialization') }}</label>
+                                <input type="text" name="specialization" value="{{ old('specialization') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-specialization') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
+                                <input type="text" name="department" value="{{ old('department') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-department') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium">{{ __('messages.admin.users.ph-validation-document') }}</label>
+                                <input type="text" name="validationDocument" value="{{ old('validationDocument') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
                         </div>
                     </template>
 
+                    {{-- Empresa --}}
                     <template x-if="role === 'Empresa'">
-                        <div class="space-y-2">
-                            <input type="text" name="cif" placeholder="{{ __('messages.admin.users.ph-cif') }}" required>
-                            <input type="text" name="address" placeholder="{{ __('messages.admin.users.ph-address') }}" required>
-                            <input type="text" name="sector" placeholder="{{ __('messages.admin.users.ph-sector') }}" required>
-                            <input type="url" name="website" placeholder="{{ __('messages.admin.users.ph-website') }}">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium">CIF</label>
+                                <input type="text" name="cif" value="{{ old('cif') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-cif') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">{{ __('messages.profile.label-address') }}</label>
+                                <input type="text" name="address" value="{{ old('address') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-address') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">{{ __('messages.profile.label-sector') }}</label>
+                                <input type="text" name="sector" value="{{ old('sector') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-sector') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">{{ __('messages.profile.label-website') }}</label>
+                                <input type="url" name="website" value="{{ old('website') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-website') }}"
+                                    class="w-full border rounded px-3 py-2">
+                            </div>
                         </div>
                     </template>
 
-                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
-                        {{ __('messages.button.register') }}
-                    </button>
+                    {{-- CV --}}
+                    <div x-data="{ cvName: '' }" x-cloak>
+                        <label class="block text-sm font-medium">{{ __('messages.profile.upload-cv') }}</label>
+                        <label for="cv-upload"
+                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
+                            {{ __('messages.profile.upload-cv') }}
+                            <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
+                                @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
+                        </label>
+                        <template x-if="cvName">
+                            <p class="mt-2 text-sm text-black dark:text-themeLightGray" x-text="cvName"></p>
+                        </template>
+                    </div>
 
+                    <div class="flex justify-end pt-4">
+                        <button type="submit"
+                            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                            {{ __('messages.button.register') }}
+                        </button>
+                    </div>
                 </form>
+
             </x-modal>
 
         </div>
