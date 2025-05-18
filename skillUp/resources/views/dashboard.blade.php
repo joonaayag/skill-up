@@ -28,7 +28,9 @@
                         </a>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ __('messages.dashboard.no-projects') }}.</p>
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                        {{ __('messages.dashboard.no-projects') }}.
+                    </p>
                 @endif
             </div>
         </x-card>
@@ -55,7 +57,9 @@
                             </a>
                         @endforeach
                     @else
-                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ __('messages.dashboard.no-own-projects') }}.</p>
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                            {{ __('messages.dashboard.no-own-projects') }}.
+                        </p>
                     @endif
                 </div>
             </x-card>
@@ -80,7 +84,9 @@
                             </a>
                         @endforeach
                     @else
-                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">{{ __('messages.dashboard.no-offers') }}.</p>
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                            {{ __('messages.dashboard.no-offers') }}.
+                        </p>
                     @endif
                 </div>
             </x-card>
@@ -93,13 +99,13 @@
                     <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg')  }}"
                         alt="Fondo" class="w-full h-30 object-cover" id="bannerImage">
                     <div class="absolute top-20 left-1/6 transform -translate-x-1/2">
-                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}" alt="Perfil" id="profileImage"
+                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}"
+                            alt="Perfil" id="profileImage"
                             class="h-18 w-18 rounded-full border-4 border-white object-cover shadow-lg">
 
                     </div>
                     <div class="px-3 mt-8">
-                        <x-heading
-                            level="h3">{{ auth()->user()->name . ' ' . auth()->user()->last_name }}</x-heading>
+                        <x-heading level="h3">{{ auth()->user()->name . ' ' . auth()->user()->last_name }}</x-heading>
                         @if (auth()->user()->role === 'Alumno')
                             <p>{{ __('messages.dashboard.student-of') }} {{ auth()->user()->detail->educational_center }}</p>
                         @else
@@ -110,27 +116,32 @@
                 </div>
             </div>
             <x-card class="row-span-4 h-full">
-                @if($notifications->count())
-                    <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.recent-notifications') }}</x-heading>
-                    @foreach($notifications as $notification)
-                        <div
-                            class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
-                            <div class="bg-themeGrape text-white p-2 rounded-full">
-                                <x-icon name="bell" class="w-8 h-auto" />
+                <div id="dashboard-notification-list">
+                    @if($notifications->count())
+                        <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.recent-notifications') }}</x-heading>
+                        @foreach($notifications as $notification)
+                            <div
+                                class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
+                                <div class="bg-themeGrape text-white p-2 rounded-full">
+                                    <x-icon name="bell" class="w-8 h-auto" />
+                                </div>
+                                <div class="[&>p]:mt-1">
+                                    <p class="font-semibold">{{ $notification->message }}</p>
+                                    <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                                        {{ $notification->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="[&>p]:mt-1">
-                                <p class="font-semibold">{{ $notification->message }}</p>
-                                <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                    {{ $notification->created_at->diffForHumans() }}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                        {{ __('messages.dashboard.no-notifications') }}.</p>
-                @endif
+                        @endforeach
+                    @else
+                        <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                            {{ __('messages.dashboard.no-notifications') }}
+                        </p>
+                    @endif
+                </div>
             </x-card>
+
+
         </div>
 
     </div>
@@ -150,7 +161,8 @@
             <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
                 <template x-for="msg in messages" :key="msg . id">
                     <div :class="msg . from === 'bot' ? 'text-left' : 'text-right'">
-                        <span :class="msg . from === 'bot' ? 'dark:text-white text-black' : 'text-blue-600'" x-text="msg.text"></span>
+                        <span :class="msg . from === 'bot' ? 'dark:text-white text-black' : 'text-blue-600'"
+                            x-text="msg.text"></span>
                     </div>
                 </template>
             </div>
@@ -211,7 +223,7 @@
                     } else if (
                         txt.includes('{{ __('messages.chatbot.text-company') }}') ||
                         txt.includes('{{ __('messages.chatbot.text-create-job-offer') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-im-company') }}') 
+                        txt.includes('{{ __('messages.chatbot.text-im-company') }}')
                     ) {
                         response = '{{ __('messages.chatbot.response-create-job-offer') }}.';
                     } else if (

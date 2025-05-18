@@ -105,7 +105,7 @@
                 class="absolute right-0 mt-2 w-40 dark:bg-themeBgDark bg-white dark:bg-themeDark border border-gray-200 dark:border-gray-600 rounded shadow">
                 @foreach ($languages as $locale => $info)
                     <a href="{{ LaravelLocalization::getLocalizedURL($locale, null, [], true) }}" class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700
-                                    {{ App::getLocale() === $locale ? 'font-semibold' : '' }}">
+                                            {{ App::getLocale() === $locale ? 'font-semibold' : '' }}">
                         <img src="{{ $info['icon'] }}" alt="{{ $info['label'] }}" class="w-5 h-5">
                         {{ $info['label'] }}
                     </a>
@@ -119,7 +119,7 @@
         @auth
             <a href="{{ route('profile.index') }}"
                 class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
-                                    transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
+                                            transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
                 <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                     alt="Perfil" id="profileImage"
@@ -187,10 +187,13 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        // Quitar la notificación del DOM
                         this.closest('li')?.remove();
+                        const dashboardList = document.getElementById('dashboard-notification-list');
+                        if (dashboardList && data.dashboardHtml !== undefined) {
+                            dashboardList.innerHTML = data.dashboardHtml;
+                        }
 
-                        // Actualizar el contador
+                        // Actualizar contador
                         const contador = document.getElementById('notification-count');
                         if (contador) {
                             if (data.notificationCount > 0) {
@@ -200,13 +203,13 @@
                                 contador.classList.add('hidden');
                             }
                         }
-
-                        // ✅ Si ya no quedan notificaciones visibles, mostrar mensaje vacío
+                        // Comprobar si el menú desplegable está vacío también
                         const lista = document.querySelector('[data-notification-list]');
                         if (lista && lista.querySelectorAll('li').length === 0) {
                             lista.innerHTML = `<li class="p-3 text-sm text-gray-500">{{ __('messages.navbar.no-notifications') }}</li>`;
                         }
                     });
+
 
             });
         });
