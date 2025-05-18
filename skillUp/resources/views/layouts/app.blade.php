@@ -33,7 +33,7 @@
         clearTimeout(logoutTimer);
         logoutTimer = setTimeout(() => {
             window.location.href = "{{ route('user.logout') }}";
-        }, 2 * 60 * 1000); 
+        }, 10 * 60 * 1000); 
     }
 
     ['mousemove', 'keydown', 'click', 'scroll'].forEach(evt => {
@@ -41,7 +41,69 @@
     });
 
     resetLogoutTimer();
+
+
+    let ultimaNotiId = parseInt(localStorage.getItem('ultimaNotiId')) || 0;
+
+    setInterval(() => {
+        fetch("/notificaciones/check")
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(noti => {
+                    if (noti.id > ultimaNotiId) {
+                        mostrarNotificacion(formatearTipo(noti.type), noti.message);
+
+                        if (noti.id > ultimaNotiId) {
+                            ultimaNotiId = noti.id;
+                            localStorage.setItem('ultimaNotiId', ultimaNotiId);
+                        }
+                    }
+                });
+            })
+            .catch(err => console.error("Error al cargar notificaciones:", err));
+    }, 5000);
+
+    function mostrarNotificacion(titulo, mensaje) {
+    const noti = document.createElement('div');
+    
+    noti.classList.add(
+        'fixed', 'top-24', 'bg-blue-600', 'text-white',
+        'p-4', 'rounded-lg', 'shadow-lg', 'z-50', 'notification-element'
+    );
+    
+    noti.style.right = '-100%';
+    noti.style.transition = 'right 0.5s ease-in-out';
+    
+    noti.innerHTML = `<strong>${titulo}</strong><br>${mensaje}`;
+    
+    document.body.appendChild(noti);
+    
+    noti.offsetHeight;
+    
+    setTimeout(() => {
+        noti.style.right = '1rem'; 
+    }, 50);
+    
+    setTimeout(() => {
+        noti.style.right = '-100%';
+        
+        setTimeout(() => {
+            noti.remove();
+        }, 500); 
+    }, 4500); 
+}
+
+function formatearTipo(tipo) {
+    switch (tipo) {
+        case 'proyecto': return '📝 Proyecto';
+        case 'oferta': return '💼 Oferta';
+        default: return '📢 Notificación';
+    }
+}
+
+
 </script>
+
 
 </body>
 

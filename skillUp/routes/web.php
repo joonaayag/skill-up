@@ -146,7 +146,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
-
+    
     Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
 
@@ -249,6 +249,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
 
+
+Route::get('/notificaciones/check', [NotificationController::class, 'check'])->middleware('auth');
 
     });
 

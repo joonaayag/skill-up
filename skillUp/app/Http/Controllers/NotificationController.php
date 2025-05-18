@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
+use Auth;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -12,6 +14,13 @@ class NotificationController extends Controller
         $notification->delete();
 
         return back();
+    }
+    public function check()
+    {
+        $notificaciones = Notification::where('user_id', Auth::id())->latest()->get();
+
+
+        return response()->json($notificaciones);
     }
 
 }
