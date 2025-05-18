@@ -127,7 +127,7 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">ç
+                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
                         {{ __('messages.dashboard.no-notifications') }}.</p>
                 @endif
             </x-card>

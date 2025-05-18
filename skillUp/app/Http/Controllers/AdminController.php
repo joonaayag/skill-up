@@ -411,7 +411,7 @@ class AdminController extends Controller
             'author_id' => auth()->id(),
         ]);
 
-        Notification::create([
+        Notification::firstOrCreate([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
             'title' => 'Proyecto registrado',
@@ -420,7 +420,7 @@ class AdminController extends Controller
         $otrosUsuarios = User::where('id', '!=', auth()->id())->get();
 
         foreach ($otrosUsuarios as $usuario) {
-            Notification::create([
+            Notification::firstOrCreate([
                 'user_id' => $usuario->id,
                 'type' => 'proyecto',
                 'title' => 'Nuevos proyectos disponible',
