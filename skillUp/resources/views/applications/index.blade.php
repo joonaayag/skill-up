@@ -56,7 +56,7 @@
                                                                                                             $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
                                 <button @click="showDetails = true"
                                     class="p-2 bg-themeBlue text-white shadow-lg rounded-lg cursor-pointer hover:bg-themeHoverBlue/80 transition">
-                                    {{ __('messages.buttons.see') }}
+                                    {{ __('messages.button.see') }}
                                 </button>
 
                                 <x-modal class="flex items-center justify-center" :show="'showDetails'">
@@ -98,13 +98,13 @@
                                                 </option>
                                             </select>
                                             <br>
+                                            <div>
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-themeBlue text-gray-800 cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
+                                                <button @click="showDetails = false"
+                                                    class="px-4 py-2 bg-themeLightGray/50 text-gray-800 cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
+                                            </div>
                                         </form>
-                                        <div>
-                                            <button type="submit"
-                                                class="px-4 py-2 bg-themeBlue text-gray-800 cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
-                                            <button @click="showDetails = false"
-                                                class="px-4 py-2 bg-themeLightGray/50 text-gray-800 cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
-                                        </div>
 
                                     </div>
                                 </x-modal>

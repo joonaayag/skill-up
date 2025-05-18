@@ -134,8 +134,8 @@ class JobOfferController extends Controller
             Notification::create([
                 'user_id' => $usuario->id,
                 'type' => 'oferta',
-                'title' => '¡Nueva oferta disponible!',
-                'message' => 'Se ha publicado una nueva oferta: "' . $jobOffer->name . '".',
+                'title' => __('messages.notifications.message-new-offer.title'),
+                'message' => __('messages.notifications.message-new-offer.message') . ' "' . $jobOffer->name . '".',
             ]);
         }
 
@@ -158,8 +158,8 @@ class JobOfferController extends Controller
             Notification::create([
                 'user_id' => $application->user->id,
                 'type' => 'oferta',
-                'title' => 'Oferta retirada',
-                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por ' . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
+                'title' => __('messages.notifications.message-offer-deleted.title'),
+                'message' => __('messages.notifications.message-offer-deleted.message') . ' "' . $jobOffer->name . __('messages.notifications.message-offer-deleted.message-2') . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
             ]);
         }
 
@@ -227,8 +227,8 @@ class JobOfferController extends Controller
                 Notification::create([
                     'user_id' => $application->user->id,
                     'type' => 'oferta',
-                    'title' => 'Oferta cerrada',
-                    'message' => 'La oferta "' . $jobOffer->name . '" ha sido cerrada por la empresa.',
+                    'title' => __('messages.notifications.message-offer-closed.title'),
+                    'message' => __('messages.notifications.message-offer-closed.message-1') . ' "' . $jobOffer->name . __('messages.notifications.message-offer-closed.message-2'),
                 ]);
             }
         }

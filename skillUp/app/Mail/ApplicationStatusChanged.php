@@ -21,7 +21,7 @@ class ApplicationStatusChanged extends Mailable
 
     public function build()
     {
-        return $this->subject('Estado de tu candidatura actualizado')
+        return $this->subject(__('messages.email.title'))
             ->view('emails.application_status_changed');
     }
 }

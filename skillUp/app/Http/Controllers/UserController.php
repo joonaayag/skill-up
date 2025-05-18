@@ -16,35 +16,39 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:20',
             'last_name' => 'required|string|max:40',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email|string|max:50|unique:users,email,' . $user->id,
             'description' => 'nullable|string|max:300',
             'profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ], [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.max' => 'El nombre no puede tener más de 20 caracteres.',
-            
-            'last_name.required' => 'El apellido es obligatorio.',
-            'last_name.max' => 'El apellido no puede tener más de 40 caracteres.',
-            
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico debe tener un formato válido.',
-            'email.unique' => 'Este correo electrónico ya está registrado.',
-        
-            'description.max' => 'La descripción no puede superar los 300 caracteres.',
-        
-            'profile.image' => 'La foto de perfil debe ser una imagen.',
-            'profile.mimes' => 'La foto de perfil debe ser un archivo JPG, JPEG o PNG.',
-            'profile.max' => 'La foto de perfil no puede superar los 2MB.',
-        
-            'banner.image' => 'El banner debe ser una imagen.',
-            'banner.mimes' => 'El banner debe ser un archivo JPG, JPEG o PNG.',
-            'banner.max' => 'El banner no puede superar los 4MB.',
-        
-            'cv.file' => 'El currículum debe ser un archivo.',
-            'cv.mimes' => 'El currículum debe estar en formato PDF.',
-            'cv.max' => 'El currículum no puede superar los 2MB.',
+            'name.required' => __('messages.errors.name.required'),
+            'name.string' => __('messages.errors.name.string'),
+            'name.max' => __('messages.errors.name.max'),
+
+            'last_name.required' => __('messages.errors.last_name.required'),
+            'last_name.max' => __('messages.errors.last_name.max'),
+            'last_name.string' => __('messages.errors.last_name.string'),
+
+            'email.required' => __('messages.errors.email.required'),
+            'email.email' => __('messages.errors.email.email'),
+            'email.unique' => __('messages.errors.email.unique'),
+            'email.max' => __('messages.errors.email.max'),
+            'email.string' => __('messages.errors.email.string'),
+
+            'description.max' => __('messages.errors.description.max'),
+
+            'profile.image' => __('messages.errors.profile.image'),
+            'profile.mimes' => __('messages.errors.profile.mimes'),
+            'profile.max' => __('messages.errors.profile.max'),
+
+            'banner.image' => __('messages.errors.banner.image'),
+            'banner.mimes' => __('messages.errors.banner.mimes'),
+            'banner.max' => __('messages.errors.banner.max'),
+
+            'cv.file' => __('messages.errors.cv.file'),
+            'cv.mimes' => __('messages.errors.cv.mimes'),
+            'cv.max' => __('messages.errors.cv.max'),
         ]);
 
         if ($request->hasFile('cv')) {

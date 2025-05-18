@@ -168,9 +168,9 @@ return [
         'table-actions' => 'Actions',
         'candidate-details' => 'Candidate details from ',
         'modal-name' => 'Name:',
-        'model-position' => 'Position applied:',
-        'model-reason' => 'Reason:',
-        'model-date' => 'Date applied:',
+        'modal-position' => 'Position applied:',
+        'modal-reason' => 'Reason:',
+        'modal-date' => 'Date applied:',
         'see-cv' => 'See CV',
         'no-cv' => 'No CV uploaded',
         'change-status' => 'Change status:',
@@ -443,6 +443,7 @@ return [
         ],
     ],
     'chatbot' => [
+        'text-some' => 'Text something...',
         'skillup-assistant' => 'SkillUp Assistant',
         'first-message' => 'Hi! Im the SkillUp assistant. You can ask me questions like:',
         'second-message' => '• Where can I see the projects?\n• How do I apply for a job at a company?\n• Where are the job offers?',
@@ -506,4 +507,224 @@ return [
         'text-how-doing' => 'how are you doing',
         'response-chat-question' => 'Im working perfectly, thanks for asking. Im a virtual assistant with no feelings but Im here to help you with whatever you need.',
     ],
+    'email' => [
+        'title' => 'Your application status has been updated',
+        'hello' => 'Hello ',
+        'text-1' => 'Your application for the position ',
+        'text-2' => 'posted by ',
+        'text-3' => 'has been updated.',
+        'text-4' => 'Job description:',
+        'text-5' => 'Current status of your application:',
+        'text-6' => 'Thank you for your interest.',
+        'text-7' => '— The SkillUp Team',
+        'new' => 'Your application has been successfully submitted and will be reviewed soon.',
+        'review' => 'We are reviewing your profile. We will keep you informed.',
+        'accepted' => 'Congratulations! Your application has been accepted. We will contact you soon.',
+        'rejected' => 'We regret to inform you that your application was not successful this time.',
+        'text-title-1' => 'Your application for the offer ',
+        'text-title-2' => 'has been updated. ',
+        'message' => 'The updated status is: ',
+        'messages' => [
+            'nueva' => 'New',
+            'en revisión' => 'Under review',
+            'aceptado' => 'Accepted',
+            'rechazado' => 'Rejected',
+        ],
+    ],
+    'notifications' => [
+        'message-student' => [
+            'title' => 'Welcome to SkillUp!',
+            'message' => 'You can now explore job offers, apply for them, and view other users’ projects.',
+        ],
+        'message-user' => [
+            'title' => 'Welcome to SkillUp!',
+            'message' => 'You can now explore job offers, apply for them, and view other users’ projects.',
+        ],
+        'message-company' => [
+            'title' => 'Your company account is ready',
+            'message' => 'You can now post job offers and receive applications from students.',
+        ],
+        'message-teacher' => [
+            'title' => 'Teacher profile created',
+            'message' => 'You can manage and validate academic projects from your dashboard.',
+        ],
+        'message-create-project' => [
+            'title' => 'Project registered',
+            'message-1' => 'Your project ',
+            'message-2' => ' has been successfully created.',
+        ],
+        'message-project-available' => [
+            'title' => 'New projects available',
+            'message' => 'New projects have recently been published — go check them out!',
+        ],
+        'message-new-job-offer' => [
+            'title' => 'New job offer available',
+            'message' => 'A new job offer has been posted: ',
+        ],
+        'message-sp-published' => [
+            'title' => 'School project published',
+            'message-1' => 'Your project ',
+            'message-2' => ' has been successfully registered.',
+        ],
+        'message-offer-closed' => [
+            'title' => 'Offer closed',
+            'message-1' => 'The offer ',
+            'message-2' => ' has been closed by the administrator.',
+        ],
+        'message-offer-deleted' => [
+            'title' => 'Offer withdrawn',
+            'message-1' => 'The offer ',
+            'message-2' => ' you applied to has been withdrawn by the administrator.',
+        ],
+        'message-project-updated' => [
+            'title' => 'Your project has been updated',
+            'message-1' => 'The project ',
+            'message-2' => ' has been updated by the administrator.',
+        ],
+        'message-project-deleted' => [
+            'title' => 'Your project has been deleted',
+            'message-1' => 'The project ',
+            'message-2' => ' has been deleted by the administrator.',
+        ],
+        'message-app-received' => [
+            'title' => 'New Application Received',
+            'message' => ' has applied to your offer ',
+        ],
+        'message-app-deleted' => [
+            'title' => 'Your Application Has Been Withdrawn',
+            'message-1' => 'Your application for the offer ',
+            'message-2' => ' has been withdrawn by ',
+        ],
+        'message-new-offer' => [
+            'title' => 'New Offer Available!',
+            'message' => 'A new job offer has been posted: ',
+        ],
+        'message-project-registered' => [
+            'title' => 'Project Registered',
+            'message-1' => 'Your project ',
+            'message-2' => ' has been successfully created.',
+        ],
+        'message-project-deleted-teacher' => [
+            'title' => 'Your Project Has Been Deleted',
+            'message-1' => 'The project ',
+            'message-2' => ' has been deleted by the teaching staff.',
+        ],
+        'message-project-updated-teacher' => [
+            'title' => 'Your Project Has Been Updated',
+            'message-1' => 'The project ',
+            'message-2' => ' has been updated by the teaching staff.',
+        ],
+        'message-project-published' => [
+            'title' => 'School Project Published',
+            'message-1' => 'Your project ',
+            'message-2' => ' has been successfully registered',
+        ],
+
+    ],
+    'errors' => [
+        'name' => [
+            'required' => 'The name field is required.',
+            'string' => 'The name must be a string.',
+            'max' => 'The name must be less than 20 characters.',
+        ],
+        'last_name' => [
+            'required' => 'The last name field is required.',
+            'string' => 'The last name must be a string.',
+            'max' => 'The last name must be less than 40 characters.',
+        ],
+        'email' => [
+            'required' => 'The email field is required.',
+            'string' => 'The email must be a string.',
+            'email' => 'The email must be a valid email address.',
+            'unique' => 'This email is already registered.',
+            'max' => 'The email must be less than 50 characters.',
+        ],
+        'description' => [
+            'max' => 'The description cannot exceed 300 characters.',
+        ],
+        'profile' => [
+            'image' => 'The profile picture must be an image.',
+            'mimes' => 'The profile picture must be a JPG, JPEG, or PNG file.',
+            'max' => 'The profile picture cannot exceed 2MB.',
+        ],
+        'banner' => [
+            'image' => 'The banner must be an image.',
+            'mimes' => 'The banner must be a JPG, JPEG, or PNG file.',
+            'max' => 'The banner cannot exceed 4MB.',
+        ],
+        'cv' => [
+            'file' => 'The CV must be a file.',
+            'mimes' => 'The CV must be a PDF file.',
+            'max' => 'The CV cannot exceed 2MB.',
+        ],
+        'comment' => [
+            'required' => 'The content field is required.',
+            'string' => 'The content must be a string.',
+            'max' => 'The content must be less than 1000 characters.',
+        ],
+        'password' => [
+            'required' => 'The password is required.',
+            'confirmed' => 'Passwords do not match.',
+            'min' => 'The password must be at least 8 characters.',
+            'string' => 'The password must be a string.',
+            'regex' => 'The password must include uppercase, lowercase, numbers, and symbols.',
+        ],
+        'role' => [
+            'required' => 'The role is required.',
+            'in' => 'The selected role is not valid.',
+        ],
+        'recaptcha' => [
+            'required' => 'Please verify that you are not a robot.',
+        ],
+        'birth_date' => [
+            'required' => 'The birth date is required.',
+            'date' => 'The birth date must be valid.',
+            'before_or_equal' => 'The birth date must be today or earlier.',
+        ],
+        'current_course' => [
+            'required' => 'The current course is required.',
+            'string' => 'The current course must be a string.',
+            'max' => 'The current course cannot exceed 50 characters.',
+        ],
+        'educational_center' => [
+            'required' => 'The educational center is required.',
+            'string' => 'The educational center must be a string.',
+            'max' => 'The educational center cannot exceed 100 characters.',
+        ],
+        'specialization' => [
+            'required' => 'The specialization is required.',
+            'string' => 'The specialization must be a string.',
+            'max' => 'The specialization cannot exceed 100 characters.',
+        ],
+        'department' => [
+            'required' => 'The department is required.',
+            'string' => 'The department must be a string.',
+            'max' => 'The department cannot exceed 100 characters.',
+        ],
+        'validation_document' => [
+            'required' => 'The validation document is required.',
+            'string' => 'The validation document must be a string.',
+            'max' => 'The validation document cannot exceed 255 characters.',
+        ],
+        'cif' => [
+            'required' => 'The CIF is required.',
+            'string' => 'The CIF must be a string.',
+            'max' => 'The CIF cannot exceed 50 characters.',
+        ],
+        'address' => [
+            'required' => 'The address is required.',
+            'string' => 'The address must be a string.',
+            'max' => 'The address cannot exceed 255 characters.',
+        ],
+        'sector' => [
+            'required' => 'The sector is required.',
+            'string' => 'The sector must be a string.',
+            'max' => 'The sector cannot exceed 100 characters.',
+        ],
+        'website' => [
+            'url' => 'The website must be a valid URL.',
+            'max' => 'The website cannot exceed 255 characters.',
+        ],
+    ],
+
 ];

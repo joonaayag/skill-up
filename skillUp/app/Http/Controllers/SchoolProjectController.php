@@ -81,8 +81,8 @@ class SchoolProjectController extends Controller
             Notification::create([
                 'user_id' => $project->user_id,
                 'type' => 'proyecto',
-                'title' => 'Tu proyecto ha sido eliminado',
-                'message' => 'El proyecto "' . $project->title . '" ha sido eliminado por el profesorado.',
+                'title' => __('messages.notifications.message-project-deleted-teacher.title'),
+                'message' =>  __('messages.notifications.message-project-deleted-teacher.message-1') . ' "' . $project->title . __('messages.notifications.message-project-deleted-teacher.message-2'),
             ]);
         }
 
@@ -161,8 +161,8 @@ class SchoolProjectController extends Controller
             Notification::create([
                 'user_id' => $project->teacher_id,
                 'type' => 'proyecto',
-                'title' => 'Tu proyecto ha sido actualizado',
-                'message' => 'El proyecto "' . $project->title . '" ha sido actualizado por el profesorado.',
+                'title' => __('messages.notifications.message-project-updated-teacher.title'),
+                'message' => __('messages.notifications.message-project-updated-teacher.message-1') . $project->title . __('messages.notifications.message-project-updated-teacher.message-2'),
             ]);
         }
 
@@ -250,8 +250,8 @@ class SchoolProjectController extends Controller
         Notification::create([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
-            'title' => 'Proyecto escolar publicado',
-            'message' => 'Tu proyecto "' . $project->title . '" ha sido registrado correctamente.',
+            'title' => __('messages.notifications.message-project-published.title'),
+            'message' => __('messages.notifications.message-project-published.message-1') . $project->title . __('messages.notifications.message-project-published.message-2'),
         ]);
 
         if ($request->hasFile('files')) {

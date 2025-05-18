@@ -169,7 +169,7 @@
 
             <form @submit.prevent="send">
                 <input x-model="input" type="text" class="w-full border px-2 py-1 rounded text-sm"
-                    placeholder="Escribe algo...">
+                    placeholder="{{ __('messages.chatbot.text-some') }}">
             </form>
         </div>
     </div>

@@ -166,8 +166,8 @@ class ProjectController extends Controller
         Notification::firstOrCreate([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
-            'title' => 'Proyecto registrado',
-            'message' => 'Tu proyecto "' . $project->title . '" ha sido creado correctamente.',
+            'title' => __('messages.notifications.message-project-registered.title'),
+            'message' => __('messages.notifications.message-project-registered.message-1') . ' "' . $project->title . __('messages.notifications.message-project-registered.message-2'),
         ]);
         $otrosUsuarios = User::where('id', '!=', auth()->id())->get();
 
@@ -175,8 +175,8 @@ class ProjectController extends Controller
             Notification::firstOrCreate([
                 'user_id' => $usuario->id,
                 'type' => 'proyecto',
-                'title' => 'Nuevos proyectos disponible',
-                'message' => 'Se han publicado nuevos proyectos recientemente, ve a descubrirlos! ',
+                'title' => __('messages.notifications.message-project-available.title'),
+                'message' => __('messages.notifications.message-project-available.message'),
             ]);
         }
 

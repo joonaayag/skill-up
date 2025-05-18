@@ -41,8 +41,8 @@ class AuthController extends Controller
         }
         $rules = [
             'name' => 'required|string|max:20',
-            'lastName' => 'nullable|string|max:50',
-            'email' => 'required|string|email|max:255|unique:users',
+            'lastName' => 'nullable|string|max:40',
+            'email' => 'required|string|email|max:50|unique:users',
             'password' => [
                 'required',
                 'confirmed',
@@ -59,14 +59,14 @@ class AuthController extends Controller
         switch ($request->role) {
             case 'Alumno':
                 $rules = array_merge($rules, [
-                    'birthDate' => 'required|date',
+                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
                     'currentCourse' => 'required|string|max:50',
                     'educationalCenter' => 'required|string|max:100',
                 ]);
                 break;
             case 'Profesor':
                 $rules = array_merge($rules, [
-                    'birthDate' => 'required|date',
+                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
                     'specialization' => 'required|string|max:100',
                     'department' => 'required|string|max:100',
                     'validationDocument' => 'required|string|max:255',
@@ -83,61 +83,69 @@ class AuthController extends Controller
         }
 
         $messages = [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.string' => 'El nombre debe ser una cadena de texto.',
-            'name.max' => 'El nombre no puede tener más de 20 caracteres.',
+            'name.required' => __('messages.errors.name.required'),
+            'name.string' => __('messages.errors.name.string'),
+            'name.max' => __('messages.errors.name.max'),
 
-            'lastName.string' => 'El apellido debe ser una cadena de texto.',
-            'lastName.max' => 'El apellido no puede tener más de 50 caracteres.',
+            'lastName.required' => __('messages.errors.last_name.required'),
+            'lastName.string' => __('messages.errors.last_name.string'),
+            'lastName.max' => __('messages.errors.last_name.max'),
 
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.string' => 'El correo electrónico debe ser una cadena de texto.',
-            'email.email' => 'El formato del correo electrónico no es válido.',
-            'email.max' => 'El correo electrónico no puede tener más de 255 caracteres.',
-            'email.unique' => 'Este correo electrónico ya está registrado.',
+            'email.required' => __('messages.errors.email.required'),
+            'email.string' => __('messages.errors.email.string'),
+            'email.email' => __('messages.errors.email.email'),
+            'email.max' => __('messages.errors.email.max'),
+            'email.unique' => __('messages.errors.email.unique'),
 
-            'password.required' => 'La contraseña es obligatoria.',
-            'password.confirmed' => 'Las contraseñas no coinciden.',
-            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'password.*' => 'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos.',
+            'password.required' => __('messages.errors.password.required'),
+            'password.confirmed' => __('messages.errors.password.confirmed'),
+            'password.min' => __('messages.errors.password.min'),
+            'password.string' => __('messages.errors.password.string'),
+            'password.*' => __('messages.errors.password.regex'),
 
+            'role.required' => __('messages.errors.role.required'),
+            'role.in' => __('messages.errors.role.in'),
 
+            'g-recaptcha-response.required' => __('messages.errors.recaptcha.required'),
 
-            'role.required' => 'El rol es obligatorio.',
-            'role.in' => 'El rol seleccionado no es válido.',
+            'birthDate.required' => __('messages.errors.birth_date.required'),
+            'birthDate.date' => __('messages.errors.birth_date.date'),
+            'birthDate.before_or_equal' => __('messages.errors.birth_date.before_or_equal'),
 
-            'g-recaptcha-response.required' => 'Por favor, verifica que no eres un robot.',
+            'currentCourse.required' => __('messages.errors.current_course.required'),
+            'currentCourse.string' => __('messages.errors.current_course.string'),
+            'currentCourse.max' => __('messages.errors.current_course.max'),
 
-            'birthDate.required' => 'La fecha de nacimiento es obligatoria.',
-            'birthDate.date' => 'La fecha de nacimiento debe ser válida.',
-            'currentCourse.required' => 'El curso actual es obligatorio.',
-            'currentCourse.string' => 'El curso actual debe ser una cadena de texto.',
-            'currentCourse.max' => 'El curso actual no puede tener más de 50 caracteres.',
-            'educationalCenter.required' => 'El centro educativo es obligatorio.',
-            'educationalCenter.string' => 'El centro educativo debe ser una cadena de texto.',
-            'educationalCenter.max' => 'El centro educativo no puede tener más de 100 caracteres.',
+            'educationalCenter.required' => __('messages.errors.educational_center.required'),
+            'educationalCenter.string' => __('messages.errors.educational_center.string'),
+            'educationalCenter.max' => __('messages.errors.educational_center.max'),
 
-            'specialization.required' => 'La especialización es obligatoria.',
-            'specialization.string' => 'La especialización debe ser una cadena de texto.',
-            'specialization.max' => 'La especialización no puede tener más de 100 caracteres.',
-            'department.required' => 'El departamento es obligatorio.',
-            'department.string' => 'El departamento debe ser una cadena de texto.',
-            'department.max' => 'El departamento no puede tener más de 100 caracteres.',
-            'validationDocument.required' => 'El documento de validación es obligatorio.',
-            'validationDocument.string' => 'El documento de validación debe ser una cadena de texto.',
-            'validationDocument.max' => 'El documento de validación no puede tener más de 255 caracteres.',
+            'specialization.required' => __('messages.errors.specialization.required'),
+            'specialization.string' => __('messages.errors.specialization.string'),
+            'specialization.max' => __('messages.errors.specialization.max'),
 
-            'cif.required' => 'El CIF es obligatorio.',
-            'cif.string' => 'El CIF debe ser una cadena de texto.',
-            'cif.max' => 'El CIF no puede tener más de 50 caracteres.',
-            'address.required' => 'La dirección es obligatoria.',
-            'address.string' => 'La dirección debe ser una cadena de texto.',
-            'address.max' => 'La dirección no puede tener más de 255 caracteres.',
-            'sector.required' => 'El sector es obligatorio.',
-            'sector.string' => 'El sector debe ser una cadena de texto.',
-            'sector.max' => 'El sector no puede tener más de 100 caracteres.',
-            'website.url' => 'La página web debe tener un formato de URL válido.',
-            'website.max' => 'La página web no puede tener más de 255 caracteres.',
+            'department.required' => __('messages.errors.department.required'),
+            'department.string' => __('messages.errors.department.string'),
+            'department.max' => __('messages.errors.department.max'),
+
+            'validationDocument.required' => __('messages.errors.validation_document.required'),
+            'validationDocument.string' => __('messages.errors.validation_document.string'),
+            'validationDocument.max' => __('messages.errors.validation_document.max'),
+
+            'cif.required' => __('messages.errors.cif.required'),
+            'cif.string' => __('messages.errors.cif.string'),
+            'cif.max' => __('messages.errors.cif.max'),
+
+            'address.required' => __('messages.errors.address.required'),
+            'address.string' => __('messages.errors.address.string'),
+            'address.max' => __('messages.errors.address.max'),
+
+            'sector.required' => __('messages.errors.sector.required'),
+            'sector.string' => __('messages.errors.sector.string'),
+            'sector.max' => __('messages.errors.sector.max'),
+
+            'website.url' => __('messages.errors.website.url'),
+            'website.max' => __('messages.errors.website.max'),
         ];
 
         $request->validate($rules, $messages);
@@ -186,20 +194,20 @@ class AuthController extends Controller
 
         $message = match ($user->role) {
             'Alumno' => [
-                'title' => '¡Bienvenido a SkillUp!',
-                'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
+                'title' => __('messages.notifications.message-student.title'),
+                'message' => __('messages.notifications.message-student.message'),
             ],
             'Usuario' => [
-                'title' => '¡Bienvenido a SkillUp!',
-                'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
+                'title' => __('messages.notifications.message-user.title'),
+                'message' => __('messages.notifications.message-user.message'),
             ],
             'Empresa' => [
-                'title' => 'Tu cuenta de empresa está lista',
-                'message' => 'Ahora puedes publicar ofertas y recibir candidaturas de estudiantes.',
+                'title' => __('messages.notifications.message-company.title'),
+                'message' => __('messages.notifications.message-company.message'),
             ],
             'Profesor' => [
-                'title' => 'Perfil de profesor creado',
-                'message' => 'Puedes gestionar y validar proyectos académicos desde tu panel.',
+                'title' => __('messages.notifications.message-teacher.title'),
+                'message' => __('messages.notifications.message-teacher.message'),
             ],
             default => null,
         };

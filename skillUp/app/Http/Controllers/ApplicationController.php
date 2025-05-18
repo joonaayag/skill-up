@@ -64,8 +64,8 @@ class ApplicationController extends Controller
             Notification::create([
                 'user_id' => $company->id,
                 'type' => 'candidatura',
-                'title' => 'Nueva candidatura recibida',
-                'message' => $application->user->name . $application->user->last_name . ' se ha postulado a tu oferta "' . $application->jobOffer->name . '".',
+                'title' => __('messages.notifications.message-app-received.title'),
+                'message' => $application->user->name . $application->user->last_name . __('messages.notifications.message-app-received.message') . $application->jobOffer->name . '".',
             ]);
         }
 
@@ -106,8 +106,8 @@ class ApplicationController extends Controller
         Notification::create([
             'user_id' => $application->user->id,
             'type' => 'candidatura',
-            'title' => 'Tu candidatura ha sido retirada',
-            'message' => 'Tu candidatura para la oferta "' . $application->jobOffer->name . '" ha sido retirada por ' . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
+            'title' => __('messages.notifications.message-app-deleted.title'),
+            'message' => __('messages.notifications.message-app-deleted.message-1') . $application->jobOffer->name . __('messages.notifications.message-app-deleted.message-2') . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
         ]);
 
         $application->delete();
@@ -133,10 +133,10 @@ class ApplicationController extends Controller
         ]);
 
         $messages = [
-            'nueva' => 'Tu candidatura ha sido registrada correctamente y será revisada pronto.',
-            'en revisión' => 'Estamos revisando tu perfil. Te mantendremos informado.',
-            'aceptado' => '¡Felicidades! Tu candidatura ha sido aceptada. Nos pondremos en contacto contigo pronto.',
-            'rechazado' => 'Lamentamos informarte que esta vez no ha sido posible continuar con tu candidatura.',
+            'nueva' => __('messages.email.new'),
+            'en revisión' => __('messages.email.review'),
+            'aceptado' => __('messages.email.accepted'),
+            'rechazado' => __('messages.email.rejected'),
         ];
 
         $email = $application->user->email ?? null;
@@ -148,8 +148,8 @@ class ApplicationController extends Controller
         Notification::create([
             'user_id' => $application->user->id,
             'type' => 'candidatura',
-            'title' => 'Tu candidatura para la oferta ' . $application->jobOffer->name . ' ha sido actualizada.',
-            'message' => ' Estado actualizado: ' . ucfirst($request->state) . ', ' . $messages[$request->state],
+            'title' => __('messages.email.text-title-1') . $application->jobOffer->name . __('messages.email.text-title-2'),
+            'message' => __('messages.email.message') . __('messages.email.messages.' . $request->state) . ', ' . $messages[$request->state],
         ]);
 
         return redirect()->route('applications.index');

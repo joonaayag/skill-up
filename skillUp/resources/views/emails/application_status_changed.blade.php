@@ -1,15 +1,15 @@
-<h2>Hola {{ $application->candidate_name }},</h2>
+<h2>{{ __('messages.email.hello') . $application->candidate_name }},</h2>
 
-<p>Tu candidatura para la oferta <strong>"{{ $application->jobOffer->name }}"</strong> publicada por <strong>{{ $application->jobOffer->company->name }}</strong> ha sido actualizada.</p>
+<p>{{ __('messages.email.text-1') }} <strong>"{{ $application->jobOffer->name }}"</strong> {{ __('messages.email.text-2') }} <strong>{{ $application->jobOffer->company->name }}</strong> {{ __('messages.email.text-3') }}</p>
 
-<p><strong>Descripción del puesto:</strong></p>
+<p><strong>{{ __('messages.email.text-4') }}</strong></p>
 <p>{{ $application->jobOffer->description }}</p>
 
 <hr>
 
-<p><strong>Estado actual de tu candidatura:</strong> {{ ucfirst($application->state) }}</p>
+<p><strong>{{ __('messages.email.text-5') }}</strong> {{ ucfirst($application->state) }}</p>
 <p>{{ $customMessage }}</p>
 
 <hr>
-<p>Gracias por tu interés.</p>
-<p>— El equipo de SkillUp</p>
+<p>{{ __('messages.email.text-6') }}</p>
+<p>{{ __('messages.email.text-7') }}</p>

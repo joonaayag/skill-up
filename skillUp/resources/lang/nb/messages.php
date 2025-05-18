@@ -168,9 +168,9 @@ return [
         'table-actions' => 'Handlinger',
         'candidate-details' => 'Kandidatdetaljer fra ',
         'modal-name' => 'Navn:',
-        'model-position' => 'Stilling søkt:',
-        'model-reason' => 'Årsak:',
-        'model-date' => 'Dato søkt:',
+        'modal-position' => 'Stilling søkt:',
+        'modal-reason' => 'Årsak:',
+        'modal-date' => 'Dato søkt:',
         'see-cv' => 'Se CV',
         'no-cv' => 'Ingen CV lastet opp',
         'change-status' => 'Endre status:',
@@ -443,6 +443,7 @@ return [
         ],
     ],
     'chatbot' => [
+        'text-some' => 'Skrive noe...',
         'skillup-assistant' => 'SkillUp-assistent',
         'first-message' => 'Hei! Jeg er SkillUp-assistenten. Du kan stille meg spørsmål som:',
         'second-message' => '• Hvor kan jeg se prosjektene?\n• Hvordan søker jeg på en jobb i en bedrift?\n• Hvor er jobbtilbudene?',
@@ -506,4 +507,225 @@ return [
         'text-how-doing' => 'hvordan går det',
         'response-chat-question' => 'Jeg fungerer perfekt, takk for at du spør. Jeg er en virtuell assistent uten følelser, men jeg er her for å hjelpe deg med det du måtte trenge.',
     ],
+    'email' => [
+        'title' => 'Statusen på søknaden din har blitt oppdatert',
+        'hello' => 'Hei ',
+        'text-1' => 'Din søknad på stillingen ',
+        'text-2' => 'publisert av ',
+        'text-3' => 'har blitt oppdatert.',
+        'text-4' => 'Stillingsbeskrivelse:',
+        'text-5' => 'Nåværende status for søknaden din:',
+        'text-6' => 'Takk for interessen din.',
+        'text-7' => '— SkillUp-teamet',
+        'new' => 'Søknaden din har blitt registrert og vil snart bli vurdert.',
+        'review' => 'Vi gjennomgår profilen din. Du vil bli holdt informert.',
+        'accepted' => 'Gratulerer! Søknaden din har blitt akseptert. Vi tar kontakt med deg snart.',
+        'rejected' => 'Vi beklager å informere deg om at søknaden din ikke ble godkjent denne gangen.',
+        'text-title-1' => 'Søknaden din for stillingen ',
+        'text-title-2' => 'har blitt oppdatert. ',
+        'message' => 'Oppdatert status: ',
+        'messages' => [
+            'nueva' => 'Ny',
+            'en revisión' => 'Til vurdering',
+            'aceptado' => 'Godkjent',
+            'rechazado' => 'Avslått',
+        ],
+    ],
+    'notifications' => [
+        'message-student' => [
+            'title' => 'Velkommen til SkillUp!',
+            'message' => 'Du kan nå utforske jobbtilbud, søke på dem og se prosjekter fra andre brukere.',
+        ],
+        'message-user' => [
+            'title' => 'Velkommen til SkillUp!',
+            'message' => 'Du kan nå utforske jobbtilbud, søke på dem og se prosjekter fra andre brukere.',
+        ],
+        'message-company' => [
+            'title' => 'Din bedriftskonto er klar',
+            'message' => 'Du kan nå publisere jobbtilbud og motta søknader fra studenter.',
+        ],
+        'message-teacher' => [
+            'title' => 'Lærerprofil opprettet',
+            'message' => 'Du kan administrere og godkjenne akademiske prosjekter fra dashbordet ditt.',
+        ],
+        'message-create-project' => [
+            'title' => 'Prosjekt registrert',
+            'message-1' => 'Ditt prosjekt ',
+            'message-2' => ' har blitt opprettet.',
+        ],
+        'message-project-available' => [
+            'title' => 'Nye prosjekter tilgjengelig',
+            'message' => 'Nye prosjekter har nylig blitt publisert – ta en titt!',
+        ],
+        'message-new-job-offer' => [
+            'title' => 'Nytt jobbtilbud tilgjengelig',
+            'message' => 'Et nytt jobbtilbud har blitt publisert: ',
+        ],
+        'message-sp-published' => [
+            'title' => 'Skoleprosjekt publisert',
+            'message-1' => 'Ditt prosjekt ',
+            'message-2' => ' har blitt registrert.',
+        ],
+        'message-offer-closed' => [
+            'title' => 'Tilbud stengt',
+            'message-1' => 'Tilbudet ',
+            'message-2' => ' har blitt stengt av administratoren.',
+        ],
+        'message-offer-deleted' => [
+            'title' => 'Tilbud trukket tilbake',
+            'message-1' => 'Tilbudet ',
+            'message-2' => ' som du søkte på har blitt trukket tilbake av administratoren.',
+        ],
+        'message-project-updated' => [
+            'title' => 'Prosjektet ditt har blitt oppdatert',
+            'message-1' => 'Prosjektet ',
+            'message-2' => ' har blitt oppdatert av administratoren.',
+        ],
+        'message-project-deleted' => [
+            'title' => 'Prosjektet ditt har blitt slettet',
+            'message-1' => 'Prosjektet ',
+            'message-2' => ' har blitt slettet av administratoren.',
+        ],
+        'message-app-received' => [
+            'title' => 'Ny søknad mottatt',
+            'message' => ' har søkt på din stillingsutlysning ',
+        ],
+        'message-app-deleted' => [
+            'title' => 'Søknaden din har blitt trukket tilbake',
+            'message-1' => 'Søknaden din til stillingen ',
+            'message-2' => ' har blitt trukket tilbake av ',
+        ],
+        'message-new-offer' => [
+            'title' => 'Ny stilling tilgjengelig!',
+            'message' => 'En ny stilling har blitt publisert: ',
+        ],
+        'message-project-registered' => [
+            'title' => 'Prosjekt registrert',
+            'message-1' => 'Ditt prosjekt ',
+            'message-2' => ' har blitt opprettet.',
+        ],
+        'message-project-deleted-teacher' => [
+            'title' => 'Prosjektet ditt har blitt slettet',
+            'message-1' => 'Prosjektet ',
+            'message-2' => ' har blitt slettet av lærer.',
+        ],
+        'message-project-updated-teacher' => [
+            'title' => 'Prosjektet ditt har blitt oppdatert',
+            'message-1' => 'Prosjektet ',
+            'message-2' => ' har blitt oppdatert av lærer.',
+        ],
+        'message-project-published' => [
+            'title' => 'Skoleprosjekt publisert',
+            'message-1' => 'Ditt prosjekt ',
+            'message-2' => ' har blitt registrert.',
+        ],
+
+    ],
+    'errors' => [
+        'name' => [
+            'required' => 'Feltet for fornavn er obligatorisk.',
+            'string' => 'Feltet fornavn må være en tekststreng.',
+            'max' => 'Feltet fornavn kan ikke ha mer enn 20 tegn.',
+        ],
+        'last_name' => [
+            'required' => 'Feltet for etternavn er obligatorisk.',
+            'string' => 'Feltet etternavn må være en tekststreng.',
+            'max' => 'Feltet etternavn kan ikke ha mer enn 40 tegn.',
+        ],
+        'email' => [
+            'required' => 'E-postfeltet er obligatorisk.',
+            'string' => 'E-postfeltet må være en tekststreng.',
+            'email' => 'E-postfeltet må være i et gyldig format.',
+            'unique' => 'Denne e-posten er allerede registrert.',
+            'max' => 'E-postfeltet kan ikke ha mer enn 50 tegn.',
+        ],
+        'description' => [
+            'max' => 'Beskrivelsen kan ikke overstige 300 tegn.',
+        ],
+        'profile' => [
+            'image' => 'Profilbildet må være et bilde.',
+            'mimes' => 'Profilbildet må være en JPG, JPEG eller PNG-fil.',
+            'max' => 'Profilbildet kan ikke være større enn 2 MB.',
+        ],
+        'banner' => [
+            'image' => 'Banneret må være et bilde.',
+            'mimes' => 'Banneret må være en JPG, JPEG eller PNG-fil.',
+            'max' => 'Banneret kan ikke være større enn 4 MB.',
+        ],
+        'cv' => [
+            'file' => 'CV-en må være en fil.',
+            'mimes' => 'CV-en må være en PDF-fil.',
+            'max' => 'CV-en kan ikke være større enn 2 MB.',
+        ],
+        'comment' => [
+            'required' => 'Innholdsfeltet er obligatorisk.',
+            'string' => 'Innholdet må være en tekststreng.',
+            'max' => 'Innholdet kan ikke ha mer enn 1000 tegn.',
+        ],
+        'password' => [
+            'required' => 'Passordet er obligatorisk.',
+            'confirmed' => 'Passordene stemmer ikke overens.',
+            'min' => 'Passordet må være minst 8 tegn langt.',
+            'string' => 'Passordet må være en tekststreng.',
+            'regex' => 'Passordet må inneholde store og små bokstaver, tall og symboler.',
+        ],
+        'role' => [
+            'required' => 'Rollen er obligatorisk.',
+            'in' => 'Den valgte rollen er ugyldig.',
+        ],
+        'recaptcha' => [
+            'required' => 'Vennligst bekreft at du ikke er en robot.',
+        ],
+        'birth_date' => [
+            'required' => 'Fødselsdatoen er obligatorisk.',
+            'date' => 'Fødselsdatoen må være gyldig.',
+            'before_or_equal' => 'Fødselsdatoen må være tidligere enn eller lik dagens dato.',
+        ],
+        'current_course' => [
+            'required' => 'Nåværende kurs er obligatorisk.',
+            'string' => 'Nåværende kurs må være en tekststreng.',
+            'max' => 'Nåværende kurs kan ikke ha mer enn 50 tegn.',
+        ],
+        'educational_center' => [
+            'required' => 'Utdanningssenteret er obligatorisk.',
+            'string' => 'Utdanningssenteret må være en tekststreng.',
+            'max' => 'Utdanningssenteret kan ikke ha mer enn 100 tegn.',
+        ],
+        'specialization' => [
+            'required' => 'Spesialiseringen er obligatorisk.',
+            'string' => 'Spesialiseringen må være en tekststreng.',
+            'max' => 'Spesialiseringen kan ikke ha mer enn 100 tegn.',
+        ],
+        'department' => [
+            'required' => 'Avdelingen er obligatorisk.',
+            'string' => 'Avdelingen må være en tekststreng.',
+            'max' => 'Avdelingen kan ikke ha mer enn 100 tegn.',
+        ],
+        'validation_document' => [
+            'required' => 'Valideringsdokumentet er obligatorisk.',
+            'string' => 'Valideringsdokumentet må være en tekststreng.',
+            'max' => 'Valideringsdokumentet kan ikke ha mer enn 255 tegn.',
+        ],
+        'cif' => [
+            'required' => 'CIF er obligatorisk.',
+            'string' => 'CIF må være en tekststreng.',
+            'max' => 'CIF kan ikke ha mer enn 50 tegn.',
+        ],
+        'address' => [
+            'required' => 'Adressen er obligatorisk.',
+            'string' => 'Adressen må være en tekststreng.',
+            'max' => 'Adressen kan ikke ha mer enn 255 tegn.',
+        ],
+        'sector' => [
+            'required' => 'Sektoren er obligatorisk.',
+            'string' => 'Sektoren må være en tekststreng.',
+            'max' => 'Sektoren kan ikke ha mer enn 100 tegn.',
+        ],
+        'website' => [
+            'url' => 'Nettstedet må ha et gyldig URL-format.',
+            'max' => 'Nettstedet kan ikke ha mer enn 255 tegn.',
+        ],
+    ],
+
+
 ];

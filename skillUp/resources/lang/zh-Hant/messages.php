@@ -168,9 +168,9 @@ return [
         'table-actions' => '操作',
         'candidate-details' => '來自以下人員的候選人詳情 ',
         'modal-name' => '名稱：',
-        'model-position' => '申請職位：',
-        'model-reason' => '原因：',
-        'model-date' => '申請日期：',
+        'modal-position' => '申請職位：',
+        'modal-reason' => '原因：',
+        'modal-date' => '申請日期：',
         'see-cv' => '查看簡歷',
         'no-cv' => '沒有上傳簡歷',
         'change-status' => '更改狀態：',
@@ -443,6 +443,7 @@ return [
         ],
     ],
     'chatbot' => [
+        'text-some' => '著述...',
         'skillup-assistant' => 'SkillUp 助手',
         'first-message' => '嗨！我是 SkillUp 助手。您可以問我以下問題：',
         'second-message' => '• 我在哪裡可以看到項目？\n• 如何申請公司的工作？\n• 工作機會在哪裡？',
@@ -506,4 +507,225 @@ return [
         'text-how-doing' => '你過得怎麼樣',
         'response-chat-question' => '我工作正常，謝謝您的詢問。我是一個沒有感情的虛擬助手，但我在這裡幫助您需要的任何事情。',
     ],
+    'email' => [
+        'title' => '您的申請狀態已更新',
+        'hello' => '您好，',
+        'text-1' => '您對職位 ',
+        'text-2' => '由 ',
+        'text-3' => '所發佈的申請已更新。',
+        'text-4' => '職位描述：',
+        'text-5' => '您申請的目前狀態：',
+        'text-6' => '感謝您的關注。',
+        'text-7' => '— SkillUp 團隊',
+        'new' => '您的申請已成功提交，稍後我們將進行審核。',
+        'review' => '我們正在審查您的資料。會隨時通知您進度。',
+        'accepted' => '恭喜！您的申請已被接受，我們將儘快與您聯繫。',
+        'rejected' => '很遺憾地通知您，這次您的申請未被錄取。',
+        'text-title-1' => '您針對職缺 ',
+        'text-title-2' => ' 的申請狀態已更新。',
+        'message' => '目前更新的狀態為：',
+        'messages' => [
+            'nueva' => '新的',
+            'en revisión' => '審核中',
+            'aceptado' => '已接受',
+            'rechazado' => '已拒絕',
+        ],
+    ],
+    'notifications' => [
+        'message-student' => [
+            'title' => '歡迎來到 SkillUp！',
+            'message' => '您現在可以探索職缺、提交申請，並查看其他使用者的專案。',
+        ],
+        'message-user' => [
+            'title' => '歡迎來到 SkillUp！',
+            'message' => '您現在可以探索職缺、提交申請，並查看其他使用者的專案。',
+        ],
+        'message-company' => [
+            'title' => '您的企業帳戶已啟用',
+            'message' => '您現在可以發布職缺並接收來自學生的申請。',
+        ],
+        'message-teacher' => [
+            'title' => '教師資料已建立',
+            'message' => '您可以從儀表板管理和審核學術專案。',
+        ],
+        'message-create-project' => [
+            'title' => '專案已註冊',
+            'message-1' => '您的專案 ',
+            'message-2' => ' 已成功建立。',
+        ],
+        'message-project-available' => [
+            'title' => '有新專案可用',
+            'message' => '最近有新專案上線，快去看看吧！',
+        ],
+        'message-new-job-offer' => [
+            'title' => '有新的職缺',
+            'message' => '有一則新職缺已發布：',
+        ],
+        'message-sp-published' => [
+            'title' => '學校專案已發布',
+            'message-1' => '您的專案 ',
+            'message-2' => ' 已成功註冊。',
+        ],
+        'message-offer-closed' => [
+            'title' => '職缺已關閉',
+            'message-1' => '職缺 ',
+            'message-2' => ' 已被管理員關閉。',
+        ],
+        'message-offer-deleted' => [
+            'title' => '職缺已撤回',
+            'message-1' => '您申請的職缺 ',
+            'message-2' => ' 已被管理員撤回。',
+        ],
+        'message-project-updated' => [
+            'title' => '您的專案已更新',
+            'message-1' => '專案 ',
+            'message-2' => ' 已被管理員更新。',
+        ],
+        'message-project-deleted' => [
+            'title' => '您的專案已刪除',
+            'message-1' => '專案 ',
+            'message-2' => ' 已被管理員刪除。',
+        ],
+        'message-app-received' => [
+            'title' => '收到新的申請',
+            'message' => ' 已申請你的職缺 ',
+        ],
+        'message-app-deleted' => [
+            'title' => '你的申請已被撤回',
+            'message-1' => '你對職缺 ',
+            'message-2' => ' 的申請已被 ',
+        ],
+        'message-new-offer' => [
+            'title' => '有新的職缺可供應徵！',
+            'message' => '已發布新的職缺：',
+        ],
+        'message-project-registered' => [
+            'title' => '專案已註冊',
+            'message-1' => '你的專案 ',
+            'message-2' => ' 已成功建立。',
+        ],
+        'message-project-deleted-teacher' => [
+            'title' => '你的專案已被刪除',
+            'message-1' => '專案 ',
+            'message-2' => ' 已被教師刪除。',
+        ],
+        'message-project-updated-teacher' => [
+            'title' => '你的專案已被更新',
+            'message-1' => '專案 ',
+            'message-2' => ' 已被教師更新。',
+        ],
+        'message-project-published' => [
+            'title' => '學校專案已發布',
+            'message-1' => '你的專案 ',
+            'message-2' => ' 已成功註冊。',
+        ],
+
+    ],
+    'errors' => [
+        'name' => [
+            'required' => '名字欄位為必填。',
+            'string' => '名字必須是文字。',
+            'max' => '名字不能超過 20 個字元。',
+        ],
+        'last_name' => [
+            'required' => '姓氏欄位為必填。',
+            'string' => '姓氏必須是文字。',
+            'max' => '姓氏不能超過 40 個字元。',
+        ],
+        'email' => [
+            'required' => '電子郵件欄位為必填。',
+            'string' => '電子郵件必須是文字。',
+            'email' => '電子郵件格式不正確。',
+            'unique' => '這個電子郵件已經被註冊。',
+            'max' => '電子郵件不能超過 50 個字元。',
+        ],
+        'description' => [
+            'max' => '描述不能超過 300 個字元。',
+        ],
+        'profile' => [
+            'image' => '大頭貼必須是圖片格式。',
+            'mimes' => '大頭貼必須是 JPG、JPEG 或 PNG 格式的檔案。',
+            'max' => '大頭貼不能超過 2MB。',
+        ],
+        'banner' => [
+            'image' => '橫幅圖片必須是圖片格式。',
+            'mimes' => '橫幅圖片必須是 JPG、JPEG 或 PNG 格式的檔案。',
+            'max' => '橫幅圖片不能超過 4MB。',
+        ],
+        'cv' => [
+            'file' => '履歷必須是檔案。',
+            'mimes' => '履歷必須是 PDF 格式。',
+            'max' => '履歷不能超過 2MB。',
+        ],
+        'comment' => [
+            'required' => '內容欄位為必填。',
+            'string' => '內容必須是文字。',
+            'max' => '內容不能超過 1000 個字元。',
+        ],
+        'password' => [
+            'required' => '密碼為必填項目。',
+            'confirmed' => '密碼不一致。',
+            'min' => '密碼至少需要 8 個字元。',
+            'string' => '密碼必須是文字。',
+            'regex' => '密碼必須包含大小寫字母、數字與符號。',
+        ],
+        'role' => [
+            'required' => '角色為必填項目。',
+            'in' => '所選角色無效。',
+        ],
+        'recaptcha' => [
+            'required' => '請確認您不是機器人。',
+        ],
+        'birth_date' => [
+            'required' => '出生日期為必填項目。',
+            'date' => '出生日期格式不正確。',
+            'before_or_equal' => '出生日期必須早於或等於今天。',
+        ],
+        'current_course' => [
+            'required' => '目前課程為必填項目。',
+            'string' => '目前課程必須是文字。',
+            'max' => '目前課程不能超過 50 個字元。',
+        ],
+        'educational_center' => [
+            'required' => '教育機構為必填項目。',
+            'string' => '教育機構必須是文字。',
+            'max' => '教育機構不能超過 100 個字元。',
+        ],
+        'specialization' => [
+            'required' => '專業領域為必填項目。',
+            'string' => '專業領域必須是文字。',
+            'max' => '專業領域不能超過 100 個字元。',
+        ],
+        'department' => [
+            'required' => '部門為必填項目。',
+            'string' => '部門必須是文字。',
+            'max' => '部門不能超過 100 個字元。',
+        ],
+        'validation_document' => [
+            'required' => '驗證文件為必填項目。',
+            'string' => '驗證文件必須是文字。',
+            'max' => '驗證文件不能超過 255 個字元。',
+        ],
+        'cif' => [
+            'required' => 'CIF 為必填項目。',
+            'string' => 'CIF 必須是文字。',
+            'max' => 'CIF 不能超過 50 個字元。',
+        ],
+        'address' => [
+            'required' => '地址為必填項目。',
+            'string' => '地址必須是文字。',
+            'max' => '地址不能超過 255 個字元。',
+        ],
+        'sector' => [
+            'required' => '產業為必填項目。',
+            'string' => '產業必須是文字。',
+            'max' => '產業不能超過 100 個字元。',
+        ],
+        'website' => [
+            'url' => '網站必須是有效的 URL 格式。',
+            'max' => '網站不能超過 255 個字元。',
+        ],
+    ],
+
+
 ];

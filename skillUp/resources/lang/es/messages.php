@@ -299,9 +299,9 @@ return [
         'table-actions' => 'Acciones',
         'candidate-details' => 'Detalles del candidato de ',
         'modal-name' => 'Nombre:',
-        'model-position' => 'Cargo aplicado:',
-        'model-reason' => 'Motivo:',
-        'model-date' => 'Fecha de solicitud:',
+        'modal-position' => 'Cargo aplicado:',
+        'modal-reason' => 'Motivo:',
+        'modal-date' => 'Fecha de solicitud:',
         'see-cv' => 'Ver CV',
         'no-cv' => 'No CV uploaded',
         'change-status' => 'Cambiar estado:',
@@ -505,4 +505,222 @@ return [
             'response-chat-question' => 'Estoy funcionando perfectamente, gracias por preguntar. Soy un asistente virtual sin sentimientos pero estoy aquí para ayudarte en lo que necesites.',
         ],
     ],
+    'email' => [
+        'title' => 'Estado de tu candidatura actualizado',
+        'hello' => 'Hola ',
+        'text-1' => 'Tu candidatura para la oferta ',
+        'text-2' => 'publicada por ',
+        'text-3' => 'ha sido actualizada.',
+        'text-4' => 'Descripción del puesto:',
+        'text-5' => 'Estado actual de tu candidatura:',
+        'text-6' => 'Gracias por tu interés.',
+        'text-7' => '— El equipo de SkillUp',
+        'new' => 'Tu candidatura ha sido registrada correctamente y será revisada pronto.',
+        'review' => 'Estamos revisando tu perfil. Te mantendremos informado.',
+        'accepted' => '¡Felicidades! Tu candidatura ha sido aceptada. Nos pondremos en contacto contigo pronto.',
+        'rejected' => 'Lamentamos informarte que esta vez no ha sido posible continuar con tu candidatura.',
+        'text-title-1' => 'Tu candidatura para la oferta ',
+        'text-title-2' => 'ha sido actualizada. ',
+        'message' => 'El estado actualizado es: ',
+        'messages' => [
+            'nueva' => 'Nueva',
+            'en revisión' => 'En revisión',
+            'aceptado' => 'Aceptado',
+            'rechazado' => 'Rechazado',
+        ],
+    ],
+    'notifications' => [
+        'message-student' => [
+            'title' => '¡Bienvenido a SkillUp!',
+            'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
+        ],
+        'message-user' => [
+            'title' => '¡Bienvenido a SkillUp!',
+            'message' => 'Ya puedes explorar ofertas de trabajo, aplicar a ellas y ver proyectos de otros usuarios.',
+        ],
+        'message-company' => [
+            'title' => 'Tu cuenta de empresa está lista',
+            'message' => 'Ahora puedes publicar ofertas y recibir candidaturas de estudiantes.',
+        ],
+        'message-teacher' => [
+            'title' => 'Perfil de profesor creado',
+            'message' => 'Puedes gestionar y validar proyectos académicos desde tu panel.',
+        ],
+        'message-create-project' => [
+            'title' => 'Proyecto registrado',
+            'message-1' => 'Tu proyecto ',
+            'message-2' => ' ha sido creado correctamente.',
+        ],
+        'message-project-available' => [
+            'title' => 'Nuevos proyectos disponible',
+            'message' => 'Se han publicado nuevos proyectos recientemente, ve a descubrirlos! ',
+        ],
+        'message-new-job-offer' => [
+            'title' => 'Nueva oferta disponible',
+            'message' => 'Se ha publicado una nueva oferta: ',
+        ],
+        'message-sp-published' => [
+            'title' => 'Proyecto escolar publicado',
+            'message-1' => 'Tu proyecto ',
+            'message-2' => 'ha sido registrado correctamente',
+        ],
+        'message-offer-closed' => [
+            'title' => 'Oferta cerrada',
+            'message-1' => 'La oferta ',
+            'message-2' => ' ha sido cerrada por el administrador.',
+        ],
+        'message-offer-deleted' => [
+            'title' => 'Oferta retirada',
+            'message-1' => 'La oferta ',
+            'message-2' => ' a la que te postulaste ha sido retirada por el administrador.',
+        ],
+        'message-project-updated' => [
+            'title' => 'Tu proyecto ha sido actualizado',
+            'message-1' => 'El proyecto ',
+            'message-2' => ' ha sido actualizado por el administrador.',
+        ],
+        'message-project-deleted' => [
+            'title' => 'Tu proyecto ha sido eliminado',
+            'message-1' => 'El proyecto ',
+            'message-2' => ' ha sido eliminado por el administrador.',
+        ],
+        'message-app-received' => [
+            'title' => 'Nueva candidatura recibida',
+            'message' => ' se ha postulado a tu oferta ',
+        ],
+        'message-app-deleted' => [
+            'title' => 'Tu candidatura ha sido retirada',
+            'message-1' => 'Tu candidatura para la oferta ',
+            'message-2' => ' ha sido retirada por ',
+        ],
+        'message-new-offer' => [
+            'title' => '¡Nueva oferta disponible!',
+            'message' => 'Se ha publicado una nueva oferta: ',
+        ],
+        'message-project-registered' => [
+            'title' => 'Proyecto registrado',
+            'message-1' => 'Tu proyecto ',
+            'message-2' => ' ha sido creado correctamente.',
+        ],
+        'message-project-deleted-teacher' => [
+            'title' => 'Tu proyecto ha sido eliminado',
+            'message-1' => 'El proyecto ',
+            'message-2' => ' ha sido eliminado por el profesorado.',
+        ],
+        'message-project-updated-teacher' => [
+            'title' => 'Tu proyecto ha sido actualizado',
+            'message-1' => 'El proyecto ',
+            'message-2' => ' ha sido actualizado por el profesorado.',
+        ],
+        'message-project-published' => [
+            'title' => 'Proyecto escolar publicado',
+            'message-1' => 'Tu proyecto ',
+            'message-2' => 'ha sido registrado correctamente',
+        ]
+    ],
+    'errors' => [
+        'name' => [
+            'required' => 'El campo nombre es obligatorio.',
+            'string' => 'El campo nombre debe ser una cadena de texto.',
+            'max' => 'El campo nombre debe tener menos de 20 caracteres.',
+        ],
+        'last_name' => [
+            'required' => 'El campo apellido es obligatorio.',
+            'string' => 'El campo apellido debe ser una cadena de texto.',
+            'max' => 'El campo apellido debe tener menos de 40 caracteres.',
+        ],
+        'email' => [
+            'required' => 'El campo correo email es obligatorio.',
+            'string' => 'El campo correo email debe ser una cadena de texto.',
+            'email' => 'El campo correo email debe tener un formato válido.',
+            'unique' => 'El correo email ya está registrado.',
+            'max' => 'El campo correo email debe tener menos de 50 caracteres.',
+        ],
+        'description' => [
+            'max' => 'La descripción no puede superar los 300 caracteres.',
+        ],
+        'profile' => [
+            'image' => 'La foto de perfil debe ser una imagen.',
+            'mimes' => 'La foto de perfil debe ser un archivo JPG, JPEG o PNG.',
+            'max' => 'La foto de perfil no puede superar los 2MB.',
+        ],
+        'banner' => [
+            'image' => 'El banner debe ser una imagen.',
+            'mimes' => 'El banner debe ser un archivo JPG, JPEG o PNG.',
+            'max' => 'El banner no puede superar los 4MB.',
+        ],
+        'cv' => [
+            'file' => 'El CV debe ser un archivo.',
+            'mimes' => 'El CV debe ser un archivo PDF.',
+            'max' => 'El CV no puede superar los 2MB.',
+        ],
+        'comment' => [
+            'required' => 'El campo contenido es obligatorio.',
+            'string' => 'El campo contenido debe ser una cadena de texto.',
+            'max' => 'El campo contenido debe tener menos de 1000 caracteres.',
+        ],
+        'password' => [
+            'required' => 'La contraseña es obligatoria.',
+            'confirmed' => 'Las contraseñas no coinciden.',
+            'min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'string' => 'La contraseña debe ser una cadena de texto.',
+            'regex' => 'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos.',
+        ],
+        'role' => [
+            'required' => 'El rol es obligatorio.',
+            'in' => 'El rol seleccionado no es valido.',
+        ],
+        'recaptcha' => [
+            'required' => 'Por favor, verifica que no eres un robot.',
+        ],
+        'birth_date' => [
+            'required' => 'La fecha de nacimiento es obligatoria.',
+            'date' => 'La fecha de nacimiento debe ser válida.',
+            'before_or_equal' => 'La fecha de nacimiento debe ser anterior o igual a la fecha actual.',
+        ],
+        'current_course' => [
+            'required' => 'El curso actual es obligatorio.',
+            'string' => 'El curso actual debe ser una cadena de texto.',
+            'max' => 'El curso actual no puede tener más de 50 caracteres.',
+        ],
+        'educational_center' => [
+            'required' => 'El centro educativo es obligatorio.',
+            'string' => 'El centro educativo debe ser una cadena de texto.',
+            'max' => 'El centro educativo no puede tener más de 100 caracteres.',
+        ],
+        'specialization' => [
+            'required' => 'La especialización es obligatoria.',
+            'string' => 'La especialización debe ser una cadena de texto.',
+            'max' => 'La especialización no puede tener más de 100 caracteres.',
+        ],
+        'department' => [
+            'required' => 'El departamento es obligatorio.',
+            'string' => 'El departamento debe ser una cadena de texto.',
+            'max' => 'El departamento no puede tener más de 100 caracteres.',
+        ],
+        'validation_document' => [
+            'required' => 'El documento de validación es obligatorio.',
+            'string' => 'El documento de validación debe ser una cadena de texto.',
+            'max' => 'El documento de validación no puede tener más de 255 caracteres.',
+        ],
+        'cif' => [
+            'required' => 'El CIF es obligatorio.',
+            'string' => 'El CIF debe ser una cadena de texto.',
+            'max' => 'El CIF no puede tener más de 50 caracteres.',
+        ],
+        'address' => [
+            'required' => 'La dirección es obligatoria.',
+            'string' => 'La dirección debe ser una cadena de texto.',
+            'max' => 'La dirección no puede tener más de 255 caracteres.',
+        ],
+        'sector' => [
+            'required' => 'El sector es obligatorio.',
+            'string' => 'El sector debe ser una cadena de texto.',
+            'max' => 'El sector no puede tener más de 100 caracteres.',
+        ],
+        'website' => [
+            'url' => 'La página web debe tener un formato de URL válido.',
+            'max' => 'La página web no puede tener más de 255 caracteres.',
+        ],
+    ]
 ];
