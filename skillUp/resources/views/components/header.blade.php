@@ -82,6 +82,7 @@
                 'fr' => ['label' => 'Français', 'icon' => asset('icons/french.svg')],
                 'nb' => ['label' => 'Norsk', 'icon' => asset('icons/norway.svg')],
                 'zh-Hant' => ['label' => '中文', 'icon' => asset('icons/china.svg')],
+                'cs' => ['label' => 'Česky', 'icon' => asset('icons/czech.svg')],
             ];
         @endphp
 
