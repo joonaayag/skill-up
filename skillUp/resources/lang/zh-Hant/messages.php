@@ -42,6 +42,8 @@ return [
         'see' => '查看',
         'create' => '創建',
         'register' => '註冊',
+        'apply' => '申請',
+
     ],
     'projects' => [
         'title' => '項目',
@@ -181,6 +183,7 @@ return [
     ],
     'job-offers' => [
         'title' => '工作機會',
+        'title-details' => '優惠詳情',
         'category' => '類別',
         'category-admin' => '管理與商業',
         'category-science' => '科學與健康',
@@ -903,5 +906,33 @@ return [
         'continue' => '繼續',
     ],
     'save-profile' => '儲存設定檔',
+    'project-details' => [
+        'title' => '專案詳情',
+        'title-school' => '學校專案詳情',
+        'author' => '作者：',
+        'published' => '發佈日期：',
+        'created-at' => '完成日期：',
+        'link' => '連結：',
+        'project-files' => '專案檔案：',
+        'no-files' => '目前沒有檔案',
+        'comments' => '留言',
+        'add-comment' => '新增留言',
+        'write-comment' => '請在此輸入您的留言...',
+        'publish-comment' => '發佈留言',
+        'Back' => '返回',
+        'see-image' => '查看圖片',
+        'download-file' => '下載檔案',
 
+    ],
+    'apply-form' => [
+        'title' => '申請表單',
+        'candidate-name' => '申請人姓名：',
+        'position-applied' => '申請職位：',
+        'application-reason' => '申請原因：',
+        'cv' => '履歷：',
+        'upload-cv' => '上傳履歷',
+        'state' => '狀態：',
+    ],
+    'from' => '從',
+    'answer' => '回覆',
 ];

@@ -42,6 +42,7 @@ return [
         'see' => 'Se',
         'create' => 'Opprett',
         'register' => 'Registrer',
+        'apply' => 'Søk her',
     ],
     'projects' => [
         'title' => 'Prosjekter',
@@ -181,6 +182,7 @@ return [
     ],
     'job-offers' => [
         'title' => 'Jobbtilbud',
+        'title-details' => 'Detaljer om tilbudet',
         'category' => 'Kategorier',
         'category-admin' => 'Ledelse og næringsliv',
         'category-science' => 'Vitenskap og helse',
@@ -893,7 +895,7 @@ return [
         'res-password' => 'Tilbakestill passord',
         'new-password' => 'Nytt passord',
         'reset' => 'Tilbakestill',
-        
+
     ],
     'choose' => [
         'role' => 'Hva er din rolle i applikasjonen?',
@@ -904,5 +906,32 @@ return [
         'continue' => 'Fortsett',
     ],
     'save-profile' => 'Lagre profil',
-
+    'project-details' => [
+        'title' => 'Prosjektdetaljer',
+        'title-school' => 'Skoleprosjektdetaljer',
+        'author' => 'Forfatter: ',
+        'published' => 'Publisert den: ',
+        'created-at' => 'Opprettet den: ',
+        'link' => 'Lenke: ',
+        'project-files' => 'Prosjektfiler:',
+        'no-files' => 'Ingen filer for øyeblikket',
+        'comments' => 'Kommentarer',
+        'add-comment' => 'Legg til kommentar',
+        'write-comment' => 'Skriv din kommentar her...',
+        'publish-comment' => 'Publiser kommentar',
+        'back' => 'Tilbake',
+        'see-image' => 'Vis bilde',
+        'download-file' => 'Last ned fil',
+    ],
+    'apply-form' => [
+        'title' => 'Søknadsskjema',
+        'candidate-name' => 'Kandidatens navn: ',
+        'position-applied' => 'Søkt stilling: ',
+        'application-reason' => 'Søknadsgrunn: ',
+        'cv' => 'CV: ',
+        'upload-cv' => 'Last opp CV',
+        'state' => 'Status: ',
+    ],
+    'from' => 'fra ',
+    'answer' => 'Svar',
 ];

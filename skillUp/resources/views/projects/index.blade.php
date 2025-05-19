@@ -70,9 +70,28 @@
             <a href="{{ route('projects.show', $project->id) }}">
                 <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
                     <li class="flex flex-col h-full ">
-                        <x-tags class="mb-2">{{ $project->tags }}</x-tags>
+                        <x-tags>{{ __('messages.tags.' . strtolower($project->tags)) }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>
-                        <span class="mb-6">{{ $project->general_category }}</span>
+                        @php
+                            $categoryMap = [
+                                'Administración y negocio' => 'option-admin',
+                                'Ciencia y salud' => 'option-science',
+                                'Comunicación' => 'option-comunication',
+                                'Diseño y comunicación' => 'option-design',
+                                'Educación' => 'option-education',
+                                'Industria' => 'option-industry',
+                                'Otro' => 'option-other',
+                                'Tecnología y desarrollo' => 'option-tec',
+                            ];
+
+                            $categoryKey = $categoryMap[$project->general_category] ?? null;
+                        @endphp
+
+                        @if ($categoryKey)
+                            <x-heading level="h4" class="mb-4">
+                                {{ __('messages.projects.' . $categoryKey) }}
+                            </x-heading>
+                        @endif
 
                         @php
                             $favorite = auth()->user()->favorites()
@@ -104,8 +123,9 @@
                                 @endif
                                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                                         class="w-4 h-auto" />{{ $project->views }}</p>
-                                <p>
-                                    {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'Sin calificaciones' }}
+                                <p class="flex justify-center text-center ">
+                                    <x-icon name="star" class="w-4 h-auto text-yellow-400 mr-1" />
+                                    {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}
                                 </p>
                             </div>
                             <span class="text-sm">{{ $project->author->name . ' ' . $project->author->last_name  }}</span>
@@ -259,10 +279,26 @@
             <a href="{{ route('school.projects.show', $school->id) }}">
                 <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
                     <li class="flex flex-col">
-                        <x-tags class="mb-2">{{ $school->tags }}</x-tags>
+                        <x-tags>{{ __('messages.tags.' . strtolower($school->tags)) }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $school->title }}</x-heading>
-                        <span>{{ $school->general_category }}</span>
-                        <p class=" text-sm break-words mb-1.5">{{ Str::limit($school->description, 100) }}</p>
+                        @php
+                            $categoryMap = [
+                                'Administración y negocio' => 'option-admin',
+                                'Ciencia y salud' => 'option-science',
+                                'Comunicación' => 'option-comunication',
+                                'Diseño y comunicación' => 'option-design',
+                                'Educación' => 'option-education',
+                                'Industria' => 'option-industry',
+                                'Otro' => 'option-other',
+                                'Tecnología y desarrollo' => 'option-tec',
+                            ];
+
+                            $categoryKey = $categoryMap[$school->general_category] ?? null;
+                        @endphp
+
+                        @if ($categoryKey)
+                            <span class="mb-6">{{ __('messages.projects.' . $categoryKey) }}</span>
+                        @endif
 
                         @php
                             $favorite = auth()->user()->favorites()
@@ -272,7 +308,7 @@
                         @endphp
 
                         <div class="flex flex-row justify-between items-center mt-auto">
-                            <div class="flex flex-row gap-3 items-center justify-center">
+                            <div class="flex flex-row gap-4 items-center justify-center">
                                 @if ($favorite)
                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                         @csrf
@@ -295,8 +331,9 @@
                                 @endif
                                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                                         class="w-4 h-auto" />{{ $school->views }}</p>
-                                <p>
-                                    {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'Sin calificaciones' }}
+                                <p class="flex justify-center text-center ">
+                                    <x-icon name="star" class="w-4 h-auto text-yellow-400 mr-1" />
+                                    {{ $school->averageRating() ? number_format($school->averageRating(), 1) : 'N/A' }}
                                 </p>
                             </div>
                             <span class="text-sm">

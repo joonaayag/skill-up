@@ -124,9 +124,73 @@
                         <a href="{{ route('job.offers.show', $offer->id) }}">
                             <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
                                 <li class="flex flex-col h-full ">
-                                    <x-tags class="mb-1">{{ $offer->general_category }}</x-tags>
+                                    @php
+                                        $categoryMap = [
+                                            'Administración y negocio' => 'option-admin',
+                                            'Ciencia y salud' => 'option-science',
+                                            'Comunicación' => 'option-comunication',
+                                            'Diseño y comunicación' => 'option-design',
+                                            'Educación' => 'option-education',
+                                            'Industria' => 'option-industry',
+                                            'Otro' => 'option-other',
+                                            'Tecnología y desarrollo' => 'option-tec',
+                                        ];
+
+                                        $categoryKey = $categoryMap[$offer->general_category] ?? null;
+                                    @endphp
+
+                                    @if ($categoryKey)
+                                    <x-tags class="mb-1 text-sm">{{ __('messages.projects.' . $categoryKey) }}</x-tags>
+                                    @endif
+                                    
                                     <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
-                                    <x-heading level="h4" class="mb-1">{{ $offer->sector_category }}</x-heading>
+                                    @php
+                                    $sectorMap = [
+                                        'Agricultura/Medio ambiente' => 'sector-agri',
+                                        'Arte/Cultura' => 'sector-art',
+                                        'Automoción' => 'sector-aut',
+                                        'Ciberseguridad' => 'sector-cyb',
+                                        'Community Manager' => 'sector-comm',
+                                        'Construcción' => 'sector-cons',
+                                        'Coordinación Educativa' => 'sector-educ',
+                                        'Diseño Gráfico' => 'sector-grap',
+                                        'Electricidad y fontanería' => 'sector-elec',
+                                        'Energía/Renovables' => 'sector-ener',
+                                        'Farmacia' => 'sector-phar',
+                                        'Finanzas y contabilidad' => 'sector-fina',
+                                        'Fotografía/vídeo' => 'sector-photo',
+                                        'Hostelería/turismo' => 'sector-hosp',
+                                        'AI' => 'sector-ai',
+                                        'Investigación/laboratorio' => 'sector-res',
+                                        'Legal' => 'sector-leg',
+                                        'Logística' => 'sector-log',
+                                        'Mecánica' => 'sector-mec',
+                                        'Medicina/Enfermería' => 'sector-med',
+                                        'Nutrición' => 'sector-nut',
+                                        'Operador Industrial' => 'sector-ind',
+                                        'Orientación' => 'sector-ori',
+                                        'Periodismo' => 'sector-jout',
+                                        'Enseñanza' => 'sector-tea',
+                                        'Psicología' => 'sector-psy',
+                                        'Publicidad' => 'sector-adv',
+                                        'Redes y Sistemas' => 'sector-net',
+                                        'RRHH' => 'sector-hr',
+                                        'Seguridad' => 'sector-sec',
+                                        'SEO/SEM' => 'sector-seo',
+                                        'Terapias/Rehabilitación' => 'sector-ther',
+                                        'Traducción' => 'sector-trans',
+                                        'Transporte/Entrega' => 'sector-transp',
+                                        'Ventas' => 'sector-sal',
+                                    ];
+
+                                        $sectorkey = $sectorMap[$offer->sector_category] ?? null;
+                                    @endphp
+
+                                    @if ($sectorkey)
+                                        <x-heading level="h4" class="mb-1">
+                                            {{ __('messages.job-offers.' . $sectorkey) }}
+                                        </x-heading>
+                                    @endif
 
                                     @php
                                         $favorite = auth()->user()->favorites()

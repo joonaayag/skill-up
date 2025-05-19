@@ -33,14 +33,81 @@
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->id }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->name }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->subtitle }}</td>
-                            <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->sector_category }}</td>
-                            <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->general_category }}</td>
-                            <td class="px-4 py-3 border dark:border-gray-700">{{ ucfirst($offer->state) }}</td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                            @php
+                                    $sectorMap = [
+                                        'Agricultura/Medio ambiente' => 'sector-agri',
+                                        'Arte/Cultura' => 'sector-art',
+                                        'Automoción' => 'sector-aut',
+                                        'Ciberseguridad' => 'sector-cyb',
+                                        'Community Manager' => 'sector-comm',
+                                        'Construcción' => 'sector-cons',
+                                        'Coordinación Educativa' => 'sector-educ',
+                                        'Diseño Gráfico' => 'sector-grap',
+                                        'Electricidad y fontanería' => 'sector-elec',
+                                        'Energía/Renovables' => 'sector-ener',
+                                        'Farmacia' => 'sector-phar',
+                                        'Finanzas y contabilidad' => 'sector-fina',
+                                        'Fotografía/vídeo' => 'sector-photo',
+                                        'Hostelería/turismo' => 'sector-hosp',
+                                        'AI' => 'sector-ai',
+                                        'Investigación/laboratorio' => 'sector-res',
+                                        'Legal' => 'sector-leg',
+                                        'Logística' => 'sector-log',
+                                        'Mecánica' => 'sector-mec',
+                                        'Medicina/Enfermería' => 'sector-med',
+                                        'Nutrición' => 'sector-nut',
+                                        'Operador Industrial' => 'sector-ind',
+                                        'Orientación' => 'sector-ori',
+                                        'Periodismo' => 'sector-jout',
+                                        'Enseñanza' => 'sector-tea',
+                                        'Psicología' => 'sector-psy',
+                                        'Publicidad' => 'sector-adv',
+                                        'Redes y Sistemas' => 'sector-net',
+                                        'RRHH' => 'sector-hr',
+                                        'Seguridad' => 'sector-sec',
+                                        'SEO/SEM' => 'sector-seo',
+                                        'Terapias/Rehabilitación' => 'sector-ther',
+                                        'Traducción' => 'sector-trans',
+                                        'Transporte/Entrega' => 'sector-transp',
+                                        'Ventas' => 'sector-sal',
+                                    ];
+
+                                        $sectorkey = $sectorMap[$offer->sector_category] ?? null;
+                                    @endphp
+
+                                    @if ($sectorkey)
+                                            {{ __('messages.job-offers.' . $sectorkey) }}
+                                    @endif
+                                </td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                    @php
+                                        $categoryMap = [
+                                            'Administración y negocio' => 'option-admin',
+                                            'Ciencia y salud' => 'option-science',
+                                            'Comunicación' => 'option-comunication',
+                                            'Diseño y comunicación' => 'option-design',
+                                            'Educación' => 'option-education',
+                                            'Industria' => 'option-industry',
+                                            'Otro' => 'option-other',
+                                            'Tecnología y desarrollo' => 'option-tec',
+                                        ];
+
+                                        $categoryKey = $categoryMap[$offer->general_category] ?? null;
+                                    @endphp
+
+                                    @if ($categoryKey)
+                                   {{ __('messages.projects.' . $categoryKey) }}
+                                    @endif
+                                </td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                {{ __('messages.company-offers.' . ($offer->state == 'Abierta' ? 'open' : 'close')) }}
+                            </td>
                             <td class="px-4 py-3 border dark:border-gray-700 whitespace-nowrap space-x-3">
 
                                 <div x-data="{ openEdit: false }" class="inline-block" x-cloak>
                                     <button @click="openEdit = true"
-                                        class="bg-themeBlue/80 border-2 border-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded transition cursor-pointer">Editar</button>
+                                        class="bg-themeBlue/80 border-2 border-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded transition cursor-pointer">{{__('messages.button.edit')}}</button>
 
                                     <x-modal :show="'openEdit'" @click.outside="openEdit = false">
                                         <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.offers.edit') }}</x-heading>
@@ -78,11 +145,13 @@
                                                         <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
                                                             {{ __('messages.select') }}
                                                         </option>
-                                                        @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
+
+                                                        @foreach (array_keys($sectorMap) as $sector)
                                                             <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
-                                                                {{ $sector }}
+                                                                {{ __('messages.job-offers.' . $sectorMap[$sector]) }}
                                                             </option>
                                                         @endforeach
+
                                                     </select>
                                                 </div>
                                                 <div>

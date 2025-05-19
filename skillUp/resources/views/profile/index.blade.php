@@ -36,7 +36,10 @@
                         @break
                     @case('Empresa')
                         {{ __('messages.roles.company') }}
-                        @break
+                    @break
+                    @case('Admin')
+                        <span>Admin</span>
+                    @break
                 @endswitch
             </span>
             @php

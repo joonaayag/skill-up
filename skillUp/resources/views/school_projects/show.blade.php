@@ -3,73 +3,166 @@
 @section('title', $schoolProject->name)
 
 @section('content')
-    <h1>{{ $schoolProject->name }}</h1>    
+    <div x-data="{ selectedImage: null }">
 
-    @if ($schoolProject->image)
-        <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto" style="max-width: 400px;">
-    @endif
+        <x-heading level="h1" class="mb-10">{{ __('messages.project-details.title-school')  }}</x-heading>
+        @if ($errors->any())
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <p><strong>Descripción:</strong><br>{{ $schoolProject->description }}</p>
+        <x-card class="mb-12">
+            <x-tags>{{ __('messages.tags.' . strtolower(string: $schoolProject->tags)) }}</x-tags>
 
-    <p><strong>Etiquetas:</strong> {{ $schoolProject->tags }}</p>
-    <p><strong>Categoría:</strong> {{ $schoolProject->sector_category }}</p>
-    <p><strong>Fecha de creación:</strong> {{ $schoolProject->creation_date }}</p>
+            <x-heading level="h2" class="mt-6 mb-3">{{ $schoolProject->title }}</x-heading>
+            @php
+                $categoryMap = [
+                    'Administración y negocio' => 'option-admin',
+                    'Ciencia y salud' => 'option-science',
+                    'Comunicación' => 'option-comunication',
+                    'Diseño y comunicación' => 'option-design',
+                    'Educación' => 'option-education',
+                    'Industria' => 'option-industry',
+                    'Otro' => 'option-other',
+                    'Tecnología y desarrollo' => 'option-tec',
+                ];
 
-    @if ($schoolProject->link)
-        <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
-    @endif
+                $categoryKey = $categoryMap[$schoolProject->general_category] ?? null;
+            @endphp
 
-    <h2>Arcvhivos destacados------------</h2>
+            @if ($categoryKey)
+                <x-heading level="h4" class="mb-4">
+                    {{ __('messages.projects.' . $categoryKey) }}
+                </x-heading>
+            @endif
 
-    @if ($schoolProject->images && $schoolProject->images->count())
-        <div style="margin-bottom: 1.5rem;">
-            <strong>Archivos del proyecto:</strong>
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
-                @foreach ($schoolProject->images as $img)
-                    @php
-                        $extension = pathinfo($img->path, PATHINFO_EXTENSION);
-                        $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
-                    @endphp
 
-                    <div style="flex: 1 0 120px;">
-                        @if ($isImage)
-                            <img src="{{ asset('storage/' . $img->path) }}" alt="Imagen del proyecto"
-                                style="width: 100%; max-width: 200px; border-radius: 8px; object-fit: cover;">
-                        @else
-                            <a href="{{ asset('storage/' . $img->path) }}" download
-                                class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
-                                📄 Descargar archivo ({{ $extension }})
-                            </a>
-                        @endif
+            <p class="mb-9 break-words">{{ $schoolProject->description }}</p>
+
+
+            @if($schoolProject->image)
+                <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto"
+                    class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
+            @endif
+
+            <div class="flex justify-between mt-16">
+                <div class="flex gap-4 items-center justify-center">
+                    <p>{{ __('messages.project-details.author') }} <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong></p>
+                    <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                            class="w-4 h-auto" />{{ $schoolProject->views }}</p>
+                    <p class="flex items-center justify-center gap-1">
+                        <label class="text-yellow-400"><x-icon name="star" class="w-4 h-auto" /></label>
+                        {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'N/A' }}
+                    </p>
+                    @auth
+                        <form id="rating-form" action="{{ route('projects.rate', $schoolProject->id) }}" method="POST"
+                            class="flex gap-1">
+                            @csrf
+                            @for ($i = 1; $i <= 5; $i++)
+                                <button type="submit" name="rating" value="{{ $i }}"
+                                    class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
+                                                        {{ $schoolProject->getRatingByUser(auth()->id()) && $schoolProject->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                    aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
+                                    <x-icon name="star" class="w-4 h-auto" />
+                                </button>
+                            @endfor
+                        </form>
+
+                    @endauth
+                </div>
+                <div class="flex flex-col justify-end [&>p]:text-black dark:[&>p]:text-themeLightGray">
+                    <p class="text-sm text-gray-500">{{ __('messages.project-details.published')  . $schoolProject->created_at }}</p>
+                    <p class="text-sm text-gray-500">{{ __('messages.project-details.created-at')  . $schoolProject->creation_date }}</p>
+                </div>
+            </div>
+
+        </x-card>
+
+
+        <x-card>
+            @if($schoolProject->link)
+                <p><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
+            @endif
+
+            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
+            @if ($schoolProject->images && $schoolProject->images->count())
+                <div class="mb-6">
+                    <div class="flex flex-wrap gap-2.5 mt-2.5">
+                        @foreach ($schoolProject->images as $img)
+                            @php
+                                $extension = pathinfo($img->path, PATHINFO_EXTENSION);
+                                $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                            @endphp
+                            <div class="flex-1 min-w-28">
+                                @if ($isImage)
+                                    <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
+                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        {{ __('messages.project-details.see-image') }}
+                                    </a>
+                                @else
+                                    <a href="{{ asset('storage/' . $img->path) }}" download
+                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                        📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
+                                    </a>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
-            </div>
-        </div>
-    @endif
+                </div>
+            @else
+                <p class="mb-6">{{ __('messages.project-details.no-files')  }}</p>
+            @endif
 
-    <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $schoolProject->views }}</p>
-    <h3>Valorar este proyecto</h3>
-    <p>Calificación actual:
-        {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'Sin calificaciones' }}</p>
+            <!-- Image Modal -->
+            <template x-if="selectedImage">
+                <div x-transition class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 p-4"
+                    @click.self="selectedImage = null">
+                    <div class="max-w-full max-h-full relative">
+                        <img :src="selectedImage" class="max-w-full max-h-[90vh] object-contain" alt="Selected Image" />
+                        <button @click="selectedImage = null"
+                            class="absolute top-2 right-2 bg-white rounded-full p-2 text-black hover:bg-gray-200">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            </template>
 
-    @auth
-        <form action="{{ route('school-projects.rate', $schoolProject->id) }}" method="POST">
-            @csrf
-            <div class="rating-stars">
-                @for ($i = 1; $i <= 5; $i++)
-                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" {{ $schoolProject->getRatingByUser(auth()->id()) && $schoolProject->getRatingByUser(auth()->id())->rating == $i ? 'checked' : '' }}>
-                    <label for="star{{ $i }}">★</label>
-                @endfor
-            </div>
+            @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'school-project'])
+        </x-card>
 
-            <button type="submit" class="btn btn-primary">
-                {{ $schoolProject->getRatingByUser(auth()->id()) ? 'Actualizar valoración' : 'Enviar valoración' }}
-            </button>
-        </form>
-    @endauth
+        <a href="{{ route('projects.index') }}"
+            class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}</a>
 
-    <p><a href="{{ route('projects.index') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a></p>
+    </div>
 
-    @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'school-project'])
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('rating-form');
+
+            if (form) {
+                const inputs = form.querySelectorAll('input, select');
+
+                inputs.forEach(input => {
+                    input.addEventListener('change', () => {
+                        form.submit();
+                    });
+
+                    if (input.tagName === 'INPUT') {
+                        input.addEventListener('keyup', () => {
+                            clearTimeout(input._timeout);
+                            input._timeout = setTimeout(() => form.submit(), 100);
+                        });
+                    }
+                });
+            }
+        });
+
+    </script>
+
 @endsection

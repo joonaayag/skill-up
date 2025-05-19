@@ -3,7 +3,7 @@
 
 <div class="comment_section mt-10 max-w-4xl ">
     <h3 class="text-2xl font-semibold mb-6 text-black dark:text-themeLightGray">
-        Comentarios ({{ $commentable->comments->count() }})
+        {{ __('messages.project-details.comments')  }} ({{ $commentable->comments->count() }})
     </h3>
 
     @auth
@@ -17,17 +17,17 @@
                     </ul>
                 </div>
             @endif
-            <h4 class="text-lg font-semibold mb-3 text-gray-700 dark:text-themeLightGray">Añadir comentario</h4>
+            <h4 class="text-lg font-semibold mb-3 text-gray-700 dark:text-themeLightGray">{{ __('messages.project-details.add-comment')  }}</h4>
             <form
                 action="{{ $type === 'project' ? route('projects.comments.store', $commentable->id) : route('school-projects.comments.store', $commentable->id) }}"
                 method="POST">
                 @csrf
                 <textarea name="content" rows="2"
                     class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-800 focus:ring-2 focus:ring-themeBlue focus:outline-none dark:bg-themeDark focus:text-white"
-                    placeholder="Escribe tu comentario aquí..." required></textarea>
+                    placeholder="{{ __('messages.project-details.write-comment')  }}" required></textarea>
                 <button type="submit"
                     class="mt-4 px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeHoverBlue transition">
-                    Publicar comentario
+                    {{ __('messages.project-details.publish-comment')  }}
                 </button>
             </form>
         </div>

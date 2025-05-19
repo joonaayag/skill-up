@@ -36,7 +36,25 @@
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $user->name }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $user->last_name }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $user->email }}</td>
-                            <td class="px-4 py-3 border dark:border-gray-700">{{ ucfirst($user->role) }}</td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                @switch($user->role)
+                                    @case('Alumno')
+                                        {{ __('messages.roles.student') }}
+                                        @break
+                                    @case('Usuario')
+                                        {{ __('messages.roles.user') }}
+                                        @break
+                                    @case('Profesor')
+                                        {{ __('messages.roles.teacher') }}
+                                        @break
+                                    @case('Empresa')
+                                        {{ __('messages.roles.company') }}
+                                        @break
+                                    @case('Admin')
+                                        <span>Admin</span>
+                                    @break
+                                @endswitch
+                            </td>
                             <td class="px-4 py-3 border dark:border-gray-700 space-x-2 whitespace-nowrap">
 
                                 <div x-data="{ openEdit: false, role: '{{ $user->role }}' }" class="inline-block" x-cloak>
@@ -96,10 +114,28 @@
                                                     <select name="role"
                                                         class="w-full border rounded px-3 py-2 dark:bg-themeBgDark"
                                                         x-model="role">
-                                                        <option value="Usuario" {{ old('role', $user->role) == 'Usuario' ? 'selected' : '' }}>Usuario</option>
-                                                        <option value="Alumno" {{ old('role', $user->role) == 'Alumno' ? 'selected' : '' }}>Alumno</option>
-                                                        <option value="Profesor" {{ old('role', $user->role) == 'Profesor' ? 'selected' : '' }}>Profesor</option>
-                                                        <option value="Empresa" {{ old('role', $user->role) == 'Empresa' ? 'selected' : '' }}>Empresa</option>
+                                                        @php
+                                                            $roleMap = [
+                                                                'Usuario' => 'user',
+                                                                'Alumno' => 'student',
+                                                                'Profesor' => 'teacher',
+                                                                'Empresa' => 'company',
+                                                            ];
+                                                        @endphp
+
+                                                        <option value="Usuario" {{ old('role') == 'Usuario' ? 'selected' : '' }}>
+                                                            {{ __('messages.roles.' . ($roleMap['Usuario'] ?? 'Usuario')) }}
+                                                        </option>
+                                                        <option value="Alumno" {{ old('role') == 'Alumno' ? 'selected' : '' }}>
+                                                            {{ __('messages.roles.' . ($roleMap['Alumno'] ?? 'Alumno')) }}
+                                                        </option>
+                                                        <option value="Profesor" {{ old('role') == 'Profesor' ? 'selected' : '' }}>
+                                                            {{ __('messages.roles.' . ($roleMap['Profesor'] ?? 'Profesor')) }}
+                                                        </option>
+                                                        <option value="Empresa" {{ old('role') == 'Empresa' ? 'selected' : '' }}>
+                                                            {{ __('messages.roles.' . ($roleMap['Empresa'] ?? 'Empresa')) }}
+                                                        </option>
+
                                                     </select>
 
                                                 </div>
@@ -343,10 +379,28 @@
                         <label class="block text-sm font-medium">{{ __('messages.admin.users.select-role') }}</label>
                         <select name="role" x-model="role" required class="w-full border rounded px-3 py-2 dark:bg-themeBgDark">
                             <option value="">{{ __('messages.admin.users.select-role') }}</option>
-                            <option value="Usuario">Usuario</option>
-                            <option value="Alumno">Alumno</option>
-                            <option value="Profesor">Profesor</option>
-                            <option value="Empresa">Empresa</option>
+                            @php
+                                $roleMap = [
+                                    'Usuario' => 'user',
+                                    'Alumno' => 'student',
+                                    'Profesor' => 'teacher',
+                                    'Empresa' => 'company',
+                                ];
+                            @endphp
+
+                            <option value="Usuario" {{ old('role') == 'Usuario' ? 'selected' : '' }}>
+                                {{ __('messages.roles.' . ($roleMap['Usuario'] )) }}
+                            </option>
+                            <option value="Alumno" {{ old('role') == 'Alumno' ? 'selected' : '' }}>
+                                {{ __('messages.roles.' . ($roleMap['Alumno'] )) }}
+                            </option>
+                            <option value="Profesor" {{ old('role') == 'Profesor' ? 'selected' : '' }}>
+                                {{ __('messages.roles.' . ($roleMap['Profesor'] )) }}
+                            </option>
+                            <option value="Empresa" {{ old('role') == 'Empresa' ? 'selected' : '' }}>
+                                {{ __('messages.roles.' . ($roleMap['Empresa'] )) }}
+                            </option>
+
                         </select>
                     </div>
 

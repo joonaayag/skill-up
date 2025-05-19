@@ -35,8 +35,25 @@
                         <td class="px-4 py-3 border dark:border-gray-700">{{ $project->id }}</td>
                         <td class="px-4 py-3 border dark:border-gray-700">{{ $project->title }}</td>
                         <td class="px-4 py-3 border dark:border-gray-700">{{ $project->author->name ?? '-' }}</td>
-                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->general_category ?? '-' }}</td>
-                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->tags ?? '-' }}</td>
+                        @php
+                            $categoryMap = [
+                                'Administración y negocio' => 'option-admin',
+                                'Ciencia y salud' => 'option-science',
+                                'Comunicación' => 'option-comunication',
+                                'Diseño y comunicación' => 'option-design',
+                                'Educación' => 'option-education',
+                                'Industria' => 'option-industry',
+                                'Otro' => 'option-other',
+                                'Tecnología y desarrollo' => 'option-tec',
+                            ];
+
+                            $categoryKey = $categoryMap[$project->general_category] ?? null;
+                        @endphp
+
+                        @if ($categoryKey)
+                            <td class="px-4 py-3 border dark:border-gray-700">{{ __('messages.projects.' . $categoryKey) ?? '-' }}</td>
+                        @endif
+                        <td class="px-4 py-3 border dark:border-gray-700">{{ __('messages.tags.' . strtolower($project->tags)) }}</td>
                         <td class="px-4 py-3 border dark:border-gray-700">
                             {{ $project->creation_date ? \Carbon\Carbon::parse($project->creation_date)->format('d/m/Y') : '-' }}
                         </td>
@@ -97,19 +114,26 @@
                             <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}
                             </option>
                             <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>
-                                {{ __('messages.tags.tesis') }}</option>
+                                {{ __('messages.tags.tesis') }}
+                            </option>
                             <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>
-                                {{ __('messages.tags.individual') }}</option>
+                                {{ __('messages.tags.individual') }}
+                            </option>
                             <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>
-                                {{ __('messages.tags.grupal') }}</option>
+                                {{ __('messages.tags.grupal') }}
+                            </option>
                             <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
-                                {{ __('messages.tags.tecnologia') }}</option>
+                                {{ __('messages.tags.tecnologia') }}
+                            </option>
                             <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
-                                {{ __('messages.tags.ciencias') }}</option>
+                                {{ __('messages.tags.ciencias') }}
+                            </option>
                             <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>
-                                {{ __('messages.tags.artes') }}</option>
+                                {{ __('messages.tags.artes') }}
+                            </option>
                             <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>
-                                {{ __('messages.tags.ingenieria') }}</option>
+                                {{ __('messages.tags.ingenieria') }}
+                            </option>
                         </select>
                     </div>
 
@@ -145,12 +169,12 @@
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ {{ __('messages.projects.label-highlight') }}
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                            fileName = $event.target.files[0]?.name || '';
-                                            if ($event.target.files[0]) {
-                                                const reader = new FileReader();
-                                                reader.onload = e => previewUrl = e.target.result;
-                                                reader.readAsDataURL($event.target.files[0]);
-                                            }" />
+                                                fileName = $event.target.files[0]?.name || '';
+                                                if ($event.target.files[0]) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = e => previewUrl = e.target.result;
+                                                    reader.readAsDataURL($event.target.files[0]);
+                                                }" />
                             </label>
 
                             <template x-if="fileName">

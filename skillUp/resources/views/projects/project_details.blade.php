@@ -5,7 +5,7 @@
 @section('content')
     <div x-data="{ selectedImage: null }">
 
-        <x-heading level="h1" class="mb-10">Proyecto </x-heading>
+        <x-heading level="h1" class="mb-10">{{ __('messages.project-details.title')  }}</x-heading>
         @if ($errors->any())
             <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
                 <ul>
@@ -17,11 +17,29 @@
         @endif
 
         <x-card class="mb-12">
-            <x-tags>{{ $project->tags }}</x-tags>
+            <x-tags>{{ __('messages.tags.' . strtolower($project->tags)) }}</x-tags>
 
             <x-heading level="h2" class="mt-6 mb-3">{{ $project->title }}</x-heading>
-            <x-heading level="h4" class="mb-4">{{ $project->general_category }}</x-heading>
+            @php
+                $categoryMap = [
+                    'Administración y negocio' => 'option-admin',
+                    'Ciencia y salud' => 'option-science',
+                    'Comunicación' => 'option-comunication',
+                    'Diseño y comunicación' => 'option-design',
+                    'Educación' => 'option-education',
+                    'Industria' => 'option-industry',
+                    'Otro' => 'option-other',
+                    'Tecnología y desarrollo' => 'option-tec',
+                ];
 
+                $categoryKey = $categoryMap[$project->general_category] ?? null;
+            @endphp
+
+            @if ($categoryKey)
+                <x-heading level="h4" class="mb-4">
+                    {{ __('messages.projects.' . $categoryKey) }}
+                </x-heading>
+            @endif
 
             <p class="mb-9 break-words">{{ $project->description }}</p>
 
@@ -33,11 +51,13 @@
 
             <div class="flex justify-between mt-16">
                 <div class="flex gap-4 items-center justify-center">
-                    <p>Autor: <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong></p>
+                    <p>{{ __('messages.project-details.author') }}
+                        <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong>
+                    </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $project->views }}</p>
                     <p class="flex items-center justify-center gap-1">
-                        <label><x-icon name="star" class="w-4 h-auto" /></label>
+                        <label class="text-yellow-400"><x-icon name="star" class="w-4 h-auto" /></label>
                         {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}
                     </p>
                     @auth
@@ -47,7 +67,7 @@
                             @for ($i = 1; $i <= 5; $i++)
                                 <button type="submit" name="rating" value="{{ $i }}"
                                     class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
-                                            {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                                                    {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
                                     aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
                                     <x-icon name="star" class="w-4 h-auto" />
                                 </button>
@@ -57,8 +77,11 @@
                     @endauth
                 </div>
                 <div class="flex flex-col justify-end [&>p]:text-black dark:[&>p]:text-themeLightGray">
-                    <p class="text-sm text-gray-500">Publicado el: {{ $project->created_at }}</p>
-                    <p class="text-sm text-gray-500">Realizado el: {{ $project->creation_date }}</p>
+                    <p class="text-sm text-gray-500">{{ __('messages.project-details.published') . $project->created_at }}
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        {{ __('messages.project-details.created-at') . $project->creation_date }}
+                    </p>
                 </div>
             </div>
 
@@ -67,10 +90,11 @@
 
         <x-card>
             @if($project->link)
-                <p><strong>Enlace:</strong> <a href="{{ $project->link }}" target="_blank">{{ $project->link }}</a></p>
+                <p><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $project->link }}"
+                        target="_blank">{{ $project->link }}</a></p>
             @endif
 
-            <x-heading level="h2" class="mt-2 mb-3">Archivos del proyecto</x-heading>
+            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
             @if ($project->images && $project->images->count())
                 <div class="mb-6">
                     <div class="flex flex-wrap gap-2.5 mt-2.5">
@@ -83,12 +107,12 @@
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
                                         class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
-                                        Ver imagen
+                                        {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
                                     <a href="{{ asset('storage/' . $img->path) }}" download
                                         class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
-                                        📄 Descargar archivo ({{ $extension }})
+                                        📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
                                 @endif
                             </div>
@@ -96,7 +120,7 @@
                     </div>
                 </div>
             @else
-                <p class="mb-6">No hay archivos por el momento</p>
+                <p class="mb-6">{{ __('messages.project-details.no-files')  }}</p>
             @endif
 
             <!-- Image Modal -->
@@ -118,7 +142,7 @@
 
         <a href="{{ route('projects.index') }}"
             class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
+            <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}</a>
 
     </div>
 
