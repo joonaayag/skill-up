@@ -56,10 +56,10 @@
 
 
     @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 p-4 mb-6 rounded">
+        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li class="text-black dark:text-white">- {{ $error }}</li>
                 @endforeach
             </ul>
         </div>
@@ -119,6 +119,7 @@
         @endforelse
     </ul>
 
+    @if (auth()->user()->role !== 'Admin')
     <div x-cloak x-data="{ showModal: false }"
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
@@ -138,31 +139,41 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.projects.label-title') }}</x-label>
-                    <x-inputtext type="text" name="title" id="title" required />
+                    <x-inputtext type="text" name="title" id="title" value="{{ old('title') }}" required />
                 </div>
 
                 <div>
                     <x-label for="description">{{ __('messages.projects.label-description') }}</x-label>
-                    <x-textarea name="description" id="description" required></x-textarea>
+                    <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
                 </div>
 
                 <div>
                     <x-label for="tags">{{ __('messages.projects.label-tags') }}</x-label>
-                    <x-inputtext type="text" name="tags" id="tags" required />
+                    <select name="tags" id="tags" class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                        <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}</option>
+                        <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}</option>
+                        <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}</option>
+                        <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>{{ __('messages.tags.individual') }}</option>
+                        <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>{{ __('messages.tags.grupal') }}</option>
+                        <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnologia') }}</option>
+                        <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>{{ __('messages.tags.ciencias') }}</option>
+                        <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}</option>
+                        <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>{{ __('messages.tags.ingenieria') }}</option>
+                    </select>
                 </div>
 
                 <div>
                     <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
                     <select name="sector_category" required
                         class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
-                        <option value="Administración y negocio">{{ __('messages.projects.option-admin') }}</option>
-                        <option value="Ciencia y salud">{{ __('messages.projects.option-science') }}</option>
-                        <option value="Comunicación">{{ __('messages.projects.option-comunication') }}</option>
-                        <option value="Diseño y comunicación">{{ __('messages.projects.option-design') }}</option>
-                        <option value="Educación">{{ __('messages.projects.option-education') }}</option>
-                        <option value="Industria">{{ __('messages.projects.industry') }}</option>
-                        <option value="Otro">{{ __('messages.projects.option-other') }}</option>
-                        <option value="Tecnología y desarrollo">{{ __('messages.projects.option-tec') }}</option>
+                        <option value="Administración y negocio" {{ old('sector_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
+                        <option value="Ciencia y salud" {{ old('sector_category') == 'Ciencia y salud' ? 'selected' : '' }}>{{ __('messages.projects.option-science') }}</option>
+                        <option value="Comunicación" {{ old('sector_category') == 'Comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-comunication') }}</option>
+                        <option value="Diseño y comunicación" {{ old('sector_category') == 'Diseño y comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-design') }}</option>
+                        <option value="Educación" {{ old('sector_category') == 'Educación' ? 'selected' : '' }}>{{ __('messages.projects.option-education') }}</option>
+                        <option value="Industria" {{ old('sector_category') == 'Industria' ? 'selected' : '' }}>{{ __('messages.projects.option-industry') }}</option>
+                        <option value="Otro" {{ old('sector_category') == 'Otro' ? 'selected' : '' }}>{{ __('messages.projects.option-other') }}</option>
+                        <option value="Tecnología y desarrollo" {{ old('sector_category') == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
                     </select>
                 </div>
 
@@ -238,6 +249,7 @@
         </x-modal>
 
     </div>
+    @endif
 
     <br>
 

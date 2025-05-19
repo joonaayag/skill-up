@@ -3,10 +3,7 @@
 @section('title', $schoolProject->name)
 
 @section('content')
-    <h1>{{ $schoolProject->name }}</h1>
-
-    
-    
+    <h1>{{ $schoolProject->name }}</h1>    
 
     @if ($schoolProject->image)
         <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto" style="max-width: 400px;">

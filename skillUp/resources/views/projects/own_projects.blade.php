@@ -32,6 +32,15 @@
             <option value="general_category" @selected(request('order') == 'general_category')>{{ __('messages.your-projects.order-category') }}</option>
         </select>
     </form>
+    @if ($errors->any())
+        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-black dark:text-white">- {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <ul class="grid grid-cols-3 gap-10">
 
@@ -90,7 +99,17 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.your-projects.label-tags') }}</x-label>
-                    <x-inputtext type="text" name="tags" id="tags" required />
+                    <select name="tags" id="tags" class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                        <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}</option>
+                        <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}</option>
+                        <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}</option>
+                        <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>{{ __('messages.tags.individual') }}</option>
+                        <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>{{ __('messages.tags.grupal') }}</option>
+                        <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnologia') }}</option>
+                        <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>{{ __('messages.tags.ciencias') }}</option>
+                        <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}</option>
+                        <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>{{ __('messages.tags.ingenieria') }}</option>
+                    </select>
                 </div>
 
                 <div>

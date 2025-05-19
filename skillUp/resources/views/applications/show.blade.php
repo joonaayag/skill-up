@@ -15,6 +15,7 @@
         <p><a href="{{ asset('storage/' . $application->cv) }}" target="_blank">Ver CV</a></p>
     @endif
 
-    <a href="{{ route('applications.index') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
+    <a href="{{ route('applications.index') }}"
+        class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+        <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
 @endsection

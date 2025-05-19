@@ -7,7 +7,7 @@
     <div x-data="{ showModal: false }"
         x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
         class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
-
+        
         <div class="relative">
             <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
                 alt="Fondo" class="w-full h-40 object-cover" id="bannerImage">
@@ -20,16 +20,6 @@
         </div>
 
         <div class="pt-8 pb-6 px-6 text-center ">
-
-        @if ($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                <ul class="mt-3 list-disc list-inside text-sm">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
             <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
             <span
@@ -54,6 +44,15 @@
             @endphp
 
             <div class="mt-6 text-left space-y-4 dark:[&>div>div>div]:text-themeLightGray">
+                @if ($errors->any())
+                    <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li class="text-black dark:text-white">- {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="flex gap-2">
                     <div class="w-1/2 ">
                         <label for="name" class="text-md font-bold">{{ __('messages.profile.name') }}</label>

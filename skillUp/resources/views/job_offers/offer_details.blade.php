@@ -4,6 +4,15 @@
 
 @section('content')
     <x-heading level="h1" class="mb-10">Oferta de empleo </x-heading>
+    @if ($errors->any())
+        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-black dark:text-white">- {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <x-card class="mb-12 flex gap-8 ">
         <div class="w-2/3">
@@ -49,7 +58,8 @@
                         class="w-4 h-auto" />{{ $offer->views }}</p>
                 @if (auth()->id() === $offer->company_id)
                     <div x-data="{ open: false }" class="inline-block" x-cloak>
-                        <button @click="open = true" class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
+                        <button @click="open = true"
+                            class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">Eliminar</button>
 
                         <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                             <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
@@ -167,8 +177,9 @@
 
 
 
-    <a href="{{ route('job.offers.index') }}" class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
+    <a href="{{ route('job.offers.index') }}"
+        class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+        <x-icon name="arrow-left" class="w-5 h-auto" /> Volver</a>
 
 
 

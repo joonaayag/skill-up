@@ -5,6 +5,15 @@
     <div x-data="{ selectedImage: null }" x-cloak>
 
         <x-heading level="h1" class="mb-10">Detalles del proyecto </x-heading>
+        @if ($errors->any())
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <x-card class="mb-12">
             <x-tags>{{ $project->tags }}</x-tags>
@@ -127,13 +136,33 @@
 
                     <div>
                         <x-label for="tags">Etiquetas (tags)</x-label>
-                        <x-inputtext type="text" name="tags" id="tags" value="{{ old('tags', $project->tags) }}" required />
+                        <select name="tags" id="tags"
+                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                            <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}
+                            </option>
+                            <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}
+                            </option>
+                            <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tesis') }}</option>
+                            <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>
+                                {{ __('messages.tags.individual') }}</option>
+                            <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>
+                                {{ __('messages.tags.grupal') }}</option>
+                            <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tecnologia') }}</option>
+                            <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ciencias') }}</option>
+                            <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>
+                                {{ __('messages.tags.artes') }}</option>
+                            <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ingenieria') }}</option>
+                        </select>
                     </div>
 
                     <div>
                         <x-label for="general_category">Categoría general:</x-label>
                         <select name="sector_category" required
-                            class="w-full px-3 py-2 rounded border border-themeLightGray">
+                           class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
                             <option value="Administración y negocio" {{ old('sector_category', $project->general_category) == 'Administración y negocio' ? 'selected' : '' }}>Administración
                                 y negocio</option>
                             <option value="Ciencia y salud" {{ old('sector_category', $project->general_category) == 'Ciencia y salud' ? 'selected' : '' }}>Ciencia y salud</option>
@@ -167,12 +196,12 @@
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ Subir imagen destacada
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                                        fileName = $event.target.files[0]?.name || '';
-                                                        if ($event.target.files[0]) {
-                                                            const reader = new FileReader();
-                                                            reader.onload = e => previewUrl = e.target.result;
-                                                            reader.readAsDataURL($event.target.files[0]);
-                                                        }" />
+                                                            fileName = $event.target.files[0]?.name || '';
+                                                            if ($event.target.files[0]) {
+                                                                const reader = new FileReader();
+                                                                reader.onload = e => previewUrl = e.target.result;
+                                                                reader.readAsDataURL($event.target.files[0]);
+                                                            }" />
                             </label>
 
                             <template x-if="fileName">

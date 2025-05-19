@@ -3,6 +3,15 @@
 @section('content')
     <div class="container mx-auto px-6 py-10">
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.school-projects.title') }}</x-heading>
+        @if ($errors->any())
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div class="overflow-x-auto rounded-lg shadow">
             <table
@@ -11,19 +20,26 @@
                     <tr>
                         <th class="px-4 py-3 border dark:border-gray-700">ID</th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.table-name') }}</th>
+                            {{ __('messages.admin.school-projects.table-name') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.table-author') }}</th>
+                            {{ __('messages.admin.school-projects.table-author') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.table-category') }}</th>
+                            {{ __('messages.admin.school-projects.table-category') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.table-tags') }}</th>
+                            {{ __('messages.admin.school-projects.table-tags') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.table-date') }}</th>
+                            {{ __('messages.admin.school-projects.table-date') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.table-link') }}</th>
+                            {{ __('messages.admin.school-projects.table-link') }}
+                        </th>
                         <th class="px-4 py-3 border dark:border-gray-700">
-                            {{ __('messages.admin.school-projects.see-details') }}</th>
+                            {{ __('messages.admin.school-projects.see-details') }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,7 +105,29 @@
 
                     <div>
                         <x-label for="title">{{ __('messages.school-projects.label-tags') }}</x-label>
-                        <x-inputtext type="text" name="tags" id="tags" required />
+                        <select name="tags" id="tags"
+                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                            <option value="TFG" {{ old('tags', $project->tags) == 'TFG' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tfg') }}
+                            </option>
+                            <option value="TFM" {{ old('tags', $project->tags) == 'TFM' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tfm') }}
+                            </option>
+                            <option value="Tesis" {{ old('tags', $project->tags) == 'Tesis' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tesis') }}</option>
+                            <option value="Individual" {{ old('tags', $project->tags) == 'Individual' ? 'selected' : '' }}>
+                                {{ __('messages.tags.individual') }}</option>
+                            <option value="Grupal" {{ old('tags', $project->tags) == 'Grupal' ? 'selected' : '' }}>
+                                {{ __('messages.tags.grupal') }}</option>
+                            <option value="Tecnología" {{ old('tags', $project->tags) == 'Tecnología' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tecnologia') }}</option>
+                            <option value="Ciencias" {{ old('tags', $project->tags) == 'Ciencias' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ciencias') }}</option>
+                            <option value="Artes" {{ old('tags', $project->tags) == 'Artes' ? 'selected' : '' }}>
+                                {{ __('messages.tags.artes') }}</option>
+                            <option value="Ingeniería" {{ old('tags', $project->tags) == 'Ingeniería' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ingenieria') }}</option>
+                        </select>
                     </div>
 
                     <div>
@@ -126,12 +164,12 @@
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
                                 {{ __('messages.school-projects.label-high-upload') }}
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                        fileName = $event.target.files[0]?.name || '';
-                                        if ($event.target.files[0]) {
-                                        const reader = new FileReader();
-                                        reader.onload = e => previewUrl = e.target.result;
-                                        reader.readAsDataURL($event.target.files[0]);
-                                        }" />
+                                            fileName = $event.target.files[0]?.name || '';
+                                            if ($event.target.files[0]) {
+                                            const reader = new FileReader();
+                                            reader.onload = e => previewUrl = e.target.result;
+                                            reader.readAsDataURL($event.target.files[0]);
+                                            }" />
                             </label>
 
                             <template x-if="fileName">
@@ -169,13 +207,13 @@
                     </div>
 
                     <div class="flex justify-end gap-3 mt-4">
-                        <button type="submit"
-                            class="px-4 py-2 bg-themeGrape/80 text-white rounded hover:bg-themeGrape transition cursor-pointer">
-                            {{ __('messages.button.save') }}
-                        </button>
-                        <button type="button" @click="showModal = false"
+                        <button type="button" @click="showCreateSchoolProject = false"
                             class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                             {{ __('messages.button.cancel') }}
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                            {{ __('messages.button.save') }}
                         </button>
                     </div>
 

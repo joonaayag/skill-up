@@ -93,28 +93,34 @@ class JobOfferController extends Controller
             'name' => 'required|string|max:40',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'sector_category' => 'required|string',
-            'general_category' => 'required|string',
+            'sector_category' => 'required|in:' . implode(',', [
+                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
+                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
+                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
+                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
+                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+            ]),
+            'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
         ], [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.string' => 'El nombre debe ser una cadena de texto.',
-            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+            'name.required' => __('messages.errors.name.required'),
+            'name.string' => __('messages.errors.name.string'),
+            'name.max' => __('messages.errors.name.max'),
 
-            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
-            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+            'subtitle.string' => __('messages.errors.subtitle.string'),
+            'subtitle.max' => __('messages.errors.subtitle.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.required' => __('messages.errors.sector_offer.required'),
+            'sector_category.in' => __('messages.errors.sector_offer.in'),
 
-            'general_category.required' => 'La categoría general es obligatoria.',
-            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.required' => __('messages.errors.sector.required'),
+            'general_category.in' => __('messages.errors.sector.in'),
 
-            'state.required' => 'El estado es obligatorio.',
-            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+            'state.required' => __('messages.errors.state.required'),
+            'state.in' => __('messages.errors.state.in'),
 
         ]);
 
@@ -184,29 +190,40 @@ class JobOfferController extends Controller
             'name' => 'required|string|max:40',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'sector_category' => 'required|string',
-            'general_category' => 'required|string',
+            'sector_category' => 'required|in:' . implode(',', [
+                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
+                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
+                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
+                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
+                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+            ]),
+            'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
+            'logo' => 'nullable|string|max:255',
         ], [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.string' => 'El nombre debe ser una cadena de texto.',
-            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+            'name.required' => __('messages.errors.name.required'),
+            'name.string' => __('messages.errors.name.string'),
+            'name.max' => __('messages.errors.name_offer.max'),
 
-            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
-            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+            'subtitle.string' => __('messages.errors.subtitle.string'),
+            'subtitle.max' => __('messages.errors.subtitle_offer.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.required' => __('messages.errors.sector_offer.required'),
+            'sector_category.string' => __('messages.errors.sector_offer.string'),
+            'sector_category.in' =>    __('messages.errors.sector_offer.in'),
 
-            'general_category.required' => 'La categoría general es obligatoria.',
-            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.required' => __('messages.errors.sector.required'),
+            'general_category.string' => __('messages.errors.sector.string'),
+            'general_category.in' =>    __('messages.errors.sector.in'),
 
-            'state.required' => 'El estado es obligatorio.',
-            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+            'state.required' => __('messages.errors.state.required'),
+            'state.in' => __('messages.errors.state.in'),
 
+            'logo.string' => 'El logo debe ser una cadena de texto.',
+            'logo.max' => 'La URL del logo no puede superar los 255 caracteres.',
         ]);
 
         $jobOffer->update([

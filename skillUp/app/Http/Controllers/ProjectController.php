@@ -110,41 +110,40 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string',
-            'tags' => 'required|string|max:50',
-            'sector_category' => 'required|string|max:40',
+            'description' => 'required|string|max:300',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
+            'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El título del proyecto es obligatorio.',
-            'title.string' => 'El título del proyecto debe ser una cadena de texto.',
-            'title.max' => 'El título del proyecto no puede tener más de 40 caracteres.',
+            'title.required' => __('messages.errors.title.required'),
+            'title.string' => __('messages.errors.title.string'),
+            'title.max' => __('messages.errors.title.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
+            'description.max' => __('messages.errors.description.max'),
 
-            'tags.required' => 'Las etiquetas son obligatorias.',
-            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
-            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+            'tags.required' => __('messages.errors.tags.required'),
+            'tags.in' => __('messages.errors.tags.in'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
-            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+            'sector_category.required' => __('messages.errors.sector.required'),
+            'sector_category.in' => __('messages.errors.sector.in'),
 
-            'creation_date.required' => 'La fecha de creación es obligatoria.',
-            'creation_date.date' => 'La fecha de creación debe ser válida.',
+            'creation_date.required' => __('messages.errors.creation_date.required'),
+            'creation_date.date' => __('messages.errors.creation_date.date'),
 
-            'link.url' => 'El enlace debe tener un formato de URL válido.',
-            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+            'link.url' => __('messages.errors.link.url'),
+            'link.max' => __('messages.errors.link.max'),
 
-            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+            'image.*.image' => __('messages.errors.image.image'),
+            'image.*.mimes' => __('messages.errors.image.mimes'),
+            'image.*.max' => __('messages.errors.image.max'),
 
-            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
-            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+            'files.*.file' => __('messages.errors.file.file'),
+            'files.*.max' => __('messages.errors.file.max'),
         ]);
 
         $imagePath = $request->hasFile('image')
@@ -162,7 +161,7 @@ class ProjectController extends Controller
             'image' => $imagePath,
             'author_id' => auth()->id(),
         ]);
-        
+
         Notification::firstOrCreate([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
@@ -199,41 +198,40 @@ class ProjectController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string',
-            'tags' => 'required|string|max:50',
-            'sector_category' => 'required|string|max:40',
+            'description' => 'required|string|max:300',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
+            'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El nombre del proyecto es obligatorio.',
-            'title.string' => 'El nombre del proyecto debe ser una cadena de texto.',
-            'title.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
+            'title.required' => __('messages.errors.title.required'),
+            'title.string' => __('messages.errors.title.string'),
+            'title.max' => __('messages.errors.title.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
+            'description.max' => __('messages.errors.description.max'),
 
-            'tags.required' => 'Las etiquetas son obligatorias.',
-            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
-            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+            'tags.required' => __('messages.errors.tags.required'),
+            'tags.in' => __('messages.errors.tags.in'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
-            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+            'sector_category.required' => __('messages.errors.sector.required'),
+            'sector_category.in' => __('messages.errors.sector.in'),
 
-            'creation_date.required' => 'La fecha de creación es obligatoria.',
-            'creation_date.date' => 'La fecha de creación debe ser válida.',
+            'creation_date.required' => __('messages.errors.creation_date.required'),
+            'creation_date.date' => __('messages.errors.creation_date.date'),
 
-            'link.url' => 'El enlace debe tener un formato de URL válido.',
-            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+            'link.url' => __('messages.errors.link.url'),
+            'link.max' => __('messages.errors.link.max'),
 
-            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+            'image.*.image' => __('messages.errors.image.image'),
+            'image.*.mimes' => __('messages.errors.image.mimes'),
+            'image.*.max' => __('messages.errors.image.max'),
 
-            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
-            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+            'files.*.file' => __('messages.errors.file.file'),
+            'files.*.max' => __('messages.errors.file.max'),
         ]);
 
         if ($request->hasFile('image')) {

@@ -8,10 +8,21 @@
 
     @auth
         <div class="bg-white dark:bg-themeDarkGray rounded-lg shadow-md p-6 mb-8">
+            @if ($errors->any())
+                <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-black dark:text-white">- {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <h4 class="text-lg font-semibold mb-3 text-gray-700 dark:text-themeLightGray">Añadir comentario</h4>
-            <form action="{{ $type === 'project' ? route('projects.comments.store', $commentable->id) : route('school-projects.comments.store', $commentable->id) }}" method="POST">
+            <form
+                action="{{ $type === 'project' ? route('projects.comments.store', $commentable->id) : route('school-projects.comments.store', $commentable->id) }}"
+                method="POST">
                 @csrf
-                <textarea name="content" rows="2" 
+                <textarea name="content" rows="2"
                     class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-800 focus:ring-2 focus:ring-themeBlue focus:outline-none dark:bg-themeDark focus:text-white"
                     placeholder="Escribe tu comentario aquí..." required></textarea>
                 <button type="submit"
@@ -35,27 +46,33 @@
     .comments-list {
         margin-bottom: 30px;
     }
+
     .comment {
         margin-bottom: 15px;
     }
+
     .comment-replies {
         margin-left: 40px;
         border-left: 1px solid #ddd;
         padding-left: 20px;
     }
+
     .comment-meta {
         font-size: 0.85rem;
         color: #666;
         margin-bottom: 5px;
     }
+
     .comment-actions {
         font-size: 0.85rem;
     }
+
     .reply-form {
         margin-top: 10px;
         margin-bottom: 15px;
         display: none;
     }
+
     .reply-form.active {
         display: block;
     }
@@ -63,14 +80,14 @@
 
 {{-- Scripts para manejar la lógica de respuestas --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Mostrar/ocultar formulario de respuesta al hacer clic en "Responder"
-        document.querySelectorAll('.reply-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
+        document.querySelectorAll('.reply-btn').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const commentId = this.getAttribute('data-comment-id');
                 const replyForm = document.getElementById('reply-form-' + commentId);
-                
+
                 if (replyForm) {
                     replyForm.classList.toggle('active');
                     if (replyForm.classList.contains('active')) {

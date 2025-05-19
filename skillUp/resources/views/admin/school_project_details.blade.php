@@ -5,17 +5,15 @@
     <div x-data="{ selectedImage: null }" x-cloak>
 
         <x-heading level="h1" class="mb-10">Detalles del proyecto </x-heading>
-
         @if ($errors->any())
-            <div class="mb-6">
-                <ul class="list-disc list-inside text-red-600">
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
-        
 
         <x-card class="mb-12">
             <x-tags>{{ $schoolProject->tags }}</x-tags>
@@ -34,7 +32,9 @@
 
             <div class="flex justify-between mt-16">
                 <div class="flex gap-4 items-center justify-center">
-                    <p>Autor: <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong></p>
+                    <p>Autor:
+                        <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong>
+                    </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $schoolProject->views }}</p>
                     <p>
@@ -53,7 +53,8 @@
 
         <x-card>
             @if($schoolProject->link)
-                <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a></p>
+                <p><strong>Enlace:</strong> <a href="{{ $schoolProject->link }}" target="_blank">{{ $schoolProject->link }}</a>
+                </p>
             @endif
 
             <x-heading level="h2" class="mt-2 mb-3">Archivos del proyecto</x-heading>
@@ -138,29 +139,58 @@
 
                     <div>
                         <x-label for="author">Autor:</x-label>
-                        <x-inputtext type="text" name="author" id="author" value="{{ old('author', $schoolProject->author) }}" required />
+                        <x-inputtext type="text" name="author" id="author"
+                            value="{{ old('author', $schoolProject->author) }}" required />
                     </div>
 
                     <div>
                         <x-label for="tags">Etiquetas (tags)</x-label>
-                        <x-inputtext type="text" name="tags" id="tags" value="{{ old('tags', $schoolProject->tags) }}" required />
+                        <select name="tags" id="tags"
+                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                            <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tfg') }}
+                            </option>
+                            <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tfm') }}
+                            </option>
+                            <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tesis') }}
+                            </option>
+                            <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>
+                                {{ __('messages.tags.individual') }}
+                            </option>
+                            <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>
+                                {{ __('messages.tags.grupal') }}
+                            </option>
+                            <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tecnologia') }}
+                            </option>
+                            <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ciencias') }}
+                            </option>
+                            <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>
+                                {{ __('messages.tags.artes') }}
+                            </option>
+                            <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ingenieria') }}
+                            </option>
+                        </select>
                     </div>
 
                     <div>
                         <x-label for="general_category">Categoría general:</x-label>
                         <select name="general_category" required
-                            class="w-full px-3 py-2 rounded border border-themeLightGray">
-                            <option value="Administración y negocio" {{ old('general_category', $schoolProject->general_category) == 'Administración y negocio' ? 'selected' : '' }}>Administración
-                                y negocio</option>
-                            <option value="Ciencia y salud" {{ old('general_category', $schoolProject->general_category) == 'Ciencia y salud' ? 'selected' : '' }}>Ciencia y salud</option>
-                            <option value="Comunicación" {{ old('general_category', $schoolProject->general_category) == 'Comunicación' ? 'selected' : '' }}>Comunicación</option>
-                            <option value="Diseño y comunicación" {{ old('general_category', $schoolProject->general_category) == 'Diseño y comunicación' ? 'selected' : '' }}>Diseño y
-                                comunicación</option>
-                            <option value="Educación" {{ old('general_category', $schoolProject->general_category) == 'Educación' ? 'selected' : '' }}>Educación</option>
-                            <option value="Industria" {{ old('general_category', $schoolProject->general_category) == 'Industria' ? 'selected' : '' }}>Industria</option>
-                            <option value="Otro" {{ old('general_category', $schoolProject->general_category) == 'Otro' ? 'selected' : '' }}>Otro</option>
-                            <option value="Tecnología y desarrollo" {{ old('general_category', $schoolProject->general_category) == 'Tecnología y desarrollo' ? 'selected' : '' }}>Tecnología y
-                                desarrollo</option>
+                            class="w-full px-3 py-2 rounded border border-themeLightGray dark:bg-themeBgDark">
+                            <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}
+                            </option>
+                            <option value="Ciencia y salud">{{ __('messages.school-projects.option-science') }}</option>
+                            <option value="Comunicación">{{ __('messages.school-projects.option-comunication') }}</option>
+                            <option value="Diseño y comunicación">{{ __('messages.school-projects.option-design') }}
+                            </option>
+                            <option value="Educación">{{ __('messages.school-projects.option-education') }}</option>
+                            <option value="Industria">{{ __('messages.school-projects.option-industry') }}</option>
+                            <option value="Otro">{{ __('messages.school-projects.option-other') }}</option>
+                            <option value="Tecnología y desarrollo">{{ __('messages.school-projects.option-tec') }}</option>
                         </select>
                     </div>
 
@@ -183,12 +213,12 @@
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ Subir imagen destacada
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                                        fileName = $event.target.files[0]?.name || '';
-                                                        if ($event.target.files[0]) {
-                                                            const reader = new FileReader();
-                                                            reader.onload = e => previewUrl = e.target.result;
-                                                            reader.readAsDataURL($event.target.files[0]);
-                                                        }" />
+                                                                fileName = $event.target.files[0]?.name || '';
+                                                                if ($event.target.files[0]) {
+                                                                    const reader = new FileReader();
+                                                                    reader.onload = e => previewUrl = e.target.result;
+                                                                    reader.readAsDataURL($event.target.files[0]);
+                                                                }" />
                             </label>
 
                             <template x-if="fileName">
@@ -241,8 +271,7 @@
         </div>
 
         <div x-cloak x-data="{ showDelete: false }"
-            x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val))"
-            >
+            x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val))">
 
             <button @click="showDelete = true"
                 class=" p-2 bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">

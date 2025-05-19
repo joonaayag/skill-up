@@ -5,6 +5,15 @@
         <x-heading level="h1" class="mb-6 text-3xl font-bold text-gray-800 dark:text-white">
             {{ __('messages.admin.dashboard.title') }}
         </x-heading>
+        @if ($errors->any())
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <x-heading level="h3" class="mb-10 text-xl font-medium text-gray-700 dark:text-themeLightGray">
             {{ __('messages.admin.dashboard.welcome') }} {{ auth()->user()->name . ' ' . auth()->user()->last_name }}

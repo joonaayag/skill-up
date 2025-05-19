@@ -3,6 +3,15 @@
 @section('content')
     <div class="container mx-auto px-4 py-10">
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.projects.title') }}</x-heading>
+        @if ($errors->any())
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <table
             class="min-w-full bg-white dark:bg-themeBgDark text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
@@ -63,7 +72,8 @@
                     name="plus" class="w-5 h-auto" /> {{ __('messages.button.create') }}</button>
 
             <x-modal :show="'showCreateUser'" @close="showCreateUser = false">
-                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.projects.create-user') }}</x-heading>
+                <x-heading level="h2"
+                    class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.projects.create-user') }}</x-heading>
                 <form method="POST" action="{{ route('admin.create.project') }}" class="space-y-4"
                     x-data="{ role: '{{ old('role') }}' }">
                     @csrf
@@ -80,7 +90,27 @@
 
                     <div>
                         <x-label for="tags">{{ __('messages.projects.label-tags') }}</x-label>
-                        <x-inputtext type="text" name="tags" id="tags" required />
+                        <select name="tags" id="tags"
+                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                            <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}
+                            </option>
+                            <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}
+                            </option>
+                            <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tesis') }}</option>
+                            <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>
+                                {{ __('messages.tags.individual') }}</option>
+                            <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>
+                                {{ __('messages.tags.grupal') }}</option>
+                            <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
+                                {{ __('messages.tags.tecnologia') }}</option>
+                            <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ciencias') }}</option>
+                            <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>
+                                {{ __('messages.tags.artes') }}</option>
+                            <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>
+                                {{ __('messages.tags.ingenieria') }}</option>
+                        </select>
                     </div>
 
                     <div>
@@ -115,12 +145,12 @@
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ {{ __('messages.projects.label-highlight') }}
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                        fileName = $event.target.files[0]?.name || '';
-                                        if ($event.target.files[0]) {
-                                            const reader = new FileReader();
-                                            reader.onload = e => previewUrl = e.target.result;
-                                            reader.readAsDataURL($event.target.files[0]);
-                                        }" />
+                                            fileName = $event.target.files[0]?.name || '';
+                                            if ($event.target.files[0]) {
+                                                const reader = new FileReader();
+                                                reader.onload = e => previewUrl = e.target.result;
+                                                reader.readAsDataURL($event.target.files[0]);
+                                            }" />
                             </label>
 
                             <template x-if="fileName">

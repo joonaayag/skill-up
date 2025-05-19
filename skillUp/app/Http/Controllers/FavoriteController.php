@@ -59,11 +59,11 @@ class FavoriteController extends Controller
             'type' => 'required|in:proyecto,oferta',
             'reference_id' => 'required|integer',
         ], [
-            'type.required' => 'El tipo es obligatorio.',
-            'type.in' => 'El tipo debe ser "proyecto" u "oferta".',
+            'type.required' => __('messages.errors.favorites.type-required'),
+            'type.in' => __('messages.errors.favorites.type-in'),
         
-            'reference_id.required' => 'El identificador de referencia es obligatorio.',
-            'reference_id.integer' => 'El identificador de referencia debe ser un número entero.',
+            'reference_id.required' => __('messages.errors.favorites.reference_id-required'),
+            'reference_id.integer' => __('messages.errors.favorites.reference_id-integer'),
         ]);
 
         Favorite::firstOrCreate([

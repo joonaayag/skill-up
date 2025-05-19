@@ -4,6 +4,15 @@
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.applications.title') }}</x-heading>
+    @if ($errors->any())
+        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-black dark:text-white">- {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="grid grid-cols-4 gap-24 ">
         <x-card class="h-full col-span-1">
@@ -13,15 +22,20 @@
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.position') }}</x-heading>
 
                 <x-inputtext class="mb-3" type="text" name="position_applied" id="position_applied"
-                    value="{{ request('position_applied') }}" placeholder="{{ __('messages.applications.placeholder-position') }}" required />
+                    value="{{ request('position_applied') }}"
+                    placeholder="{{ __('messages.applications.placeholder-position') }}" required />
 
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.status') }}</x-heading>
                 <select class="mb-3" name="state">
                     <option value="">{{ __('messages.applications.status') }}</option>
-                    <option value="nueva" @selected(request('state') == 'nueva')>{{ __('messages.applications.new') }}</option>
-                    <option value="en revisión" @selected(request('state') == 'en revisión')>{{ __('messages.applications.in-process') }}</option>
-                    <option value="aceptado" @selected(request('state') == 'aceptado')>{{ __('messages.applications.accepted') }}</option>
-                    <option value="rechazado" @selected(request('state') == 'rechazado')>{{ __('messages.applications.rejected') }}</option>
+                    <option value="nueva" @selected(request('state') == 'nueva')>{{ __('messages.applications.new') }}
+                    </option>
+                    <option value="en revisión" @selected(request('state') == 'en revisión')>
+                        {{ __('messages.applications.in-process') }}</option>
+                    <option value="aceptado" @selected(request('state') == 'aceptado')>
+                        {{ __('messages.applications.accepted') }}</option>
+                    <option value="rechazado" @selected(request('state') == 'rechazado')>
+                        {{ __('messages.applications.rejected') }}</option>
                 </select>
 
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.name') }}</x-heading>
@@ -53,7 +67,7 @@
 
                             <td class="py-2 space-x-2 relative z-10" x-data="{ showDelete: false, showDetails: false }" x-cloak
                                 x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
-                                                                                                            $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
+                                                                                                                    $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
                                 <button @click="showDetails = true"
                                     class="p-2 bg-themeBlue text-white shadow-lg rounded-lg cursor-pointer hover:bg-themeHoverBlue/80 transition">
                                     {{ __('messages.button.see') }}
@@ -61,13 +75,19 @@
 
                                 <x-modal class="flex items-center justify-center" :show="'showDetails'">
 
-                                    <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.applications.candidate-details') }} {{ $app->candidate_name }}
+                                    <x-heading level="h2"
+                                        class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.applications.candidate-details') }}
+                                        {{ $app->candidate_name }}
                                     </x-heading>
                                     <div class="flex flex-col items-center text-left gap-2.5 mb-4 ">
-                                        <p><strong>{{ __('messages.applications.modal-name') }}</strong> {{ $app->candidate_name }}</p>
-                                        <p><strong>{{ __('messages.applications.modal-position') }}</strong> {{ $app->position_applied }}</p>
-                                        <p><strong>{{ __('messages.applications.modal-reason') }}:</strong> {{ $app->application_reason }}</p>
-                                        <p><strong>{{ __('messages.applications.modal-date') }}</strong> {{ $app->application_date }}</p>
+                                        <p><strong>{{ __('messages.applications.modal-name') }}</strong>
+                                            {{ $app->candidate_name }}</p>
+                                        <p><strong>{{ __('messages.applications.modal-position') }}</strong>
+                                            {{ $app->position_applied }}</p>
+                                        <p><strong>{{ __('messages.applications.modal-reason') }}:</strong>
+                                            {{ $app->application_reason }}</p>
+                                        <p><strong>{{ __('messages.applications.modal-date') }}</strong>
+                                            {{ $app->application_date }}</p>
 
                                         @if ($app->cv)
                                             <p>
@@ -85,7 +105,8 @@
 
                                             <label for="state">{{ __('messages.applications.change-status') }}</label>
                                             <select name="state" required class="dark:bg-themeBgDark">
-                                                <option value="nueva" {{ $app->state === 'nueva' ? 'selected' : '' }}>{{ __('messages.applications.new') }}
+                                                <option value="nueva" {{ $app->state === 'nueva' ? 'selected' : '' }}>
+                                                    {{ __('messages.applications.new') }}
                                                 </option>
                                                 <option value="en revisión" {{ $app->state === 'en revisión' ? 'selected' : '' }}>
                                                     {{ __('messages.applications.in-process') }}
@@ -115,7 +136,10 @@
                                 </button>
 
                                 <x-modal :show="'showDelete'">
-                                    <x-heading level="h3" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.applications.delete-confirm-1') }} {{ $app->candidate_name }} {{ __('messages.applications.delete-confirm-2') }} {{ $app->position_applied }}?</x-heading>
+                                    <x-heading level="h3"
+                                        class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.applications.delete-confirm-1') }}
+                                        {{ $app->candidate_name }} {{ __('messages.applications.delete-confirm-2') }}
+                                        {{ $app->position_applied }}?</x-heading>
                                     <form action="{{ route('applications.destroy', $app->id) }}" method="POST"
                                         class="flex justify-center gap-3">
                                         @csrf

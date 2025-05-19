@@ -17,8 +17,8 @@ class PasswordResetController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email'],[
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico debe tener un formato válido.',
+            'email.required' => __('messages.errors.email.required'),
+            'email.email' => __('messages.errors.email.email'),
         ]);
 
         $status = Password::sendResetLink(
@@ -44,11 +44,21 @@ class PasswordResetController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols(),
+            ],
         ],[
-            'password.required' => 'Debes introducir una contraseña.',
-            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
-            'password.confirmed' => 'Las contraseñas no coinciden.',
+            'password.required' => __('messages.errors.password.required'),
+            'password.confirmed' => __('messages.errors.password.confirmed'),
+            'password.min' => __('messages.errors.password.min'),
+            'password.string' => __('messages.errors.password.string'),
+            'password.*' => __('messages.errors.password.regex'),
         ]);
 
         $status = Password::reset(

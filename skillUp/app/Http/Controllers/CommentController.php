@@ -13,14 +13,14 @@ class CommentController extends Controller
     public function storeProjectComment(Request $request, Project $project)
     {
         $request->validate([
-            'content' => 'required|string|max:1000',
+            'content' => 'required|string|max:300',
             'parent_id' => 'nullable|exists:comments,id'
         ], [
-            'content.required' => 'El contenido del comentario es obligatorio.',
-            'content.string' => 'El contenido debe ser una cadena de texto.',
-            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
+            'content.required' => __('messages.errors.comments.required'),
+            'content.string' => __('messages.errors.comments.string'),
+            'content.max' => __('messages.errors.comments.max'),
         
-            'parent_id.exists' => 'El comentario padre seleccionado no existe.',
+            'parent_id.exists' => __('messages.errors.comments.exists'),
         ]);
 
         $comment = new Comment([
@@ -37,14 +37,14 @@ class CommentController extends Controller
     public function storeSchoolProjectComment(Request $request, SchoolProject $schoolProject)
     {
         $request->validate([
-            'content' => 'required|string|max:1000',
+            'content' => 'required|string|max:300',
             'parent_id' => 'nullable|exists:comments,id'
         ], [
-            'content.required' => 'El contenido del comentario es obligatorio.',
-            'content.string' => 'El contenido debe ser una cadena de texto.',
-            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
+            'content.required' => __('messages.errors.comments.required'),
+            'content.string' => __('messages.errors.comments.string'),
+            'content.max' => __('messages.errors.comments.max'),
         
-            'parent_id.exists' => 'El comentario padre seleccionado no existe.',
+            'parent_id.exists' => __('messages.errors.comments.exists'),
         ]);
 
         $comment = new Comment([
@@ -74,11 +74,11 @@ class CommentController extends Controller
         }
 
         $request->validate([
-            'content' => 'required|string|max:1000',
+            'content' => 'required|string|max:300',
         ], [
-            'content.required' => 'El contenido es obligatorio.',
-            'content.string' => 'El contenido debe ser una cadena de texto.',
-            'content.max' => 'El contenido no puede superar los 1000 caracteres.',
+            'content.required' => __('messages.errors.comment.content-required'),
+            'content.string' => __('messages.errors.comment.content-string'),
+            'content.max' => __('messages.errors.comment.content-max'),
         ]);
 
         $comment->update([

@@ -15,9 +15,9 @@ class RatingController extends Controller
         $request->validate([
             'rating' => 'required|integer|between:1,5',
         ], [
-            'rating.required' => 'La valoración es obligatoria.',
-            'rating.integer' => 'La valoración debe ser un número entero.',
-            'rating.between' => 'La valoración debe estar entre 1 y 5 estrellas.',
+            'rating.required' => __('messages.errors.ratings.required'),
+            'rating.integer' => __('messages.errors.ratings.integer'),
+            'rating.between' => __('messages.errors.ratings.between'),
         ]);
 
         $user = Auth::user();
@@ -46,9 +46,9 @@ class RatingController extends Controller
         $request->validate([
             'rating' => 'required|integer|between:1,5',
         ], [
-            'rating.required' => 'La valoración es obligatoria.',
-            'rating.integer' => 'La valoración debe ser un número entero.',
-            'rating.between' => 'La valoración debe estar entre 1 y 5 estrellas.',
+            'rating.required' => __('messages.errors.ratings.required'),
+            'rating.integer' => __('messages.errors.ratings.integer'),
+            'rating.between' => __('messages.errors.ratings.between'),
         ]);
 
         $user = Auth::user();

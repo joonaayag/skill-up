@@ -6,6 +6,15 @@
     <div x-data="{ selectedImage: null }">
 
         <x-heading level="h1" class="mb-10">Proyecto </x-heading>
+        @if ($errors->any())
+            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <x-card class="mb-12">
             <x-tags>{{ $project->tags }}</x-tags>
@@ -36,12 +45,12 @@
                             class="flex gap-1">
                             @csrf
                             @for ($i = 1; $i <= 5; $i++)
-                                    <button type="submit" name="rating" value="{{ $i }}"
-                                        class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
-                                {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
-                                        aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
-                                        <x-icon name="star" class="w-4 h-auto" />
-                                    </button>
+                                <button type="submit" name="rating" value="{{ $i }}"
+                                    class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
+                                            {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                    aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
+                                    <x-icon name="star" class="w-4 h-auto" />
+                                </button>
                             @endfor
                         </form>
 

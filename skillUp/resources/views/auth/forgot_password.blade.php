@@ -1,5 +1,13 @@
-<h2>¿Has olvidado tu contraseña?</h2>
-
+<h2>{{ __('messages.auth.forgot-password') }}</h2>
+@if ($errors->any())
+    <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li class="text-black dark:text-white">- {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if (session('status'))
     <div class="text-green-500">{{ session('status') }}</div>
 @endif
@@ -7,12 +15,8 @@
 <form method="POST" action="{{ route('password.email') }}">
     @csrf
 
-    <label for="email">Correo electrónico</label>
+    <label for="email">{{ __('messages.auth.password')  }}</label>
     <input type="email" name="email" required>
 
-    @error('email')
-        <div class="text-red-500">{{ $message }}</div>
-    @enderror
-
-    <button type="submit">Enviar enlace de recuperación</button>
+    <button type="submit">{{ __('messages.auth.send-link') }}</button>
 </form>

@@ -15,28 +15,29 @@ class ApplicationController extends Controller
     {
         $request->validate([
             'offer_id' => 'required|exists:job_offers,id',
-            'candidate_name' => 'required|string|max:50',
+            'candidate_name' => 'required|string|max:20',
             'position_applied' => 'required|string|max:40',
-            'application_reason' => 'required|string',
+            'application_reason' => 'required|string|max:255',
             'cv' => 'nullable|file|mimes:pdf|max:2048',
         ], [
-            'offer_id.required' => 'La oferta de trabajo es obligatoria.',
-            'offer_id.exists' => 'La oferta seleccionada no existe.',
+            'offer_id.required' => __('messages.errors.offer.required'),
+            'offer_id.exists' => __('messages.errors.offer.exists'),
         
-            'candidate_name.required' => 'El nombre del candidato es obligatorio.',
-            'candidate_name.string' => 'El nombre debe ser una cadena de texto.',
-            'candidate_name.max' => 'El nombre no puede tener más de 50 caracteres.',
+            'candidate_name.required' => __('messages.errors.candidate-name.required'),
+            'candidate_name.string' => __('messages.errors.candidate-name.string'),
+            'candidate_name.max' => __('messages.errors.candidate-name.max'),
         
-            'position_applied.required' => 'El puesto al que se postula es obligatorio.',
-            'position_applied.string' => 'El puesto debe ser una cadena de texto.',
-            'position_applied.max' => 'El puesto no puede tener más de 40 caracteres.',
+            'position_applied.required' => __('messages.errors.position-applied.required'),
+            'position_applied.string' => __('messages.errors.position-applied.string'),
+            'position_applied.max' => __('messages.errors.position-applied.max'),
         
-            'application_reason.required' => 'Debe indicar el motivo de la candidatura.',
-            'application_reason.string' => 'El motivo debe ser una cadena de texto.',
+            'application_reason.required' => __('messages.errors.application-reason-required'),
+            'application_reason.string' => __('messages.errors.application-reason-string'),
+            'application_reason.max' => __('messages.errors.application-reason-max'),
         
-            'cv.file' => 'El archivo del currículum debe ser un archivo válido.',
-            'cv.mimes' => 'El currículum debe estar en formato PDF.',
-            'cv.max' => 'El currículum no puede superar los 2MB.',
+            'cv.file' => __('messages.errors.offers.cv-file'),
+            'cv.mimes' => __('messages.errors.offers.cv-mimes'),
+            'cv.max' => __('messages.errors.offers.cv-max'),
         ]);
 
         if ($request->hasFile('cv')) {
@@ -120,8 +121,8 @@ class ApplicationController extends Controller
         $request->validate([
             'state' => 'required|in:nueva,en revisión,aceptado,rechazado',
         ], [
-            'state.required' => 'El estado es obligatorio.',
-            'state.in' => 'El estado debe ser uno de los siguientes: nueva, en revisión, aceptado o rechazado.',
+            'state.required' => __('messages.errors.offers.state-required'),
+            'state.in' => __('messages.errors.offers.state-in'),
         ]);
 
         $application = Application::where('id', $id)

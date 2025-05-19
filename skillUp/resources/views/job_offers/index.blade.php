@@ -4,6 +4,15 @@
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.job-offers.title') }}</x-heading>
+    @if ($errors->any())
+        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-black dark:text-white">- {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
         <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
@@ -87,16 +96,21 @@
             <main class="space-y-4">
                 <div
                     class="flex flex-wrap gap-2 h-12 [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                                                 [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
-                    <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}" value="{{ request('name') }}"
-                        class="input" />
-                    <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}" value="{{ request('author') }}"
-                        class="input" />
+                                                         [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                    <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
+                        value="{{ request('name') }}" class="input" />
+                    <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}"
+                        value="{{ request('author') }}" class="input" />
                     <select name="order">
                         <option value="">{{ __('messages.job-offers.order-by') }}</option>
-                        <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}</option>
-                        <option value="general_category" @selected(request('order') == 'general_category')>{{ __('messages.job-offers.category') }}</option>
-                        <option value="created_at" @selected(request('order') == 'created_at')>{{ __('messages.job-offers.order-date') }}</option>
+                        <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}
+                        </option>
+                        <option value="general_category" @selected(request('order') == 'general_category')>
+                            {{ __('messages.job-offers.category') }}
+                        </option>
+                        <option value="created_at" @selected(request('order') == 'created_at')>
+                            {{ __('messages.job-offers.order-date') }}
+                        </option>
                     </select>
 
                     <select name="direction">
@@ -125,7 +139,8 @@
                                         <div class="flex flex-row gap-4">
                                             <p
                                                 class="px-3 py-1 rounded-full {{ $offer->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">
-                                                {{ $offer->state }}</p>
+                                                {{ $offer->state }}
+                                            </p>
                                             @if ($offer->company_id !== auth()->id())
                                                 @if ($favorite)
                                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
@@ -163,59 +178,92 @@
         </div>
     </form>
 
-    <div x-data="{ showModal: false }" x-cloak
-        x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
+    @if (in_array(auth()->user()->role, ['Profesor', 'Empresa']))
+        <div x-data="{ showModal: false }" x-cloak
+            x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
-        <button @click="showModal = true"
-            class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeBlue/80 transition cursor-pointer">
-            <x-icon size="6" name="plus" />
-        </button>
+            <button @click="showModal = true"
+                class="fixed bottom-6 right-6 p-2 bg-themeBlue text-white rounded-full shadow-lg hover:bg-themeBlue/80 transition cursor-pointer">
+                <x-icon size="6" name="plus" />
+            </button>
 
-        <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
-            <form action="{{ route('job.offers.store') }}" method="POST"
-                class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
-                @csrf
+            <x-modal>
+                <x-heading level="h2"
+                    class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
+                <form action="{{ route('job.offers.store') }}" method="POST"
+                    class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
+                    @csrf
 
-                <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
-                <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
+                    <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
+                    <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
 
-                <x-label for="subtitle">{{ __('messages.job-offers.label-subtitle') }}</x-label>
-                <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
+                    <x-label for="subtitle">{{ __('messages.job-offers.label-subtitle') }}</x-label>
+                    <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
 
-                <x-label for="description">{{ __('messages.job-offers.label-description') }}</x-label>
-                <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
+                    <x-label for="description">{{ __('messages.job-offers.label-description') }}</x-label>
+                    <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
 
-                <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
-                <x-inputtext type="text" name="sector_category" id="sector_category" value="{{ old('sector_category') }}"
-                    required />
+                    <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
+                    <select name="sector_category" id="sector_category" required
+                        class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white dark:bg-themeBgD">
+                        <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
+                            {{ __('messages.select') }}
+                        </option>
+                        @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
+                            <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
+                                {{ $sector }}
+                            </option>
+                        @endforeach
+                    </select>
 
-                <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
-                <x-inputtext type="text" name="general_category" id="general_category" value="{{ old('general_category') }}"
-                    required />
+                    <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
+                    <select name="general_category" required
+                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                        <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
+                        <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
+                            {{ __('messages.projects.option-science') }}
+                        </option>
+                        <option value="Comunicación" {{ old('general_category') == 'Comunicación' ? 'selected' : '' }}>
+                            {{ __('messages.projects.option-comunication') }}
+                        </option>
+                        <option value="Diseño y comunicación" {{ old('general_category') == 'Diseño y comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-design') }}</option>
+                        <option value="Educación" {{ old('general_category') == 'Educación' ? 'selected' : '' }}>
+                            {{ __('messages.projects.option-education') }}
+                        </option>
+                        <option value="Industria" {{ old('general_category') == 'Industria' ? 'selected' : '' }}>
+                            {{ __('messages.projects.option-industry') }}
+                        </option>
+                        <option value="Otro" {{ old('general_category') == 'Otro' ? 'selected' : '' }}>
+                            {{ __('messages.projects.option-other') }}
+                        </option>
+                        <option value="Tecnología y desarrollo" {{ old('general_category') == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
+                    </select>
 
-                <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
-                <select name="state" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
-                    <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.job-offers.state-open') }}</option>
-                    <option value="cerrada" @selected(old('state') == 'cerrada')>{{ __('messages.job-offers.state-close') }}</option>
-                </select>
+                    <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
+                    <select name="state" required
+                        class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
+                        <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.job-offers.state-open') }}
+                        </option>
+                        <option value="cerrada" @selected(old('state') == 'cerrada')>{{ __('messages.job-offers.state-close') }}
+                        </option>
+                    </select>
 
-                <div class="flex justify-end gap-3 mt-4">
-                    <button type="button" @click="showModal = false"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                        {{ __('messages.button.cancel') }}
-                    </button>
-                    <button type="submit"
-                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
-                        {{ __('messages.button.save') }}
-                    </button>
-                </div>
-            </form>
-        </x-modal>
+                    <div class="flex justify-end gap-3 mt-4">
+                        <button type="button" @click="showModal = false"
+                            class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                            {{ __('messages.button.cancel') }}
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                            {{ __('messages.button.save') }}
+                        </button>
+                    </div>
+                </form>
+            </x-modal>
 
+        </div>
 
-    </div>
+    @endif
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('filters-input');

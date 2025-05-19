@@ -60,6 +60,7 @@ class AdminController extends Controller
             'last_name' => 'required|string|max:40',
             'email' => 'required|email|string|max:50|unique:users,email,' . $user->id,
             'description' => 'nullable|string|max:300',
+            'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
             'profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'cv' => 'nullable|file|mimes:pdf|max:2048',
@@ -67,6 +68,9 @@ class AdminController extends Controller
             'name.required' => __('messages.errors.name.required'),
             'name.string' => __('messages.errors.name.string'),
             'name.max' => __('messages.errors.name.max'),
+
+            'role.required' => __('messages.errors.role.required'),
+            'role.in' => __('messages.errors.role.in'),
 
             'last_name.required' => __('messages.errors.last_name.required'),
             'last_name.max' => __('messages.errors.last_name.max'),
@@ -187,6 +191,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:20',
             'lastName' => 'nullable|string|max:50',
             'email' => 'required|string|email|max:255|unique:users',
+            'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
             'password' => [
                 'required',
                 'string',
@@ -197,7 +202,6 @@ class AdminController extends Controller
                     ->numbers()
                     ->symbols(),
             ],
-            'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
         ];
 
         switch ($request->role) {
@@ -371,41 +375,40 @@ class AdminController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string',
-            'tags' => 'required|string|max:50',
-            'sector_category' => 'required|string|max:40',
+            'description' => 'required|string|max:300',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
+            'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El título del proyecto es obligatorio.',
-            'title.string' => 'El título del proyecto debe ser una cadena de texto.',
-            'title.max' => 'El título del proyecto no puede tener más de 40 caracteres.',
+            'title.required' => __('messages.errors.title.required'),
+            'title.string' => __('messages.errors.title.string'),
+            'title.max' => __('messages.errors.title.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
+            'description.max' => __('messages.errors.description.max'),
 
-            'tags.required' => 'Las etiquetas son obligatorias.',
-            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
-            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+            'tags.required' => __('messages.errors.tags.required'),
+            'tags.in' => __('messages.errors.tags.in'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
-            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+            'sector_category.required' => __('messages.errors.sector.required'),
+            'sector_category.in' => __('messages.errors.sector.in'),
 
-            'creation_date.required' => 'La fecha de creación es obligatoria.',
-            'creation_date.date' => 'La fecha de creación debe ser válida.',
+            'creation_date.required' => __('messages.errors.creation_date.required'),
+            'creation_date.date' => __('messages.errors.creation_date.date'),
 
-            'link.url' => 'El enlace debe tener un formato de URL válido.',
-            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+            'link.url' => __('messages.errors.link.url'),
+            'link.max' => __('messages.errors.link.max'),
 
-            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+            'image.*.image' => __('messages.errors.image.image'),
+            'image.*.mimes' => __('messages.errors.image.mimes'),
+            'image.*.max' => __('messages.errors.image.max'),
 
-            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
-            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+            'files.*.file' => __('messages.errors.file.file'),
+            'files.*.max' => __('messages.errors.file.max'),
         ]);
 
         $imagePath = $request->hasFile('image')
@@ -460,28 +463,34 @@ class AdminController extends Controller
             'name' => 'required|string|max:40',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'sector_category' => 'required|string',
-            'general_category' => 'required|string',
+            'sector_category' => 'required|in:' . implode(',', [
+                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
+                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
+                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
+                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
+                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+            ]),
+            'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
         ], [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.string' => 'El nombre debe ser una cadena de texto.',
-            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+            'name.required' => __('messages.errors.name.required'),
+            'name.string' => __('messages.errors.name.string'),
+            'name.max' => __('messages.errors.name.max'),
 
-            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
-            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+            'subtitle.string' => __('messages.errors.subtitle.string'),
+            'subtitle.max' => __('messages.errors.subtitle.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.required' => __('messages.errors.sector_offer.required'),
+            'sector_category.in' => __('messages.errors.sector_offer.in'),
 
-            'general_category.required' => 'La categoría general es obligatoria.',
-            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.required' => __('messages.errors.sector.required'),
+            'general_category.in' => __('messages.errors.sector.in'),
 
-            'state.required' => 'El estado es obligatorio.',
-            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+            'state.required' => __('messages.errors.state.required'),
+            'state.in' => __('messages.errors.state.in'),
 
         ]);
 
@@ -519,36 +528,35 @@ class AdminController extends Controller
             'creation_date' => 'required|date',
             'description' => 'required|string',
             'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
-            'general_category' => 'nullable|string|max:40',
+            'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El título es obligatorio.',
-            'title.string' => 'El título debe ser una cadena de texto.',
-            'title.max' => 'El título no puede tener más de 40 caracteres.',
+            'title.required' => __('messages.errors.title.required'),
+            'title.string' => __('messages.errors.title.string'),
+            'title.max' => __('messages.errors.title.max'),
 
-            'author.required' => 'El autor es obligatorio.',
-            'author.string' => 'El autor debe ser una cadena de texto.',
-            'author.max' => 'El autor no puede tener más de 50 caracteres.',
+            'author.required' => __('messages.errors.author.required'),
+            'author.string' => __('messages.errors.author.string'),
+            'author.max' => __('messages.errors.author.max'),
 
-            'creation_date.required' => 'La fecha de creación es obligatoria.',
-            'creation_date.date' => 'La fecha de creación debe ser una fecha válida.',
+            'creation_date.required' => __('messages.errors.creation_date.required'),
+            'creation_date.date' => __('messages.errors.creation_date.date'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
 
-            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
-            'tags.max' => 'Las etiquetas no pueden tener más de 50 caracteres.',
+            'tags.in' => __('messages.errors.tags.in'),
 
-            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
-            'general_category.max' => 'La categoría general no puede tener más de 40 caracteres.',
+            'general_category.in' => __('messages.errors.sector.in'),
+            'general_category.required' => __('messages.errors.sector.required'),
+            
+            'images.*.image' => __('messages.errors.image.image'),
+            'images.*.mimes' => __('messages.errors.image.mimes'),
+            'images.*.max' => __('messages.errors.image.max'),
 
-            'images.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'images.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'images.*.max' => 'Cada imagen no puede superar los 4MB.',
-
-            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
-            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+            'files.*.file' => __('messages.errors.file.file'),
+            'files.*.max' => __('messages.errors.file.max'),
         ]);
 
         $imagePath = $request->hasFile('image')
@@ -606,29 +614,37 @@ class AdminController extends Controller
             'name' => 'required|string|max:40',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'sector_category' => 'required|string',
-            'general_category' => 'required|string',
+            'sector_category' => 'required|in:' . implode(',', [
+                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
+                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
+                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
+                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
+                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+            ]),
+            'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
             'logo' => 'nullable|string|max:255',
         ], [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.string' => 'El nombre debe ser una cadena de texto.',
-            'name.max' => 'El nombre no puede tener más de 40 caracteres.',
+            'name.required' => __('messages.errors.name.required'),
+            'name.string' => __('messages.errors.name.string'),
+            'name.max' => __('messages.errors.name_offer.max'),
 
-            'subtitle.string' => 'El subtítulo debe ser una cadena de texto.',
-            'subtitle.max' => 'El subtítulo no puede tener más de 255 caracteres.',
+            'subtitle.string' => __('messages.errors.subtitle.string'),
+            'subtitle.max' => __('messages.errors.subtitle_offer.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
+            'sector_category.required' => __('messages.errors.sector_offer.required'),
+            'sector_category.string' => __('messages.errors.sector_offer.string'),
+            'sector_category.in' =>    __('messages.errors.sector_offer.in'),
 
-            'general_category.required' => 'La categoría general es obligatoria.',
-            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
+            'general_category.required' => __('messages.errors.sector.required'),
+            'general_category.string' => __('messages.errors.sector.string'),
+            'general_category.in' =>    __('messages.errors.sector.in'),
 
-            'state.required' => 'El estado es obligatorio.',
-            'state.in' => 'El estado debe ser "abierta" o "cerrada".',
+            'state.required' => __('messages.errors.state.required'),
+            'state.in' => __('messages.errors.state.in'),
 
             'logo.string' => 'El logo debe ser una cadena de texto.',
             'logo.max' => 'La URL del logo no puede superar los 255 caracteres.',
@@ -709,41 +725,38 @@ class AdminController extends Controller
             'author' => 'required|string|max:50',
             'creation_date' => 'required|date',
             'description' => 'required|string',
-            'tags' => 'nullable|string|max:50',
-            'general_category' => 'nullable|string|max:40',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
+            'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El título es obligatorio.',
-            'title.string' => 'El título debe ser una cadena de texto.',
-            'title.max' => 'El título no puede tener más de 40 caracteres.',
+            'title.required' => __('messages.errors.title.required'),
+            'title.string' => __('messages.errors.title.string'),
+            'title.max' => __('messages.errors.title.max'),
 
-            'author.required' => 'El autor es obligatorio.',
-            'author.string' => 'El autor debe ser una cadena de texto.',
-            'author.max' => 'El autor no puede tener más de 50 caracteres.',
+            'author.required' => __('messages.errors.author.required'),
+            'author.string' => __('messages.errors.author.string'),
+            'author.max' => __('messages.errors.author.max'),
 
-            'creation_date.required' => 'La fecha de creación es obligatoria.',
-            'creation_date.date' => 'La fecha de creación debe ser una fecha válida.',
+            'creation_date.required' => __('messages.errors.creation_date.required'),
+            'creation_date.date' => __('messages.errors.creation_date.date'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
 
-            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
-            'tags.max' => 'Las etiquetas no pueden tener más de 50 caracteres.',
+            'tags.in' => __('messages.errors.tags.in'),
+            'tags.required' => __('messages.errors.tags.required'),
 
-            'general_category.string' => 'La categoría general debe ser una cadena de texto.',
-            'general_category.max' => 'La categoría general no puede tener más de 40 caracteres.',
+            'general_category.in' => __('messages.errors.sector.in'),
+            'general_category.required' => __('messages.errors.sector.required'),
+            
+            'images.*.image' => __('messages.errors.image.image'),
+            'images.*.mimes' => __('messages.errors.image.mimes'),
+            'images.*.max' => __('messages.errors.image.max'),
 
-            'link.url' => 'El enlace debe tener un formato de URL válido.',
-            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
-
-            'image.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'image.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'image.max' => 'Cada imagen no puede superar los 4MB.',
-
-            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
-            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+            'files.*.file' => __('messages.errors.file.file'),
+            'files.*.max' => __('messages.errors.file.max'),
         ]);
 
         $project = SchoolProject::findOrFail($id);
@@ -839,41 +852,40 @@ class AdminController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string',
-            'tags' => 'required|string|max:50',
-            'sector_category' => 'required|string|max:40',
+            'description' => 'required|string|max:300',
+            'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
+            'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|file|max:4096',
         ], [
-            'title.required' => 'El nombre del proyecto es obligatorio.',
-            'title.string' => 'El nombre del proyecto debe ser una cadena de texto.',
-            'title.max' => 'El nombre del proyecto no puede tener más de 40 caracteres.',
+            'title.required' => __('messages.errors.title.required'),
+            'title.string' => __('messages.errors.title.string'),
+            'title.max' => __('messages.errors.title.max'),
 
-            'description.required' => 'La descripción es obligatoria.',
-            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.required' => __('messages.errors.description.required'),
+            'description.string' => __('messages.errors.description.string'),
+            'description.max' => __('messages.errors.description.max'),
 
-            'tags.required' => 'Las etiquetas son obligatorias.',
-            'tags.string' => 'Las etiquetas deben ser una cadena de texto.',
-            'tags.max' => 'Las etiquetas no pueden superar los 50 caracteres.',
+            'tags.required' => __('messages.errors.tags.required'),
+            'tags.in' => __('messages.errors.tags.in'),
 
-            'sector_category.required' => 'La categoría del sector es obligatoria.',
-            'sector_category.string' => 'La categoría del sector debe ser una cadena de texto.',
-            'sector_category.max' => 'La categoría del sector no puede tener más de 40 caracteres.',
+            'sector_category.required' => __('messages.errors.sector.required'),
+            'sector_category.in' => __('messages.errors.sector.in'),
 
-            'creation_date.required' => 'La fecha de creación es obligatoria.',
-            'creation_date.date' => 'La fecha de creación debe ser válida.',
+            'creation_date.required' => __('messages.errors.creation_date.required'),
+            'creation_date.date' => __('messages.errors.creation_date.date'),
 
-            'link.url' => 'El enlace debe tener un formato de URL válido.',
-            'link.max' => 'El enlace no puede tener más de 255 caracteres.',
+            'link.url' => __('messages.errors.link.url'),
+            'link.max' => __('messages.errors.link.max'),
 
-            'image.*.image' => 'Cada imagen debe ser un archivo de imagen válido.',
-            'image.*.mimes' => 'Las imágenes deben ser en formato jpeg, png, jpg o gif.',
-            'image.*.max' => 'Cada imagen no puede superar los 4MB.',
+            'image.*.image' => __('messages.errors.image.image'),
+            'image.*.mimes' => __('messages.errors.image.mimes'),
+            'image.*.max' => __('messages.errors.image.max'),
 
-            'files.*.file' => 'Cada archivo debe ser un archivo válido.',
-            'files.*.max' => 'Cada archivo no puede superar los 4MB.',
+            'files.*.file' => __('messages.errors.file.file'),
+            'files.*.max' => __('messages.errors.file.max'),
         ]);
 
         if ($request->hasFile('image')) {
