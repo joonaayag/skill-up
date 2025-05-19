@@ -21,11 +21,54 @@
 :style="darkMode ? 'background-image: url(/images/app-dark-bg.jpg)' : 'background-image: url(/images/app-bg.jpg)'">
     <x-header/>
 
+    @if (session('message'))
+    <div 
+        id="toast"
+        class="fixed top-20 right-5 max-w-xs w-full z-50 px-4 py-3 text-sm text-white bg-black rounded-lg shadow-lg animate-slide-in"
+    >
+        {{ session('message') }}
+    </div>
+
+    <style>
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-out {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.5s ease-out forwards;
+        }
+
+        .animate-slide-out {
+            animation: slide-out 0.5s ease-in forwards;
+        }
+    </style>
+    @endif
+
+
     <main class="mt-32 mx-24 flex-grow">
         @yield('content')
     </main>
 
     <x-footer/>
+
 <script>
     let logoutTimer;
 
@@ -100,6 +143,16 @@ function formatearTipo(tipo) {
         default: return '📢 Notificación';
     }
 }
+
+const toast = document.getElementById('toast');
+        if (toast) {
+            setTimeout(() => {
+                toast.classList.add('animate-slide-out');
+            }, 3000); 
+            setTimeout(() => {
+                toast.remove();
+            }, 4000);
+        }
 
 
 </script>

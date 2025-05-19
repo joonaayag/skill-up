@@ -71,7 +71,7 @@ class ApplicationController extends Controller
         }
 
 
-        return redirect()->route('job.offers.show', $request->offer_id);
+        return redirect()->route('job.offers.show', $request->offer_id)->with('message', __('messages.messages.candidate-create'));
     }
 
     public function index(Request $request)
@@ -113,7 +113,7 @@ class ApplicationController extends Controller
 
         $application->delete();
 
-        return redirect()->route('applications.index');
+        return redirect()->route('applications.index')->with('message', __('messages.messages.candidate-delete'));
     }
 
     public function update(Request $request, $id)
@@ -153,7 +153,7 @@ class ApplicationController extends Controller
             'message' => __('messages.email.message') . __('messages.email.messages.' . $request->state) . ', ' . $messages[$request->state],
         ]);
 
-        return redirect()->route('applications.index');
+        return redirect()->route('applications.index')->with('message', __('messages.messages.candidate-update'));
     }
 
 }

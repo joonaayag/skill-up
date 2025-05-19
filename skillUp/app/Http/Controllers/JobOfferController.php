@@ -146,7 +146,7 @@ class JobOfferController extends Controller
         }
 
 
-        return back();
+        return back()->with('message', __('messages.messages.offer-create'));
     }
 
     public function destroy($id)
@@ -174,7 +174,7 @@ class JobOfferController extends Controller
 
         $jobOffer->delete();
 
-        return redirect()->route('job.offers.company.index');
+        return redirect()->route('job.offers.company.index')->with('message', __('messages.messages.offer-delete'));
     }
 
 
@@ -251,7 +251,7 @@ class JobOfferController extends Controller
         }
 
 
-        return redirect()->route('job.offers.company.index');
+        return redirect()->route('job.offers.company.index')->with('message', __('messages.messages.offer-update'));
     }
 
     public function show($id)

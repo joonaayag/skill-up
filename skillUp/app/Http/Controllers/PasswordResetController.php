@@ -72,7 +72,7 @@ class PasswordResetController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('auth')->with('status', '¡Tu contraseña ha sido actualizada correctamente!')
+            ? redirect()->route('auth')->with('message', __('messages.messages.password-reset'))
             : back()->withErrors(['email' => [__($status)]]);
     }
 

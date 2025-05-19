@@ -28,7 +28,7 @@ class AuthController extends Controller
         $remember = $request->has('remember');
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials, $remember)) {
-            return redirect('/dashboard');
+            return redirect('/dashboard')->with('message', __('messages.messages.login'));
         }
 
         return back()->withErrors(['email' => __('messages.errors.wrong-credentials')])->withInput();
@@ -221,7 +221,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('message', __('messages.messages.register'));
     }
 
 

@@ -100,7 +100,7 @@ class UserController extends Controller
 
         $detail->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('messages', __('messages.messages.user-updated'));
     }
 
 }

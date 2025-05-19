@@ -48,7 +48,7 @@ class AdminController extends Controller
         }
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users')->with('message', __('messages.messages.user-destroy'));
     }
     public function updateUser(Request $request, $id)
     {
@@ -147,7 +147,7 @@ class AdminController extends Controller
 
         $detail->save();
 
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users')->with('message', __('messages.messages.user-update'));
     }
 
     public function updateComment(Request $request, $id)
@@ -165,7 +165,7 @@ class AdminController extends Controller
         $comment->update([
             'content' => $request->content
         ]);
-        return back();
+        return back()->with('message', __('messages.messages.comment-update'));
 
     }
 
@@ -178,7 +178,7 @@ class AdminController extends Controller
 
         $comment->delete();
 
-        return back();
+        return back()->with('message', __('messages.messages.comment-delete'));
 
     }
 
@@ -368,7 +368,7 @@ class AdminController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users')->with('message', __('messages.messages.user-create'));
     }
 
     public function createProject(Request $request)
@@ -454,7 +454,7 @@ class AdminController extends Controller
         }
 
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('messages.messages.project-create'));
     }
 
     public function createJobOffer(Request $request)
@@ -516,7 +516,7 @@ class AdminController extends Controller
         }
 
 
-        return back();
+        return back()->with('message', __('messages.messages.job-offer-create'));
     }
 
     public function createSchoolProject(Request $request)
@@ -590,7 +590,7 @@ class AdminController extends Controller
             }
         }
 
-        return back();
+        return back()->with('message', __('messages.messages.sp-create'));
     }
 
 
@@ -675,7 +675,7 @@ class AdminController extends Controller
             }
         }
         $offers = JobOffer::all();
-        return view('admin.offers', compact('offers'));
+        return view('admin.offers', compact('offers'))->with('message', __('messages.messages.success.offer-updated'));
     }
 
     public function destroyOffer($id)
@@ -701,7 +701,7 @@ class AdminController extends Controller
         $jobOffer->delete();
 
         $offers = JobOffer::all();
-        return view('admin.offers', compact('offers'));
+        return view('admin.offers', compact('offers'))->with('message', __('messages.messages.success.offer-deleted'));
     }
 
     public function showSchoolProjects()
@@ -805,7 +805,7 @@ class AdminController extends Controller
         }
 
 
-        return redirect()->route('admin.school_project.details', $project->id);
+        return redirect()->route('admin.school_project.details', $project->id)->with('message', __('messages.messages.sp-update'));
     }
 
     public function destroy($id)
@@ -827,7 +827,7 @@ class AdminController extends Controller
 
         $project->delete();
 
-        return redirect()->route('admin.school_projects');
+        return redirect()->route('admin.school_projects')->with('message', __('messages.messages.sp-delete'));
     }
 
     public function ProjectsShow()
@@ -922,7 +922,7 @@ class AdminController extends Controller
             }
         }
 
-        return redirect()->route('admin.project.details', $project->id);
+        return redirect()->route('admin.project.details', $project->id)->with('message', __('messages.messages.project-update'));
     }
     public function destroyProject($id)
     {
@@ -945,7 +945,7 @@ class AdminController extends Controller
 
         $project->delete();
         $projects = Project::all();
-        return view('admin.projects', compact('projects'));
+        return view('admin.projects', compact('projects'))->with('message', __('messages.messages.project-delete'));
     }
 
     public function destroySchoolProject($id)
@@ -969,7 +969,7 @@ class AdminController extends Controller
 
         $project->delete();
         $projects = SchoolProject::all();
-        return view('admin.projects', compact('projects'));
+        return view('admin.projects', compact('projects'))->with('message', __('messages.messages.project-delete'));
     }
 
 }

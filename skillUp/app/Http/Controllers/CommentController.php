@@ -31,7 +31,7 @@ class CommentController extends Controller
 
         $project->comments()->save($comment);
 
-        return back()->with('success', 'Comentario añadido correctamente.');
+        return back()->with('message', __('messages.messages.comment-create'));
     }
 
     public function storeSchoolProjectComment(Request $request, SchoolProject $schoolProject)
@@ -55,7 +55,7 @@ class CommentController extends Controller
 
         $schoolProject->comments()->save($comment);
 
-        return back()->with('success', 'Comentario añadido correctamente.');
+        return back()->with('message', __('messages.messages.comment-create'));
     }
 
     public function edit(Comment $comment)
@@ -64,7 +64,7 @@ class CommentController extends Controller
             return back()->with('error', 'No tienes permiso para editar este comentario.');
         }
 
-        return view('comments.edit', compact('comment'));
+        return view('comments.edit', compact('comment'))->with('message', __('messages.messages.comment-edit'));
     }
 
     public function update(Request $request, Comment $comment)
@@ -86,9 +86,9 @@ class CommentController extends Controller
         ]);
 
         if ($comment->project_id) {
-            return redirect()->route('projects.show', $comment->project_id)->with('success', 'Comentario actualizado correctamente.');
+            return redirect()->route('projects.show', $comment->project_id)->with('message', __('messages.messages.comment-update'));
         } else {
-            return redirect()->route('school-projects.show', $comment->school_project_id)->with('success', 'Comentario actualizado correctamente.');
+            return redirect()->route('school-projects.show', $comment->school_project_id)->with('message', __('messages.messages.comment-update'));
         }
     }
 
@@ -104,9 +104,9 @@ class CommentController extends Controller
         $comment->delete();
 
         if ($projectId) {
-            return redirect()->route('projects.show', $projectId)->with('success', 'Comentario eliminado correctamente.');
+            return redirect()->route('projects.show', $projectId)->with('message', __('messages.messages.comment-delete'));
         } else {
-            return redirect()->route('school-projects.show', $schoolProjectId)->with('success', 'Comentario eliminado correctamente.');
+            return redirect()->route('school-projects.show', $schoolProjectId)->with('message', __('messages.messages.comment-delete'));
         }
     }
 }

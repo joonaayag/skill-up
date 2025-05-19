@@ -189,7 +189,7 @@ class ProjectController extends Controller
         }
 
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('messages.messages.project-created'));
     }
 
     public function update(Request $request, $id)
@@ -262,7 +262,7 @@ class ProjectController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Proyecto actualizado correctamente.');
+        return redirect()->back()->with('message', __('messages.messages.project-updated'));
     }
 
 
@@ -287,7 +287,7 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->back()->with('success', 'Proyecto eliminado correctamente.');
+        return redirect()->back()->with('message', __('messages.messages.project-deleted'));
     }
 
 
