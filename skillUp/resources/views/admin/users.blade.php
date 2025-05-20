@@ -4,11 +4,13 @@
     <div class="container mx-auto px-6 py-10">
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.title') }}</x-heading>
 
-        @if ($errors->any())
-            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+        
+        @if(session('errors'))
+            <div class="alert alert-danger">
+                <strong>Se encontraron errores al importar:</strong>
                 <ul>
-                    @foreach ($errors->all() as $error)
-                        <li class="text-black dark:text-white">- {{ $error }}</li>
+                    @foreach (session('errors') as $error)
+                        <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
@@ -494,6 +496,29 @@
             </x-modal>
 
         </div>
+        @if (auth()->user()->role == 'Profesor')
+            <form action="{{ route('professor.import.students') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <label for="students_file">Importar alumnos (.txt con campos separados por ;)</label>
+                <input type="file" name="students_file" accept=".txt" required>
+                <button type="submit">Subir archivo</button>
+            </form>
+
+            <form action="{{ route('professor.reset.passwords') }}" method="POST" class="space-y-4">
+                @csrf
+                <label for="student_id">Selecciona alumno:</label>
+                <select name="student_id" id="student_id" required class="border rounded p-2">
+                    <option value="all">Todos los alumnos del centro</option>
+                    @foreach ($students as $student)
+                        <option value="{{ $student->id }}">{{ $student->name }} {{ $student->last_name }} ({{ $student->email }})</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
+                    Restablecer contraseña(s)
+                </button>
+            </form>
+
+        @endif
 
     </div>
 

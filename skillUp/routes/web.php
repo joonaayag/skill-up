@@ -146,7 +146,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
-    
+
     Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
 
@@ -172,6 +172,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/admin/proyectos/{id}/editar', [AdminController::class, 'updateProject'])->name('admin.project.update');
         Route::put('/admin/proyectos/{id}/editar', [AdminController::class, 'updateProject'])->name('admin.project.update');
         Route::delete('/admin/proyectos/{id}', [AdminController::class, 'destroyProject'])->name('admin.project.destroy');
+
+        Route::post('/profesor/importar-alumnos', [AdminController::class, 'importStudents'])->name('professor.import.students');
+        Route::post('/profesor/reset-passwords', [AdminController::class, 'resetPasswords'])->name('professor.reset.passwords');
 
 
 
@@ -250,7 +253,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 
 
-Route::get('/notificaciones/check', [NotificationController::class, 'check'])->middleware('auth');
+        Route::get('/notificaciones/check', [NotificationController::class, 'check'])->middleware('auth');
 
     });
 

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserDetail;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Storage;
 
@@ -18,7 +19,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role !== 'Admin') {
+        if (auth()->user()->role !== 'Admin' && auth()->user()->role !== 'Profesor') {
             abort(403, 'Acceso denegado');
         }
         return view('admin.dashboard');
@@ -26,12 +27,30 @@ class AdminController extends Controller
 
     public function showUsers()
     {
-        if (auth()->user()->role !== 'Admin') {
+        $user = auth()->user();
+
+        if (!in_array($user->role, ['Admin', 'Profesor'])) {
             abort(403, 'Acceso denegado');
         }
-        $users = User::all();
-        return view('admin.users', compact('users'));
+
+        if ($user->role === 'Profesor') {
+            $users = User::whereHas('detail', function ($query) use ($user) {
+                $query->where('educational_center', $user->detail->educational_center);
+            })->with('detail')->get();
+
+            $students = User::where('role', 'Alumno')
+                ->whereHas('detail', function ($q) use ($user) {
+                    $q->where('educational_center', $user->detail->educational_center);
+                })->get();
+
+        } else {
+            $users = User::with('detail')->get();
+        }
+
+        return view('admin.users', compact('users', 'students'));
     }
+
+
     public function showComments()
     {
         if (auth()->user()->role !== 'Admin') {
@@ -52,7 +71,7 @@ class AdminController extends Controller
     }
     public function updateUser(Request $request, $id)
     {
-        if (auth()->user()->role !== 'Admin') {
+        if (auth()->user()->role !== 'Admin' && auth()->user()->role !== 'Profesor') {
             return redirect('/dashboard');
         }
 
@@ -155,6 +174,130 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('message', __('messages.messages.user-update'));
     }
 
+    public function importStudents(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($user->role !== 'Profesor') {
+            abort(403, 'Acceso denegado');
+        }
+
+        $request->validate([
+            'students_file' => 'required|file|mimes:txt|max:2048',
+        ]);
+
+        $path = $request->file('students_file')->getRealPath();
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        $errors = [];
+        $lineNumber = 1;
+
+        foreach ($lines as $line) {
+            $parts = explode(';', $line);
+
+            if (count($parts) < 5) {
+                $errors[] = "Línea $lineNumber: No tiene suficientes campos.";
+                $lineNumber++;
+                continue;
+            }
+
+            [$name, $last_name, $email, $birthDate, $currentCourse] = array_map('trim', $parts);
+
+            $data = [
+                'name' => $name,
+                'last_name' => $last_name,
+                'email' => $email,
+                'birthDate' => $birthDate,
+                'currentCourse' => $currentCourse,
+            ];
+
+            $validator = Validator::make($data, [
+                'name' => 'required|string|max:20',
+                'last_name' => 'required|string|max:40',
+                'email' => 'required|email|string|max:50|unique:users,email',
+                'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                'currentCourse' => 'required|string|max:50',
+            ]);
+
+            if ($validator->fails()) {
+                $errors[] = "Línea $lineNumber: " . implode(' | ', $validator->errors()->all());
+                $lineNumber++;
+                continue;
+            }
+
+            $newUser = new User();
+            $newUser->name = ucfirst($name);
+            $newUser->last_name = ucfirst($last_name);
+            $newUser->email = $email;
+            $newUser->description = null;
+            $newUser->role = 'Alumno';
+            $newUser->password = bcrypt('Password1@');
+            $newUser->save();
+
+            $detail = new UserDetail();
+            $detail->user_id = $newUser->id;
+            $detail->birth_date = $birthDate;
+            $detail->current_course = ucfirst($currentCourse);
+            $detail->educational_center = $user->detail->educational_center;
+            $detail->save();
+
+            $lineNumber++;
+        }
+
+        if (!empty($errors)) {
+            return back()->with('message', 'Importación completada con errores.')->with('errors', $errors);
+        }
+
+        return back()->with('message', 'Alumnos importados correctamente.');
+    }
+
+    public function resetPasswords(Request $request)
+    {
+        $request->validate([
+            'student_id' => 'required',
+        ]);
+
+        $profesor = auth()->user();
+
+        if ($profesor->role !== 'Profesor') {
+            abort(403, 'Acceso denegado');
+        }
+
+        $center = $profesor->detail->educational_center;
+
+        $newPassword = 'Password1@';
+
+        if ($request->student_id === 'all') {
+            $students = User::where('role', 'Alumno')
+                ->whereHas('detail', function ($query) use ($center) {
+                    $query->where('educational_center', $center);
+                })->get();
+
+            foreach ($students as $student) {
+                $student->password = bcrypt($newPassword);
+                $student->save();
+            }
+
+            return back()->with('message', 'Contraseñas restablecidas para todos los alumnos del centro.');
+        }
+
+        $student = User::where('id', $request->student_id)
+            ->where('role', 'Alumno')
+            ->whereHas('detail', function ($query) use ($center) {
+                $query->where('educational_center', $center);
+            })->first();
+
+        if (!$student) {
+            return back()->with('message', 'Alumno no encontrado o no pertenece a tu centro.');
+        }
+
+        $student->password = bcrypt($newPassword);
+        $student->save();
+
+        return back()->with('message', 'Contraseña restablecida para ' . $student->name . ' ' . $student->last_name);
+    }
+
+
     public function updateComment(Request $request, $id)
     {
         $request->validate([
@@ -217,8 +360,8 @@ class AdminController extends Controller
                     'educationalCenter' => 'required|string|max:100',
                 ]);
                 break;
-                case 'Profesor':
-                    $rules = array_merge($rules, [
+            case 'Profesor':
+                $rules = array_merge($rules, [
                     'educationalCenter' => 'required|string|max:100',
                     'specialization' => 'required|string|max:100',
                     'department' => 'required|string|max:100',
@@ -323,8 +466,8 @@ class AdminController extends Controller
                     'educational_center' => ucfirst($request->educationalCenter),
                 ];
                 break;
-                case 'Profesor':
-                    $details += [
+            case 'Profesor':
+                $details += [
                     'educational_center' => ucfirst($request->educationalCenter),
                     'specialization' => ucfirst($request->specialization),
                     'department' => ucfirst($request->department),
