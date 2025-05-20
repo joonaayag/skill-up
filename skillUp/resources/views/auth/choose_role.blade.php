@@ -13,7 +13,6 @@
     <select name="role" id="role" required>
         <option value="Usuario">{{ __('messages.choose.option-user') }}</option>
         <option value="Alumno">{{ __('messages.choose.option-student') }}</option>
-        <option value="Profesor">{{ __('messages.choose.option-teacher') }}</option>
         <option value="Empresa">{{ __('messages.choose.option-company') }}</option>
     </select>
     <button type="submit">{{ __('messages.choose.continue') }}</button>

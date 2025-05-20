@@ -63,7 +63,6 @@
             <option value="">{{__('messages.auth.select')}}</option>
             <option value="Usuario">{{__('messages.auth.option-user')}}</option>
             <option value="Alumno">{{__('messages.auth.option-student')}}</option>
-            <option value="Profesor">{{__('messages.auth.option-teacher')}}</option>
             <option value="Empresa">{{__('messages.auth.option-company')}}</option>
         </select>
 
@@ -75,19 +74,6 @@
                     required>
                 <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                     placeholder="{{__('messages.admin.users.ph-educational-center')}}" required>
-            </div>
-        </template>
-
-        <template x-if="role === 'Profesor'">
-            <div class="space-y-2">
-                <input type="date" name="birthDate" value="{{ old('birthDate') }}" placeholder="{{ __('messages.admin.users.ph-birth-date') }}"
-                    required>
-                <input type="text" name="specialization" value="{{ old('specialization') }}"
-                    placeholder="{{__('messages.admin.users.ph-specialization')}}" required>
-                <input type="text" name="department" value="{{ old('department') }}" placeholder="{{__('messages.admin.users.ph-department')}}"
-                    required>
-                <input type="text" name="validationDocument" value="{{ old('validationDocument') }}"
-                    placeholder="{{__('messages.admin.users.ph-validation-document')}}" required>
             </div>
         </template>
 

@@ -14,9 +14,6 @@
         <input type="text" name="current_course" placeholder="{{ __('messages.profile.current-course')  }}" required>
         <input type="text" name="specialization" placeholder="{{ __('messages.profile.specialization')  }}" required>
         <input type="text" name="educational_center" placeholder="{{ __('messages.profile.educational-center')  }}" required>
-    @elseif($role === 'Profesor')
-        <input type="text" name="department" placeholder="{{ __('messages.profile.department')  }}" required>
-        <input type="text" name="educational_center" placeholder="{{ __('messages.profile.educational-center')  }}" required>
     @elseif($role === 'Empresa')
         <input type="text" name="cif" placeholder="{{ __('messages.profile.cif')  }}" required>
         <input type="text" name="address" placeholder="{{ __('messages.profile.address')  }}" required>

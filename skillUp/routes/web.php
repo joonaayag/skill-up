@@ -102,17 +102,6 @@ Route::post('/completar-perfil', function (Request $request) {
         ]));
     }
 
-    if ($user->role === 'Profesor') {
-        $request->validate([
-            'department' => 'required|string',
-            'educational_center' => 'required|string',
-        ]);
-        $detail->update($request->only([
-            'department',
-            'educational_center'
-        ]));
-    }
-
     if ($user->role === 'Empresa') {
         $request->validate([
             'cif' => 'required|string',

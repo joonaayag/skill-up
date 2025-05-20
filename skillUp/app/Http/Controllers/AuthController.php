@@ -64,14 +64,6 @@ class AuthController extends Controller
                     'educationalCenter' => 'required|string|max:100',
                 ]);
                 break;
-            case 'Profesor':
-                $rules = array_merge($rules, [
-                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
-                    'specialization' => 'required|string|max:100',
-                    'department' => 'required|string|max:100',
-                    'validationDocument' => 'required|string|max:255',
-                ]);
-                break;
             case 'Empresa':
                 $rules = array_merge($rules, [
                     'cif' => 'required|string|max:50',
@@ -120,14 +112,6 @@ class AuthController extends Controller
             'educationalCenter.string' => __('messages.errors.educational_center.string'),
             'educationalCenter.max' => __('messages.errors.educational_center.max'),
 
-            'specialization.required' => __('messages.errors.specialization.required'),
-            'specialization.string' => __('messages.errors.specialization.string'),
-            'specialization.max' => __('messages.errors.specialization.max'),
-
-            'department.required' => __('messages.errors.department.required'),
-            'department.string' => __('messages.errors.department.string'),
-            'department.max' => __('messages.errors.department.max'),
-
             'validationDocument.required' => __('messages.errors.validation_document.required'),
             'validationDocument.string' => __('messages.errors.validation_document.string'),
             'validationDocument.max' => __('messages.errors.validation_document.max'),
@@ -171,14 +155,6 @@ class AuthController extends Controller
                     'educational_center' => ucfirst($request->educationalCenter),
                 ];
                 break;
-            case 'Profesor':
-                $details += [
-                    'birth_date' => $request->birthDate,
-                    'specialization' => ucfirst($request->specialization),
-                    'department' => ucfirst($request->department),
-                    'validation_document' => $request->validationDocument,
-                ];
-                break;
             case 'Empresa':
                 $details += [
                     'cif' => ucfirst($request->cif),
@@ -204,10 +180,6 @@ class AuthController extends Controller
             'Empresa' => [
                 'title' => __('messages.notifications.message-company.title'),
                 'message' => __('messages.notifications.message-company.message'),
-            ],
-            'Profesor' => [
-                'title' => __('messages.notifications.message-teacher.title'),
-                'message' => __('messages.notifications.message-teacher.message'),
             ],
             default => null,
         };
