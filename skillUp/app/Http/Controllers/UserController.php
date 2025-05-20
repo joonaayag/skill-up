@@ -34,6 +34,7 @@ class UserController extends Controller
                 break;
             case 'Profesor':
                 $rules += [
+                    'educational_center' => 'required|string|max:100',
                     'specialization' => 'required|string|max:100',
                     'department' => 'required|string|max:100',
                 ];
@@ -80,6 +81,7 @@ class UserController extends Controller
                 $detail->educational_center = ucfirst($request->educational_center);
                 break;
             case 'Profesor':
+                $detail->educational_center = ucfirst($request->educational_center);
                 $detail->specialization = ucfirst($request->specialization);
                 $detail->department = ucfirst($request->department);
                 break;

@@ -104,8 +104,9 @@
                             <div class="w-1/2 text-dark ml-2">{{ $details?->department ?? __('messages.profile.no-specify') }}</div>
                         </div>
                     </div>
-                    <div class="flex">
-
+                    <div>
+                        <label for="email" class="text-md font-bold">{{ __('messages.profile.educational-center') }}</label>
+                        <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? __('messages.profile.no-specify') }}</div>
                     </div>
                 @elseif (auth()->user()->role === 'Empresa')
                     <div class="flex gap-2">
@@ -257,6 +258,12 @@
                             <label class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
                             <input type="text" name="department"
                                 value="{{ old('department', $user->detail->department ?? '') }}"
+                                class="w-full border rounded px-3 py-2">
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                            <input type="text" name="educational_center"
+                                value="{{ old('educational_center', $user->detail->educational_center ?? '') }}"
                                 class="w-full border rounded px-3 py-2">
                         </div>
                     @endif

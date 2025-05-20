@@ -174,8 +174,9 @@
                                             <template x-if="role === 'Profesor'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
-                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
-                                                        <input type="date" name="birthDate" value="{{ old('birthDate', $user->detail?->birth_date) }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                                                        <input type="text" name="educationalCenter"
+                                                            value="{{ old('educationalCenter', $user->detail?->educational_center) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
@@ -190,12 +191,7 @@
                                                             value="{{ old('department', $user->detail?->department) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
-                                                    <div>
-                                                        <label class="block text-sm font-medium">{{ __('messages.admin.users.ph-validation-document') }}</label>
-                                                        <input type="text" name="validationDocument"
-                                                            value="{{ old('validationDocument', $user->detail?->validation_document) }}"
-                                                            class="w-full border rounded px-3 py-2">
-                                                    </div>
+                                                    
                                                 </div>
                                             </template>
 
@@ -419,8 +415,9 @@
                         <div class="space-y-4">
                             <div>
                                 <label
-                                    class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
-                                <input type="date" name="birthDate" value="{{ old('birthDate') }}"
+                                    class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                                <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
+                                    placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
                                     class="w-full border rounded px-3 py-2">
                             </div>
                             <div>
@@ -435,12 +432,6 @@
                                     class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
                                 <input type="text" name="department" value="{{ old('department') }}"
                                     placeholder="{{ __('messages.admin.users.ph-department') }}"
-                                    class="w-full border rounded px-3 py-2">
-                            </div>
-                            <div>
-                                <label
-                                    class="block text-sm font-medium">{{ __('messages.admin.users.ph-validation-document') }}</label>
-                                <input type="text" name="validationDocument" value="{{ old('validationDocument') }}"
                                     class="w-full border rounded px-3 py-2">
                             </div>
                         </div>

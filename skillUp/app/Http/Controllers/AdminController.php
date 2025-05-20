@@ -79,10 +79,9 @@ class AdminController extends Controller
                 break;
             case 'Profesor':
                 $rules += [
-                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                    'educationalCenter' => 'required|string|max:100',
                     'specialization' => 'required|string|max:100',
                     'department' => 'required|string|max:100',
-                    'validationDocument' => 'required|string|max:255',
                 ];
                 break;
             case 'Empresa':
@@ -129,7 +128,7 @@ class AdminController extends Controller
             $detail->user_id = $user->id;
         }
 
-        
+
 
         switch ($user->role) {
             case 'Alumno':
@@ -138,10 +137,10 @@ class AdminController extends Controller
                 $detail->educational_center = ucfirst($request->educationalCenter);
                 break;
             case 'Profesor':
+                $detail->educational_center = ucfirst($request->educationalCenter);
                 $detail->birth_date = $request->birthDate;
                 $detail->specialization = ucfirst($request->specialization);
                 $detail->department = ucfirst($request->department);
-                $detail->validation_document = $request->validationDocument;
                 break;
             case 'Empresa':
                 $detail->cif = strtoupper($request->cif);
@@ -220,12 +219,11 @@ class AdminController extends Controller
                     'educationalCenter' => 'required|string|max:100',
                 ]);
                 break;
-            case 'Profesor':
-                $rules = array_merge($rules, [
-                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                case 'Profesor':
+                    $rules = array_merge($rules, [
+                    'educationalCenter' => 'required|string|max:100',
                     'specialization' => 'required|string|max:100',
                     'department' => 'required|string|max:100',
-                    'validationDocument' => 'required|string|max:255',
                 ]);
                 break;
             case 'Empresa':
@@ -327,12 +325,11 @@ class AdminController extends Controller
                     'educational_center' => ucfirst($request->educationalCenter),
                 ];
                 break;
-            case 'Profesor':
-                $details += [
-                    'birth_date' => $request->birthDate,
+                case 'Profesor':
+                    $details += [
+                    'educational_center' => ucfirst($request->educationalCenter),
                     'specialization' => ucfirst($request->specialization),
                     'department' => ucfirst($request->department),
-                    'validation_document' => $request->validationDocument,
                 ];
                 break;
             case 'Empresa':
