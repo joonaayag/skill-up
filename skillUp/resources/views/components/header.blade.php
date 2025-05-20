@@ -25,6 +25,7 @@
             @endif
             @if($role === 'Profesor')
                 <a href="{{ route('school.projects.index') }}">{{ __('messages.navbar.school-projects') }}</a>
+                <a href="{{ route('admin.dashboard') }}">AP</a>
             @endif
             @if(in_array($role, ['Profesor', 'Empresa']))
                 <a href="{{ route('applications.index') }}">{{ __('messages.navbar.applications') }}</a>

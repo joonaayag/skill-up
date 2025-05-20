@@ -20,37 +20,55 @@
         </x-heading>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            <a href="{{ route('admin.projects') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
-                <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.p-management.text') }}</h4>
-                <p class="text-sm text-gray-600 dark:text-themeLightGray">{{ __('messages.admin.dashboard.p-management.description') }}
-                </p>
-            </a>
 
-            <a href="{{ route('admin.school_projects') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
-                <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.sp-management.text') }}</h4>
-                <p class="text-sm text-gray-600 dark:text-themeLightGray">{{ __('messages.admin.dashboard.sp-management.description') }}
-                    educativos.</p>
-            </a>
+            @if (auth()->user()->role === 'Admin')
+                <a href="{{ route('admin.projects') }}"
+                    class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                    <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.p-management.text') }}
+                    </h4>
+                    <p class="text-sm text-gray-600 dark:text-themeLightGray">
+                        {{ __('messages.admin.dashboard.p-management.description') }}</p>
+                </a>
 
-            <a href="{{ route('admin.users') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
-                <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.u-management.text') }}</h4>
-                <p class="text-sm text-gray-600 dark:text-themeLightGray">{{ __('messages.admin.dashboard.u-management.description') }}</p>
-            </a>
+                <a href="{{ route('admin.school_projects') }}"
+                    class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                    <h4 class="text-lg font-semibold text-themeBlue mb-2">
+                        {{ __('messages.admin.dashboard.sp-management.text') }}</h4>
+                    <p class="text-sm text-gray-600 dark:text-themeLightGray">
+                        {{ __('messages.admin.dashboard.sp-management.description') }}</p>
+                </a>
+            @endif
 
-            <a href="{{ route('admin.offers') }}"
-                class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
-                <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.o-management.text') }}</h4>
-                <p class="text-sm text-gray-600 dark:text-themeLightGray">{{ __('messages.admin.dashboard.o-management.description') }}</p>
-            </a>
-            <a href="{{ route('admin.comments') }}"
-                class="col-span-2 text-center block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
-                <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.c-management.text') }}</h4>
-                <p class="text-sm text-gray-600 dark:text-themeLightGray">{{ __('messages.admin.dashboard.c-management.description') }}</p>
-            </a>
+            @if (in_array(auth()->user()->role, ['Admin', 'Profesor']))
+                <a href="{{ route('admin.users') }}"
+                    class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                    <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.u-management.text') }}
+                    </h4>
+                    <p class="text-sm text-gray-600 dark:text-themeLightGray">
+                        {{ __('messages.admin.dashboard.u-management.description') }}</p>
+                </a>
+            @endif
+
+            @if (auth()->user()->role === 'Admin')
+                <a href="{{ route('admin.offers') }}"
+                    class="block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                    <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.o-management.text') }}
+                    </h4>
+                    <p class="text-sm text-gray-600 dark:text-themeLightGray">
+                        {{ __('messages.admin.dashboard.o-management.description') }}</p>
+                </a>
+
+                <a href="{{ route('admin.comments') }}"
+                    class="col-span-2 text-center block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                    <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.c-management.text') }}
+                    </h4>
+                    <p class="text-sm text-gray-600 dark:text-themeLightGray">
+                        {{ __('messages.admin.dashboard.c-management.description') }}</p>
+                </a>
+            @endif
+
         </div>
+
     </div>
 
 @endsection

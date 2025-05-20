@@ -155,8 +155,6 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('message', __('messages.messages.user-update'));
     }
 
-
-
     public function updateComment(Request $request, $id)
     {
         $request->validate([
@@ -627,7 +625,6 @@ class AdminController extends Controller
 
         return back()->with('message', __('messages.messages.sp-create'));
     }
-
 
     public function showOffers()
     {
