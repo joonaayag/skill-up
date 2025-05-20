@@ -151,94 +151,80 @@
                                             <template x-if="role === 'Alumno'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
-                                                        <input type="date" name="birthDate" value="{{ old('birthDate') }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
+                                                        <input type="date" name="birthDate" value="{{ old('birthDate', $user->detail?->birth_date) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-current-course') }}</label>
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-current-course') }}</label>
                                                         <input type="text" name="currentCourse"
-                                                            value="{{ old('currentCourse') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-current-course') }}"
+                                                            value="{{ old('currentCourse', $user->detail?->current_course) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                                         <input type="text" name="educationalCenter"
-                                                            value="{{ old('educationalCenter') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
+                                                            value="{{ old('educationalCenter', $user->detail?->educational_center) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                 </div>
                                             </template>
 
+
                                             <template x-if="role === 'Profesor'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
-                                                        <input type="date" name="birthDate" value="{{ old('birthDate') }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
+                                                        <input type="date" name="birthDate" value="{{ old('birthDate', $user->detail?->birth_date) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-specialization') }}</label>
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-specialization') }}</label>
                                                         <input type="text" name="specialization"
-                                                            value="{{ old('specialization') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-specialization') }}"
+                                                            value="{{ old('specialization', $user->detail?->specialization) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
-                                                        <input type="text" name="department" value="{{ old('department') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-department') }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
+                                                        <input type="text" name="department"
+                                                            value="{{ old('department', $user->detail?->department) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.admin.users.ph-validation-document') }}</label>
+                                                        <label class="block text-sm font-medium">{{ __('messages.admin.users.ph-validation-document') }}</label>
                                                         <input type="text" name="validationDocument"
-                                                            value="{{ old('validationDocument') }}"
+                                                            value="{{ old('validationDocument', $user->detail?->validation_document) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                 </div>
                                             </template>
+
 
                                             <template x-if="role === 'Empresa'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
                                                         <label class="block text-sm font-medium">CIF</label>
-                                                        <input type="text" name="cif" value="{{ old('cif') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-cif') }}"
+                                                        <input type="text" name="cif" value="{{ old('cif', $user->detail?->cif) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-address') }}</label>
-                                                        <input type="text" name="address" value="{{ old('address') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-address') }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-address') }}</label>
+                                                        <input type="text" name="address" value="{{ old('address', $user->detail?->address) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-sector') }}</label>
-                                                        <input type="text" name="sector" value="{{ old('sector') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-sector') }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-sector') }}</label>
+                                                        <input type="text" name="sector" value="{{ old('sector', $user->detail?->sector) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                     <div>
-                                                        <label
-                                                            class="block text-sm font-medium">{{ __('messages.profile.label-website') }}</label>
-                                                        <input type="url" name="website" value="{{ old('website') }}"
-                                                            placeholder="{{ __('messages.admin.users.ph-website') }}"
+                                                        <label class="block text-sm font-medium">{{ __('messages.profile.label-website') }}</label>
+                                                        <input type="url" name="website" value="{{ old('website', $user->detail?->website) }}"
                                                             class="w-full border rounded px-3 py-2">
                                                     </div>
                                                 </div>
                                             </template>
+
 
                                             <div class="mt-4" x-data="{ cvName: '' }" x-cloak>
                                                 <label

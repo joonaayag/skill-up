@@ -52,10 +52,13 @@ class AdminController extends Controller
     }
     public function updateUser(Request $request, $id)
     {
+        if (auth()->user()->role !== 'Admin') {
+            return redirect('/dashboard');
+        }
 
         $user = User::findOrFail($id);
 
-        $validated = $request->validate([
+        $rules = [
             'name' => 'required|string|max:20',
             'last_name' => 'required|string|max:40',
             'email' => 'required|email|string|max:50|unique:users,email,' . $user->id,
@@ -64,91 +67,96 @@ class AdminController extends Controller
             'profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'cv' => 'nullable|file|mimes:pdf|max:2048',
-        ], [
-            'name.required' => __('messages.errors.name.required'),
-            'name.string' => __('messages.errors.name.string'),
-            'name.max' => __('messages.errors.name.max'),
+        ];
 
-            'role.required' => __('messages.errors.role.required'),
-            'role.in' => __('messages.errors.role.in'),
-
-            'last_name.required' => __('messages.errors.last_name.required'),
-            'last_name.max' => __('messages.errors.last_name.max'),
-            'last_name.string' => __('messages.errors.last_name.string'),
-
-            'email.required' => __('messages.errors.email.required'),
-            'email.email' => __('messages.errors.email.email'),
-            'email.unique' => __('messages.errors.email.unique'),
-            'email.max' => __('messages.errors.email.max'),
-            'email.string' => __('messages.errors.email.string'),
-
-            'description.max' => __('messages.errors.description.max'),
-
-            'profile.image' => __('messages.errors.profile.image'),
-            'profile.mimes' => __('messages.errors.profile.mimes'),
-            'profile.max' => __('messages.errors.profile.max'),
-
-            'banner.image' => __('messages.errors.banner.image'),
-            'banner.mimes' => __('messages.errors.banner.mimes'),
-            'banner.max' => __('messages.errors.banner.max'),
-
-            'cv.file' => __('messages.errors.cv.file'),
-            'cv.mimes' => __('messages.errors.cv.mimes'),
-            'cv.max' => __('messages.errors.cv.max'),
-        ]);
-
-        if ($request->hasFile('cv')) {
-            if ($request->cv && Storage::disk('public')->exists($request->cv)) {
-                Storage::disk('public')->delete($request->cv);
-            }
-
-            $cvPath = $request->file('cv')->store('cvs', 'public');
-            $user->cv = $cvPath;
+        switch ($request->role) {
+            case 'Alumno':
+                $rules += [
+                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                    'currentCourse' => 'required|string|max:50',
+                    'educationalCenter' => 'required|string|max:100',
+                ];
+                break;
+            case 'Profesor':
+                $rules += [
+                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                    'specialization' => 'required|string|max:100',
+                    'department' => 'required|string|max:100',
+                    'validationDocument' => 'required|string|max:255',
+                ];
+                break;
+            case 'Empresa':
+                $rules += [
+                    'cif' => 'required|string|max:50',
+                    'address' => 'required|string|max:255',
+                    'sector' => 'required|string|max:100',
+                    'website' => 'nullable|url|max:255',
+                ];
+                break;
         }
 
-        $user->name = $validated['name'];
-        $user->last_name = $validated['last_name'];
-        $user->email = $validated['email'];
-        $user->description = $validated['description'];
+        $validated = $request->validate($rules);
 
+        // Archivos
+        if ($request->hasFile('cv')) {
+            if ($user->cv && Storage::disk('public')->exists($user->cv)) {
+                Storage::disk('public')->delete($user->cv);
+            }
+            $user->cv = $request->file('cv')->store('cvs', 'public');
+        }
 
         if ($request->hasFile('profile')) {
-            $path = $request->file('profile')->store('perfil', 'public');
-            $user->profile = $path;
+            $user->profile = $request->file('profile')->store('perfil', 'public');
         }
 
         if ($request->hasFile('banner')) {
-            $path = $request->file('banner')->store('banners', 'public');
-            $user->banner = $path;
+            $user->banner = $request->file('banner')->store('banners', 'public');
         }
 
+        // Datos generales del usuario
+        $user->name = ucfirst($validated['name']);
+        $user->last_name = ucfirst($validated['last_name']);
+        $user->email = $validated['email'];
+        $user->description = $validated['description'];
+        $user->role = $validated['role'];
         $user->save();
 
-        $detail = $user->detail ?? new UserDetail(['user_id' => $user->id]);
+        // Detalles del usuario
+        $detail = $user->detail;
 
-
-        if ($user->role === 'Alumno') {
-            $detail->birth_date = $request->birth_date;
-            $detail->current_course = $request->current_course;
-            $detail->educational_center = $request->educational_center;
+        if (!$detail) {
+            $detail = new UserDetail();
+            $detail->user_id = $user->id;
         }
 
-        if ($user->role === 'Profesor') {
-            $detail->specialization = $request->specialization;
-            $detail->department = $request->department;
-        }
+        
 
-        if ($user->role === 'Empresa') {
-            $detail->cif = $request->cif;
-            $detail->address = $request->address;
-            $detail->sector = $request->sector;
-            $detail->website = $request->website;
+        switch ($user->role) {
+            case 'Alumno':
+                $detail->birth_date = $request->birthDate;
+                $detail->current_course = ucfirst($request->currentCourse);
+                $detail->educational_center = ucfirst($request->educationalCenter);
+                break;
+            case 'Profesor':
+                $detail->birth_date = $request->birthDate;
+                $detail->specialization = ucfirst($request->specialization);
+                $detail->department = ucfirst($request->department);
+                $detail->validation_document = $request->validationDocument;
+                break;
+            case 'Empresa':
+                $detail->cif = strtoupper($request->cif);
+                $detail->address = ucfirst($request->address);
+                $detail->sector = ucfirst($request->sector);
+                $detail->website = $request->website;
+                break;
         }
 
         $detail->save();
 
         return redirect()->route('admin.users')->with('message', __('messages.messages.user-update'));
     }
+
+
 
     public function updateComment(Request $request, $id)
     {
@@ -464,11 +472,41 @@ class AdminController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'sector_category' => 'required|in:' . implode(',', [
-                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
-                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
-                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
-                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
-                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+                'Agricultura/Medio ambiente',
+                'Arte/Cultura',
+                'Automoción',
+                'Ciberseguridad',
+                'Community Manager',
+                'Construcción',
+                'Coordinación Educativa',
+                'Diseño Gráfico',
+                'Electricidad y fontanería',
+                'Energía/Renovables',
+                'Farmacia',
+                'Finanzas y contabilidad',
+                'Fotografía/vídeo',
+                'Hostelería/turismo',
+                'AI',
+                'Investigación/laboratorio',
+                'Legal',
+                'Logística',
+                'Mecánica',
+                'Medicina/Enfermería',
+                'Nutrición',
+                'Operador Industrial',
+                'Orientación',
+                'Periodismo',
+                'Enseñanza',
+                'Psicología',
+                'Publicidad',
+                'Redes y Sistemas',
+                'RRHH',
+                'Seguridad',
+                'SEO/SEM',
+                'Terapias/Rehabilitación',
+                'Traducción',
+                'Transporte/Entrega',
+                'Ventas'
             ]),
             'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
@@ -550,7 +588,7 @@ class AdminController extends Controller
 
             'general_category.in' => __('messages.errors.sector.in'),
             'general_category.required' => __('messages.errors.sector.required'),
-            
+
             'images.*.image' => __('messages.errors.image.image'),
             'images.*.mimes' => __('messages.errors.image.mimes'),
             'images.*.max' => __('messages.errors.image.max'),
@@ -578,7 +616,7 @@ class AdminController extends Controller
             'user_id' => auth()->id(),
             'type' => 'proyecto',
             'title' => __('messages.notifications.message-sp-published.title'),
-            'message' => __('messages.notifications.message-sp-published.message-1') . $project->title  . __('messages.notifications.message-sp-published.message-2'),
+            'message' => __('messages.notifications.message-sp-published.message-1') . $project->title . __('messages.notifications.message-sp-published.message-2'),
         ]);
 
         if ($request->hasFile('files')) {
@@ -615,11 +653,41 @@ class AdminController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'sector_category' => 'required|in:' . implode(',', [
-                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
-                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
-                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
-                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
-                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+                'Agricultura/Medio ambiente',
+                'Arte/Cultura',
+                'Automoción',
+                'Ciberseguridad',
+                'Community Manager',
+                'Construcción',
+                'Coordinación Educativa',
+                'Diseño Gráfico',
+                'Electricidad y fontanería',
+                'Energía/Renovables',
+                'Farmacia',
+                'Finanzas y contabilidad',
+                'Fotografía/vídeo',
+                'Hostelería/turismo',
+                'AI',
+                'Investigación/laboratorio',
+                'Legal',
+                'Logística',
+                'Mecánica',
+                'Medicina/Enfermería',
+                'Nutrición',
+                'Operador Industrial',
+                'Orientación',
+                'Periodismo',
+                'Enseñanza',
+                'Psicología',
+                'Publicidad',
+                'Redes y Sistemas',
+                'RRHH',
+                'Seguridad',
+                'SEO/SEM',
+                'Terapias/Rehabilitación',
+                'Traducción',
+                'Transporte/Entrega',
+                'Ventas'
             ]),
             'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
@@ -637,11 +705,11 @@ class AdminController extends Controller
 
             'sector_category.required' => __('messages.errors.sector_offer.required'),
             'sector_category.string' => __('messages.errors.sector_offer.string'),
-            'sector_category.in' =>    __('messages.errors.sector_offer.in'),
+            'sector_category.in' => __('messages.errors.sector_offer.in'),
 
             'general_category.required' => __('messages.errors.sector.required'),
             'general_category.string' => __('messages.errors.sector.string'),
-            'general_category.in' =>    __('messages.errors.sector.in'),
+            'general_category.in' => __('messages.errors.sector.in'),
 
             'state.required' => __('messages.errors.state.required'),
             'state.in' => __('messages.errors.state.in'),
@@ -750,7 +818,7 @@ class AdminController extends Controller
 
             'general_category.in' => __('messages.errors.sector.in'),
             'general_category.required' => __('messages.errors.sector.required'),
-            
+
             'images.*.image' => __('messages.errors.image.image'),
             'images.*.mimes' => __('messages.errors.image.mimes'),
             'images.*.max' => __('messages.errors.image.max'),
