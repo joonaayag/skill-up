@@ -35,16 +35,16 @@ class AdminController extends Controller
 
         if ($user->role === 'Profesor') {
             $users = User::whereHas('detail', function ($query) use ($user) {
-                $query->where('educational_center', $user->detail->educational_center);
-            })->with('detail')->get();
+                $query->where('educational_center', $user->detail?->educational_center);
+            })->where('id', '!=', $user->id)->with('detail')->get();
 
             $students = User::where('role', 'Alumno')
                 ->whereHas('detail', function ($q) use ($user) {
-                    $q->where('educational_center', $user->detail->educational_center);
-                })->get();
+                    $q->where('educational_center', $user->detail?->educational_center);
+                })->where('id', '!=', $user->id)->get();
 
         } else {
-            $users = User::with('detail')->get();
+            $users = User::where('id', '!=', auth()->id())->with('detail')->get();
         }
 
         return view('admin.users', compact('users', 'students'));
@@ -331,191 +331,136 @@ class AdminController extends Controller
     }
 
     public function userRegister(Request $request)
-    {
-        if (auth()->user()->role !== 'Admin') {
-            return redirect('/dashboard');
-        }
-        $rules = [
-            'name' => 'required|string|max:20',
-            'lastName' => 'nullable|string|max:50',
-            'email' => 'required|string|email|max:255|unique:users',
-            'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
-            'password' => [
-                'required',
-                'string',
-                'confirmed',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->symbols(),
-            ],
-        ];
+{
+    $user = auth()->user();
 
-        switch ($request->role) {
-            case 'Alumno':
-                $rules = array_merge($rules, [
-                    'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
-                    'currentCourse' => 'required|string|max:50',
-                    'educationalCenter' => 'required|string|max:100',
-                ]);
-                break;
-            case 'Profesor':
-                $rules = array_merge($rules, [
-                    'educationalCenter' => 'required|string|max:100',
-                    'specialization' => 'required|string|max:100',
-                    'department' => 'required|string|max:100',
-                ]);
-                break;
-            case 'Empresa':
-                $rules = array_merge($rules, [
-                    'cif' => 'required|string|max:50',
-                    'address' => 'required|string|max:255',
-                    'sector' => 'required|string|max:100',
-                    'website' => 'nullable|url|max:255',
-                ]);
-                break;
-        }
-
-        $messages = [
-            'name.required' => __('messages.errors.name.required'),
-            'name.string' => __('messages.errors.name.string'),
-            'name.max' => __('messages.errors.name.max'),
-
-            'lastName.required' => __('messages.errors.last_name.required'),
-            'lastName.string' => __('messages.errors.last_name.string'),
-            'lastName.max' => __('messages.errors.last_name.max'),
-
-            'email.required' => __('messages.errors.email.required'),
-            'email.string' => __('messages.errors.email.string'),
-            'email.email' => __('messages.errors.email.email'),
-            'email.max' => __('messages.errors.email.max'),
-            'email.unique' => __('messages.errors.email.unique'),
-
-            'password.required' => __('messages.errors.password.required'),
-            'password.confirmed' => __('messages.errors.password.confirmed'),
-            'password.min' => __('messages.errors.password.min'),
-            'password.string' => __('messages.errors.password.string'),
-            'password.*' => __('messages.errors.password.regex'),
-
-            'role.required' => __('messages.errors.role.required'),
-            'role.in' => __('messages.errors.role.in'),
-
-            'g-recaptcha-response.required' => __('messages.errors.recaptcha.required'),
-
-            'birthDate.required' => __('messages.errors.birth_date.required'),
-            'birthDate.date' => __('messages.errors.birth_date.date'),
-            'birthDate.before_or_equal' => __('messages.errors.birth_date.before_or_equal'),
-
-            'currentCourse.required' => __('messages.errors.current_course.required'),
-            'currentCourse.string' => __('messages.errors.current_course.string'),
-            'currentCourse.max' => __('messages.errors.current_course.max'),
-
-            'educationalCenter.required' => __('messages.errors.educational_center.required'),
-            'educationalCenter.string' => __('messages.errors.educational_center.string'),
-            'educationalCenter.max' => __('messages.errors.educational_center.max'),
-
-            'specialization.required' => __('messages.errors.specialization.required'),
-            'specialization.string' => __('messages.errors.specialization.string'),
-            'specialization.max' => __('messages.errors.specialization.max'),
-
-            'department.required' => __('messages.errors.department.required'),
-            'department.string' => __('messages.errors.department.string'),
-            'department.max' => __('messages.errors.department.max'),
-
-            'validationDocument.required' => __('messages.errors.validation_document.required'),
-            'validationDocument.string' => __('messages.errors.validation_document.string'),
-            'validationDocument.max' => __('messages.errors.validation_document.max'),
-
-            'cif.required' => __('messages.errors.cif.required'),
-            'cif.string' => __('messages.errors.cif.string'),
-            'cif.max' => __('messages.errors.cif.max'),
-
-            'address.required' => __('messages.errors.address.required'),
-            'address.string' => __('messages.errors.address.string'),
-            'address.max' => __('messages.errors.address.max'),
-
-            'sector.required' => __('messages.errors.sector.required'),
-            'sector.string' => __('messages.errors.sector.string'),
-            'sector.max' => __('messages.errors.sector.max'),
-
-            'website.url' => __('messages.errors.website.url'),
-            'website.max' => __('messages.errors.website.max'),
-        ];
-
-        $request->validate($rules, $messages);
-
-
-        $user = User::create([
-            'name' => ucfirst($request->name),
-            'last_name' => ucfirst($request->lastName),
-            'email' => ucfirst($request->email),
-            'password' => bcrypt($request->password),
-            'role' => $request->role,
-            'profile' => null,
-            'banner' => null
-        ]);
-
-        $details = ['user_id' => $user->id];
-
-        switch ($user->role) {
-            case 'Alumno':
-                $details += [
-                    'birth_date' => $request->birthDate,
-                    'current_course' => ucfirst($request->currentCourse),
-                    'educational_center' => ucfirst($request->educationalCenter),
-                ];
-                break;
-            case 'Profesor':
-                $details += [
-                    'educational_center' => ucfirst($request->educationalCenter),
-                    'specialization' => ucfirst($request->specialization),
-                    'department' => ucfirst($request->department),
-                ];
-                break;
-            case 'Empresa':
-                $details += [
-                    'cif' => ucfirst($request->cif),
-                    'address' => ucfirst($request->address),
-                    'sector' => ucfirst($request->sector),
-                    'website' => $request->website,
-                ];
-                break;
-        }
-
-        UserDetail::create($details);
-
-        $message = match ($user->role) {
-            'Alumno' => [
-                'title' => __('messages.notifications.message-student.title'),
-                'message' => __('messages.notifications.message-student.message'),
-            ],
-            'Usuario' => [
-                'title' => __('messages.notifications.message-user.title'),
-                'message' => __('messages.notifications.message-user.message'),
-            ],
-            'Empresa' => [
-                'title' => __('messages.notifications.message-company.title'),
-                'message' => __('messages.notifications.message-company.message'),
-            ],
-            'Profesor' => [
-                'title' => __('messages.notifications.message-teacher.title'),
-                'message' => __('messages.notifications.message-teacher.message'),
-            ],
-            default => null,
-        };
-
-        if ($message) {
-            Notification::create([
-                'user_id' => $user->id,
-                'type' => 'mensaje',
-                'title' => $message['title'],
-                'message' => $message['message'],
-            ]);
-        }
-
-        return redirect()->route('admin.users')->with('message', __('messages.messages.user-create'));
+    // Solo pueden acceder Admin o Profesor
+    if (!$user || !in_array($user->role, ['Admin', 'Profesor'])) {
+        return redirect('/dashboard');
     }
+
+    // Si es profesor, solo puede crear alumnos
+    if ($user->role === 'Profesor' && $request->role !== 'Alumno') {
+        return redirect()->back()->withErrors([
+            'role' => 'Solo puedes registrar alumnos de tu centro educativo.',
+        ])->withInput();
+    }
+
+    $rules = [
+        'name' => 'required|string|max:20',
+        'lastName' => 'nullable|string|max:50',
+        'email' => 'required|string|email|max:255|unique:users',
+        'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
+        'password' => [
+            'required',
+            'string',
+            'confirmed',
+            Password::min(8)->mixedCase()->letters()->numbers()->symbols(),
+        ],
+    ];
+
+    switch ($request->role) {
+        case 'Alumno':
+            $rules = array_merge($rules, [
+                'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                'currentCourse' => 'required|string|max:50',
+                // Se valida aunque el campo no se use en vista del profesor
+                'educationalCenter' => 'required|string|max:100',
+            ]);
+            break;
+        case 'Profesor':
+            $rules = array_merge($rules, [
+                'educationalCenter' => 'required|string|max:100',
+                'specialization' => 'required|string|max:100',
+                'department' => 'required|string|max:100',
+            ]);
+            break;
+        case 'Empresa':
+            $rules = array_merge($rules, [
+                'cif' => 'required|string|max:50',
+                'address' => 'required|string|max:255',
+                'sector' => 'required|string|max:100',
+                'website' => 'nullable|url|max:255',
+            ]);
+            break;
+    }
+
+    $request->validate($rules); // puedes incluir tus mensajes personalizados si quieres
+
+    $newUser = User::create([
+        'name' => ucfirst($request->name),
+        'last_name' => ucfirst($request->lastName),
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+        'role' => $request->role,
+        'profile' => null,
+        'banner' => null,
+    ]);
+
+    $details = ['user_id' => $newUser->id];
+
+    switch ($newUser->role) {
+        case 'Alumno':
+            $details += [
+                'birth_date' => $request->birthDate,
+                'current_course' => ucfirst($request->currentCourse),
+                // Si lo crea un profesor, se impone su centro educativo
+                'educational_center' => $user->role === 'Profesor'
+                    ? $user->detail?->educational_center
+                    : ucfirst($request->educationalCenter),
+            ];
+            break;
+        case 'Profesor':
+            $details += [
+                'educational_center' => ucfirst($request->educationalCenter),
+                'specialization' => ucfirst($request->specialization),
+                'department' => ucfirst($request->department),
+            ];
+            break;
+        case 'Empresa':
+            $details += [
+                'cif' => strtoupper($request->cif),
+                'address' => ucfirst($request->address),
+                'sector' => ucfirst($request->sector),
+                'website' => $request->website,
+            ];
+            break;
+    }
+
+    UserDetail::create($details);
+
+    $message = match ($newUser->role) {
+        'Alumno' => [
+            'title' => __('messages.notifications.message-student.title'),
+            'message' => __('messages.notifications.message-student.message'),
+        ],
+        'Usuario' => [
+            'title' => __('messages.notifications.message-user.title'),
+            'message' => __('messages.notifications.message-user.message'),
+        ],
+        'Empresa' => [
+            'title' => __('messages.notifications.message-company.title'),
+            'message' => __('messages.notifications.message-company.message'),
+        ],
+        'Profesor' => [
+            'title' => __('messages.notifications.message-teacher.title'),
+            'message' => __('messages.notifications.message-teacher.message'),
+        ],
+        default => null,
+    };
+
+    if ($message) {
+        Notification::create([
+            'user_id' => $newUser->id,
+            'type' => 'mensaje',
+            'title' => $message['title'],
+            'message' => $message['message'],
+        ]);
+    }
+
+    return redirect()->route('admin.users')->with('message', __('messages.messages.user-create'));
+}
+
 
     public function createProject(Request $request)
     {
