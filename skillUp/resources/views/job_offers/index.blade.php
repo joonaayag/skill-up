@@ -254,9 +254,14 @@
             <x-modal>
                 <x-heading level="h2"
                     class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
-                <form action="{{ route('job.offers.store') }}" method="POST"
+                <form action="{{ route('job.offers.store') }}" method="POST" id="mi-form"
                     class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                     @csrf
+
+                    <div id="form-errors" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
+                        <ul id="error-list" class="list-disc list-inside"></ul>
+                    </div>
+
 
                     <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
                     <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
@@ -269,10 +274,7 @@
 
                     <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
                     <select name="sector_category" id="sector_category" required
-                        class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white dark:bg-themeBgD">
-                        <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
-                            {{ __('messages.select') }}
-                        </option>
+                        class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                         @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
                             <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
                                 {{ $sector }}
@@ -282,7 +284,7 @@
 
                     <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
                     <select name="general_category" required
-                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                         <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                         <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
                             {{ __('messages.projects.option-science') }}
@@ -349,6 +351,81 @@
                 });
             }
         });
+
+        document.getElementById('mi-form').addEventListener('submit', function (event) {
+            const formData = {
+                name: document.getElementById('name')?.value.trim() || '',
+                subtitle: document.getElementById('subtitle')?.value.trim() || '',
+                description: document.getElementById('description')?.value.trim() || '',
+                sector_category: document.getElementById('sector_category')?.value || '',
+                general_category: document.getElementsByName('general_category')[0]?.value || '',
+                state: document.getElementsByName('state')[0]?.value || ''
+            };
+
+            const errors = {};
+
+            if (!formData.name) {
+                errors.name = "{{ __('messages.errors.name.required') }}";
+            } else if (formData.name.length > 40) {
+                errors.name = "{{ __('messages.errors.name.max') }}";
+            }
+
+            if (formData.subtitle && formData.subtitle.length > 255) {
+                errors.subtitle = "{{ __('messages.errors.subtitle.max') }}";
+            }
+
+            if (!formData.description) {
+                errors.description = "{{ __('messages.errors.description.required') }}";
+            }
+
+            const validSectors = [
+                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
+                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
+                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
+                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
+                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+            ];
+            if (!formData.sector_category) {
+                errors.sector_category = "{{ __('messages.errors.sector_offer.required') }}";
+            } else if (!validSectors.includes(formData.sector_category)) {
+                errors.sector_category = "{{ __('messages.errors.sector_offer.in') }}";
+            }
+
+            const validCategories = [
+                'Administración y negocio', 'Ciencia y salud', 'Comunicación', 'Diseño y comunicación',
+                'Educación', 'Industria', 'Otro', 'Tecnología y desarrollo'
+            ];
+            if (!formData.general_category) {
+                errors.general_category = "{{ __('messages.errors.sector.required') }}";
+            } else if (!validCategories.includes(formData.general_category)) {
+                errors.general_category = "{{ __('messages.errors.sector.in') }}";
+            }
+
+            if (!formData.state) {
+                errors.state = "{{ __('messages.errors.state.required') }}";
+            } else if (!['abierta', 'cerrada'].includes(formData.state)) {
+                errors.state = "{{ __('messages.errors.state.in') }}";
+            }
+
+            const errorBox = document.getElementById('form-errors');
+            const errorList = document.getElementById('error-list');
+
+            if (Object.keys(errors).length > 0) {
+                event.preventDefault();
+
+                errorList.innerHTML = '';
+                errorBox.classList.remove('hidden');
+
+                Object.values(errors).forEach(msg => {
+                    const li = document.createElement('li');
+                    li.textContent = msg;
+                    errorList.appendChild(li);
+                });
+            } else {
+                errorBox.classList.add('hidden');
+            }
+        });
+
 
     </script>
 

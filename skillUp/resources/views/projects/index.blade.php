@@ -153,9 +153,13 @@
             <x-heading level="h2"
                 class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.projects.new-project') }}</x-heading>
 
-            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
+            <form action="{{ route('projects.store') }}" id="mi-form" method="POST" enctype="multipart/form-data"
                 class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
                 @csrf
+
+                <div id="form-errors" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
+                    <ul id="error-list" class="list-disc list-inside"></ul>
+                </div>
 
                 <div>
                     <x-label for="title">{{ __('messages.projects.label-title') }}</x-label>
@@ -184,7 +188,7 @@
 
                 <div>
                     <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
-                    <select name="sector_category" required
+                    <select name="sector_category" id="sector_category" required
                         class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
                         <option value="Administración y negocio" {{ old('sector_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                         <option value="Ciencia y salud" {{ old('sector_category') == 'Ciencia y salud' ? 'selected' : '' }}>{{ __('messages.projects.option-science') }}</option>
@@ -204,7 +208,7 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.projects.label-link') }}</x-label>
-                    <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
+                    <input type="url" name="link" id="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
                 </div>
 
                 <div>
@@ -371,6 +375,128 @@
                 });
             }
         });
+
+        function validateForm(data) {
+            const errors = {};
+
+            if (!data.title) {
+                errors.title = "{{ __('messages.errors.title.required') }}";
+            } else if (typeof data.title !== 'string') {
+                errors.title = "{{ __('messages.errors.title.string') }}";
+            } else if (data.title.length > 40) {
+                errors.title = "{{ __('messages.errors.title.max') }}";
+            }
+
+            if (!data.description) {
+                errors.description = "{{ __('messages.errors.description.required') }}";
+            } else if (typeof data.description !== 'string') {
+                errors.description = "{{ __('messages.errors.description.string') }}";
+            } else if (data.description.length > 300) {
+                errors.description = "{{ __('messages.errors.description.max') }}";
+            }
+
+            const validTags = ['TFG', 'TFM', 'Tesis', 'Individual', 'Grupal', 'Tecnología', 'Ciencias', 'Artes', 'Ingeniería'];
+            if (!data.tags) {
+                errors.tags = "{{ __('messages.errors.tags.required') }}";
+            } else if (!validTags.includes(data.tags)) {
+                errors.tags = "{{ __('messages.errors.tags.in') }}";
+            }
+
+            const validSectors = [
+                'Administración y negocio',
+                'Ciencia y salud',
+                'Comunicación',
+                'Diseño y comunicación',
+                'Educación',
+                'Industria',
+                'Otro',
+                'Tecnología y desarrollo'
+            ];
+            if (!data.sector_category) {
+                errors.sector_category = "{{ __('messages.errors.sector.required') }}";
+            } else if (!validSectors.includes(data.sector_category)) {
+                errors.sector_category = "{{ __('messages.errors.sector.in') }}";
+            }
+
+            if (!data.creation_date) {
+                errors.creation_date = "{{ __('messages.errors.creation_date.required') }}";
+            } else if (isNaN(Date.parse(data.creation_date))) {
+                errors.creation_date = "{{ __('messages.errors.creation_date.date') }}";
+            }
+
+            if (data.link) {
+                try {
+                    const url = new URL(data.link);
+                    if (data.link.length > 255) {
+                        errors.link = "{{ __('messages.errors.link.max') }}";
+                    }
+                } catch (e) {
+                    errors.link = "{{ __('messages.errors.link.url') }}";
+                }
+            }
+
+            if (data.image) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                if (!allowedTypes.includes(data.image.type)) {
+                    errors.image = "{{ __('messages.errors.image.image') }}";
+                }
+                if (data.image.size > 4096 * 1024) {
+                    errors.image = "{{ __('messages.errors.image.max') }}";
+                }
+                const extension = data.image.name.split('.').pop().toLowerCase();
+                if (!['jpeg', 'png', 'jpg', 'gif'].includes(extension)) {
+                    errors.image = "{{ __('messages.errors.image.mimes') }}";
+                }
+            }
+
+            if (data.files && Array.isArray(data.files)) {
+                data.files.forEach((file, i) => {
+                    if (!(file instanceof File)) {
+                        errors[`files_${i}`] = "{{ __('messages.errors.file.file') }}";
+                    } else if (file.size > 4096 * 1024) {
+                        errors[`files_${i}`] = "{{ __('messages.errors.file.max') }}";
+                    }
+                });
+            }
+
+            return errors;
+        }
+
+        document.getElementById('mi-form').addEventListener('submit', function(event) {
+            const formData = {
+                title: document.getElementById('title')?.value || '',
+                description: document.getElementById('description')?.value || '',
+                tags: document.getElementById('tags')?.value || '',
+                sector_category: document.getElementById('sector_category')?.value || '',
+                creation_date: document.getElementById('creation_date')?.value || '',
+                link: document.getElementById('link')?.value || '',
+                image: document.getElementById('image')?.files[0] || null,
+                files: document.getElementById('file-upload')?.files ? Array.from(document.getElementById('file-upload').files) : []
+            };
+
+
+            const errors = validateForm(formData);
+
+            const errorBox = document.getElementById('form-errors');
+            const errorList = document.getElementById('error-list');
+
+            if (Object.keys(errors).length > 0) {
+                event.preventDefault();
+
+                errorList.innerHTML = '';
+                errorBox.classList.remove('hidden');
+
+                Object.values(errors).forEach(msg => {
+                    const li = document.createElement('li');
+                    li.textContent = msg;
+                    errorList.appendChild(li);
+                });
+            } else {
+                errorBox.classList.add('hidden');
+            }
+                });
+
+
     </script>
 
 @endsection

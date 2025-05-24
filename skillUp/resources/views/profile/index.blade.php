@@ -222,7 +222,7 @@
 
                     <div class="mt-4">
                         <label class="block text-sm font-medium">{{ __('messages.profile.label-description') }}</label>
-                        <textarea name="description" class="w-full border rounded px-3 py-2"
+                        <textarea name="description" class="w-full border rounded px-3 py-2 resize-none"
                             rows="4">{{ old('description', $user->description) }}</textarea>
                     </div>
 

@@ -74,6 +74,11 @@
                                             @csrf
                                             @method('PUT')
 
+                                            <div id="form-errors" class="bg-red-200 text-red-700 p-4 rounded mb-4 hidden">
+                                                <ul class="list-disc list-inside"></ul>
+                                            </div>
+
+
                                             <div class="relative mb-8">
                                                 <img src="{{ $user->banner ? asset('storage/' . $user->banner) : asset('images/defaultBanner.jpg') }}"
                                                     class="w-full h-40 object-cover cursor-pointer banner-preview" alt="Banner">
@@ -146,7 +151,7 @@
                                             <div class="mt-4">
                                                 <label
                                                     class="block text-sm font-medium">{{ __('messages.profile.label-description') }}</label>
-                                                <textarea name="description" class="w-full border rounded px-3 py-2"
+                                                <textarea name="description" class="w-full border rounded px-3 py-2 resize-none"
                                                     rows="4">{{ old('description', $user->description) }}</textarea>
                                             </div>
 
@@ -491,7 +496,7 @@
                 {{ __('messages.button.register') }}
             </button>
         </div>
-    </form>
+                </form>
     
             </x-modal>
             <button @click="showCreateUser = true"
@@ -622,6 +627,231 @@
             }
         }
     }   
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Manejo de previsualización de imágenes
+    const bannerPreview = document.querySelector('.banner-preview');
+    const bannerInput = document.querySelector('.banner-input');
+    const profilePreview = document.querySelector('.profile-preview');
+    const profileInput = document.querySelector('.profile-input');
+
+    // Click en banner para seleccionar archivo
+    bannerPreview.addEventListener('click', function() {
+        bannerInput.click();
+    });
+
+    // Click en perfil para seleccionar archivo
+    profilePreview.addEventListener('click', function() {
+        profileInput.click();
+    });
+
+    // Previsualización de banner
+    bannerInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                bannerPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Previsualización de perfil
+    profileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profilePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Validación del formulario
+    const form = document.querySelector('form[action*="admin.user.update"]');
+    
+    form.addEventListener('submit', function(event) {
+        const errors = {};
+        
+        // Obtener valores del formulario
+        const name = form.querySelector('input[name="name"]').value.trim();
+        const lastName = form.querySelector('input[name="last_name"]').value.trim();
+        const email = form.querySelector('input[name="email"]').value.trim();
+        const description = form.querySelector('textarea[name="description"]').value.trim();
+        const role = form.querySelector('select[name="role"]').value;
+        
+        // Archivos
+        const profileFile = form.querySelector('input[name="profile"]').files[0];
+        const bannerFile = form.querySelector('input[name="banner"]').files[0];
+        const cvFile = form.querySelector('input[name="cv"]').files[0];
+
+        // Validaciones generales
+        if (!name) {
+            errors.name = "El nombre es obligatorio.";
+        } else if (name.length > 20) {
+            errors.name = "El nombre no puede tener más de 20 caracteres.";
+        }
+
+        if (!lastName) {
+            errors.last_name = "El apellido es obligatorio.";
+        } else if (lastName.length > 40) {
+            errors.last_name = "El apellido no puede tener más de 40 caracteres.";
+        }
+
+        if (!email) {
+            errors.email = "El correo electrónico es obligatorio.";
+        } else if (!/^[\w-.]+@[\w-]+\.[a-z]{2,}$/i.test(email)) {
+            errors.email = "El formato del correo no es válido.";
+        } else if (email.length > 50) {
+            errors.email = "El correo no puede tener más de 50 caracteres.";
+        }
+
+        if (description && description.length > 300) {
+            errors.description = "La descripción no puede tener más de 300 caracteres.";
+        }
+
+        if (!role) {
+            errors.role = "El rol es obligatorio.";
+        } else if (!['Usuario', 'Alumno', 'Profesor', 'Empresa'].includes(role)) {
+            errors.role = "El rol seleccionado no es válido.";
+        }
+
+        // Validación de archivos
+        if (profileFile) {
+            const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!allowedImageTypes.includes(profileFile.type)) {
+                errors.profile = "La imagen de perfil debe ser JPG, JPEG o PNG.";
+            } else if (profileFile.size > 2048 * 1024) { // 2MB
+                errors.profile = "La imagen de perfil no puede ser mayor a 2MB.";
+            }
+        }
+
+        if (bannerFile) {
+            const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!allowedImageTypes.includes(bannerFile.type)) {
+                errors.banner = "La imagen de banner debe ser JPG, JPEG o PNG.";
+            } else if (bannerFile.size > 4096 * 1024) { // 4MB
+                errors.banner = "La imagen de banner no puede ser mayor a 4MB.";
+            }
+        }
+
+        if (cvFile) {
+            if (cvFile.type !== 'application/pdf') {
+                errors.cv = "El CV debe ser un archivo PDF.";
+            } else if (cvFile.size > 2048 * 1024) { // 2MB
+                errors.cv = "El CV no puede ser mayor a 2MB.";
+            }
+        }
+
+        // Validaciones específicas por rol
+        if (role === 'Alumno') {
+            const birthDate = form.querySelector('input[name="birthDate"]')?.value;
+            const currentCourse = form.querySelector('input[name="currentCourse"]')?.value?.trim();
+            const educationalCenter = form.querySelector('input[name="educationalCenter"]')?.value?.trim();
+
+            if (!birthDate) {
+                errors.birthDate = "La fecha de nacimiento es obligatoria para estudiantes.";
+            } else if (new Date(birthDate) > new Date()) {
+                errors.birthDate = "La fecha de nacimiento debe ser anterior o igual a hoy.";
+            }
+
+            if (!currentCourse) {
+                errors.currentCourse = "El curso actual es obligatorio para estudiantes.";
+            } else if (currentCourse.length > 50) {
+                errors.currentCourse = "El curso actual no puede tener más de 50 caracteres.";
+            }
+
+            if (!educationalCenter) {
+                errors.educationalCenter = "El centro educativo es obligatorio para estudiantes.";
+            } else if (educationalCenter.length > 100) {
+                errors.educationalCenter = "El centro educativo no puede tener más de 100 caracteres.";
+            }
+        }
+
+        if (role === 'Profesor') {
+            const educationalCenter = form.querySelector('input[name="educationalCenter"]')?.value?.trim();
+            const specialization = form.querySelector('input[name="specialization"]')?.value?.trim();
+            const department = form.querySelector('input[name="department"]')?.value?.trim();
+
+            if (!educationalCenter) {
+                errors.educationalCenter = "El centro educativo es obligatorio para profesores.";
+            } else if (educationalCenter.length > 100) {
+                errors.educationalCenter = "El centro educativo no puede tener más de 100 caracteres.";
+            }
+
+            if (!specialization) {
+                errors.specialization = "La especialización es obligatoria para profesores.";
+            } else if (specialization.length > 100) {
+                errors.specialization = "La especialización no puede tener más de 100 caracteres.";
+            }
+
+            if (!department) {
+                errors.department = "El departamento es obligatorio para profesores.";
+            } else if (department.length > 100) {
+                errors.department = "El departamento no puede tener más de 100 caracteres.";
+            }
+        }
+
+        if (role === 'Empresa') {
+            const cif = form.querySelector('input[name="cif"]')?.value?.trim();
+            const address = form.querySelector('input[name="address"]')?.value?.trim();
+            const sector = form.querySelector('input[name="sector"]')?.value?.trim();
+            const website = form.querySelector('input[name="website"]')?.value?.trim();
+
+            if (!cif) {
+                errors.cif = "El CIF es obligatorio para empresas.";
+            } else if (cif.length > 50) {
+                errors.cif = "El CIF no puede tener más de 50 caracteres.";
+            }
+
+            if (!address) {
+                errors.address = "La dirección es obligatoria para empresas.";
+            } else if (address.length > 255) {
+                errors.address = "La dirección no puede tener más de 255 caracteres.";
+            }
+
+            if (!sector) {
+                errors.sector = "El sector es obligatorio para empresas.";
+            } else if (sector.length > 100) {
+                errors.sector = "El sector no puede tener más de 100 caracteres.";
+            }
+
+            if (website && (!/^https?:\/\/.+/i.test(website) || website.length > 255)) {
+                errors.website = "La URL del sitio web no es válida o es demasiado larga.";
+            }
+        }
+
+        // Mostrar errores si existen
+        const errorContainer = document.getElementById('form-errors');
+        const errorList = errorContainer.querySelector('ul');
+
+        if (Object.keys(errors).length > 0) {
+            event.preventDefault();
+
+            // Limpiar errores anteriores
+            errorList.innerHTML = '';
+
+            // Agregar nuevos errores
+            Object.values(errors).forEach(error => {
+                const li = document.createElement('li');
+                li.textContent = error;
+                errorList.appendChild(li);
+            });
+
+            // Mostrar contenedor de errores
+            errorContainer.classList.remove('hidden');
+
+            // Scroll hacia arriba para mostrar errores
+            errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            // Ocultar errores si no hay ninguno
+            errorContainer.classList.add('hidden');
+        }
+    });
+});
+
     </script>
 
 

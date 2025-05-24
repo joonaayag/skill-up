@@ -154,10 +154,15 @@
                                             <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
                                                 {{ __('messages.school-projects.edit-project') }}
                                             </x-heading>
-                                            <form action="{{ route('school.projects.update', $project->id) }}" method="POST"
+                                            <form action="{{ route('school.projects.update', $project->id) }}" id="mi-form-update" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
+
+                                                <div id="form-errors-{{ $project->id }}" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
+                                                    <ul id="error-list-{{ $project->id }}" class="list-disc list-inside"></ul>
+                                                </div>
+
 
                                                 <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
                                                 <x-inputtext type="text" name="title" id="title"
@@ -185,7 +190,7 @@
                                                 <x-label
                                                     for="description">{{ __('messages.school-projects.label-description') }}</x-label>
                                                 <textarea name="description" id="description"
-                                                    class="w-full mb-2 border px-2 py-1 rounded"
+                                                    class="w-full mb-2 border px-2 py-1 rounded resize-none"
                                                     required>{{ old('description', $project->description) }}</textarea>
                                                 @error('description')
                                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -302,6 +307,129 @@
                                                         {{ __('messages.button.save') }}
                                                     </button>
                                                 </div>
+
+                                                <script>
+                                                    document.querySelector('form[action="{{ route('school.projects.update', $project->id) }}"]').addEventListener('submit', function (event) {
+                                                        const data = {
+                                                            title: document.getElementById('title')?.value.trim() || '',
+                                                            author: document.getElementById('author')?.value.trim() || '',
+                                                            creation_date: document.getElementById('date_created')?.value || '',
+                                                            description: document.getElementById('description')?.value.trim() || '',
+                                                            tags: document.getElementById('tags')?.value || '',
+                                                            general_category: document.getElementById('general_category')?.value || '',
+                                                            link: document.querySelector('input[name="link"]')?.value || '',
+                                                            image: document.getElementById('image-upload-{{ $project->id }}')?.files[0] || null,
+                                                            files: document.getElementById('file-upload-{{ $project->id }}')?.files ? Array.from(document.getElementById('file-upload-{{ $project->id }}').files) : []
+                                                        };
+
+                                                        const errors = {};
+
+                                                        // Título
+                                                        if (!data.title) {
+                                                            errors.title = "{{ __('messages.errors.title.required') }}";
+                                                        } else if (data.title.length > 40) {
+                                                            errors.title = "{{ __('messages.errors.title.max') }}";
+                                                        }
+
+                                                        // Autor
+                                                        if (!data.author) {
+                                                            errors.author = "{{ __('messages.errors.author.required') }}";
+                                                        } else if (data.author.length > 50) {
+                                                            errors.author = "{{ __('messages.errors.author.max') }}";
+                                                        }
+
+                                                        // Fecha
+                                                        if (!data.creation_date) {
+                                                            errors.creation_date = "{{ __('messages.errors.creation_date.required') }}";
+                                                        } else if (isNaN(Date.parse(data.creation_date))) {
+                                                            errors.creation_date = "{{ __('messages.errors.creation_date.date') }}";
+                                                        }
+
+                                                        // Descripción
+                                                        if (!data.description) {
+                                                            errors.description = "{{ __('messages.errors.description.required') }}";
+                                                        }
+
+                                                        // Tags
+                                                        const validTags = ['TFG', 'TFM', 'Tesis', 'Individual', 'Grupal', 'Tecnología', 'Ciencias', 'Artes', 'Ingeniería'];
+                                                        if (!data.tags) {
+                                                            errors.tags = "{{ __('messages.errors.tags.required') }}";
+                                                        } else if (!validTags.includes(data.tags)) {
+                                                            errors.tags = "{{ __('messages.errors.tags.in') }}";
+                                                        }
+
+                                                        // Categoría general
+                                                        const validCategories = [
+                                                            'Administración y negocio',
+                                                            'Ciencia y salud',
+                                                            'Comunicación',
+                                                            'Diseño y comunicación',
+                                                            'Educación',
+                                                            'Industria',
+                                                            'Otro',
+                                                            'Tecnología y desarrollo'
+                                                        ];
+                                                        if (!data.general_category) {
+                                                            errors.general_category = "{{ __('messages.errors.sector.required') }}";
+                                                        } else if (!validCategories.includes(data.general_category)) {
+                                                            errors.general_category = "{{ __('messages.errors.sector.in') }}";
+                                                        }
+
+                                                        // Link
+                                                        if (data.link) {
+                                                            try {
+                                                                new URL(data.link);
+                                                                if (data.link.length > 255) {
+                                                                    errors.link = "{{ __('messages.errors.link.max') }}";
+                                                                }
+                                                            } catch (_) {
+                                                                errors.link = "{{ __('messages.errors.link.url') }}";
+                                                            }
+                                                        }
+
+                                                        // Imagen
+                                                        if (data.image) {
+                                                            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                                                            if (!allowedTypes.includes(data.image.type)) {
+                                                                errors.image = "{{ __('messages.errors.image.image') }}";
+                                                            }
+                                                            const extension = data.image.name.split('.').pop().toLowerCase();
+                                                            if (!['jpeg', 'png', 'jpg', 'gif'].includes(extension)) {
+                                                                errors.image = "{{ __('messages.errors.image.mimes') }}";
+                                                            }
+                                                            if (data.image.size > 4096 * 1024) {
+                                                                errors.image = "{{ __('messages.errors.image.max') }}";
+                                                            }
+                                                        }
+
+                                                        // Archivos adicionales
+                                                        data.files.forEach((file, i) => {
+                                                            if (!(file instanceof File)) {
+                                                                errors[`file_${i}`] = "{{ __('messages.errors.file.file') }}";
+                                                            } else if (file.size > 4096 * 1024) {
+                                                                errors[`file_${i}`] = "{{ __('messages.errors.file.max') }}";
+                                                            }
+                                                        });
+
+                                                        // Mostrar errores
+                                                        const errorBox = document.getElementById('form-errors-{{ $project->id }}');
+                                                        const errorList = document.getElementById('error-list-{{ $project->id }}');
+                                                        errorList.innerHTML = '';
+
+                                                        if (Object.keys(errors).length > 0) {
+                                                            event.preventDefault();
+                                                            errorBox.classList.remove('hidden');
+                                                            Object.values(errors).forEach(msg => {
+                                                                const li = document.createElement('li');
+                                                                li.textContent = msg;
+                                                                errorList.appendChild(li);
+                                                            });
+                                                        } else {
+                                                            errorBox.classList.add('hidden');
+                                                        }
+                                                    });
+                                                </script>
+
                                             </form>
                                         </x-modal>
                                     </td>
@@ -330,9 +458,14 @@
             <x-heading level="h2"
                 class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.school-projects.heading-new-project') }}</x-heading>
 
-            <form action="{{ route('school.projects.store') }}" method="POST" enctype="multipart/form-data"
+            <form action="{{ route('school.projects.store') }}" method="POST" id="mi-form" enctype="multipart/form-data"
                 class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
                 @csrf
+
+                <div id="form-errors" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
+                    <ul id="error-list" class="list-disc list-inside"></ul>
+                </div>
+
 
                 <div>
                     <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
@@ -474,6 +607,115 @@
                 });
             }
         });
+
+        document.getElementById('mi-form').addEventListener('submit', function (event) {
+            const data = {
+                title: document.getElementById('title')?.value.trim() || '',
+                author: document.getElementById('author')?.value.trim() || '',
+                creation_date: document.getElementById('creation_date')?.value || '',
+                description: document.getElementById('description')?.value.trim() || '',
+                tags: document.getElementById('tags')?.value || '',
+                general_category: document.getElementsByName('general_category')[0]?.value || '',
+                image: document.getElementById('image-upload')?.files[0] || null,
+                files: document.getElementById('file-upload')?.files ? Array.from(document.getElementById('file-upload').files) : []
+            };
+
+            const errors = {};
+
+            // Título
+            if (!data.title) {
+                errors.title = "{{ __('messages.errors.title.required') }}";
+            } else if (data.title.length > 40) {
+                errors.title = "{{ __('messages.errors.title.max') }}";
+            }
+
+            // Autor
+            if (!data.author) {
+                errors.author = "{{ __('messages.errors.author.required') }}";
+            } else if (data.author.length > 50) {
+                errors.author = "{{ __('messages.errors.author.max') }}";
+            }
+
+            // Fecha
+            if (!data.creation_date) {
+                errors.creation_date = "{{ __('messages.errors.creation_date.required') }}";
+            } else if (isNaN(Date.parse(data.creation_date))) {
+                errors.creation_date = "{{ __('messages.errors.creation_date.date') }}";
+            }
+
+            // Descripción
+            if (!data.description) {
+                errors.description = "{{ __('messages.errors.description.required') }}";
+            }
+
+            // Tags
+            const validTags = ['TFG', 'TFM', 'Tesis', 'Individual', 'Grupal', 'Tecnología', 'Ciencias', 'Artes', 'Ingeniería'];
+            if (!data.tags || !validTags.includes(data.tags)) {
+                errors.tags = "{{ __('messages.errors.tags.in') }}";
+            }
+
+            // Categoría
+            const validCategories = [
+                'Administración y negocio',
+                'Ciencia y salud',
+                'Comunicación',
+                'Diseño y comunicación',
+                'Educación',
+                'Industria',
+                'Otro',
+                'Tecnología y desarrollo'
+            ];
+            if (!data.general_category) {
+                errors.general_category = "{{ __('messages.errors.sector.required') }}";
+            } else if (!validCategories.includes(data.general_category)) {
+                errors.general_category = "{{ __('messages.errors.sector.in') }}";
+            }
+
+            // Imagen
+            if (data.image) {
+                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                if (!allowedImageTypes.includes(data.image.type)) {
+                    errors.image = "{{ __('messages.errors.image.image') }}";
+                }
+                const extension = data.image.name.split('.').pop().toLowerCase();
+                if (!['jpeg', 'png', 'jpg', 'gif'].includes(extension)) {
+                    errors.image = "{{ __('messages.errors.image.mimes') }}";
+                }
+                if (data.image.size > 4096 * 1024) {
+                    errors.image = "{{ __('messages.errors.image.max') }}";
+                }
+            }
+
+            // Archivos
+            if (data.files.length > 0) {
+                data.files.forEach((file, i) => {
+                    if (!(file instanceof File)) {
+                        errors[`file_${i}`] = "{{ __('messages.errors.file.file') }}";
+                    } else if (file.size > 4096 * 1024) {
+                        errors[`file_${i}`] = "{{ __('messages.errors.file.max') }}";
+                    }
+                });
+            }
+
+            // Mostrar errores en el formulario
+            const errorBox = document.getElementById('form-errors');
+            const errorList = document.getElementById('error-list');
+            errorList.innerHTML = '';
+
+            if (Object.keys(errors).length > 0) {
+                event.preventDefault();
+                errorBox.classList.remove('hidden');
+
+                Object.values(errors).forEach(msg => {
+                    const li = document.createElement('li');
+                    li.textContent = msg;
+                    errorList.appendChild(li);
+                });
+            } else {
+                errorBox.classList.add('hidden');
+            }
+        });
+
     </script>
 
 @endsection

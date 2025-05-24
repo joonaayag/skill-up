@@ -67,7 +67,7 @@
                 @csrf
                 <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                 <textarea name="content" rows="2"
-                    class="w-full p-2 border rounded-lg dark:bg-themeDark dark:text-white border-gray-300 dark:border-gray-600"
+                    class="w-full p-2 border rounded-lg dark:bg-themeDark dark:text-white border-gray-300 dark:border-gray-600 resize-none"
                     placeholder="Escribe tu respuesta..." required></textarea>
                 <div class="flex gap-2 mt-2">
                     <button type="submit"

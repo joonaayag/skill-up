@@ -23,7 +23,7 @@
                 method="POST">
                 @csrf
                 <textarea name="content" rows="2"
-                    class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-800 focus:ring-2 focus:ring-themeBlue focus:outline-none dark:bg-themeDark focus:text-white"
+                    class="w-full p-3 rounded-lg resize-none border border-gray-300 dark:border-gray-800 focus:ring-2 focus:ring-themeBlue focus:outline-none dark:bg-themeDark focus:text-white"
                     placeholder="{{ __('messages.project-details.write-comment')  }}" required></textarea>
                 <button type="submit"
                     class="mt-4 px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeHoverBlue transition">
