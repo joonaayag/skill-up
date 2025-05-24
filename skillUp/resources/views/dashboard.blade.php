@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-3 gap-14 h-full mb-24 ">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-14 h-full mb-24 ">
         <x-card>
             <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.highlight-projects') }}</x-heading>
             <div class="flex flex-col gap-3">
