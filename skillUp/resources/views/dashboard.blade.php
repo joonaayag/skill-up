@@ -106,7 +106,7 @@
                 class="row-span-3 h-full [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
                 <div class="relative">
                     <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg')  }}"
-                        alt="Fondo" class="w-full h-30 object-cover" id="bannerImage">
+                        alt="Fondo" class="w-full h-30 rounded-t-md object-cover" id="bannerImage">
                     <div class="absolute top-20 left-1/6 transform -translate-x-1/2">
                         <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                             alt="Perfil" id="profileImage"
@@ -120,7 +120,6 @@
                         @else
                             <p>{{ auth()->user()->role }}</p>
                         @endif
-                        <p>Ciudad</p>
                     </div>
                 </div>
             </div>

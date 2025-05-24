@@ -26,7 +26,7 @@
                         value="{{ request('title') }}" class="input w-full py-2" />
                     <input type="text" name="author" placeholder="{{ __('messages.school-projects.placeholder-author') }}"
                         value="{{ request('author') }}" class="input w-full py-2" />
-                    <select name="order" class="input w-full py-2">
+                    <select name="order" class="input w-full py-2 cursor-pointer">
                         <option>{{ __('messages.school-projects.order-by') }}</option>
                         <option value="title" @selected(request('order') == 'title')>
                             {{ __('messages.school-projects.order-title') }}
@@ -35,7 +35,7 @@
                             {{ __('messages.school-projects.order-date') }}
                         </option>
                     </select>
-                    <select name="direction" class="w-full py-2">
+                    <select name="direction" class="w-full py-2 cursor-pointer">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
                         <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>
@@ -352,7 +352,7 @@
                 <div>
                     <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
                     <select name="tags" id="tags"
-                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray"
+                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer"
                         required>
                         <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
                             {{ __('messages.tags.tfg') }}</option>
@@ -370,7 +370,7 @@
 
                 <div>
                     <x-label for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
-                    <select name="general_category" required class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                    <select name="general_category" required class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                         <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}</option>
                         <option value="Ciencia y salud">{{ __('messages.school-projects.option-science') }}</option>
                         <option value="Comunicación">{{ __('messages.school-projects.option-comunication') }}</option>
@@ -440,7 +440,7 @@
                 </div>
 
                 <div class="flex justify-end gap-3 mt-4">
-                    <button type="button" @click="showEdit = false"
+                    <button type="button" @click="showModal = false"
                         class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         {{ __('messages.button.cancel') }}
                     </button>

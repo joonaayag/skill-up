@@ -99,7 +99,7 @@
                                                      [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
                     <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
                         value="{{ request('name') }}" class="input" />
-                    <select name="order">
+                    <select name="order" class="cursor-pointer">
                         <option value="">{{ __('messages.job-offers.order-by') }}</option>
                         <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}
                         </option>
@@ -109,14 +109,14 @@
                             {{ __('messages.job-offers.order-date') }}</option>
                     </select>
 
-                    <select name="state">
+                    <select name="state" class="cursor-pointer">
                         <option value="">{{ __('messages.company-offers.status') }}</option>
                         <option value="Abierta" @selected(request('state') == 'Abierta')>
                             {{ __('messages.company-offers.open') }}</option>
                         <option value="Cerrada" @selected(request('state') == 'Cerrada')>
                             {{ __('messages.company-offers.close') }}</option>
                     </select>
-                    <select name="direction">
+                    <select name="direction" class="cursor-pointer">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
                         <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>
@@ -209,7 +209,7 @@
 
                 <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
                 <select name="sector_category" id="sector_category" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white dark:bg-themeBgD">
+                    class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                     <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
                         {{ __('messages.select') }}
                     </option>
@@ -222,7 +222,7 @@
 
                 <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
                 <select name="general_category" required
-                    class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                    class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                     <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                     <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
                         {{ __('messages.projects.option-science') }}
@@ -245,7 +245,7 @@
 
                 <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
                 <select name="state" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
+                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
                     <option value="abierta">{{ __('messages.job-offers.state-open') }}</option>
                     <option value="cerrada">{{ __('messages.job-offers.state-close') }}</option>
                 </select>

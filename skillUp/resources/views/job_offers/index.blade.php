@@ -101,7 +101,7 @@
                         value="{{ request('name') }}" class="input" />
                     <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}"
                         value="{{ request('author') }}" class="input" />
-                    <select name="order">
+                    <select name="order" class="cursor-pointer">
                         <option value="">{{ __('messages.job-offers.order-by') }}</option>
                         <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}
                         </option>

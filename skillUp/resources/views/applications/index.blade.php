@@ -26,7 +26,7 @@
                     placeholder="{{ __('messages.applications.placeholder-position') }}" required />
 
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.status') }}</x-heading>
-                <select class="mb-3" name="state">
+                <select class="mb-3 cursor-pointer" name="state">
                     <option value="">{{ __('messages.applications.status') }}</option>
                     <option value="nueva" @selected(request('state') == 'nueva')>{{ __('messages.applications.new') }}
                     </option>

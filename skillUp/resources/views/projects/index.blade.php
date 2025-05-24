@@ -16,7 +16,7 @@
         <input type="text" name="author" placeholder="{{ __('messages.projects.placeholder-author') }}"
             value="{{ request('author') }}">
 
-        <select name="category">
+        <select name="category" class="cursor-pointer [&>option]:cursor-pointer">
             <option value="" {{ request('category') === null ? 'selected' : '' }}>{{ __('messages.projects.category') }}</option>
             <option value="Administración y negocio" {{ request('category') === 'Administración y negocio' ? 'selected' : '' }}>
                 {{ __('messages.school-projects.option-admin') }}</option>
@@ -36,7 +36,7 @@
                 {{ __('messages.school-projects.option-tec') }}</option>
         </select>
 
-        <select name="order">
+        <select name="order" class="cursor-pointer [&>option]:cursor-pointer">
             <option value="">{{ __('messages.projects.order-by') }}</option>
             <option value="title" {{ request('order') === 'title' ? 'selected' : '' }}>
                 {{ __('messages.projects.order-title') }}</option>
@@ -47,7 +47,7 @@
             </option>
         </select>
 
-        <select name="direction">
+        <select name="direction" class="cursor-pointer">
             <option value="asc" {{ request('direction') === 'asc' ? 'selected' : '' }}>Asc</option>
             <option value="desc" {{ request('direction') === 'desc' ? 'selected' : '' }}>Desc</option>
         </select>
