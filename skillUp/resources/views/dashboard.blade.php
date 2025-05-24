@@ -15,8 +15,8 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-14 h-full mb-24 ">
-        <x-card>
+    <div class="grid grid-cols-1 2md:grid-cols-2 xl:grid-cols-3 gap-14 h-full mb-24 ">
+        <x-card class="order-2 2md:order-1">
             <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.highlight-projects') }}</x-heading>
             <div class="flex flex-col gap-3">
                 @if ($combined->isNotEmpty())
@@ -28,7 +28,7 @@
                                     <x-icon name="project" class="w-8 h-auto" />
                                 </div>
                                 <div>
-                                    <strong>{{ $project->title }}</strong>
+                                    <x-heading level="h4">{{ $project->title }}</x-heading>
                                     <p class=" text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
                                         {{ $project->general_category }}
                                     </p>
@@ -37,14 +37,14 @@
                         </a>
                     @endforeach
                 @else
-                    <p class="mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
+                    <p class="text-xs mt-6 text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
                         {{ __('messages.dashboard.no-projects') }}.
                     </p>
                 @endif
             </div>
         </x-card>
 
-        <div class="grid grid-rows-5 gap-8">
+        <div class="grid grid-rows-5 gap-8 order-3 2md:order-2">
             <x-card class="row-span-2 h-full">
                 <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.your-projects') }}</x-heading>
                 <div class="flex flex-col gap-3">
@@ -101,9 +101,9 @@
             </x-card>
         </div>
 
-        <div class="grid grid-rows-7 gap-8 -mt-20">
+        <div class="grid grid-rows-7 gap-8 xl:-mt-20 order-1 2md:order-3">
             <div
-                class="row-span-3 h-full [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
+                class="row-span-3 h-full order-2 xl:order-1 [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
                 <div class="relative">
                     <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg')  }}"
                         alt="Fondo" class="w-full h-30 rounded-t-md object-cover" id="bannerImage">
@@ -123,10 +123,10 @@
                     </div>
                 </div>
             </div>
-            <x-card class="row-span-4 h-full">
+            <x-card class="row-span-4 h-full order-1 xl:order-2">
                 <div id="dashboard-notification-list">
+                    <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.recent-notifications') }}</x-heading>
                     @if($notifications->count())
-                        <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.recent-notifications') }}</x-heading>
                         @foreach($notifications as $notification)
                             <div
                                 class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
@@ -164,7 +164,7 @@
 
 
         <div x-cloak x-show="open" @click.outside="open = false" x-transition
-            class="mt-2 w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
+            class="mt-2 w-56 lg:w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
             <x-heading level="h3" class="mb-8">{{ __('messages.chatbot.skillup-assistant') }}</x-heading>
             <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
                 <template x-for="msg in messages" :key="msg . id">
