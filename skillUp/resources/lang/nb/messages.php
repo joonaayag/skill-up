@@ -678,7 +678,7 @@ return [
         'description' => [
             'string' => 'Beskrivelsen skal være en tekststreng.',
             'required' => 'Beskrivelse er obligatorisk.',
-            'max' => 'Beskrivelsen kan ikke overstige 300 tegn.',
+            'max' => 'Beskrivelsen kan ikke overstige 600 tegn.',
         ],
         'profile' => [
             'image' => 'Profilbildet må være et bilde.',

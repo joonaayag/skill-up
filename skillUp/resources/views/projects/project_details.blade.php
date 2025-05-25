@@ -45,19 +45,23 @@
 
 
             @if($project->image)
-                <img src="{{ asset('storage/' . $project->image) }}" alt="Imagen del proyecto"
-                    class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
+                <div class="flex justify-center mb-4">
+                    <img src="{{ asset('storage/' . $project->image) }}" alt="Imagen del proyecto"
+                        class="w-[80%] h-auto rounded-lg shadow-md">
+                </div>
+
             @endif
 
-            <div class="flex justify-between mt-16">
-                <div class="flex gap-4 items-center justify-center">
+            <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
+                <div
+                    class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
                     <p>{{ __('messages.project-details.author') }}
                         <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong>
                     </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $project->views }}</p>
                     <p class="flex items-center justify-center gap-1">
-                        <label class="text-yellow-400"><x-icon name="star" class="w-4 h-auto" /></label>
+                        <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
                         {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}
                     </p>
                     @auth
@@ -67,9 +71,9 @@
                             @for ($i = 1; $i <= 5; $i++)
                                 <button type="submit" name="rating" value="{{ $i }}"
                                     class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
-                                                                    {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                                                                {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
                                     aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
-                                    <x-icon name="star" class="w-4 h-auto" />
+                                    <x-icon name="star" class="w-3 md:w-4 h-auto" />
                                 </button>
                             @endfor
                         </form>
@@ -89,12 +93,13 @@
 
 
         <x-card>
+            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
+
             @if($project->link)
-                <p><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $project->link }}"
+                <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $project->link }}"
                         target="_blank">{{ $project->link }}</a></p>
             @endif
 
-            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
             @if ($project->images && $project->images->count())
                 <div class="mb-6">
                     <div class="flex flex-wrap gap-2.5 mt-2.5">
@@ -106,12 +111,12 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center dark:bg-themeDarkGray hover:bg-themeGrape">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
                                     <a href="{{ asset('storage/' . $img->path) }}" download
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                        class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center hover:bg-themeGrape">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
                                 @endif
@@ -141,7 +146,7 @@
         </x-card>
 
         <a href="{{ route('projects.index') }}"
-            class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            class="mt-3 px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
             <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}</a>
 
     </div>

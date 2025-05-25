@@ -42,12 +42,14 @@ class AdminController extends Controller
                 ->whereHas('detail', function ($q) use ($user) {
                     $q->where('educational_center', $user->detail?->educational_center);
                 })->where('id', '!=', $user->id)->get();
+            
+                return view('admin.users', compact('users', 'students'));
 
         } else {
             $users = User::where('id', '!=', auth()->id())->with('detail')->get();
         }
 
-        return view('admin.users', compact('users', 'students'));
+        return view('admin.users', compact('users'));
     }
 
 
@@ -81,7 +83,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:20',
             'last_name' => 'required|string|max:40',
             'email' => 'required|email|string|max:50|unique:users,email,' . $user->id,
-            'description' => 'nullable|string|max:300',
+            'description' => 'nullable|string|max:600',
             'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
             'profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
@@ -466,7 +468,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string|max:300',
+            'description' => 'required|string|max:600',
             'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
             'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',
@@ -1002,7 +1004,7 @@ class AdminController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string|max:300',
+            'description' => 'required|string|max:600',
             'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
             'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',

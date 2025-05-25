@@ -44,18 +44,18 @@
 
             @if($project->image)
                 <img src="{{ asset('storage/' . $project->image) }}" alt="Imagen del proyecto"
-                    class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
+                    class="w-[80%] h-auto rounded-lg shadow-md">
             @endif
 
-            <div class="flex justify-between mt-16">
-                <div class="flex gap-4 items-center justify-center">
+            <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
+                <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
                     <p>{{ __('messages.project-details.author') }}
                         <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong>
                     </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $project->views }}</p>
                     <p class="flex items-center justify-center gap-1">
-                        <label class="text-yellow-400"><x-icon name="star" class="w-4 h-auto" /></label>
+                        <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
                         {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}
                     </p>
                     @auth
@@ -67,7 +67,7 @@
                                     class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
                                                                                                         {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
                                     aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
-                                    <x-icon name="star" class="w-4 h-auto" />
+                                    <x-icon name="star" class="w-3 md:w-4 h-auto" />
                                 </button>
                             @endfor
                         </form>
@@ -87,12 +87,13 @@
 
 
         <x-card>
+            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
+
             @if($project->link)
-                <p><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $project->link }}"
+                <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $project->link }}"
                         target="_blank">{{ $project->link }}</a></p>
             @endif
 
-            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
             @if ($project->images && $project->images->count())
                 <div class="mb-6">
                     <div class="flex flex-wrap gap-2.5 mt-2.5">
@@ -104,12 +105,12 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center dark:bg-themeDarkGray hover:bg-themeGrape">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
                                     <a href="{{ asset('storage/' . $img->path) }}" download
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                        class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center hover:bg-themeGrape">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
                                 @endif
@@ -147,7 +148,7 @@
             class="relative z-10">
 
             <button @click="showModal = true"
-                class=" p-2 bg-yellow-400 text-black shadow-lg hover:bg-yellow-500 transition cursor-pointer">
+                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-yellow-400 text-black shadow-lg hover:bg-yellow-500 transition cursor-pointer">
                 {{ __('messages.button.edit') }}
             </button>
 
@@ -176,7 +177,7 @@
                     <div>
                         <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
                         <select name="tags" id="tags"
-                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                            class="w-full h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
                             <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}
                             </option>
                             <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}
@@ -208,7 +209,7 @@
                     <div>
                         <x-label for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
                         <select name="sector_category" required
-                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                            class="w-full h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
                             @foreach ($categoryMap as $value => $key)
                                 <option value="{{ $value }}" {{ old('sector_category') == $value ? 'selected' : '' }}>
                                     {{ __('messages.projects.' . $key) }}
@@ -225,7 +226,7 @@
 
                     <div>
                         <x-label for="title">{{ __('messages.school-projects.label-link') }}</x-label>
-                        <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray"
+                        <input type="url" name="link" class="w-full h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray"
                             value="{{ old('link', $project->link) }}" />
                     </div>
 
@@ -233,7 +234,7 @@
                         <x-label for="title">{{ __('messages.school-projects.label-highlight') }}</x-label>
                         <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
                             <label for="image-upload"
-                                class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
+                                class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ {{__('messages.school-projects.label-high-upload')}}
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                         fileName = $event.target.files[0]?.name || '';
@@ -261,7 +262,7 @@
                         <x-label for="title">{{ __('messages.school-projects.label-additional') }}</x-label>
                         <div x-data="{ fileNames: [] }" class="w-full">
                             <label for="file-upload"
-                                class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
+                                class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 📎 {{__('messages.school-projects.label-upload')}}
                                 <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                     @change="fileNames = [...$event.target.files].map(f => f.name)" />
@@ -280,11 +281,11 @@
 
                     <div class="flex justify-end gap-3 mt-4">
                         <button type="button" @click="showModal = false"
-                            class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                            class="h-8 sm:h-10 px-3 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                             {{ __('messages.button.cancel') }}
                         </button>
                         <button type="submit"
-                            class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                            class="h-8 sm:h-10 px-3 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                             {{ __('messages.button.save-changes') }}
                         </button>
                     </div>
@@ -298,7 +299,7 @@
             class="relative z-10">
 
             <button @click="showDelete = true"
-                class=" p-2 bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">
+                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">
                 {{ __('messages.button.delete') }}
             </button>
 
@@ -309,9 +310,9 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="p-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
+                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
                     <button type="button"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
+                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
                         @click="showDelete = false">Cancelar</button>
                 </form>
 
@@ -319,8 +320,8 @@
         </div>
 
         <a href="{{ route('admin.projects') }}"
-            class=" px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" />
+            class=" px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            <x-icon name="arrow-left" class="w-3 md:w-5 h-auto" />
             {{__('messages.project-details.back') }}
         </a>
     </div>

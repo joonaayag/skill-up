@@ -678,7 +678,7 @@ return [
         'description' => [
             'required' => 'The description field is required.',
             'string' => 'The description must be a string.',
-            'max' => 'The description cannot exceed 300 characters.',
+            'max' => 'The description cannot exceed 600 characters.',
         ],
         'profile' => [
             'image' => 'The profile picture must be an image.',

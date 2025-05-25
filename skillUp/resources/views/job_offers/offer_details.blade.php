@@ -14,8 +14,8 @@
         </div>
     @endif
 
-    <x-card class="mb-12 flex gap-8 ">
-        <div class="w-2/3">
+    <x-card class="mb-12 flex flex-col md:flex-row gap-8 ">
+        <div class="md:w-2/3">
             <div class="flex gap-4 items-center ">
 
                 @php
@@ -42,7 +42,7 @@
                 @endphp
 
                 <span
-                    class="px-3 py-1 rounded-full {{ $stateKey === 'close' ? 'bg-themeRed' : 'bg-themeBlue' }} text-white">
+                    class="text-xs md:text-base px-2 py-1 md:px-3 md:py-1 rounded-full {{ $stateKey === 'close' ? 'bg-themeRed' : 'bg-themeBlue' }} text-white">
                     {{ __('messages.company-offers.' . $stateKey) }}
                 </span>
 
@@ -95,14 +95,14 @@
             @endif
 
             @if ($offer->subtitle)
-                <p><strong>{{ $offer->subtitle }}</strong></p>
+                <p class="text-xs md:tex-sm lg:text-base"><strong>{{ $offer->subtitle }}</strong></p>
             @endif
 
-            <p class="mt-6 mb-3 font-semibold">{{ __('messages.email.text-4') }}</p>
+            <p class="mt-6 mb-3 text-xs md:tex-sm lg:text-base font-semibold">{{ __('messages.email.text-4') }}</p>
 
-            <p class="mb-9">{{ $offer->description }}</p>
+            <p class="mb-9 text-xs md:tex-sm lg:text-base">{{ $offer->description }}</p>
 
-            <div class="flex items-center justify-start gap-4 mb-6 mt-auto">
+            <div class="flex items-center justify-start gap-4 mb-6 text-xs md:tex-sm lg:text-base mt-auto">
                 @php
                     $favorite = auth()->user()->favorites()
                         ->where('type', 'proyecto')
@@ -129,7 +129,7 @@
                 @if (auth()->id() === $offer->company_id)
                         <div x-data="{ open: false }" class="inline-block" x-cloak>
                             <button @click="open = true"
-                                class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold py-2 px-4 rounded transition cursor-pointer">{{
+                                class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{
                     __('messages.button.delete') }}</button>
 
                             <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
@@ -143,7 +143,7 @@
                                     </p>
                                     <div class="flex justify-end gap-4">
                                         <button @click="open = false"
-                                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                            class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
                                             {{ __('messages.button.cancel') }}
                                         </button>
 
@@ -151,7 +151,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                                                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700">
                                                 {{ __('messages.button.delete') }}
                                             </button>
                                         </form>
@@ -230,11 +230,11 @@
                 </div>
             @endif
         </div>
-        <div class="w-1/3 flex justify-end">
-            <ul>
-                <li class="mb-5 flex justify-end">
+        <div class="md:w-1/3 md:flex md:justify-end">
+            <ul class=" text-xs lg:text-sm">
+                <li class="hidden md:flex mb-5 justify-end">
                     <img src="{{ $offer->company->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
-                        alt="Perfil" id="profileImage" class="size-40 object-cover">
+                        alt="Perfil" id="profileImage" class="size-32 lg:size-40 object-cover">
                 </li>
                 <li><strong>{{__('messages.project-details.published')}} </strong>{{ $offer->created_at }}</li>
                 <li><strong>{{__('messages.roles.company')}}: </strong>{{ $offer->company->name }}</li>
@@ -247,7 +247,7 @@
 
 
     <a href="{{ route('job.offers.index') }}"
-        class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+        class="mt-3 px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
         <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back') }}</a>
 
 

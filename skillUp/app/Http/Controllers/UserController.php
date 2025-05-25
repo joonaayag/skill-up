@@ -18,7 +18,7 @@ class UserController extends Controller
             'name' => 'required|string|max:20',
             'last_name' => 'required|string|max:40',
             'email' => 'required|email|string|max:50|unique:users,email,' . $user->id,
-            'description' => 'nullable|string|max:300',
+            'description' => 'nullable|string|max:600',
             'profile' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'banner' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'cv' => 'nullable|file|mimes:pdf|max:2048',

@@ -670,7 +670,7 @@ return [
       'description' => [
          'string' => 'Popis musí bít textový řetězec.',
          'required' => 'Popis je povinný.',
-         'max' => 'Popis nesmí přesáhnout 300 znaků.',
+         'max' => 'Popis nesmí přesáhnout 6s00 znaků.',
       ],
       'profile' => [
          'image' => 'Profilová fotka musí být obrázek.',

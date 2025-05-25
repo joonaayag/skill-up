@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-6 py-10">
+    <div class="px-6 py-10">
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.title') }}</x-heading>
 
         
@@ -16,9 +16,9 @@
             </div>
         @endif
 
-        <div class="rounded-lg shadow">
+        <div class="rounded-lg shadow w-full overflow-x-auto">
             <table
-                class="min-w-full bg-white dark:bg-themeDarkGray text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
+                class=" w-full bg-white dark:bg-themeDarkGray text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
                 <thead class="bg-gray-100 dark:bg-gray-800 text-xs uppercase text-gray-600 dark:text-gray-300">
                     <tr>
                         <th class="px-4 py-3 border dark:border-gray-700">ID</th>
@@ -312,58 +312,58 @@
                 <x-heading level="h2"
                 class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.create-user') }}</x-heading>
                 <form method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data"
-                class="max-w-2xl mx-auto dark:bg-themeBgDark bg-white p-6 rounded shadow space-y-6"
+                class=" dark:bg-themeBgDark bg-white p-6 rounded shadow space-y-6"
                 x-data="{ role: '{{ old('role') }}' }">
                 @csrf
                 
-                <div class="relative mb-8">
+                <div class="relative mb-12 sm:mb-8">
                         <img src="{{ asset('images/defaultBanner.jpg') }}"
-                        class="w-full h-40 object-cover cursor-pointer banner-preview" alt="Banner">
+                        class="w-full h-20 md:h-40 object-cover cursor-pointer banner-preview" alt="Banner">
                         <input type="file" name="banner" accept="image/*" class="hidden banner-input">
 
                         <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                             <img src="{{ asset('images/defaultProfile.png') }}"
-                            class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer profile-preview"
+                            class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer profile-preview"
                             alt="Foto de perfil">
                             <input type="file" name="profile" accept="image/*" class="hidden profile-input">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium">{{ __('messages.profile.label-name') }}</label>
+                            <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-name') }}</label>
                             <input type="text" name="name" placeholder="{{ __('messages.admin.users.ph-name') }}"
-                            value="{{ old('name') }}" required class="w-full border rounded px-3 py-2">
+                            value="{{ old('name') }}" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">{{ __('messages.profile.label-last-name') }}</label>
+                            <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-last-name') }}</label>
                             <input type="text" name="lastName" placeholder="{{ __('messages.admin.users.ph-last-name') }}"
-                                value="{{ old('lastName') }}" required class="w-full border rounded px-3 py-2">
+                                value="{{ old('lastName') }}" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                             </div>
-                        </div>
+                    </div>
 
                     <div>
-                        <label class="block text-sm font-medium">{{ __('messages.profile.label-email') }}</label>
+                        <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-email') }}</label>
                         <input type="email" name="email" placeholder="{{ __('messages.admin.users.ph-email') }}"
-                            value="{{ old('email') }}" required class="w-full border rounded px-3 py-2">
+                            value="{{ old('email') }}" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium">{{ __('messages.admin.users.ph-password') }}</label>
-                            <input type="password" name="password" required class="w-full border rounded px-3 py-2">
+                            <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.ph-password') }}</label>
+                            <input type="password" name="password" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div>
                             <label
-                            class="block text-sm font-medium">{{ __('messages.admin.users.ph-password-confirmation') }}</label>
+                            class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.ph-password-confirmation') }}</label>
                             <input type="password" name="password_confirmation" required
-                            class="w-full border rounded px-3 py-2">
+                            class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium">{{ __('messages.admin.users.select-role') }}</label>
-                        <select name="role" x-model="role" required class="w-full border rounded px-3 py-2 dark:bg-themeBgDark">
+                        <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.select-role') }}</label>
+                        <select name="role" x-model="role" required class="w-full border rounded h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark">
                             <option value="">{{ __('messages.admin.users.select-role') }}</option>
                             @php
                                 $roleMap = [
@@ -394,24 +394,24 @@
                         <div class="space-y-4">
                             <div>
                                 <label
-                                class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
+                                class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-birth-date') }}</label>
                                 <input type="date" name="birthDate" value="{{ old('birthDate') }}"
-                                class="w-full border rounded px-3 py-2">
+                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                             </div>
                             <div>
                                 <label
-                                class="block text-sm font-medium">{{ __('messages.profile.label-current-course') }}</label>
+                                class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-current-course') }}</label>
                                 <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
                                 placeholder="{{ __('messages.admin.users.ph-current-course') }}"
-                                class="w-full border rounded px-3 py-2">
+                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                             </div>
                             @if(auth()->user()->role !== 'Profesor')
                                 <div>
                                     <label
-                                    class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                                    class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                     <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                     placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
-                                    class="w-full border rounded px-3 py-2">
+                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                                 </div>
                             @endif
 
@@ -422,24 +422,24 @@
                         <div class="space-y-4">
                             <div>
                                 <label
-                                class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                                class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                 <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                 placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
-                                class="w-full border rounded px-3 py-2">
+                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                             </div>
                             <div>
                                 <label
-                                class="block text-sm font-medium">{{ __('messages.profile.label-specialization') }}</label>
+                                class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-specialization') }}</label>
                                 <input type="text" name="specialization" value="{{ old('specialization') }}"
                                 placeholder="{{ __('messages.admin.users.ph-specialization') }}"
-                                class="w-full border rounded px-3 py-2">
+                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                             </div>
                             <div>
                                 <label
-                                class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
+                                class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-department') }}</label>
                                 <input type="text" name="department" value="{{ old('department') }}"
                                 placeholder="{{ __('messages.admin.users.ph-department') }}"
-                                class="w-full border rounded px-3 py-2">
+                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                             </div>
                         </div>
                     </template>
@@ -447,52 +447,52 @@
                     <template x-if="role === 'Empresa'">
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium">CIF</label>
+                                <label class="block text-xs md:text-sm lg:text-base font-medium">CIF</label>
                                 <input type="text" name="cif" value="{{ old('cif') }}"
                                 placeholder="{{ __('messages.admin.users.ph-cif') }}"
-                                    class="w-full border rounded px-3 py-2">
+                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium">{{ __('messages.profile.label-address') }}</label>
+                                    <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-address') }}</label>
                                     <input type="text" name="address" value="{{ old('address') }}"
                                     placeholder="{{ __('messages.admin.users.ph-address') }}"
-                                    class="w-full border rounded px-3 py-2">
+                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium">{{ __('messages.profile.label-sector') }}</label>
+                                    <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-sector') }}</label>
                                     <input type="text" name="sector" value="{{ old('sector') }}"
                                     placeholder="{{ __('messages.admin.users.ph-sector') }}"
-                                    class="w-full border rounded px-3 py-2">
+                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium">{{ __('messages.profile.label-website') }}</label>
+                                    <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-website') }}</label>
                                     <input type="url" name="website" value="{{ old('website') }}"
                                     placeholder="{{ __('messages.admin.users.ph-website') }}"
-                                    class="w-full border rounded px-3 py-2">
+                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                                 </div>
                             </div>
                     </template>
 
                     <div x-data="{ cvName: '' }" x-cloak>
-                        <label class="block text-sm font-medium">{{ __('messages.profile.upload-cv') }}</label>
+                        <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.upload-cv') }}</label>
                         <label for="cv-upload"
-                        class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
+                        class="flex items-center justify-center w-full px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                         {{ __('messages.profile.upload-cv') }}
                         <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
                         @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
                     </label>
                     <template x-if="cvName">
-                        <p class="mt-2 text-sm text-black dark:text-themeLightGray" x-text="cvName"></p>
+                        <p class="mt-2 text-xs md:text-sm lg:text-base text-black dark:text-themeLightGray" x-text="cvName"></p>
                     </template>
                 </div>
                 
                 <div class="flex justify-end pt-4 gap-2">
                     <button type="button" @click="showCreateUser = false"
-                    class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition cursor-pointer">
+                    class="bg-gray-200 text-gray-800 px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded hover:bg-gray-300 transition cursor-pointer">
                     {{ __('messages.button.cancel') }}
                 </button>
                 <button type="submit"
-                class="bg-themeBlue/80 text-white px-4 py-2 rounded hover:bg-themeBlue transition cursor-pointer">
+                class="bg-themeBlue/80 text-white px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded hover:bg-themeBlue transition cursor-pointer">
                 {{ __('messages.button.register') }}
             </button>
         </div>
@@ -578,6 +578,8 @@
             @endif
 
         </div>
+    </div>
+    
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

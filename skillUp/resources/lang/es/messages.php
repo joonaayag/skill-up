@@ -675,7 +675,7 @@ return [
         'description' => [
             'required' => 'La descripción es obligatoria.',
             'string' => 'La descripción debe ser una cadena de texto.',
-            'max' => 'La descripción no puede superar los 300 caracteres.',
+            'max' => 'La descripción no puede superar los 600 caracteres.',
         ],
         'profile' => [
             'image' => 'La foto de perfil debe ser una imagen.',

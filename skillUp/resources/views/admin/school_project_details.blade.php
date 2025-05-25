@@ -48,14 +48,14 @@
                     class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
             @endif
 
-            <div class="flex justify-between mt-16">
-                <div class="flex gap-4 items-center justify-center">
+            <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
+                <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
                     <p>{{ __('messages.project-details.author') }}
                         <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong></p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $schoolProject->views }}</p>
                     <p class="flex items-center justify-center gap-1">
-                        <label class="text-yellow-400"><x-icon name="star" class="w-4 h-auto" /></label>
+                        <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
                         {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'N/A' }}
                     </p>
                     @auth
@@ -67,7 +67,7 @@
                                     class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
                                                                     {{ $schoolProject->getRatingByUser(auth()->id()) && $schoolProject->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
                                     aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
-                                    <x-icon name="star" class="w-4 h-auto" />
+                                    <x-icon name="star" class="w-3 md:w-4 h-auto" />
                                 </button>
                             @endfor
                         </form>
@@ -86,12 +86,13 @@
 
 
         <x-card>
+            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
+            
             @if($schoolProject->link)
-                <p><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $schoolProject->link }}"
+                <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $schoolProject->link }}"
                         target="_blank">{{ $schoolProject->link }}</a></p>
             @endif
 
-            <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
             @if ($schoolProject->images && $schoolProject->images->count())
                 <div class="mb-6">
                     <div class="flex flex-wrap gap-2.5 mt-2.5">
@@ -103,12 +104,12 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
                                     <a href="{{ asset('storage/' . $img->path) }}" download
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                        class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center hover:bg-gray-200">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
                                 @endif
@@ -138,7 +139,7 @@
         </x-card>
 
         <a href="{{ route('projects.index') }}"
-            class="mt-3 px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            class="mt-3  h-8 sm:h-10 px-3 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
             <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}</a>
 
     </div>
@@ -150,7 +151,7 @@
             class="relative z-10">
 
             <button @click="showModal = true"
-                class=" p-2 bg-yellow-400 text-black shadow-lg hover:bg-yellow-500 transition cursor-pointer">
+                class=" h-8 sm:h-10 px-3 bg-yellow-400 text-black shadow-lg hover:bg-yellow-500 transition cursor-pointer">
                 {{ __('messages.button.edit')  }}
             </button>
 
@@ -185,7 +186,7 @@
                     <div>
                         <x-label for="tags">Etiquetas (tags)</x-label>
                         <select name="tags" id="tags"
-                            class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                            class="w-full  h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
                             <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
                                 {{ __('messages.tags.tfg') }}
                             </option>
@@ -219,7 +220,7 @@
                     <div>
                         <x-label for="general_category">Categoría general:</x-label>
                         <select name="general_category" required
-                            class="w-full px-3 py-2 rounded border border-themeLightGray dark:bg-themeBgDark">
+                            class="w-full  h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray dark:bg-themeBgDark">
                             <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}
                             </option>
                             <option value="Ciencia y salud">{{ __('messages.school-projects.option-science') }}</option>
@@ -241,7 +242,7 @@
 
                     <div>
                         <x-label for="title">Enlace (Opcional):</x-label>
-                        <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray"
+                        <input type="url" name="link" class="w-full  h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray"
                             value="{{ old('link', $schoolProject->link) }}" />
                     </div>
 
@@ -300,7 +301,7 @@
                             Cancelar
                         </button>
                         <button type="submit"
-                            class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                            class="px-4  bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                             Guardar
                         </button>
                     </div>
@@ -313,7 +314,7 @@
             x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val))">
 
             <button @click="showDelete = true"
-                class=" p-2 bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">
+                class=" h-8 sm:h-10 px-3  text-center bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">
                 {{ __('messages.button.delete') }}
             </button>
 
@@ -325,9 +326,9 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="p-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
+                        class=" h-8 sm:h-10 px-3 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
                     <button type="button"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
+                        class=" h-8 sm:h-10 px-3 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
                         @click="showDelete = false">Cancelar</button>
                 </form>
 
@@ -335,7 +336,7 @@
         </div>
 
         <a href="{{ route('admin.school_projects') }}"
-            class=" px-2 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+            class="  h-8 sm:h-10 px-3 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
             <x-icon name="arrow-left" class="w-5 h-auto" />
             {{ __('messages.project-details.back')  }}
         </a>

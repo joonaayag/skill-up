@@ -55,7 +55,7 @@
                                             </div>
 
                                             <div>
-                                                <label class="block text-sm font-medium">{{ __('messages.admin.comments.content') }}</label>
+                                                <label class="block text-sm font-medium mb-4">{{ __('messages.admin.comments.content') }}</label>
                                                 <input type="text" name="content" value="{{ $comment->content }}"
                                                     class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
                                                     required>
@@ -63,11 +63,11 @@
 
                                             <div class="mt-6 flex justify-end gap-4">
                                                 <button type="button" @click="openEdit = false"
-                                                    class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                                    class="h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                                                     {{ __('messages.button.cancel') }}
                                                 </button>
                                                 <button type="submit"
-                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
+                                                    class="bg-blue-600 text-white h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base rounded hover:bg-blue-700 cursor-pointer">
                                                     {{ __('messages.button.save-changes') }}
                                                 </button>
                                             </div>
@@ -86,14 +86,14 @@
                                         </p>
                                         <div class="flex justify-end gap-4">
                                             <button @click="openDelete = false"
-                                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
+                                                class="h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
                                                 {{ __('messages.button.cancel') }}
                                             </button>
                                             <form action="{{ route('admin.comment.destroy', $comment->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 cursor-pointer">
+                                                    class="h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer">
                                                     {{ __('messages.button.delete') }}
                                                 </button>
                                             </form>

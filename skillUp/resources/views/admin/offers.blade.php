@@ -113,7 +113,7 @@
                                         <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.offers.edit') }}</x-heading>
 
                                         <form action="{{ route('admin.offers.update', $offer->id) }}" method="POST"
-                                            class="space-y-4">
+                                            class="space-y-4 ">
                                             @csrf
                                             @method('PUT')
 
@@ -138,10 +138,10 @@
                                             </div>
 
                                             <div class="grid grid-cols-2 gap-4">
-                                                <div>
+                                                <div class="">
                                                     <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-sector') }}</label>
                                                     <select name="sector_category" id="sector_category" required
-                                                        class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white dark:bg-themeBgD">
+                                                        class="w-full h-8 sm:h-10 px-3 py-2 border-themeLightGray rounded dark:bg-themeBgDark bg-white border-1 outline-0 ">
                                                         <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
                                                             {{ __('messages.select') }}
                                                         </option>
@@ -154,10 +154,10 @@
 
                                                     </select>
                                                 </div>
-                                                <div>
+                                                <div class="[&>select]:border-1  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                                                     <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-category') }}</label>
                                                     <select name="general_category" id="general_category" required
-                                                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                                                        class="w-fullh-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
                                                         <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                                                         <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
                                                             {{ __('messages.projects.option-science') }}
@@ -180,10 +180,10 @@
                                                 </div>
                                             </div>
 
-                                            <div>
+                                            <div class="[&>select]:border-1  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                                                 <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-state') }}</label>
                                                 <select name="state" id="state"
-                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:bg-themeBgDark dark:text-white dark:border-gray-600"
+                                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2 dark:bg-themeDark dark:bg-themeBgDark dark:text-white dark:border-gray-600"
                                                     required>
                                                     <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>
                                                         {{ __('messages.admin.offers.status-open') }}</option>
@@ -194,11 +194,11 @@
 
                                             <div class="mt-6 flex justify-end gap-4">
                                                 <button type="button" @click="openEdit = false"
-                                                    class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                                    class="h-8 sm:h-10 px-3 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                                                     {{ __('messages.button.cancel') }}
                                                 </button>
                                                 <button type="submit"
-                                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
+                                                    class="bg-blue-600 text-white h-8 sm:h-10 px-3 py-2 rounded hover:bg-blue-700 cursor-pointer">
                                                     {{ __('messages.button.save-changes') }}
                                                 </button>
                                             </div>
@@ -212,19 +212,19 @@
 
                                     <x-modal :show="'openDelete'" @click.outside="openDelete = false">
                                         <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.offers.delete-confirm') }}</x-heading>
-                                        <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                        <p class="mb-4 text-xs md:tex-sm lg:text-base text-gray-600 dark:text-gray-300">
                                             {{ __('messages.admin.offers.delete-text-1') }} <strong>{{ $offer->name }}</strong>{{ __('messages.admin.offers.delete-text-2') }}.
                                         </p>
                                         <div class="flex justify-end gap-4">
                                             <button @click="openDelete = false"
-                                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
+                                                class="h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
                                                 {{ __('messages.button.cancel') }}
                                             </button>
                                             <form action="{{ route('admin.offers.destroy', $offer->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 cursor-pointer">
+                                                    class="h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer">
                                                     {{ __('messages.button.delete') }}
                                                 </button>
                                             </form>
@@ -254,7 +254,7 @@
             <x-modal :show="'showOffer'" @close="showOffer = false">
                 <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.offers.create') }}</x-heading>
                 <form action="{{ route('admin.job.offers.store') }}" method="POST"
-                class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
+                class="space-y-4 [&>select]:border-1  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
 
                 <x-label for="title">{{ __('messages.admin.offers.label-title') }}</x-label>
@@ -268,7 +268,7 @@
 
                 <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}</x-label>
                 <select name="sector_category" id="sector_category" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white dark:bg-themeBgD">
+                    class="w-full rounded h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark bg-white dark:bg-themeBgD">
                     @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
                         <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
                             {{ $sector }}
@@ -278,7 +278,7 @@
 
                 <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}</x-label>
                 <select name="general_category" required
-                    class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                    class="w-full h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border">
                     <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                     <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
                         {{ __('messages.projects.option-science') }}
@@ -301,18 +301,18 @@
 
                 <x-label for="state">{{ __('messages.admin.offers.label-state') }}</x-label>
                 <select name="state" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
+                    class="w-full rounded h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-white dark:bg-themeBgDark outline-0">
                     <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.admin.offers.status-open') }}</option>
                     <option value="cerrada" @selected(old('state') == 'cerrada')>{{ __('messages.admin.offers.status-close') }}</option>
                 </select>
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showOffer = false"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        class="h-8 text-xs md:tex-sm lg:text-base sm:h-10 px-3 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
-                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        class="h-8 text-xs md:tex-sm lg:text-base sm:h-10 px-3 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                         {{ __('messages.button.save') }}
                     </button>
                 </div>

@@ -26,7 +26,7 @@
                     class="w-full p-3 rounded-lg resize-none border border-gray-300 dark:border-gray-800 focus:ring-2 focus:ring-themeBlue focus:outline-none dark:bg-themeDark focus:text-white"
                     placeholder="{{ __('messages.project-details.write-comment')  }}" required></textarea>
                 <button type="submit"
-                    class="mt-4 px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeHoverBlue transition">
+                    class="mt-4 px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeBlue text-white rounded hover:bg-themeHoverBlue transition cursor-pointer">
                     {{ __('messages.project-details.publish-comment')  }}
                 </button>
             </form>

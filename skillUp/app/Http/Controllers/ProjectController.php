@@ -110,7 +110,7 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string|max:300',
+            'description' => 'required|string',
             'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
             'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',
@@ -198,7 +198,7 @@ class ProjectController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:40',
-            'description' => 'required|string|max:300',
+            'description' => 'required|string|max:600',
             'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
             'sector_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'creation_date' => 'required|date',

@@ -12,76 +12,86 @@
                 </ul>
             </div>
         @endif
-
-        <table
-            class="min-w-full bg-white dark:bg-themeBgDark text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
-            <thead class="bg-gray-100 dark:bg-gray-800 text-xs uppercase text-gray-600 dark:text-gray-300">
-                <tr>
-                    <th class="px-4 py-3 border dark:border-gray-700">ID</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-name') }}</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-author') }}</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-category') }}
-                    </th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-tags') }}</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-date') }}</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-link') }}</th>
-                    <th class="pl-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-rating') }}</th>
-                    <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-actions') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($projects as $project)
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->id }}</td>
-                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->title }}</td>
-                        <td class="px-4 py-3 border dark:border-gray-700">{{ $project->author->name ?? '-' }}</td>
-                        @php
-                            $categoryMap = [
-                                'Administración y negocio' => 'option-admin',
-                                'Ciencia y salud' => 'option-science',
-                                'Comunicación' => 'option-comunication',
-                                'Diseño y comunicación' => 'option-design',
-                                'Educación' => 'option-education',
-                                'Industria' => 'option-industry',
-                                'Otro' => 'option-other',
-                                'Tecnología y desarrollo' => 'option-tec',
-                            ];
-
-                            $categoryKey = $categoryMap[$project->general_category] ?? null;
-                        @endphp
-
-                        @if ($categoryKey)
-                            <td class="px-4 py-3 border dark:border-gray-700">{{ __('messages.projects.' . $categoryKey) ?? '-' }}</td>
-                        @endif
-                        <td class="px-4 py-3 border dark:border-gray-700">{{ __('messages.tags.' . strtolower($project->tags)) }}</td>
-                        <td class="px-4 py-3 border dark:border-gray-700">
-                            {{ $project->creation_date ? \Carbon\Carbon::parse($project->creation_date)->format('d/m/Y') : '-' }}
-                        </td>
-                        <td class="px-4 py-3 border dark:border-gray-700">
-                            @if ($project->link)
-                                <a href="{{ $project->link }}" target="_blank"
-                                    class="text-themeBlue hover:underline">{{ __('messages.admin.projects.see') }}</a>
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td class="px-4 py-3 border dark:border-gray-700">
-                            {{ number_format($project->averageRating() ?? 0, 1) }} / 5
-                        </td>
-                        <td class="px-4 py-3 border dark:border-gray-700">
-                            <a href="{{ route('admin.project.details', $project->id) }}"
-                                class="text-themeBlue hover:underline font-medium">{{ __('messages.admin.projects.see-details') }}</a>
-                        </td>
-                    </tr>
-                @empty
+        <div class="w-full overflow-x-auto rounded shadow-sm">
+            <table
+                class="min-w-full bg-white dark:bg-themeBgDark text-sm text-left text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700">
+                <thead class="bg-gray-100 dark:bg-gray-800 text-xs uppercase text-gray-600 dark:text-gray-300">
                     <tr>
-                        <td colspan="9" class="px-4 py-5 text-center text-gray-500 dark:text-gray-300">
-                            {{ __('messages.admin.projects.no-projects') }}
-                        </td>
+                        <th class="px-4 py-3 border dark:border-gray-700">ID</th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-name') }}
+                        </th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-author') }}
+                        </th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-category') }}
+                        </th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-tags') }}
+                        </th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-date') }}
+                        </th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-link') }}
+                        </th>
+                        <th class="pl-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-rating') }}
+                        </th>
+                        <th class="px-4 py-3 border dark:border-gray-700">{{ __('messages.admin.projects.table-actions') }}
+                        </th>
                     </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($projects as $project)
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <td class="px-4 py-3 border dark:border-gray-700">{{ $project->id }}</td>
+                            <td class="px-4 py-3 border dark:border-gray-700">{{ $project->title }}</td>
+                            <td class="px-4 py-3 border dark:border-gray-700">{{ $project->author->name ?? '-' }}</td>
+                            @php
+                                $categoryMap = [
+                                    'Administración y negocio' => 'option-admin',
+                                    'Ciencia y salud' => 'option-science',
+                                    'Comunicación' => 'option-comunication',
+                                    'Diseño y comunicación' => 'option-design',
+                                    'Educación' => 'option-education',
+                                    'Industria' => 'option-industry',
+                                    'Otro' => 'option-other',
+                                    'Tecnología y desarrollo' => 'option-tec',
+                                ];
+
+                                $categoryKey = $categoryMap[$project->general_category] ?? null;
+                            @endphp
+
+                            @if ($categoryKey)
+                                <td class="px-4 py-3 border dark:border-gray-700">
+                                    {{ __('messages.projects.' . $categoryKey) ?? '-' }}</td>
+                            @endif
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                {{ __('messages.tags.' . strtolower($project->tags)) }}</td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                {{ $project->creation_date ? \Carbon\Carbon::parse($project->creation_date)->format('d/m/Y') : '-' }}
+                            </td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                @if ($project->link)
+                                    <a href="{{ $project->link }}" target="_blank"
+                                        class="text-themeBlue hover:underline">{{ __('messages.admin.projects.see') }}</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                {{ number_format($project->averageRating() ?? 0, 1) }} / 5
+                            </td>
+                            <td class="px-4 py-3 border dark:border-gray-700">
+                                <a href="{{ route('admin.project.details', $project->id) }}"
+                                    class="text-themeBlue hover:underline font-medium">{{ __('messages.admin.projects.see-details') }}</a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="px-4 py-5 text-center text-gray-500 dark:text-gray-300">
+                                {{ __('messages.admin.projects.no-projects') }}
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
         <div x-data="{ showCreateUser: false }" class="inline-block mt-5" x-cloak>
             <button @click="showCreateUser = true"
@@ -169,12 +179,12 @@
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                                 🖼️ {{ __('messages.projects.label-highlight') }}
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                                fileName = $event.target.files[0]?.name || '';
-                                                if ($event.target.files[0]) {
-                                                    const reader = new FileReader();
-                                                    reader.onload = e => previewUrl = e.target.result;
-                                                    reader.readAsDataURL($event.target.files[0]);
-                                                }" />
+                                                    fileName = $event.target.files[0]?.name || '';
+                                                    if ($event.target.files[0]) {
+                                                        const reader = new FileReader();
+                                                        reader.onload = e => previewUrl = e.target.result;
+                                                        reader.readAsDataURL($event.target.files[0]);
+                                                    }" />
                             </label>
 
                             <template x-if="fileName">

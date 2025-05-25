@@ -19,7 +19,7 @@
             {{ __('messages.admin.dashboard.welcome') }} {{ auth()->user()->name . ' ' . auth()->user()->last_name }}
         </x-heading>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
             @if (auth()->user()->role === 'Admin')
                 <a href="{{ route('admin.projects') }}"
@@ -59,7 +59,7 @@
                 </a>
 
                 <a href="{{ route('admin.comments') }}"
-                    class="col-span-2 text-center block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
+                    class="md:col-span-2 text-center block bg-white dark:bg-themeBgDark border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow hover:shadow-md transition hover:border-themeBlue hover:scale-101">
                     <h4 class="text-lg font-semibold text-themeBlue mb-2">{{ __('messages.admin.dashboard.c-management.text') }}
                     </h4>
                     <p class="text-sm text-gray-600 dark:text-themeLightGray">
