@@ -15,7 +15,7 @@
     @endif
 
     <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
-        <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
+        <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
             <aside
                 class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
                 <x-heading level="h4"><strong>{{ __('messages.job-offers.category') }}</strong></x-heading>
@@ -93,10 +93,11 @@
                 </div>
             </aside>
 
-            <main class="space-y-4">
+            <main class="space-y-4 ">
                 <div
-                    class="flex flex-wrap gap-2 h-12 [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                                                         [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                    class="flex flex-wrap gap-2 h-8 sm:h-10 lg:h-12 text-sm [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+                     [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+                      [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
                     <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
                         value="{{ request('name') }}" class="input" />
                     <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}"
@@ -119,11 +120,11 @@
                     </select>
 
                 </div>
-                <ul class="grid grid-cols-3 gap-10">
+                <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full mt-32 sm:mt-20 md:mt-40 xl:mt-20">
                     @forelse ($offers as $offer)
                         <a href="{{ route('job.offers.show', $offer->id) }}">
                             <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
-                                <li class="flex flex-col h-full ">
+                                <li class="flex flex-col">
                                     @php
                                         $categoryMap = [
                                             'Administración y negocio' => 'option-admin',
@@ -140,7 +141,7 @@
                                     @endphp
 
                                     @if ($categoryKey)
-                                    <x-tags class="mb-1 text-sm">{{ __('messages.projects.' . $categoryKey) }}</x-tags>
+                                    <x-tags class="mb-1 ">{{ __('messages.projects.' . $categoryKey) }}</x-tags>
                                     @endif
                                     
                                     <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
@@ -234,7 +235,7 @@
                             </x-card>
                         </a>
                     @empty
-                        <p>{{ __('messages.job-offers.no-offers') }}.</p>
+                        <p class="w-full mt-32 md:mt-44 2md:mt-24 xl:mt-12">{{ __('messages.job-offers.no-offers') }}.</p>
                     @endforelse
                 </ul>
 
@@ -255,7 +256,7 @@
                 <x-heading level="h2"
                     class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
                 <form action="{{ route('job.offers.store') }}" method="POST" id="mi-form"
-                    class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
+                    class="space-y-4 [&>select]:border-1 [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0 text-xs md:tex-sm lg:text-base">
                     @csrf
 
                     <div id="form-errors" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
@@ -274,7 +275,7 @@
 
                     <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
                     <select name="sector_category" id="sector_category" required
-                        class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
+                        class="w-full rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                         @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
                             <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
                                 {{ $sector }}
@@ -284,7 +285,7 @@
 
                     <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
                     <select name="general_category" required
-                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
+                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border  cursor-pointer">
                         <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                         <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
                             {{ __('messages.projects.option-science') }}
@@ -307,7 +308,7 @@
 
                     <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
                     <select name="state" required
-                        class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
+                        class="w-full  rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
                         <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.job-offers.state-open') }}
                         </option>
                         <option value="cerrada" @selected(old('state') == 'cerrada')>{{ __('messages.job-offers.state-close') }}

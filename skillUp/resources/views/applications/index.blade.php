@@ -14,10 +14,10 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-4 gap-24 ">
-        <x-card class="h-full col-span-1">
+    <div class="grid grid-cols-1 xl:grid-cols-4 gap-24 ">
+        <x-card class="h-full col-span-3 xl:col-span-1">
             <form id="candidate-filter-form" method="GET" action="{{ route('applications.index') }}"
-                class=" flex flex-col [&>select]:h-12 [&>select]:bg-white dark:[&>select]:bg-themeBgDark [&>select]:rounded-lg [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 ">
+                class=" flex flex-col text-xs md:tex-sm lg:text-base [&>select]:bg-white dark:[&>select]:bg-themeBgDark [&>select]:rounded-md [&>select]:border [&>select]:border-themeLightGray [&>select]:text-darkThemeSmallTextLightGray [&>select]:px-4 ">
 
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.position') }}</x-heading>
 
@@ -26,7 +26,7 @@
                     placeholder="{{ __('messages.applications.placeholder-position') }}" required />
 
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.status') }}</x-heading>
-                <select class="mb-3 cursor-pointer" name="state">
+                <select class="mb-3 cursor-pointer h-8 sm:h-10" name="state">
                     <option value="">{{ __('messages.applications.status') }}</option>
                     <option value="nueva" @selected(request('state') == 'nueva')>{{ __('messages.applications.new') }}
                     </option>
@@ -47,8 +47,8 @@
         </x-card>
         <x-card class="col-span-3 bg-white dark:bg-themeBgDark">
             <table class="w-full text-left">
-                <thead>
-                    <tr class="border-b">
+                <thead> 
+                    <tr class="border-b text-xs md:tex-sm lg:text-base">
                         <th class="py-2">{{ __('messages.applications.table-name') }}</th>
                         <th class="py-2">{{ __('messages.applications.table-status') }}</th>
                         <th class="py-2">{{ __('messages.applications.table-date') }}</th>
@@ -57,8 +57,8 @@
                 </thead>
                 <tbody>
                     @forelse ($applications as $app)
-                        <tr class="border-b">
-                            <td class="py-2">
+                        <tr class="border-b [&>td]:text-xs [&>td]:md:tex-sm [&>td]lg:text-base">
+                            <td class="py-2 ">
                                 <div class="font-semibold">{{ $app->candidate_name }}</div>
                                 <div class="text-sm text-gray-500">{{ ucfirst($app->position_applied) }}</div>
                             </td>
@@ -69,7 +69,7 @@
                                 x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
                                                                                                                     $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
                                 <button @click="showDetails = true"
-                                    class="p-2 bg-themeBlue text-white shadow-lg rounded-lg cursor-pointer hover:bg-themeHoverBlue/80 transition">
+                                    class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white shadow-lg rounded-lg cursor-pointer hover:bg-themeHoverBlue/80 transition">
                                     {{ __('messages.button.see') }}
                                 </button>
 
@@ -79,7 +79,7 @@
                                         class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.applications.candidate-details') }}
                                         {{ $app->candidate_name }}
                                     </x-heading>
-                                    <div class="flex flex-col items-center text-left gap-2.5 mb-4 ">
+                                    <div class="flex flex-col justify-center mx-auto text-left gap-2.5 mb-4 ">
                                         <p><strong>{{ __('messages.applications.modal-name') }}</strong>
                                             {{ $app->candidate_name }}</p>
                                         <p><strong>{{ __('messages.applications.modal-position') }}</strong>
@@ -119,11 +119,11 @@
                                                 </option>
                                             </select>
                                             <br>
-                                            <div>
+                                            <div class="mt-6">
                                                 <button type="submit"
-                                                    class="px-4 py-2 bg-themeBlue text-gray-800 cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
+                                                    class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-gray-800 cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
                                                 <button @click="showDetails = false"
-                                                    class="px-4 py-2 bg-themeLightGray/50 text-gray-800 cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
+                                                    class="px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray/50 text-gray-800 cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
                                             </div>
                                         </form>
 
@@ -131,7 +131,7 @@
                                 </x-modal>
 
                                 <button @click="showDelete = true"
-                                    class="p-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">
+                                    class="px-2 py-1 2md:px-4 2md:py-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">
                                     {{ __('messages.button.delete') }}
                                 </button>
 
@@ -145,9 +145,9 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="p-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">{{ __('messages.applications.delete') }}</button>
+                                            class="px-2 py-1 2md:px-4 2md:py-2 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">{{ __('messages.applications.delete') }}</button>
                                         <button type="button"
-                                            class="px-4 py-2 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
+                                            class="px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
                                             @click="showDelete = false">{{ __('messages.button.cancel') }}</button>
                                     </form>
 
@@ -157,7 +157,7 @@
                     @empty
                         <tr>
                             <td colspan="4" class="text-center py-4">
-                                <p class="text-lg">{{ __('messages.applications.no-applications') }}</p>
+                                <p class="text-xs md:tex-sm lg:text-base">{{ __('messages.applications.no-applications') }}</p>
                             </td>
                         </tr>
                     @endforelse

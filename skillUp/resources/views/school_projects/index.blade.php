@@ -15,10 +15,10 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
+    <div class="grid grid-cols-1 2md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
         <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
             <form id="filters" action="{{ route('school.projects.index') }}" method="get">
-                <div class="flex flex-wrap gap-2 [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+                <div class="flex flex-wrap gap-2 text-xs md:tex-sm lg:text-base [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
                              [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray
                               [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 mb-2">
                     <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.filters') }}</x-heading>
@@ -42,7 +42,7 @@
                 </div>
                 <div>
                     <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.academic-year') }}</x-heading>
-                    <ul class="space-y-1">
+                    <ul class="space-y-1 text-xs md:tex-sm lg:text-base">
                         <li><input type="checkbox" name="academic_year[]" value="2024-2025"
                                 @checked(is_array(request('academic_year')) && in_array('2024-2025', request('academic_year'))) />
                             2024-2025</li>
@@ -59,7 +59,7 @@
                 </div>
                 <div>
                     <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.categorys') }}</x-heading>
-                    <ul class="space-y-1">
+                    <ul class="space-y-1 text-xs md:tex-sm lg:text-base">
                         <li><input type="checkbox" name="tags[]" value="TFG" @checked(is_array(request('tags')) && in_array('TFG', request('tags'))) /> TFG</li>
                         <li><input type="checkbox" name="tags[]" value="TFM" @checked(is_array(request('tags')) && in_array('TFM', request('tags'))) /> TFM</li>
                         <li><input type="checkbox" name="tags[]" value="Tesis" @checked(is_array(request('tags')) && in_array('Tesis', request('tags'))) /> Tesis</li>
@@ -97,7 +97,7 @@
                 @endif
                 <table class="w-full text-left">
                     <thead>
-                        <tr class="border-b">
+                        <tr class="border-b text-xs md:tex-sm lg:text-base">
                             <th class="py-2">{{ __('messages.school-projects.table-name') }}</th>
                             <th class="py-2">{{ __('messages.school-projects.table-dateC') }}</th>
                             <th class="py-2">{{ __('messages.school-projects.table-dateP') }}</th>
@@ -107,20 +107,20 @@
                     <tbody>
                         @if ($projects->count())
                             @foreach($projects as $project)
-                                <tr class="border-b">
+                                <tr class="border-b [&>td]:text-xs [&>td]:md:tex-sm [&>td]lg:text-base">
                                     <td class="py-2">
                                         <div class="font-semibold">{{ $project->title }}</div>
                                         <div class="text-sm text-gray-500">{{ $project->author }}</div>
                                     </td>
                                     <td class="py-2">{{ $project->creation_date }}</td>
-                                    <td class="py-2">{{ $project->created_at }}</td>
-                                    <td class="py-2 space-x-2" x-data="{ showDelete: false, showEdit: false }" x-cloak
+                                    <td class="py-2">{{ explode(' ', $project->created_at)[0] }}</td>
+                                    <td class="py-2 space-x-2 space-y-1" x-data="{ showDelete: false, showEdit: false }" x-cloak
                                         x-init="
                                                              $watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
                                                              $watch('showEdit', val => document.body.classList.toggle('overflow-hidden', val));">
 
                                         <button @click="showDelete = true"
-                                            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
+                                            class="px-2 py-1 2md:px-4 2md:py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
                                             {{ __('messages.button.delete') }}
                                         </button>
 
@@ -146,7 +146,7 @@
                                         </x-modal>
 
                                         <button @click="showEdit = true"
-                                            class="px-4 py-2 bg-themeBlue/80 hover:bg-themeBlue text-white rounded transition cursor-pointer">
+                                            class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue/80 hover:bg-themeBlue text-white rounded transition cursor-pointer">
                                             {{ __('messages.button.edit') }}
                                         </button>
 
@@ -436,7 +436,7 @@
                             @endforeach
                         @else
                                 <tr>
-                                    <td colspan="4" class="py-4 text-center">{{ __('messages.school-projects.no-projects') }}</td>
+                                    <td colspan="4" class="py-4 text-sm md:text-base">{{ __('messages.school-projects.no-projects') }}</td>
                                 </tr>
                             @endif
                     </tbody>
@@ -529,7 +529,8 @@
                     <x-label for="title">{{ __('messages.school-projects.label-highlight') }}</x-label>
                     <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
                         <label for="image-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            class="flex items-center justify-center w-full px-2 py-1 md:px-4 md:py-2 bg-themeBlue text-white font-medium
+                             rounded cursor-pointer hover:bg-themeHoverBlue transition">
                             {{ __('messages.school-projects.label-high-upload') }}
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                             fileName = $event.target.files[0]?.name || '';

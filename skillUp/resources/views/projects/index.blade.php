@@ -5,7 +5,9 @@
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.projects.title') }}</x-heading>
 
-    <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
+    <form id="project-filter-form" method="GET" action="{{ route('projects.index') }}" class="
+    h-8 sm:h-10 mb-36 text-sm space-y-2
+    lg:mb-16 lg:space-x-5 lg:h-12 w-full [&>input]:h-full [&>select]:h-full
               [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
               [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
               dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark
@@ -65,7 +67,7 @@
         </div>
     @endif
 
-    <ul class="grid grid-cols-3 gap-10">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
         @forelse ($projects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
                 <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
@@ -135,7 +137,7 @@
                 </x-card>
             </a>
         @empty
-            <p>{{ __('messages.projects.no-projects') }}.</p>
+            <p class="col-span-1 md:col-span-2 lg:col-span-3">{{ __('messages.projects.no-projects') }}.</p>
         @endforelse
     </ul>
 
@@ -154,7 +156,7 @@
                 class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.projects.new-project') }}</x-heading>
 
             <form action="{{ route('projects.store') }}" id="mi-form" method="POST" enctype="multipart/form-data"
-                class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
+                class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0 text-xs md:tex-sm lg:text-base">
                 @csrf
 
                 <div id="form-errors" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
@@ -173,7 +175,7 @@
 
                 <div>
                     <x-label for="tags">{{ __('messages.projects.label-tags') }}</x-label>
-                    <select name="tags" id="tags" class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
+                    <select name="tags" id="tags" class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray" required>
                         <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}</option>
                         <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}</option>
                         <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}</option>
@@ -189,7 +191,7 @@
                 <div>
                     <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
                     <select name="sector_category" id="sector_category" required
-                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray">
                         <option value="Administración y negocio" {{ old('sector_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                         <option value="Ciencia y salud" {{ old('sector_category') == 'Ciencia y salud' ? 'selected' : '' }}>{{ __('messages.projects.option-science') }}</option>
                         <option value="Comunicación" {{ old('sector_category') == 'Comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-comunication') }}</option>
@@ -208,14 +210,14 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.projects.label-link') }}</x-label>
-                    <input type="url" name="link" id="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
+                    <input type="url" name="link" id="link" class="w-full h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray" />
                 </div>
 
                 <div>
                     <x-label for="title">{{ __('messages.projects.label-image') }}</x-label>
                     <div x-data="{ fileName: '', previewUrl: '' }" class="w-full" x-cloak>
                         <label for="image-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
+                            class="flex items-center justify-center w-full h-8 sm:h-10 px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                             🖼️ {{ __('messages.projects.label-highlight') }}
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                     fileName = $event.target.files[0]?.name || '';
@@ -242,7 +244,7 @@
                     <x-label for="title">{{ __('messages.projects.label-additional') }}</x-label>
                     <div x-data="{ fileNames: [] }" class="w-full" x-cloak>
                         <label for="file-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
+                            class="flex items-center justify-center w-fullh-8 sm:h-10 px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
                             📎 {{ __('messages.projects.label-upload') }}
                             <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                 @change="fileNames = [...$event.target.files].map(f => f.name)" />
@@ -278,11 +280,11 @@
     <br>
 
     <x-heading level="h1" class="mb-10">{{ __('messages.school-projects.title') }}</x-heading>
-    <ul class="grid grid-cols-3 gap-10">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
         @forelse ($schoolProjects as $school)
             <a href="{{ route('school.projects.show', $school->id) }}">
                 <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
-                    <li class="flex flex-col">
+                    <li class="flex flex-col h-full">
                         <x-tags>{{ __('messages.tags.' . strtolower($school->tags)) }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $school->title }}</x-heading>
                         @php
@@ -351,7 +353,7 @@
                 </li>
             </a>
         @empty
-            <p>{{ __('messages.school-projects.no-projects') }}.</p>
+            <p class="col-span-1 md:col-span-2 lg:col-span-3">{{ __('messages.school-projects.no-projects') }}.</p>
         @endforelse
     </ul>
     <script>

@@ -16,10 +16,10 @@
     @endif
 
     <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}"
-        class="mb-9 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-                  [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-                    [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-                    dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
+        class="space-y-2 lg:mb-9 space-x-5  h-8 sm:h-10 lg:h-12 w-full [&>input]:h-full [&>select]:h-full
+                          [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+                            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
+                            dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
         <select name="type" class="cursor-pointer">
             <option value=""> {{ __('messages.favorites.type') }} </option>
             <option value="proyecto" @selected(request('type') == 'proyecto')>{{ __('messages.favorites.projects') }}</option>
@@ -46,28 +46,94 @@
         $ofertas = $favorites->where('type', 'oferta')->filter(fn($f) => $f->item());
     @endphp
 
-    @if ($proyectos->isNotEmpty())
-        <x-heading level="h3" class="mb-4">{{ __('messages.favorites.projects') }}</x-heading>
-        <div class="grid grid-cols-3 gap-6 mb-9">
-            @foreach ($proyectos as $fav)
-                @php $item = $fav->item(); @endphp
-                <a href="{{ route('projects.show', $item->id) }}">
-                    <x-card class="h-full hover:border-themeBlue hover:scale-101 transition cursor-pointer">
+    <div class="mt-44 sm:mt-32 2md:mt-20 xl:mt-10">
+        @if ($proyectos->isNotEmpty())
+            <x-heading level="h3" class="mb-4">{{ __('messages.favorites.projects') }}</x-heading>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+                @foreach ($proyectos as $fav)
+                    @php $item = $fav->item(); @endphp
+                    <a href="{{ route('projects.show', $item->id) }}">
+                        <x-card class="h-full hover:border-themeBlue hover:scale-101 transition cursor-pointer">
+                            <li class="flex flex-col h-full ">
+                                <x-tags class="mb-2">{{ $item->tags }}</x-tags>
+                                <x-heading level="h3" class="mb-1">{{ $item->title }}</x-heading>
+                                <span class="mb-4">{{ $item->general_category }}</span>
+
+                                @php
+                                    $favorite = auth()->user()->favorites()
+                                        ->where('type', 'proyecto')
+                                        ->where('reference_id', $item->id)
+                                        ->first();
+                                @endphp
+
+                                <div class="flex flex-row justify-between items-center mt-auto">
+                                    <div class="flex flex-row gap-3 ">
+                                        @if ($favorite)
+                                            <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                                    <x-icon name="filled-heart" class="w-5 h-auto" />
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('favorites.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="type" value="proyecto">
+                                                <input type="hidden" name="reference_id" value="{{ $item->id }}">
+                                                <button type="submit"
+                                                    class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                                    <x-icon name="heart" class="w-5 h-auto" />
+                                                </button>
+                                            </form>
+                                        @endif
+                                        <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                                class="w-4 h-auto" />{{ $item->views }}</p>
+                                        <p>
+                                            {{ $item->averageRating() ? number_format($item->averageRating(), 1) : 'Sin calificaciones' }}
+                                        </p>
+                                    </div>
+                                    <span class="text-sm">{{ $item->author->name . ' ' . $item->author->last_name  }}</span>
+                                </div>
+
+                            </li>
+                        </x-card>
+                    </a>
+                @endforeach
+            </div>
+        @endif
+    </div>
+
+    <div class="mt-44 sm:mt-32 2md:mt-20 xl:mt-10">
+        @if ($ofertas->isNotEmpty())
+            <x-heading level="h3" class="mb-4">{{ __('messages.favorites.offers') }}</x-heading>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+                @foreach ($ofertas as $fav)
+                    @php $item = $fav->item(); @endphp
+                    <x-card class="h-full relative">
+                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                            alt="Perfil" id="profileImage"
+                            class="h-20 w-20 rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
                         <li class="flex flex-col h-full ">
-                            <x-tags class="mb-2">{{ $item->tags }}</x-tags>
-                            <x-heading level="h3" class="mb-1">{{ $item->title }}</x-heading>
-                            <span>{{ $item->general_category }}</span>
-                            <p class=" text-sm break-words mb-1.5">{{ Str::limit($item->description, 100) }}</p>
+                            <x-tags class="mb-2">{{ $item->general_category }}</x-tags>
+                            <x-heading level="h3" class="mb-1">{{ $item->name }}</x-heading>
+                            <span>{{ $item->sector_category }}</span>
 
                             @php
                                 $favorite = auth()->user()->favorites()
-                                    ->where('type', 'proyecto')
+                                    ->where('type', 'oferta')
                                     ->where('reference_id', $item->id)
                                     ->first();
                             @endphp
 
                             <div class="flex flex-row justify-between items-center mt-auto">
-                                <div class="flex flex-row gap-3 ">
+                                <div class="flex flex-row gap-3 items-cente mt-2">
+                                    <p
+                                        class="px-3 py-1 rounded-full text-white text-sm font-medium
+                                                                                                {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
+                                        {{ $item->state }}
+                                    </p>
                                     @if ($favorite)
                                         <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                             @csrf
@@ -80,7 +146,7 @@
                                     @else
                                         <form action="{{ route('favorites.store') }}" method="POST">
                                             @csrf
-                                            <input type="hidden" name="type" value="proyecto">
+                                            <input type="hidden" name="type" value="oferta">
                                             <input type="hidden" name="reference_id" value="{{ $item->id }}">
                                             <button type="submit"
                                                 class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
@@ -90,83 +156,21 @@
                                     @endif
                                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                                             class="w-4 h-auto" />{{ $item->views }}</p>
-                                    <p>
-                                        {{ $item->averageRating() ? number_format($item->averageRating(), 1) : 'Sin calificaciones' }}
-                                    </p>
                                 </div>
-                                <span class="text-sm">{{ $item->author->name . ' ' . $item->author->last_name  }}</span>
+                                <span class="text-sm">{{ $item->company->name . ' ' . $item->company->last_name  }}</span>
                             </div>
 
                         </li>
                     </x-card>
-                </a>
-            @endforeach
-        </div>
-    @endif
-
-    @if ($ofertas->isNotEmpty())
-        <x-heading level="h3" class="mb-4">{{ __('messages.favorites.offers') }}</x-heading>
-        <div class="grid grid-cols-3 gap-6 mb-9">
-            @foreach ($ofertas as $fav)
-                @php $item = $fav->item(); @endphp
-                <x-card class="h-full relative">
-                    <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
-                        alt="Perfil" id="profileImage"
-                        class="h-20 w-20 rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
-                    <li class="flex flex-col h-full ">
-                        <x-tags class="mb-2">{{ $item->general_category }}</x-tags>
-                        <x-heading level="h3" class="mb-1">{{ $item->name }}</x-heading>
-                        <span>{{ $item->sector_category }}</span>
-                        <p class=" text-sm mb-1.5">{{ Str::limit($item->description, 100) }}</p>
-
-                        @php
-                            $favorite = auth()->user()->favorites()
-                                ->where('type', 'oferta')
-                                ->where('reference_id', $item->id)
-                                ->first();
-                        @endphp
-
-                        <div class="flex flex-row justify-between items-center mt-auto">
-                            <div class="flex flex-row gap-3 items-cente mt-2">
-                                <p
-                                    class="px-3 py-1 rounded-full text-white text-sm font-medium
-                                                                        {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
-                                    {{ $item->state }}
-                                </p>
-                                @if ($favorite)
-                                    <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
-                                            <x-icon name="filled-heart" class="w-5 h-auto" />
-                                        </button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('favorites.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type" value="oferta">
-                                        <input type="hidden" name="reference_id" value="{{ $item->id }}">
-                                        <button type="submit"
-                                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
-                                            <x-icon name="heart" class="w-5 h-auto" />
-                                        </button>
-                                    </form>
-                                @endif
-                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
-                                        class="w-4 h-auto" />{{ $item->views }}</p>
-                            </div>
-                            <span class="text-sm">{{ $item->company->name . ' ' . $item->company->last_name  }}</span>
-                        </div>
-
-                    </li>
-                </x-card>
-            @endforeach
-        </div>
-    @endif
+                @endforeach
+            </div>
+        @endif
+    </div>
 
     @if ($proyectos->isEmpty() && $ofertas->isEmpty())
-        <p>{{ __('messages.favorites.no-favorites') }}.</p>
+        <p class="col-span-1 md:col-span-2 lg:col-span-3 mt-44 sm:mt-32 2md:mt-20 xl:mt-10">
+            {{ __('messages.favorites.no-favorites') }}.
+        </p>
     @endif
 
     <script>

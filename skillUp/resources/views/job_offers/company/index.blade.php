@@ -15,7 +15,7 @@
         @endif
 
     <form id="filters-input" method="GET" action="{{ route('job.offers.company.index') }}" class="mb-6 space-y-2">
-        <div class="grid grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
+        <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
             <aside
                 class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
                 <x-heading level="h4"><strong>{{ __('messages.job-offers.category') }}</strong></x-heading>
@@ -122,7 +122,7 @@
                     </select>
 
                 </div>
-                <ul class="grid grid-cols-3 gap-10">
+                <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-40 sm:mt-24 md:mt-40 lg:mt-28 xl:mt-10">
                     @forelse ($offers as $offer)
                         <a href="{{ route('job.offers.show', $offer->id) }}">
                             <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
@@ -195,7 +195,7 @@
             <x-heading level="h2"
                 class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
             <form action="{{ route('job.offers.store') }}" method="POST"
-                class="space-y-4 [&>select]:border-2  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
+                class="space-y-4 [&>select]:border  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
 
                 <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
@@ -209,7 +209,7 @@
 
                 <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
                 <select name="sector_category" id="sector_category" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
+                    class="w-full border-themeLightGray rounded text-xs md:tex-sm lg:text-base h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                     <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
                         {{ __('messages.select') }}
                     </option>
@@ -222,7 +222,7 @@
 
                 <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
                 <select name="general_category" required
-                    class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
+                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                     <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
                     <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
                         {{ __('messages.projects.option-science') }}
@@ -245,18 +245,18 @@
 
                 <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
                 <select name="state" required
-                    class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
+                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base border-themeLightGray rounded bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
                     <option value="abierta">{{ __('messages.job-offers.state-open') }}</option>
                     <option value="cerrada">{{ __('messages.job-offers.state-close') }}</option>
                 </select>
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showModal = false"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        class="px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
-                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                         {{ __('messages.button.save') }}
                     </button>
                 </div>
