@@ -42,6 +42,29 @@
 
 }
 
+html{
+    scrollbar-width: thin;
+    scrollbar-color: #0097FF #8d8d8d3a;
+}
+
 [x-cloak] {
     display: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(128, 128, 128, 0.1); 
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #0097FF, #239485);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #0097FF, #239485);
 }
