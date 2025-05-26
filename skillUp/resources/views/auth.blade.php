@@ -5,97 +5,183 @@
     <meta charset="UTF-8">
     <title>Autenticación</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('icons/logo.svg') }}">
-    <!-- @vite('resources/css/app.css')
-    @vite('resources/js/app.js') -->
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body>
-    @if (session('status'))
-        <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
-            {{ session('status') }}
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li class="text-black dark:text-white">- {{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+<body class="flex flex-col min-h-screen bg-cover bg-center"
+    style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">
 
-    <h2>{{__('messages.auth.login')}}</h2>
-    <form action="{{ route('login') }}" method="POST">
-        @csrf
-        <div id="login-errors" class="bg-red-300 text-black p-4 rounded mb-4 hidden"></div>
-        <label>{{__('messages.auth.email')}}</label>
-        <input type="email" name="email" value="{{ old('email') }}" required><br>
-        <label>{{__('messages.auth.password')}}</label>
-        <input type="password" name="password" required><br>
-        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-        <span>{{__('messages.auth.remember')}}</span>
-        <button type="submit">{{__('messages.auth.acceed')}}</button>
-    </form>
-    <p class="text-sm text-center mt-4">
-        <a href="{{ route('password.request') }}" class="text-blue-600 hover:underline">
-            {{__('messages.auth.forgot-password')}}
-        </a>
-    </p>
+    <main class="flex-grow px-12">
+        <section x-data="{ form: 'login' }" class="w-full md:w-3/4 lg:w-2/4 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
-    <a href="/auth/google/redirect">
-        <button>{{__('messages.auth.google')}}</button>
-    </a>
-
-    <hr>
-
-    <h2>{{__('messages.auth.register')}}</h2>
-    <form method="POST" action="{{ route('register') }}" class="space-y-4" x-data="{ role: '{{ old('role') }}' }">
-        @csrf
-
-        <div id="register-errors" class="bg-red-100 text-red-700 p-4 rounded mt-4"></div>
-
-        <input type="text" name="name" placeholder="{{__('messages.profile.name')}}" value="{{ old('name') }}" required>
-        <input type="text" name="lastName" placeholder="{{__('messages.profile.last-name')}}" value="{{ old('lastName') }}" required>
-        <input type="email" name="email" placeholder="{{__('messages.profile.email')}}" value="{{ old('email') }}" required>
-        <input type="password" name="password" placeholder="{{__('messages.auth.ph-password')}}" required>
-        <input type="password" name="password_confirmation" placeholder="{{__('messages.auth.ph-password-confirm')}}" required>
-
-        <select name="role" x-model="role" required>
-            <option value="">{{__('messages.auth.select')}}</option>
-            <option value="Usuario">{{__('messages.auth.option-user')}}</option>
-            <option value="Alumno">{{__('messages.auth.option-student')}}</option>
-            <option value="Empresa">{{__('messages.auth.option-company')}}</option>
-        </select>
-
-        <template x-if="role === 'Alumno'">
-            <div class="space-y-2">
-                <input type="date" name="birthDate" value="{{ old('birthDate') }}" placeholder="{{__('messages.admin.users.ph-birth-date')}}"
-                    required>
-                <input type="text" name="currentCourse" value="{{ old('currentCourse') }}" placeholder="{{__('messages.admin.users.ph-current-course')}}"
-                    required>
-                <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
-                    placeholder="{{__('messages.admin.users.ph-educational-center')}}" required>
+            {{-- TÍTULO + CAMBIO DE FORMULARIO --}}
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+                    <template x-if="form === 'login'">{{ __('messages.auth.login') }}</template>
+                    <template x-if="form === 'register'">{{ __('messages.auth.register') }}</template>
+                </h2>
+                <p class="text-sm text-gray-500 dark:text-gray-300">
+                    <template x-if="form === 'login'">
+                        <span>¿No tienes cuenta?
+                            <button @click="form = 'register'" class="text-blue-500 hover:underline">Regístrate</button>
+                        </span>
+                    </template>
+                    <template x-if="form === 'register'">
+                        <span>¿Ya tienes cuenta?
+                            <button @click="form = 'login'" class="text-blue-500 hover:underline">Inicia sesión</button>
+                        </span>
+                    </template>
+                </p>
             </div>
-        </template>
 
-        <template x-if="role === 'Empresa'">
-            <div class="space-y-2">
-                <input type="text" name="cif" value="{{ old('cif') }}" placeholder="{{__('messages.profile.cif')}}" required>
-                <input type="text" name="address" value="{{ old('address') }}" placeholder="{{__('messages.profile.adress')}}" required>
-                <input type="text" name="sector" value="{{ old('sector') }}" placeholder="{{__('messages.profile.sector')}}" required>
-                <input type="url" name="website" value="{{ old('website') }}" placeholder="{{__('messages.profile.website')}}">
+            {{-- ERRORES --}}
+            @if (session('status'))
+                <div class="bg-green-100 border border-green-400 text-green-800 dark:bg-green-200 dark:text-green-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>- {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- FORMULARIO LOGIN --}}
+            <div x-show="form === 'login'" x-transition>
+                <form action="{{ route('login') }}" method="POST" class="space-y-5">
+                    @csrf
+                    <div id="login-errors" class="bg-red-300 text-black p-4 rounded hidden"></div>
+
+                    <div class="space-y-1">
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            {{ __('messages.auth.email') }}
+                        </label>
+                        <input type="email" name="email" id="email"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                            required value="{{ old('email') }}">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            {{ __('messages.auth.password') }}
+                        </label>
+                        <input type="password" name="password" id="password"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                            required>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}
+                            class="rounded border-gray-300 dark:border-gray-600 text-themeBlue focus:ring-themeBlue">
+                        <label>{{ __('messages.auth.remember') }}</label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-150 shadow-md">
+                        {{ __('messages.auth.acceed') }}
+                    </button>
+
+                    <a href="{{ route('password.request') }}"
+                        class="block text-center text-sm text-blue-600 hover:underline">
+                        {{ __('messages.auth.forgot-password') }}
+                    </a>
+
+                    <a href="/auth/google/redirect">
+                        <button type="button"
+                            class="mt-4 w-full bg-red-500 text-white py-2 px-4 font-semibold rounded-xl hover:bg-red-600 active:scale-[.98] transition-all duration-150 shadow-md">
+                            {{ __('messages.auth.google') }}
+                        </button>
+                    </a>
+                </form>
             </div>
-        </template>
 
-        <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
+            {{-- FORMULARIO REGISTRO --}}
+            <div x-show="form === 'register'" x-transition x-cloak>
+                <form method="POST" action="{{ route('register') }}" class="space-y-5"
+                    x-data="{ role: '{{ old('role') }}' }">
+                    @csrf
 
-        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
-            {{ __('messages.auth.register') }}
-        </button>
-    </form>
+                    <div id="register-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
+
+                    @foreach ([
+                        'name' => 'messages.profile.name',
+                        'lastName' => 'messages.profile.last-name',
+                        'email' => 'messages.profile.email',
+                    ] as $field => $label)
+                        <input type="{{ $field === 'email' ? 'email' : 'text' }}" name="{{ $field }}"
+                            placeholder="{{ __($label) }}" value="{{ old($field) }}"
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                            required>
+                    @endforeach
+
+                    <input type="password" name="password" placeholder="{{__('messages.auth.ph-password')}}"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                        required>
+
+                    <input type="password" name="password_confirmation"
+                        placeholder="{{__('messages.auth.ph-password-confirm')}}"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                        required>
+
+                    <select name="role" x-model="role" required
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition">
+                        <option value="">{{__('messages.auth.select')}}</option>
+                        <option value="Usuario">{{__('messages.auth.option-user')}}</option>
+                        <option value="Alumno">{{__('messages.auth.option-student')}}</option>
+                        <option value="Empresa">{{__('messages.auth.option-company')}}</option>
+                    </select>
+
+                    <template x-if="role === 'Alumno'">
+                        <div class="space-y-3">
+                            <input type="date" name="birthDate" value="{{ old('birthDate') }}"
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition"
+                                required>
+                            <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
+                                placeholder="{{__('messages.admin.users.ph-current-course')}}" required
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                            <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
+                                placeholder="{{__('messages.admin.users.ph-educational-center')}}" required
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                        </div>
+                    </template>
+
+                    <template x-if="role === 'Empresa'">
+                        <div class="space-y-3">
+                            <input type="text" name="cif" value="{{ old('cif') }}"
+                                placeholder="{{__('messages.profile.cif')}}" required
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                            <input type="text" name="address" value="{{ old('address') }}"
+                                placeholder="{{__('messages.profile.adress')}}" required
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                            <input type="text" name="sector" value="{{ old('sector') }}"
+                                placeholder="{{__('messages.profile.sector')}}" required
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                            <input type="url" name="website" value="{{ old('website') }}"
+                                placeholder="{{__('messages.profile.website')}}"
+                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                        </div>
+                    </template>
+
+                    <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
+
+                    <button type="submit"
+                        class="w-full bg-green-600 text-white py-2 px-4 font-semibold rounded-xl hover:bg-green-700 active:scale-[.98] transition-all duration-150 shadow-md">
+                        {{ __('messages.auth.register') }}
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <x-footer />
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -222,7 +308,7 @@
                     ul.appendChild(li);
                 });
                 box.appendChild(ul);
-                form.insertBefore(box, form.querySelector('button[type="submit"]'));
+      xfoinsertBefore(box, form.querySelector('button[type="submit"]'));
             }
         });
 
