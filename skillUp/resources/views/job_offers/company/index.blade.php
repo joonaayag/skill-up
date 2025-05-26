@@ -252,11 +252,11 @@
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showModal = false"
-                        class="px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs md:tex-sm lg:text-base bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
-                        class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs md:tex-sm lg:text-base bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                         {{ __('messages.button.save') }}
                     </button>
                 </div>

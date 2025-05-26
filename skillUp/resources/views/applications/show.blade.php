@@ -3,7 +3,7 @@
 @section('title', 'Detalles de la candidatura')
 
 @section('content')
-    <h1>Candidatura para: {{ $application->offer->name }}</h1>
+    <x-heading level="h1" class="mb-10">{{ $application->offer->name }}</x-heading>
 
     <p><strong>Candidato:</strong> {{ $application->candidate_name }}</p>
     <p><strong>Puesto solicitado:</strong> {{ $application->position_applied }}</p>

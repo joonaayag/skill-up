@@ -6,7 +6,7 @@
 ])
 
 @php
-    $base = 'inline-flex items-center px-4 py-2 rounded-md font-semibold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+    $base = 'inline-flex items-center px-2 py-1 2md:px-4 2md:py-2 rounded-md font-semibold text-xs md:tex-sm lg:text-base transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
     $variants = [
         'grape' => 'text-white bg-themeGrape hover:opacity-90 focus:ring-themeGrape',

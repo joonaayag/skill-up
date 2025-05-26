@@ -105,7 +105,7 @@
             <div class="flex items-center justify-start gap-4 mb-6 text-xs md:tex-sm lg:text-base mt-auto">
                 @php
                     $favorite = auth()->user()->favorites()
-                        ->where('type', 'proyecto')
+                        ->where('type', 'oferta')
                         ->where('reference_id', $offer->id)
                         ->first();
                 @endphp
@@ -114,14 +114,19 @@
                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit"><x-icon name="filled-heart" class="w-5 h-auto cursor-pointer " /></button>
+                        <button type="submit"
+                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer"><x-icon
+                                name="filled-heart" class="w-5 h-auto translate-y-1" /></button>
                     </form>
                 @else
                     <form action="{{ route('favorites.store') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="type" value="proyecto">
+                        <input type="hidden" name="type" value="oferta">
                         <input type="hidden" name="reference_id" value="{{ $offer->id }}">
-                        <button type="submit"><x-icon name="heart" class="w-5 h-auto cursor-pointer" /></button>
+                        <button type="submit"
+                            class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                            <x-icon name="heart" class="w-5 h-auto translate-y-1" />
+                        </button>
                     </form>
                 @endif
                 <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
@@ -132,7 +137,8 @@
                                 class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{
                     __('messages.button.delete') }}</button>
 
-                            <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
+                            <div x-show="open" x-cloak
+                                class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
                                 <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
                                     @click.outside="open = false">
                                     <x-heading level="h2"
@@ -151,7 +157,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700">
+                                                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700 ">
                                                 {{ __('messages.button.delete') }}
                                             </button>
                                         </form>

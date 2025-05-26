@@ -96,12 +96,13 @@
             <main class="space-y-4 ">
                 <div
                     class="flex flex-wrap gap-2 h-8 sm:h-10 lg:h-12 text-sm [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark
-                     [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                      [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                     [&>select]:bg-white dark:[&>select]:bg-themeBgDark [&>input]:text-themeLightGray [&>select]:text-themeLightGray
+                      [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray
+                       [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
                     <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
-                        value="{{ request('name') }}" class="input" />
+                        value="{{ request('name') }}" class="text-themeLightGray"  />
                     <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}"
-                        value="{{ request('author') }}" class="input" />
+                        value="{{ request('author') }}" class="text-themeLightGray" />
                     <select name="order" class="cursor-pointer">
                         <option value="">{{ __('messages.job-offers.order-by') }}</option>
                         <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}
@@ -114,7 +115,7 @@
                         </option>
                     </select>
 
-                    <select name="direction">
+                    <select name="direction" class="cursor-pointer text-themeLightGray">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
                         <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>

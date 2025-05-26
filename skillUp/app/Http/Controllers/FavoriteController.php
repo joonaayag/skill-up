@@ -52,24 +52,23 @@ class FavoriteController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
-        $request->validate([
-            'type' => 'required|in:proyecto,oferta',
+        $validated = $request->validate([
+            'type' => 'required|string',
             'reference_id' => 'required|integer',
         ], [
             'type.required' => __('messages.errors.favorites.type-required'),
             'type.in' => __('messages.errors.favorites.type-in'),
-        
+
             'reference_id.required' => __('messages.errors.favorites.reference_id-required'),
             'reference_id.integer' => __('messages.errors.favorites.reference_id-integer'),
         ]);
 
-        Favorite::firstOrCreate([
+        Favorite::create([
             'user_id' => auth()->id(),
-            'type' => $request->type,
-            'reference_id' => $request->reference_id,
+            'type' => $validated['type'],
+            'reference_id' => $validated['reference_id'],
         ]);
 
         return back();

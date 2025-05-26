@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <x-heading level="h1" class="mb-10">{{ __('messages.dashboard.hi') }}, {{ auth()->user()->name }}</x-heading>
+    <x-heading level="h1" class="mb-10 ">{{ __('messages.dashboard.hi') }}, {{ auth()->user()->name }}</x-heading>
     @if ($errors->any())
         <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
             <ul>
@@ -15,7 +15,8 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 2md:grid-cols-2 xl:grid-cols-3 gap-14 h-full mb-24 ">
+    <div class="grid grid-cols-1 2md:grid-cols-2 xl:grid-cols-3 gap-14 h-full mb-24 transition-all duration-300 ease-in-out">
+
         <x-card class="order-2 2md:order-1">
             <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.highlight-projects') }}</x-heading>
             <div class="flex flex-col gap-3">
@@ -44,7 +45,8 @@
             </div>
         </x-card>
 
-        <div class="grid grid-rows-5 gap-8 order-3 2md:order-2">
+        <div class="grid grid-rows-5 gap-8 order-3 2md:order-2 transition-all duration-300 ease-in-out">
+
             <x-card class="row-span-2 h-full">
                 <x-heading level="h3" class="mb-8">{{ __('messages.dashboard.your-projects') }}</x-heading>
                 <div class="flex flex-col gap-3">
@@ -101,7 +103,8 @@
             </x-card>
         </div>
 
-        <div class="grid grid-rows-7 gap-8 xl:-mt-20 order-1 2md:order-3">
+        <div class="grid grid-rows-7 gap-8 xl:-mt-20 order-1 2md:order-3 transition-all duration-300 ease-in-out">
+
             <div
                 class="row-span-3 h-full order-2 xl:order-1 [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
                 <div class="relative">

@@ -35,18 +35,18 @@
                     {{ __('messages.welcome.title') }}
                 </x-heading>
 
-                <p class="text-base text-gray-600 dark:text-themeLightGray mb-6 leading-relaxed">
+                <p class="text-xs md:tex-sm 2md:text-base text-gray-600 dark:text-themeLightGray mb-6 leading-relaxed">
                     {{ __('messages.welcome.subtitle') }}
                 </p>
 
-                <x-button href="{{ route('auth') }}" class="w-max">
+                <x-button href="{{ route('auth') }}" class="w-max ">
                     {{ __('messages.welcome.button') }}
                 </x-button>
             </div>
 
             <!-- Lado derecho: imagen -->
             <div class="lg:col-span-2 flex items-center justify-center">
-                <img class="max-h-[400px] w-auto rounded-lg shadow-md" src="{{ asset('images/phone-mockup.png') }}"
+                <img class="max-h-[400px] w-auto rounded-lg " src="{{ asset('images/phone-mockup.png') }}"
                     alt="phone mockup">
             </div>
         </section>

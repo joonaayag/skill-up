@@ -80,31 +80,31 @@
                                         {{ $app->candidate_name }}
                                     </x-heading>
                                     <div class="flex flex-col justify-center mx-auto text-left gap-2.5 mb-4 ">
-                                        <p><strong>{{ __('messages.applications.modal-name') }}</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-name') }}</strong>
                                             {{ $app->candidate_name }}</p>
-                                        <p><strong>{{ __('messages.applications.modal-position') }}</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-position') }}</strong>
                                             {{ $app->position_applied }}</p>
-                                        <p><strong>{{ __('messages.applications.modal-reason') }}:</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-reason') }}:</strong>
                                             {{ $app->application_reason }}</p>
-                                        <p><strong>{{ __('messages.applications.modal-date') }}</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-date') }}</strong>
                                             {{ $app->application_date }}</p>
 
                                         @if ($app->cv)
                                             <p>
-                                                <a href="{{ asset('storage/' . $app->cv) }}" class="text-blue-600 underline"
+                                                <a href="{{ asset('storage/' . $app->cv) }}" class="text-blue-600 underline text-xs md:tex-sm lg:text-base"
                                                     target="_blank">📄
                                                     {{ __('messages.applications.see-cv') }}</a>
                                             </p>
                                         @else
-                                            <p class="text-gray-500">{{ __('messages.applications.no-cv') }}</p>
+                                            <p class="text-gray-500 text-xs md:tex-sm lg:text-base">{{ __('messages.applications.no-cv') }}</p>
                                         @endif
 
                                         <form method="POST" action="{{ route('applications.update', $app->id) }}">
                                             @csrf
                                             @method('PUT')
 
-                                            <label for="state">{{ __('messages.applications.change-status') }}</label>
-                                            <select name="state" required class="dark:bg-themeBgDark">
+                                            <x-label for="state">{{ __('messages.applications.change-status') }}</x-label>
+                                            <select name="state" required class="dark:bg-themeBgDark text-xs md:tex-sm lg:text-base border border-themeLightGray rounded-md px-4 py-2 cursor-pointer">
                                                 <option value="nueva" {{ $app->state === 'nueva' ? 'selected' : '' }}>
                                                     {{ __('messages.applications.new') }}
                                                 </option>
@@ -121,9 +121,9 @@
                                             <br>
                                             <div class="mt-6">
                                                 <button type="submit"
-                                                    class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-gray-800 cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
+                                                    class="h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
                                                 <button @click="showDetails = false"
-                                                    class="px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray/50 text-gray-800 cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
+                                                    class="h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray/50 text-white cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
                                             </div>
                                         </form>
 

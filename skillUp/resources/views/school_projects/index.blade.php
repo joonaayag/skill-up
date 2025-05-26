@@ -485,7 +485,7 @@
                 <div>
                     <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
                     <select name="tags" id="tags"
-                        class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer"
+                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer"
                         required>
                         <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
                             {{ __('messages.tags.tfg') }}</option>
@@ -503,7 +503,7 @@
 
                 <div>
                     <x-label for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
-                    <select name="general_category" required class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
+                    <select name="general_category" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                         <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}</option>
                         <option value="Ciencia y salud">{{ __('messages.school-projects.option-science') }}</option>
                         <option value="Comunicación">{{ __('messages.school-projects.option-comunication') }}</option>
@@ -522,7 +522,7 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.school-projects.label-link') }}</x-label>
-                    <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
+                    <input type="url" name="link" class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray" />
                 </div>
 
                 <div>
@@ -557,7 +557,7 @@
                     <x-label for="title">{{ __('messages.school-projects.label-additional') }}</x-label>
                     <div x-data="{ fileNames: [] }" x-cloak class="w-full">
                         <label for="file-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
+                            class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
                             {{ __('messages.school-projects.label-upload') }}
                             <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                 @change="fileNames = [...$event.target.files].map(f => f.name)" />
@@ -575,11 +575,11 @@
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showModal = false"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        class="h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
-                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        class="h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                         {{ __('messages.button.save') }}
                     </button>
                 </div>

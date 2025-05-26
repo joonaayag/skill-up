@@ -111,10 +111,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
                 @foreach ($ofertas as $fav)
                     @php $item = $fav->item(); @endphp
-                    <x-card class="h-full relative">
+                    <x-card class="h-full hover:border-themeBlue hover:scale-101 transition cursor-pointer">
                         <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
                             alt="Perfil" id="profileImage"
-                            class="h-20 w-20 rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
+                            class="h-20 w-20 hidden 2xl:flex rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
                         <li class="flex flex-col h-full ">
                             <x-tags class="mb-2">{{ $item->general_category }}</x-tags>
                             <x-heading level="h3" class="mb-1">{{ $item->name }}</x-heading>
@@ -128,10 +128,10 @@
                             @endphp
 
                             <div class="flex flex-row justify-between items-center mt-auto">
-                                <div class="flex flex-row gap-3 items-cente mt-2">
+                                <div class="flex flex-row gap-3 items-center justify-center mt-2">
                                     <p
                                         class="px-3 py-1 rounded-full text-white text-sm font-medium
-                                                                                                {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
+                                        {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
                                         {{ $item->state }}
                                     </p>
                                     @if ($favorite)
@@ -139,7 +139,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                                class="text-themeRed hover:scale-110 transition-transform duration-200 translate-y-1 cursor-pointer">
                                                 <x-icon name="filled-heart" class="w-5 h-auto" />
                                             </button>
                                         </form>
@@ -149,7 +149,7 @@
                                             <input type="hidden" name="type" value="oferta">
                                             <input type="hidden" name="reference_id" value="{{ $item->id }}">
                                             <button type="submit"
-                                                class="text-themeRed hover:scale-110 transition-transform duration-200 cursor-pointer">
+                                                class="text-themeRed hover:scale-110 transition-transform duration-200 translate-y-1 cursor-pointer">
                                                 <x-icon name="heart" class="w-5 h-auto" />
                                             </button>
                                         </form>

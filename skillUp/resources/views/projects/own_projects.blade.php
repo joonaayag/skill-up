@@ -4,32 +4,45 @@
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.your-projects.title') }}</x-heading>
-    <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}"
-        class="mb-16 space-x-5 h-12 w-full [&>input]:h-full [&>select]:h-full
-              [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-                [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-                 dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark dark:[&>select]:bg-themeBgDark">
-        <input type="text" name="title" placeholder="{{ __('messages.your-projects.placeholder-title') }}" value="{{ request('title') }}">
-        <input type="text" name="description" placeholder="{{ __('messages.your-projects.placeholder-description') }}" value="{{ request('description') }}">
+    <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}" class=" h-8 sm:h-10 mb-36 text-sm space-y-2
+        lg:mb-16 lg:space-x-5 lg:h-12 w-full [&>input]:h-full [&>select]:h-full
+                  [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
+                  [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
+                  dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark
+                  dark:[&>select]:bg-themeBgDark ">
+        <input type="text" name="title" placeholder="{{ __('messages.your-projects.placeholder-title') }}"
+            value="{{ request('title') }}">
+        <input type="text" name="description" placeholder="{{ __('messages.your-projects.placeholder-description') }}"
+            value="{{ request('description') }}">
 
-        <select name="category">
+        <select name="category" class="cursor-pointer">
             <option value="">{{ __('messages.your-projects.category') }}</option>
             <option value="Administración y negocio" @selected(request('category') == 'Administración y negocio')>
-                {{ __('messages.your-projects.option-admin') }}</option>
-            <option value="Ciencia y salud" @selected(request('category') == 'Ciencia y salud')>{{ __('messages.your-projects.option-science') }}</option>
-            <option value="Comunicación" @selected(request('category') == 'Comunicación')>{{ __('messages.your-projects.option-communication') }}</option>
-            <option value="Diseño y comunicación" @selected(request('category') == 'Diseño y comunicación')>{{ __('messages.your-projects.option-design') }}</option>
-            <option value="Educación" @selected(request('category') == 'Educación')>{{ __('messages.your-projects.option-education') }}</option>
-            <option value="Industria" @selected(request('category') == 'Industria')>{{ __('messages.your-projects.option-industry') }}</option>
-            <option value="Otro" @selected(request('category') == 'Otro')>{{ __('messages.your-projects.option-other') }}</option>
-            <option value="Tecnología y desarrollo" @selected(request('category') == 'Tecnología y desarrollo')>{{ __('messages.your-projects.option-tec') }}</option>
+                {{ __('messages.your-projects.option-admin') }}
+            </option>
+            <option value="Ciencia y salud" @selected(request('category') == 'Ciencia y salud')>
+                {{ __('messages.your-projects.option-science') }}</option>
+            <option value="Comunicación" @selected(request('category') == 'Comunicación')>
+                {{ __('messages.your-projects.option-communication') }}</option>
+            <option value="Diseño y comunicación" @selected(request('category') == 'Diseño y comunicación')>
+                {{ __('messages.your-projects.option-design') }}</option>
+            <option value="Educación" @selected(request('category') == 'Educación')>
+                {{ __('messages.your-projects.option-education') }}</option>
+            <option value="Industria" @selected(request('category') == 'Industria')>
+                {{ __('messages.your-projects.option-industry') }}</option>
+            <option value="Otro" @selected(request('category') == 'Otro')>{{ __('messages.your-projects.option-other') }}
+            </option>
+            <option value="Tecnología y desarrollo" @selected(request('category') == 'Tecnología y desarrollo')>
+                {{ __('messages.your-projects.option-tec') }}</option>
         </select>
 
-        <select name="order">
+        <select name="order" class="cursor-pointer">
             <option value="">{{ __('messages.your-projects.order-by') }}</option>
             <option value="name" @selected(request('order') == 'name')>{{ __('messages.your-projects.order-name') }}</option>
-            <option value="creation_date" @selected(request('order') == 'creation_date')>{{ __('messages.your-projects.order-date') }}</option>
-            <option value="general_category" @selected(request('order') == 'general_category')>{{ __('messages.your-projects.order-category') }}</option>
+            <option value="creation_date" @selected(request('order') == 'creation_date')>
+                {{ __('messages.your-projects.order-date') }}</option>
+            <option value="general_category" @selected(request('order') == 'general_category')>
+                {{ __('messages.your-projects.order-category') }}</option>
         </select>
     </form>
     @if ($errors->any())
@@ -42,11 +55,11 @@
         </div>
     @endif
 
-    <ul class="grid grid-cols-3 gap-10">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
 
         @forelse ($userProjects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
-                <x-card class="h-full">
+                <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
                     <li class="flex flex-col h-full ">
                         <x-tags class="mb-2">{{ $project->tags }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>
@@ -55,7 +68,8 @@
 
                         <div class="flex flex-row justify-between items-center mt-auto">
                             <div class="flex flex-row gap-3">
-                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic" class="w-4 h-auto" />{{ $project->views }}</p>
+                                <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
+                                        class="w-4 h-auto" />{{ $project->views }}</p>
                                 <p>
                                     {{ $project->averageRating() ? number_format($project->averageRating(), 1) : __('messages.your-projects.no-califications') }}
                                 </p>
@@ -81,7 +95,8 @@
 
 
         <x-modal>
-            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.your-projects.new-project') }}</x-heading>
+            <x-heading level="h2"
+                class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.your-projects.new-project') }}</x-heading>
 
             <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
                 class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
@@ -99,22 +114,34 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.your-projects.label-tags') }}</x-label>
-                    <select name="tags" id="tags" class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
-                        <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}</option>
-                        <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}</option>
-                        <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}</option>
-                        <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>{{ __('messages.tags.individual') }}</option>
-                        <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>{{ __('messages.tags.grupal') }}</option>
-                        <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnologia') }}</option>
-                        <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>{{ __('messages.tags.ciencias') }}</option>
-                        <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}</option>
-                        <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>{{ __('messages.tags.ingenieria') }}</option>
+                    <select name="tags" id="tags"
+                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray"
+                        required>
+                        <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}
+                        </option>
+                        <option value="TFM" {{ old('tags') == 'TFM' ? 'selected' : '' }}>{{ __('messages.tags.tfm') }}
+                        </option>
+                        <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}
+                        </option>
+                        <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>
+                            {{ __('messages.tags.individual') }}</option>
+                        <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>
+                            {{ __('messages.tags.grupal') }}</option>
+                        <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
+                            {{ __('messages.tags.tecnologia') }}</option>
+                        <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
+                            {{ __('messages.tags.ciencias') }}</option>
+                        <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}
+                        </option>
+                        <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>
+                            {{ __('messages.tags.ingenieria') }}</option>
                     </select>
                 </div>
 
                 <div>
                     <x-label for="title">{{ __('messages.your-projects.label-category') }}</x-label>
-                    <select name="sector_category" required class="w-full px-3 py-2 rounded border dark:bg-themeBgDark border-themeLightGray">
+                    <select name="sector_category" required
+                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border dark:bg-themeBgDark border-themeLightGray">
                         <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}</option>
                         <option value="Ciencia y salud">{{ __('messages.school-projects.option-science') }}</option>
                         <option value="Comunicación">{{ __('messages.school-projects.option-comunication') }}</option>
@@ -133,22 +160,23 @@
 
                 <div>
                     <x-label for="title">{{ __('messages.your-projects.label-link') }}</x-label>
-                    <input type="url" name="link" class="w-full px-3 py-2 rounded border border-themeLightGray" />
+                    <input type="url" name="link"
+                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray" />
                 </div>
 
                 <div>
                     <x-label for="title">{{ __('messages.your-projects.label-image') }}</x-label>
                     <div x-data="{ fileName: '', previewUrl: '' }" class="w-full" x-cloak>
                         <label for="image-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
+                            class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             {{ __('messages.your-projects.label-highlight') }}
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
-                                fileName = $event.target.files[0]?.name || '';
-                                if ($event.target.files[0]) {
-                                    const reader = new FileReader();
-                                    reader.onload = e => previewUrl = e.target.result;
-                                    reader.readAsDataURL($event.target.files[0]);
-                                }" />
+                                    fileName = $event.target.files[0]?.name || '';
+                                    if ($event.target.files[0]) {
+                                        const reader = new FileReader();
+                                        reader.onload = e => previewUrl = e.target.result;
+                                        reader.readAsDataURL($event.target.files[0]);
+                                    }" />
                         </label>
 
                         <template x-if="fileName">
@@ -167,7 +195,7 @@
                     <x-label for="title">{{ __('messages.your-projects.label-additional') }}</x-label>
                     <div x-data="{ fileNames: [] }" class="w-full" x-cloak>
                         <label for="file-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
+                            class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
                             {{ __('messages.your-projects.label-upload') }}
                             <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                 @change="fileNames = [...$event.target.files].map(f => f.name)" />
@@ -185,11 +213,11 @@
 
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" @click="showModal = false"
-                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                        class="h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                         {{ __('messages.button.cancel') }}
                     </button>
                     <button type="submit"
-                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                        class="h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                         {{ __('messages.button.save') }}
                     </button>
                 </div>
