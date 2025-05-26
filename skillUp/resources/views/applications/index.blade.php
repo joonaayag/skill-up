@@ -16,17 +16,30 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-24 ">
         <x-card class="h-full col-span-3 xl:col-span-1">
-            <form id="candidate-filter-form" method="GET" action="{{ route('applications.index') }}"
-                class=" flex flex-col text-xs md:tex-sm lg:text-base [&>select]:bg-white dark:[&>select]:bg-themeBgDark [&>select]:rounded-md [&>select]:border [&>select]:border-themeLightGray [&>select]:text-darkThemeSmallTextLightGray [&>select]:px-4 ">
+            <form id="candidate-filter-form" method="GET" action="{{ route('applications.index') }}" class="flex flex-col text-xs md:text-sm lg:text-base
+            [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+            [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+            [&>select]:rounded-lg
+            [&>select]:border-2 [&>select]:border-themeLightGray
+            [&>select]:px-4 [&>select]:outline-0
+            [&>select]:transition-all
+            [&>select]:duration-300 [&>select]:ease-in-out
+            [&>select]:hover:shadow-md
+            [&>select]:focus:ring-2 [&>select]:focus:ring-themeBlue
+            [&>select]:focus:border-themeBlue">
 
+                <!-- Puesto -->
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.position') }}</x-heading>
 
-                <x-inputtext class="mb-3" type="text" name="position_applied" id="position_applied"
-                    value="{{ request('position_applied') }}"
+                <x-inputtext
+                    class="mb-3 w-full h-10 bg-white dark:bg-themeBgDark text-gray-800 dark:text-themeLightGray border-2 border-themeLightGray rounded-lg px-4 outline-0 transition-all duration-300 ease-in-out hover:shadow-md focus:ring-2 focus:ring-themeBlue focus:border-themeBlue"
+                    type="text" name="position_applied" id="position_applied" value="{{ request('position_applied') }}"
                     placeholder="{{ __('messages.applications.placeholder-position') }}" required />
 
+                <!-- Estado -->
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.status') }}</x-heading>
-                <select class="mb-3 cursor-pointer h-8 sm:h-10" name="state">
+
+                <select class="mb-3 cursor-pointer h-10 ">
                     <option value="">{{ __('messages.applications.status') }}</option>
                     <option value="nueva" @selected(request('state') == 'nueva')>{{ __('messages.applications.new') }}
                     </option>
@@ -38,16 +51,19 @@
                         {{ __('messages.applications.rejected') }}</option>
                 </select>
 
+                <!-- Nombre -->
                 <x-heading level="h3" class="mb-2.5">{{ __('messages.applications.name') }}</x-heading>
 
-                <x-inputtext type="text" name="candidate_name" id="candidate_name" value="{{ request('candidate_name') }}"
+                <x-inputtext
+                    class="w-full h-10 bg-white dark:bg-themeBgDark text-gray-800 dark:text-themeLightGray border-2 border-themeLightGray rounded-lg px-4 outline-0 transition-all duration-300 ease-in-out hover:shadow-md focus:ring-2 focus:ring-themeBlue focus:border-themeBlue"
+                    type="text" name="candidate_name" id="candidate_name" value="{{ request('candidate_name') }}"
                     placeholder="{{ __('messages.applications.placeholder-name') }}" required />
-
             </form>
+
         </x-card>
         <x-card class="col-span-3 bg-white dark:bg-themeBgDark">
             <table class="w-full text-left">
-                <thead> 
+                <thead>
                     <tr class="border-b text-xs md:tex-sm lg:text-base">
                         <th class="py-2">{{ __('messages.applications.table-name') }}</th>
                         <th class="py-2">{{ __('messages.applications.table-status') }}</th>
@@ -67,7 +83,7 @@
 
                             <td class="py-2 space-x-2 relative z-10" x-data="{ showDelete: false, showDetails: false }" x-cloak
                                 x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val));
-                                                                                                                    $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
+                                                                                                                            $watch('showDetails', val => document.body.classList.toggle('overflow-hidden', val));">
                                 <button @click="showDetails = true"
                                     class="px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white shadow-lg rounded-lg cursor-pointer hover:bg-themeHoverBlue/80 transition">
                                     {{ __('messages.button.see') }}
@@ -80,23 +96,29 @@
                                         {{ $app->candidate_name }}
                                     </x-heading>
                                     <div class="flex flex-col justify-center mx-auto text-left gap-2.5 mb-4 ">
-                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-name') }}</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base">
+                                            <strong>{{ __('messages.applications.modal-name') }}</strong>
                                             {{ $app->candidate_name }}</p>
-                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-position') }}</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base">
+                                            <strong>{{ __('messages.applications.modal-position') }}</strong>
                                             {{ $app->position_applied }}</p>
-                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-reason') }}:</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base">
+                                            <strong>{{ __('messages.applications.modal-reason') }}:</strong>
                                             {{ $app->application_reason }}</p>
-                                        <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.applications.modal-date') }}</strong>
+                                        <p class="text-xs md:tex-sm lg:text-base">
+                                            <strong>{{ __('messages.applications.modal-date') }}</strong>
                                             {{ $app->application_date }}</p>
 
                                         @if ($app->cv)
                                             <p>
-                                                <a href="{{ asset('storage/' . $app->cv) }}" class="text-blue-600 underline text-xs md:tex-sm lg:text-base"
+                                                <a href="{{ asset('storage/' . $app->cv) }}"
+                                                    class="text-blue-600 underline text-xs md:tex-sm lg:text-base"
                                                     target="_blank">📄
                                                     {{ __('messages.applications.see-cv') }}</a>
                                             </p>
                                         @else
-                                            <p class="text-gray-500 text-xs md:tex-sm lg:text-base">{{ __('messages.applications.no-cv') }}</p>
+                                            <p class="text-gray-500 text-xs md:tex-sm lg:text-base">
+                                                {{ __('messages.applications.no-cv') }}</p>
                                         @endif
 
                                         <form method="POST" action="{{ route('applications.update', $app->id) }}">
@@ -104,7 +126,8 @@
                                             @method('PUT')
 
                                             <x-label for="state">{{ __('messages.applications.change-status') }}</x-label>
-                                            <select name="state" required class="dark:bg-themeBgDark text-xs md:tex-sm lg:text-base border border-themeLightGray rounded-md px-4 py-2 cursor-pointer">
+                                            <select name="state" required
+                                                class="dark:bg-themeBgDark text-xs md:tex-sm lg:text-base border border-themeLightGray rounded-md px-4 py-2 cursor-pointer">
                                                 <option value="nueva" {{ $app->state === 'nueva' ? 'selected' : '' }}>
                                                     {{ __('messages.applications.new') }}
                                                 </option>

@@ -59,7 +59,7 @@
 
         @forelse ($userProjects as $project)
             <a href="{{ route('projects.show', $project->id) }}">
-                <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
+                <x-card class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeDark text-gray-800 dark:text-white">
                     <li class="flex flex-col h-full ">
                         <x-tags class="mb-2">{{ $project->tags }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $project->title }}</x-heading>

@@ -18,15 +18,38 @@
     <div class="grid grid-cols-1 2md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
         <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
             <form id="filters" action="{{ route('school.projects.index') }}" method="get">
-                <div class="flex flex-wrap gap-2 text-xs md:tex-sm lg:text-base [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                             [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray
-                              [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 mb-2">
-                    <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.filters') }}</x-heading>
+
+                <!-- Filtros principales -->
+                <div class="flex flex-wrap gap-2 mb-4 text-xs md:text-sm lg:text-base
+                    [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+                    [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+                    [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
+                    [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+                    [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
+                    [&>select]:placeholder:text-themeLightGray
+                    [&>input]:rounded-lg [&>select]:rounded-lg
+                    [&>input]:border-2 [&>input]:border-themeLightGray
+                    [&>select]:border-2 [&>select]:border-themeLightGray
+                    [&>input]:px-4 [&>select]:px-4
+                    [&>input]:outline-0 [&>select]:outline-0
+
+                    [&>input]:transition-all [&>select]:transition-all
+                    [&>input]:duration-300 [&>select]:duration-300
+                    [&>input]:ease-in-out [&>select]:ease-in-out
+                    [&>input]:hover:shadow-md [&>select]:hover:shadow-md
+                    [&>input]:focus:ring-2 [&>select]:focus:ring-2
+                    [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
+                    [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
+
+                    <x-heading level="h3" class="mb-2.5 w-full">{{ __('messages.school-projects.filters') }}</x-heading>
+
                     <input type="text" name="title" placeholder="{{ __('messages.school-projects.placeholder-title') }}"
-                        value="{{ request('title') }}" class="input w-full py-2" />
+                        value="{{ request('title') }}" class="w-full py-2" />
+
                     <input type="text" name="author" placeholder="{{ __('messages.school-projects.placeholder-author') }}"
-                        value="{{ request('author') }}" class="input w-full py-2" />
-                    <select name="order" class="input w-full py-2 cursor-pointer">
+                        value="{{ request('author') }}" class="w-full py-2" />
+
+                    <select name="order" class="w-full py-2 cursor-pointer">
                         <option>{{ __('messages.school-projects.order-by') }}</option>
                         <option value="title" @selected(request('order') == 'title')>
                             {{ __('messages.school-projects.order-title') }}
@@ -35,51 +58,61 @@
                             {{ __('messages.school-projects.order-date') }}
                         </option>
                     </select>
+
                     <select name="direction" class="w-full py-2 cursor-pointer">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
                         <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>
                 </div>
-                <div>
+
+                <!-- Año académico -->
+                <div class="mb-5">
                     <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.academic-year') }}</x-heading>
-                    <ul class="space-y-1 text-xs md:tex-sm lg:text-base">
-                        <li><input type="checkbox" name="academic_year[]" value="2024-2025"
-                                @checked(is_array(request('academic_year')) && in_array('2024-2025', request('academic_year'))) />
-                            2024-2025</li>
-                        <li><input type="checkbox" name="academic_year[]" value="2023-2024"
-                                @checked(is_array(request('academic_year')) && in_array('2023-2024', request('academic_year'))) />
-                            2023-2024</li>
-                        <li><input type="checkbox" name="academic_year[]" value="2022-2023"
-                                @checked(is_array(request('academic_year')) && in_array('2022-2023', request('academic_year'))) />
-                            2022-2023</li>
-                        <li><input type="checkbox" name="academic_year[]" value="2021-2022"
-                                @checked(is_array(request('academic_year')) && in_array('2021-2022', request('academic_year'))) />
-                            2021-2022</li>
+                    <ul class="space-y-1 text-xs md:text-sm lg:text-base">
+                        @foreach (['2024-2025', '2023-2024', '2022-2023', '2021-2022'] as $year)
+                            <li>
+                                <label
+                                    class="flex items-center gap-2 text-gray-800 dark:text-themeLightGray cursor-pointer hover:text-themeBlue transition-colors duration-200">
+                                    <input type="checkbox" name="academic_year[]" value="{{ $year }}"
+                                        @checked(is_array(request('academic_year')) && in_array($year, request('academic_year')))
+                                        class="accent-themeBlue focus:ring-themeBlue transition duration-200">
+                                    {{ $year }}
+                                </label>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
+
+                <!-- Categorías -->
                 <div>
                     <x-heading level="h3" class="mb-2.5">{{ __('messages.school-projects.categorys') }}</x-heading>
-                    <ul class="space-y-1 text-xs md:tex-sm lg:text-base">
-                        <li><input type="checkbox" name="tags[]" value="TFG" @checked(is_array(request('tags')) && in_array('TFG', request('tags'))) /> TFG</li>
-                        <li><input type="checkbox" name="tags[]" value="TFM" @checked(is_array(request('tags')) && in_array('TFM', request('tags'))) /> TFM</li>
-                        <li><input type="checkbox" name="tags[]" value="Tesis" @checked(is_array(request('tags')) && in_array('Tesis', request('tags'))) /> Tesis</li>
-                        <li><input type="checkbox" name="tags[]" value="Individual" @checked(is_array(request('tags')) && in_array('Individual', request('tags'))) />
-                            Individual</li>
-                        <li><input type="checkbox" name="tags[]" value="Grupal" @checked(is_array(request('tags')) && in_array('Grupal', request('tags'))) />
-                            {{ __('messages.school-projects.groupally') }}</li>
-                        <li><input type="checkbox" name="tags[]" value="Tecnología" @checked(is_array(request('tags')) && in_array('Tecnología', request('tags'))) />
-                            {{ __('messages.school-projects.technology') }}</li>
-                        <li><input type="checkbox" name="tags[]" value="Ciencias" @checked(is_array(request('tags')) && in_array('Ciencias', request('tags'))) />
-                            {{ __('messages.school-projects.sciences') }}</li>
-                        <li><input type="checkbox" name="tags[]" value="Artes" @checked(is_array(request('tags')) && in_array('Artes', request('tags'))) />
-                            {{ __('messages.school-projects.arts') }}</li>
-                        <li><input type="checkbox" name="tags[]" value="Ingeniería" @checked(is_array(request('tags')) && in_array('Ingeniería', request('tags'))) />
-                            {{ __('messages.school-projects.engineering') }}</li>
+                    <ul class="space-y-1 text-xs md:text-sm lg:text-base">
+                        @foreach ([
+                            'TFG' => 'TFG',
+                            'TFM' => 'TFM',
+                            'Tesis' => 'Tesis',
+                            'Individual' => 'Individual',
+                            'Grupal' => __('messages.school-projects.groupally'),
+                            'Tecnología' => __('messages.school-projects.technology'),
+                            'Ciencias' => __('messages.school-projects.sciences'),
+                            'Artes' => __('messages.school-projects.arts'),
+                            'Ingeniería' => __('messages.school-projects.engineering'),
+                        ] as $value => $label)
+                            <li>
+                                <label
+                                    class="flex items-center gap-2 text-gray-800 dark:text-themeLightGray cursor-pointer hover:text-themeBlue transition-colors duration-200">
+                                    <input type="checkbox" name="tags[]" value="{{ $value }}"
+                                        @checked(is_array(request('tags')) && in_array($value, request('tags')))
+                                        class="accent-themeBlue focus:ring-themeBlue transition duration-200">
+                                    {{ $label }}
+                                </label>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
 
-
             </form>
+
         </aside>
 
         <main>

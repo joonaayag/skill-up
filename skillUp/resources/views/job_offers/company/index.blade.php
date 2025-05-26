@@ -5,19 +5,18 @@
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.company-offers.title') }}</x-heading>
     @if ($errors->any())
-            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li class="text-black dark:text-white">- {{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-black dark:text-white">- {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form id="filters-input" method="GET" action="{{ route('job.offers.company.index') }}" class="mb-6 space-y-2">
         <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
-            <aside
-                class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
+            <aside class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow-md px-4 py-5 space-y-4 transition-all duration-300 ease-in-out">
                 <x-heading level="h4"><strong>{{ __('messages.job-offers.category') }}</strong></x-heading>
                 @php
                     $generalCategories = [
@@ -33,8 +32,10 @@
                 @endphp
                 <div class="space-y-1">
                     @foreach ($generalCategories as $cat)
-                        <label class="block">
+                        <label
+                            class="flex items-center gap-2 text-sm text-gray-700 dark:text-themeLightGray cursor-pointer hover:text-themeBlue transition-colors duration-200">
                             <input type="checkbox" name="general_category[]" value="{{ $cat }}"
+                                class="accent-themeBlue focus:ring-themeBlue transition duration-200"
                                 @checked(is_array(request('general_category')) && in_array($cat, request('general_category')))>
                             {{ $cat }}
                         </label>
@@ -84,8 +85,10 @@
                 @endphp
                 <div class="space-y-1">
                     @foreach ($sectorCategories as $sector)
-                        <label class="block">
+                        <label
+                            class="flex items-center gap-2 text-sm text-gray-700 dark:text-themeLightGray cursor-pointer hover:text-themeBlue transition-colors duration-200">
                             <input type="checkbox" name="sector_category[]" value="{{ $sector }}"
+                                class="accent-themeBlue focus:ring-themeBlue transition duration-200"
                                 @checked(is_array(request('sector_category')) && in_array($sector, request('sector_category')))>
                             {{ $sector }}
                         </label>
@@ -94,12 +97,31 @@
             </aside>
 
             <main class="space-y-4">
-                <div
-                    class="flex flex-wrap gap-2 h-12 [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                                                     [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                <div class="flex flex-wrap gap-2 h-12
+                    [&>input]:h-full [&>select]:h-full
+                    [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+                    [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+                    [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
+                    [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+                    [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
+                    [&>select]:placeholder:text-themeLightGray
+                    [&>input]:rounded-lg [&>select]:rounded-lg
+                    [&>input]:border-2 [&>input]:border-themeLightGray
+                    [&>select]:border-2 [&>select]:border-themeLightGray
+                    [&>input]:px-4 [&>select]:px-4
+                    [&>input]:outline-0 [&>select]:outline-0
+                    [&>input]:transition-all [&>select]:transition-all
+                    [&>input]:duration-300 [&>select]:duration-300
+                    [&>input]:ease-in-out [&>select]:ease-in-out
+                    [&>input]:hover:shadow-md [&>select]:hover:shadow-md
+                    [&>input]:focus:ring-2 [&>select]:focus:ring-2
+                    [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
+                    [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
+
                     <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
-                        value="{{ request('name') }}" class="input" />
-                    <select name="order" class="cursor-pointer">
+                        value="{{ request('name') }}" class="w-full sm:w-auto" />
+
+                    <select name="order" class="cursor-pointer w-full sm:w-auto">
                         <option value="">{{ __('messages.job-offers.order-by') }}</option>
                         <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}
                         </option>
@@ -109,23 +131,24 @@
                             {{ __('messages.job-offers.order-date') }}</option>
                     </select>
 
-                    <select name="state" class="cursor-pointer">
+                    <select name="state" class="cursor-pointer w-full sm:w-auto">
                         <option value="">{{ __('messages.company-offers.status') }}</option>
                         <option value="Abierta" @selected(request('state') == 'Abierta')>
                             {{ __('messages.company-offers.open') }}</option>
                         <option value="Cerrada" @selected(request('state') == 'Cerrada')>
                             {{ __('messages.company-offers.close') }}</option>
                     </select>
-                    <select name="direction" class="cursor-pointer">
+
+                    <select name="direction" class="cursor-pointer w-full sm:w-auto">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
                         <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>
-
                 </div>
                 <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-40 sm:mt-24 md:mt-40 lg:mt-28 xl:mt-10">
                     @forelse ($offers as $offer)
                         <a href="{{ route('job.offers.show', $offer->id) }}">
-                            <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
+                            <x-card
+                                class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeDark text-gray-800 dark:text-white">
                                 <li class="flex flex-col h-full ">
                                     <x-tags class="mb-1">{{ $offer->general_category }}</x-tags>
                                     <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
@@ -144,7 +167,8 @@
                                         <div class="flex flex-row gap-3">
                                             <p
                                                 class="px-3 py-1 rounded-full {{ $offer->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">
-                                                {{ $offer->state }}</p>
+                                                {{ $offer->state }}
+                                            </p>
                                             @if ($offer->company_id !== auth()->id())
                                                 @if ($favorite)
                                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">

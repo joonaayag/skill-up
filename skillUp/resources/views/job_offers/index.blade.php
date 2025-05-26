@@ -17,8 +17,10 @@
     <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
         <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
             <aside
-                class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow px-4 py-5 space-y-4">
+                class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow-md px-4 py-5 space-y-4 transition-all duration-300 ease-in-out">
+
                 <x-heading level="h4"><strong>{{ __('messages.job-offers.category') }}</strong></x-heading>
+
                 @php
                     $generalCategories = [
                         __('messages.job-offers.category-admin'),
@@ -31,17 +33,21 @@
                         __('messages.job-offers.category-tec'),
                     ];
                 @endphp
-                <div class="space-y-1">
+
+                <div class="space-y-2">
                     @foreach ($generalCategories as $cat)
-                        <label class="block">
+                        <label
+                            class="flex items-center gap-2 text-sm text-gray-700 dark:text-themeLightGray cursor-pointer hover:text-themeBlue transition-colors duration-200">
                             <input type="checkbox" name="general_category[]" value="{{ $cat }}"
-                                @checked(is_array(request('general_category')) && in_array($cat, request('general_category')))>
+                                @checked(is_array(request('general_category')) && in_array($cat, request('general_category')))
+                                class="accent-themeBlue focus:ring-themeBlue transition duration-200">
                             {{ $cat }}
                         </label>
                     @endforeach
                 </div>
 
                 <x-heading level="h4" class="mt-4"><strong>Sector</strong></x-heading>
+
                 @php
                     $sectorCategories = [
                         __('messages.job-offers.sector-agri'),
@@ -79,33 +85,56 @@
                         __('messages.job-offers.sector-trans'),
                         __('messages.job-offers.sector-transp'),
                         __('messages.job-offers.sector-sal'),
-
                     ];
                 @endphp
-                <div class="space-y-1">
+
+                <div class="space-y-2">
                     @foreach ($sectorCategories as $sector)
-                        <label class="block">
+                        <label
+                            class="flex items-center gap-2 text-sm text-gray-700 dark:text-themeLightGray cursor-pointer hover:text-themeBlue transition-colors duration-200">
                             <input type="checkbox" name="sector_category[]" value="{{ $sector }}"
-                                @checked(is_array(request('sector_category')) && in_array($sector, request('sector_category')))>
+                                @checked(is_array(request('sector_category')) && in_array($sector, request('sector_category')))
+                                class="accent-themeBlue focus:ring-themeBlue transition duration-200">
                             {{ $sector }}
                         </label>
                     @endforeach
                 </div>
             </aside>
 
+
             <main class="space-y-4 ">
-                <div
-                    class="flex flex-wrap gap-2 h-8 sm:h-10 lg:h-12 text-sm [&>input]:h-full [&>select]:h-full [&>input]:bg-white dark:[&>input]:bg-themeBgDark
-                     [&>select]:bg-white dark:[&>select]:bg-themeBgDark [&>input]:text-themeLightGray [&>select]:text-themeLightGray
-                      [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray [&>select]:border-2 [&>select]:border-themeLightGray
-                       [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0">
+                <div class="flex flex-wrap gap-2 h-8 sm:h-10 lg:h-12 text-sm
+            [&>input]:h-full [&>select]:h-full
+            [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+            [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+            [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
+            [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+            [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
+            [&>select]:placeholder:text-themeLightGray
+            [&>input]:rounded-lg [&>select]:rounded-lg
+            [&>input]:border-2 [&>input]:border-themeLightGray
+            [&>select]:border-2 [&>select]:border-themeLightGray
+            [&>select]:px-4 [&>input]:px-4
+            [&>input]:outline-0 [&>select]:outline-0
+
+            [&>input]:transition-all [&>select]:transition-all
+            [&>input]:duration-300 [&>select]:duration-300
+            [&>input]:ease-in-out [&>select]:ease-in-out
+            [&>input]:hover:shadow-md [&>select]:hover:shadow-md
+            [&>input]:focus:ring-2 [&>select]:focus:ring-2
+            [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
+            [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
+
                     <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
-                        value="{{ request('name') }}" class="text-themeLightGray"  />
+                        value="{{ request('name') }}" />
+
                     <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}"
-                        value="{{ request('author') }}" class="text-themeLightGray" />
+                        value="{{ request('author') }}" />
+
                     <select name="order" class="cursor-pointer">
                         <option value="">{{ __('messages.job-offers.order-by') }}</option>
-                        <option value="name" @selected(request('order') == 'name')>{{ __('messages.job-offers.title') }}
+                        <option value="name" @selected(request('order') == 'name')>
+                            {{ __('messages.job-offers.title') }}
                         </option>
                         <option value="general_category" @selected(request('order') == 'general_category')>
                             {{ __('messages.job-offers.category') }}
@@ -115,16 +144,18 @@
                         </option>
                     </select>
 
-                    <select name="direction" class="cursor-pointer text-themeLightGray">
+                    <select name="direction" class="cursor-pointer">
                         <option value="asc" @selected(request('direction') == 'asc')>Asc</option>
                         <option value="desc" @selected(request('direction') == 'desc')>Desc</option>
                     </select>
-
                 </div>
+
                 <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full mt-32 sm:mt-20 md:mt-40 xl:mt-20">
                     @forelse ($offers as $offer)
                         <a href="{{ route('job.offers.show', $offer->id) }}">
-                            <x-card class="h-full hover:border-themeBlue hover:scale-101 transition">
+                            <x-card
+                                class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeDark text-gray-800 dark:text-white">
+
                                 <li class="flex flex-col">
                                     @php
                                         $categoryMap = [
@@ -142,48 +173,48 @@
                                     @endphp
 
                                     @if ($categoryKey)
-                                    <x-tags class="mb-1 ">{{ __('messages.projects.' . $categoryKey) }}</x-tags>
+                                        <x-tags class="mb-1 ">{{ __('messages.projects.' . $categoryKey) }}</x-tags>
                                     @endif
-                                    
+
                                     <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
                                     @php
-                                    $sectorMap = [
-                                        'Agricultura/Medio ambiente' => 'sector-agri',
-                                        'Arte/Cultura' => 'sector-art',
-                                        'Automoción' => 'sector-aut',
-                                        'Ciberseguridad' => 'sector-cyb',
-                                        'Community Manager' => 'sector-comm',
-                                        'Construcción' => 'sector-cons',
-                                        'Coordinación Educativa' => 'sector-educ',
-                                        'Diseño Gráfico' => 'sector-grap',
-                                        'Electricidad y fontanería' => 'sector-elec',
-                                        'Energía/Renovables' => 'sector-ener',
-                                        'Farmacia' => 'sector-phar',
-                                        'Finanzas y contabilidad' => 'sector-fina',
-                                        'Fotografía/vídeo' => 'sector-photo',
-                                        'Hostelería/turismo' => 'sector-hosp',
-                                        'AI' => 'sector-ai',
-                                        'Investigación/laboratorio' => 'sector-res',
-                                        'Legal' => 'sector-leg',
-                                        'Logística' => 'sector-log',
-                                        'Mecánica' => 'sector-mec',
-                                        'Medicina/Enfermería' => 'sector-med',
-                                        'Nutrición' => 'sector-nut',
-                                        'Operador Industrial' => 'sector-ind',
-                                        'Orientación' => 'sector-ori',
-                                        'Periodismo' => 'sector-jout',
-                                        'Enseñanza' => 'sector-tea',
-                                        'Psicología' => 'sector-psy',
-                                        'Publicidad' => 'sector-adv',
-                                        'Redes y Sistemas' => 'sector-net',
-                                        'RRHH' => 'sector-hr',
-                                        'Seguridad' => 'sector-sec',
-                                        'SEO/SEM' => 'sector-seo',
-                                        'Terapias/Rehabilitación' => 'sector-ther',
-                                        'Traducción' => 'sector-trans',
-                                        'Transporte/Entrega' => 'sector-transp',
-                                        'Ventas' => 'sector-sal',
-                                    ];
+                                        $sectorMap = [
+                                            'Agricultura/Medio ambiente' => 'sector-agri',
+                                            'Arte/Cultura' => 'sector-art',
+                                            'Automoción' => 'sector-aut',
+                                            'Ciberseguridad' => 'sector-cyb',
+                                            'Community Manager' => 'sector-comm',
+                                            'Construcción' => 'sector-cons',
+                                            'Coordinación Educativa' => 'sector-educ',
+                                            'Diseño Gráfico' => 'sector-grap',
+                                            'Electricidad y fontanería' => 'sector-elec',
+                                            'Energía/Renovables' => 'sector-ener',
+                                            'Farmacia' => 'sector-phar',
+                                            'Finanzas y contabilidad' => 'sector-fina',
+                                            'Fotografía/vídeo' => 'sector-photo',
+                                            'Hostelería/turismo' => 'sector-hosp',
+                                            'AI' => 'sector-ai',
+                                            'Investigación/laboratorio' => 'sector-res',
+                                            'Legal' => 'sector-leg',
+                                            'Logística' => 'sector-log',
+                                            'Mecánica' => 'sector-mec',
+                                            'Medicina/Enfermería' => 'sector-med',
+                                            'Nutrición' => 'sector-nut',
+                                            'Operador Industrial' => 'sector-ind',
+                                            'Orientación' => 'sector-ori',
+                                            'Periodismo' => 'sector-jout',
+                                            'Enseñanza' => 'sector-tea',
+                                            'Psicología' => 'sector-psy',
+                                            'Publicidad' => 'sector-adv',
+                                            'Redes y Sistemas' => 'sector-net',
+                                            'RRHH' => 'sector-hr',
+                                            'Seguridad' => 'sector-sec',
+                                            'SEO/SEM' => 'sector-seo',
+                                            'Terapias/Rehabilitación' => 'sector-ther',
+                                            'Traducción' => 'sector-trans',
+                                            'Transporte/Entrega' => 'sector-transp',
+                                            'Ventas' => 'sector-sal',
+                                        ];
 
                                         $sectorkey = $sectorMap[$offer->sector_category] ?? null;
                                     @endphp
@@ -260,7 +291,8 @@
                     class="space-y-4 [&>select]:border-1 [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0 text-xs md:tex-sm lg:text-base">
                     @csrf
 
-                    <div id="form-errors" class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
+                    <div id="form-errors"
+                        class="bg-red-300/70 border border-red-500 text-black dark:text-white p-4 mb-4 rounded hidden">
                         <ul id="error-list" class="list-disc list-inside"></ul>
                     </div>
 

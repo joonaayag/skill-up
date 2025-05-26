@@ -15,31 +15,51 @@
         </div>
     @endif
 
-    <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}"
-        class="space-y-2 lg:mb-9 space-x-5  h-8 sm:h-10 lg:h-12 w-full [&>input]:h-full [&>select]:h-full
-                          [&>select]:bg-white [&>input]:bg-white dark:[&>select]:bg-themeBgDark dark:[&>input]:bg-themeBgDark [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-                            [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-                            dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray">
+    <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}" class="space-y-2 lg:mb-9 space-x-5 h-8 sm:h-10 lg:h-12 w-full
+            [&>input]:h-full [&>select]:h-full
+            [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+            [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+            [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
+            [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+            [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
+            [&>select]:placeholder:text-themeLightGray
+            [&>input]:rounded-lg [&>select]:rounded-lg
+            [&>input]:border-2 [&>input]:border-themeLightGray
+            [&>select]:border-2 [&>select]:border-themeLightGray
+            [&>input]:px-4 [&>select]:px-4
+            [&>input]:outline-0 [&>select]:outline-0
+
+            [&>input]:transition-all [&>select]:transition-all
+            [&>input]:duration-300 [&>select]:duration-300
+            [&>input]:ease-in-out [&>select]:ease-in-out
+            [&>input]:hover:shadow-md [&>select]:hover:shadow-md
+            [&>input]:focus:ring-2 [&>select]:focus:ring-2
+            [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
+            [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
+
         <select name="type" class="cursor-pointer">
-            <option value=""> {{ __('messages.favorites.type') }} </option>
+            <option value="">{{ __('messages.favorites.type') }}</option>
             <option value="proyecto" @selected(request('type') == 'proyecto')>{{ __('messages.favorites.projects') }}</option>
             <option value="oferta" @selected(request('type') == 'oferta')>{{ __('messages.favorites.offers') }}</option>
         </select>
 
         <input type="text" name="name" placeholder="{{ __('messages.favorites.placeholder-title') }}"
             value="{{ request('name') }}">
+
         <input type="text" name="description" placeholder="{{ __('messages.favorites.placeholder-description') }}"
             value="{{ request('description') }}">
+
         <input type="text" name="author" placeholder="{{ __('messages.favorites.placeholder-author') }}"
             value="{{ request('author') }}">
 
         <select name="order" class="cursor-pointer">
-            <option value=""> {{ __('messages.favorites.order-by') }} </option>
+            <option value="">{{ __('messages.favorites.order-by') }}</option>
             <option value="name" @selected(request('order') == 'name')>{{ __('messages.favorites.order-title') }}</option>
             <option value="created_at" @selected(request('order') == 'created_at')>{{ __('messages.favorites.order-date') }}
             </option>
         </select>
     </form>
+
 
     @php
         $proyectos = $favorites->where('type', 'proyecto')->filter(fn($f) => $f->item());
@@ -53,7 +73,8 @@
                 @foreach ($proyectos as $fav)
                     @php $item = $fav->item(); @endphp
                     <a href="{{ route('projects.show', $item->id) }}">
-                        <x-card class="h-full hover:border-themeBlue hover:scale-101 transition cursor-pointer">
+                        <x-card
+                            class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeDark text-gray-800 dark:text-white">
                             <li class="flex flex-col h-full ">
                                 <x-tags class="mb-2">{{ $item->tags }}</x-tags>
                                 <x-heading level="h3" class="mb-1">{{ $item->title }}</x-heading>
@@ -111,9 +132,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
                 @foreach ($ofertas as $fav)
                     @php $item = $fav->item(); @endphp
-                    <x-card class="h-full hover:border-themeBlue hover:scale-101 transition cursor-pointer">
-                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
-                            alt="Perfil" id="profileImage"
+                    <x-card
+                        class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeBgDark text-gray-800 dark:text-white">
+
+                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : '' }}" alt="Perfil"
+                            id="profileImage"
                             class="h-20 w-20 hidden 2xl:flex rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
                         <li class="flex flex-col h-full ">
                             <x-tags class="mb-2">{{ $item->general_category }}</x-tags>
@@ -129,9 +152,8 @@
 
                             <div class="flex flex-row justify-between items-center mt-auto">
                                 <div class="flex flex-row gap-3 items-center justify-center mt-2">
-                                    <p
-                                        class="px-3 py-1 rounded-full text-white text-sm font-medium
-                                        {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
+                                    <p class="px-3 py-1 rounded-full text-white text-sm font-medium
+                                                    {{ $item->state === 'abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
                                         {{ $item->state }}
                                     </p>
                                     @if ($favorite)

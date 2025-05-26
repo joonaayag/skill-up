@@ -166,6 +166,7 @@ return [
         'category-industry' => 'Industria',
         'category-other' => 'Otro',
         'category-tec' => 'Tecnología y desarrollo',
+        'placeholder-title' => 'Buscar por título...',
 
         'sector-agri' => 'Agricultura/Medio ambiente',
         'sector-art' => 'Arte/Cultura',
