@@ -15,37 +15,26 @@
     style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">
 
     <main class="flex-grow px-12">
-        <section x-data="{ form: 'login' }" class="w-full md:w-3/4 lg:w-2/4 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
+        <section x-data="{ form: 'login' }"
+            class="w-full md:w-1/2 lg:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
-            {{-- TÍTULO + CAMBIO DE FORMULARIO --}}
             <div class="text-center mb-6">
-                <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-                    <template x-if="form === 'login'">{{ __('messages.auth.login') }}</template>
-                    <template x-if="form === 'register'">{{ __('messages.auth.register') }}</template>
-                </h2>
-                <p class="text-sm text-gray-500 dark:text-gray-300">
-                    <template x-if="form === 'login'">
-                        <span>¿No tienes cuenta?
-                            <button @click="form = 'register'" class="text-blue-500 hover:underline">Regístrate</button>
-                        </span>
-                    </template>
-                    <template x-if="form === 'register'">
-                        <span>¿Ya tienes cuenta?
-                            <button @click="form = 'login'" class="text-blue-500 hover:underline">Inicia sesión</button>
-                        </span>
-                    </template>
-                </p>
+                <x-heading level="h2" class="mb-10">
+                    <span x-show="form === 'login'" x-text="'{{ __('messages.auth.login') }}'"></span>
+                    <span x-show="form === 'register'" x-text="'{{ __('messages.auth.register') }}'"></span>
+                </x-heading>
             </div>
 
-            {{-- ERRORES --}}
             @if (session('status'))
-                <div class="bg-green-100 border border-green-400 text-green-800 dark:bg-green-200 dark:text-green-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                <div
+                    class="bg-green-100 border border-green-400 text-green-800 dark:bg-green-200 dark:text-green-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                     {{ session('status') }}
                 </div>
             @endif
 
             @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                <div
+                    class="bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                     <ul class="list-disc list-inside space-y-1">
                         @foreach ($errors->all() as $error)
                             <li>- {{ $error }}</li>
@@ -54,7 +43,6 @@
                 </div>
             @endif
 
-            {{-- FORMULARIO LOGIN --}}
             <div x-show="form === 'login'" x-transition>
                 <form action="{{ route('login') }}" method="POST" class="space-y-5">
                     @csrf
@@ -85,7 +73,7 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-150 shadow-md">
+                        class="w-full bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
                         {{ __('messages.auth.acceed') }}
                     </button>
 
@@ -93,10 +81,24 @@
                         class="block text-center text-sm text-blue-600 hover:underline">
                         {{ __('messages.auth.forgot-password') }}
                     </a>
+                    <p class="text-sm text-center text-gray-500 dark:text-gray-300">
+                        <template x-if="form === 'login'">
+                            <span>¿No tienes cuenta?
+                                <button @click="form = 'register'"
+                                    class="text-blue-500 hover:underline cursor-pointer">Regístrate</button>
+                            </span>
+                        </template>
+                        <template x-if="form === 'register'">
+                            <span>¿Ya tienes cuenta?
+                                <button @click="form = 'login'" class="text-blue-500 hover:underline cursor-pointer">Inicia
+                                    sesión</button>
+                            </span>
+                        </template>
+                    </p>
 
                     <a href="/auth/google/redirect">
                         <button type="button"
-                            class="mt-4 w-full bg-red-500 text-white py-2 px-4 font-semibold rounded-xl hover:bg-red-600 active:scale-[.98] transition-all duration-150 shadow-md">
+                            class="mt-4 w-full bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
                             {{ __('messages.auth.google') }}
                         </button>
                     </a>
@@ -111,11 +113,7 @@
 
                     <div id="register-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
 
-                    @foreach ([
-                        'name' => 'messages.profile.name',
-                        'lastName' => 'messages.profile.last-name',
-                        'email' => 'messages.profile.email',
-                    ] as $field => $label)
+                    @foreach (['name' => 'messages.profile.name', 'lastName' => 'messages.profile.last-name', 'email' => 'messages.profile.email',] as $field => $label)
                         <input type="{{ $field === 'email' ? 'email' : 'text' }}" name="{{ $field }}"
                             placeholder="{{ __($label) }}" value="{{ old($field) }}"
                             class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
@@ -159,7 +157,7 @@
                                 placeholder="{{__('messages.profile.cif')}}" required
                                 class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                             <input type="text" name="address" value="{{ old('address') }}"
-                                placeholder="{{__('messages.profile.adress')}}" required
+                                placeholder="{{__('messages.profile.address')}}" required
                                 class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                             <input type="text" name="sector" value="{{ old('sector') }}"
                                 placeholder="{{__('messages.profile.sector')}}" required
@@ -169,11 +167,25 @@
                                 class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                         </div>
                     </template>
+                    <p class="text-sm text-center text-gray-500 dark:text-gray-300">
+                        <template x-if="form === 'login'">
+                            <span>¿No tienes cuenta?
+                                <button @click="form = 'register'"
+                                    class="text-blue-500 hover:underline cursor-pointer">Regístrate</button>
+                            </span>
+                        </template>
+                        <template x-if="form === 'register'">
+                            <span>¿Ya tienes cuenta?
+                                <button @click="form = 'login'" class="text-blue-500 hover:underline cursor-pointer">Inicia
+                                    sesión</button>
+                            </span>
+                        </template>
+                    </p>
 
                     <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
 
                     <button type="submit"
-                        class="w-full bg-green-600 text-white py-2 px-4 font-semibold rounded-xl hover:bg-green-700 active:scale-[.98] transition-all duration-150 shadow-md">
+                        class="w-full bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
                         {{ __('messages.auth.register') }}
                     </button>
                 </form>
@@ -183,47 +195,48 @@
 
     <x-footer />
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <scr ipt src="https://www.google.com/recaptcha/api.js" async defer>
+        </script>
 
-    <script>
-        document.querySelector('form[action="{{ route('login') }}"]').addEventListener('submit', function(event) {
-        const email = this.querySelector('input[name="email"]').value.trim();
-        const password = this.querySelector('input[name="password"]').value.trim();
-        const errors = [];
+        <script>
+            document.querySelector('form[action="{{ route('login') }}"]').addEventListener('submit', function(event) {
+            const email = this.querySelector('input[name="email"]').value.trim();
+            const password = this.querySelector('input[name="password"]').value.trim();
+            cons t errors = [];
 
-        // Validación de email
-        if (!email) {
+            // V alidación de email
+            if (!email) {
             errors.push("{{ __('validation.required', ['attribute' => 'email']) }}");
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             errors.push("{{ __('validation.email', ['attribute' => 'email']) }}");
-        }
+            }
 
-        // Validación de contraseña
-        if (!password) {
+            // Validación de contraseña
+            if (!password) {
             errors.push("{{ __('validation.required', ['attribute' => 'password']) }}");
-        }
+            }
 
-        // Mostrar errores
-        if (errors.length > 0) {
+            // Mostrar errores
+            if ( errors.length > 0) {
             event.preventDefault();
 
             let errorBox = document.getElementById('login-errors');
-            if (!errorBox) {
-                errorBox = document.createElement('div');
-                errorBox.id = 'login-errors';
-                errorBox.className = 'bg-red-300 text-black p-4 rounded mb-4';
-                const form = this;
-                form.parentNode.insertBefore(errorBox, form);
+            if ( !errorBox) {
+            errorBox = document.createElement('div');
+            errorBox.id = 'login-errors';
+            errorBox.className = 'bg-red-300 text-black p-4 rounded mb-4';
+            const form = this;
+            form.parentNode.insertBefore(errorBox, form);
             }
 
             errorBox.innerHTML = '<ul class="list-disc list-inside">' +
                 errors.map(e => `<li>${e}</li>`).join('') +
                 '</ul>';
-        }
-    });
-    
+            }
+            });
 
-        document.querySelector('form[action$="/register"]').addEventListener('submit', function (event) {
+
+            document.querySelector('form[action$="/register"]').addEventListener('submit', function (event) {
             const form = event.target;
             const role = form.querySelector('select[name="role"]').value;
             const errors = {};
@@ -246,30 +259,28 @@
 
             if (!password) errors.password = "La contraseña es obligatoria.";
             else if (password !== passwordConfirmation) errors.password_confirmation = "Las contraseñas no coinciden.";
-            else if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) || !/[^\w]/.test(password))
-                errors.password = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.";
-
-            if (!role) errors.role = "El rol es obligatorio.";
-            else if (!['Usuario', 'Alumno', 'Profesor', 'Empresa'].includes(role)) errors.role = "El rol seleccionado no es válido.";
-
-            if (!recaptcha) errors.recaptcha = "Debes verificar el captcha.";
-
-            if (role === 'Alumno') {
-                const birthDate = form.querySelector('input[name="birthDate"]').value;
-                const currentCourse = form.querySelector('input[name="currentCourse"]').value.trim();
-                const educationalCenter = form.querySelector('input[name="educationalCenter"]').value.trim();
-
-                if (!birthDate) errors.birthDate = "La fecha de nacimiento es obligatoria.";
-                else if (new Date(birthDate) > new Date()) errors.birthDate = "La fecha debe ser anterior o igual a hoy.";
+            else if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password)
+                || !/[^\w]/.test(password))
+                errors.password="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo."
+                ; if (!role) errors.role="El rol es obligatorio." ; else if (!['Usuario', 'Alumno' , 'Profesor'
+                , 'Empresa' ].includes(role)) errors.role="El rol seleccionado no es válido." ; if (!recaptcha)
+                errors.recaptcha="Debes verificar el captcha." ; if (role==='Alumno' ) { const
+                birthDate=form.querySelector('input[name="birthDate" ]').value; const
+                currentCourse=form.querySelector('input[name="currentCourse" ]').value.trim(); const
+                educationalCenter=form.querySelector('input[name="educationalCenter" ]').value.trim(); if (!birthDate)
+                errors.birthDate="La fecha de nacimiento es obligatoria." ; else if (new Date(birthDate)> new Date())
+                errors.birthDate = "La fecha debe ser anterior o igual a hoy.";
 
                 if (!currentCourse) errors.currentCourse = "El curso actual es obligatorio.";
-                else if (currentCourse.length > 50) errors.currentCourse = "El curso no puede tener más de 50 caracteres.";
+                else if (currentCourse.length > 50) errors.currentCourse = "El curso no puede tener más de 50
+                caracteres.";
 
                 if (!educationalCenter) errors.educationalCenter = "El centro educativo es obligatorio.";
-                else if (educationalCenter.length > 100) errors.educationalCenter = "El centro no puede tener más de 100 caracteres.";
-            }
+                else if (educationalCenter.length > 100) errors.educationalCenter = "El centro no puede tener más de 100
+                caracteres.";
+                }
 
-            if (role === 'Empresa') {
+                if (role === 'Empresa') {
                 const cif = form.querySelector('input[name="cif"]').value.trim();
                 const address = form.querySelector('input[name="address"]').value.trim();
                 const sector = form.querySelector('input[name="sector"]').value.trim();
@@ -285,17 +296,17 @@
                 else if (sector.length > 100) errors.sector = "El sector no puede tener más de 100 caracteres.";
 
                 if (website && website.length > 255) {
-                    errors.website = "La URL del sitio web no es válida o es demasiado larga.";
+                errors.website = "La URL del sitio web no es válida o es demasiado larga.";
                 }
-            }
+                }
 
-            // Limpiar errores anteriores
-            const existingBox = document.getElementById('register-errors');
-            if (existingBox) {
+                // Limpiar errores anteriores
+                const existingBox = document.getElementById('register-errors');
+                if (existingBox) {
                 existingBox.remove();
-            }
+                }
 
-            if (Object.keys(errors).length > 0) {
+                if (Object.keys(errors).length > 0) {
                 event.preventDefault();
 
                 const box = document.createElement('div');
@@ -303,16 +314,16 @@
                 box.className = 'bg-red-100 text-red-700 p-4 rounded mt-4';
                 const ul = document.createElement('ul');
                 Object.values(errors).forEach(msg => {
-                    const li = document.createElement('li');
-                    li.textContent = msg;
-                    ul.appendChild(li);
+                const li = document.createElement('li');
+                li.textContent = msg;
+                ul.appendChild(li);
                 });
                 box.appendChild(ul);
-      xfoinsertBefore(box, form.querySelector('button[type="submit"]'));
-            }
-        });
+                xfoinsertBefore(box, form.querySelector('button[type="submit"]'));
+                }
+                });
 
-    </script>
+        </script>
 
 </body>
 

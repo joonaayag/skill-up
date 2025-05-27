@@ -69,8 +69,8 @@ Route::post('/elegir-rol', function (Request $request) {
 
 Route::get('/completar-perfil', function () {
     $user = Auth::user();
-    if ($user->role === 'usuario') {
-        return redirect('/dashboard');
+    if ($user->role === 'Usuario') {
+        return redirect('/dashboard')->with('message', __('messages.messages.register'));
     }
 
     return view('auth.complete_profile', [
@@ -87,7 +87,7 @@ Route::post('/completar-perfil', function (Request $request) {
         $detail = UserDetail::create(['user_id' => $user->id]);
     }
 
-    if ($user->role === 'Alumno' || $user->role === 'Usuario') {
+    if ($user->role === 'Alumno') {
         $request->validate([
             'birth_date' => 'required|date',
             'current_course' => 'required|string',
