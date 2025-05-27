@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password as PasswordRule; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -16,7 +17,9 @@ class PasswordResetController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate(['email' => 'required|email'],[
+        $request->validate([
+            'email' => 'required|email'
+        ], [
             'email.required' => __('messages.errors.email.required'),
             'email.email' => __('messages.errors.email.email'),
         ]);
@@ -38,7 +41,6 @@ class PasswordResetController extends Controller
         ]);
     }
 
-
     public function reset(Request $request)
     {
         $request->validate([
@@ -47,18 +49,16 @@ class PasswordResetController extends Controller
             'password' => [
                 'required',
                 'confirmed',
-                Password::min(8)
+                PasswordRule::min(8)
                     ->mixedCase()
-                    ->letters()
                     ->numbers()
                     ->symbols(),
             ],
-        ],[
+        ], [
             'password.required' => __('messages.errors.password.required'),
             'password.confirmed' => __('messages.errors.password.confirmed'),
             'password.min' => __('messages.errors.password.min'),
-            'password.string' => __('messages.errors.password.string'),
-            'password.*' => __('messages.errors.password.regex'),
+            'password.symbols' => 'La contraseña debe contener al menos un símbolo.',
         ]);
 
         $status = Password::reset(
@@ -75,5 +75,4 @@ class PasswordResetController extends Controller
             ? redirect()->route('auth')->with('message', __('messages.messages.password-reset'))
             : back()->withErrors(['email' => [__($status)]]);
     }
-
 }

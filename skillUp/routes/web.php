@@ -48,7 +48,7 @@ Route::get('/auth/google/callback', function () {
         return redirect('/elegir-rol');
     }
 
-    return redirect('/dashboard');
+    return redirect('/dashboard')->with('message', __('messages.messages.register'));
 });
 
 Route::get('/elegir-rol', function () {
@@ -63,24 +63,10 @@ Route::post('/elegir-rol', function (Request $request) {
     $user = Auth::user();
     $user->role = $request->role;
     $user->save();
-
-    return redirect('/completar-perfil');
-});
-
-Route::get('/completar-perfil', function () {
-    $user = Auth::user();
     if ($user->role === 'Usuario') {
         return redirect('/dashboard')->with('message', __('messages.messages.register'));
     }
 
-    return view('auth.complete_profile', [
-        'role' => $user->role,
-        'userDetail' => $user->userDetail
-    ]);
-});
-
-Route::post('/completar-perfil', function (Request $request) {
-    $user = Auth::user();
     $detail = $user->userDetail;
 
     if (!$detail) {
@@ -89,25 +75,23 @@ Route::post('/completar-perfil', function (Request $request) {
 
     if ($user->role === 'Alumno') {
         $request->validate([
-            'birth_date' => 'required|date',
-            'current_course' => 'required|string',
-            'specialization' => 'required|string',
-            'educational_center' => 'required|string',
+            'birth_date' => 'required|date|before_or_equal:' . date('Y-m-d'),
+            'current_course' => 'required|string|max:50',
+            'educational_center' => 'required|string|max:100',
         ]);
         $detail->update($request->only([
             'birth_date',
             'current_course',
-            'specialization',
             'educational_center'
         ]));
     }
 
     if ($user->role === 'Empresa') {
         $request->validate([
-            'cif' => 'required|string',
-            'address' => 'required|string',
-            'sector' => 'required|string',
-            'website' => 'nullable|url',
+            'cif' => 'required|string|max:50',
+            'address' => 'required|string|max:255',
+            'sector' => 'required|string|max:100',
+            'website' => 'nullable|url|max:255',
         ]);
         $detail->update($request->only([
             'cif',
@@ -117,7 +101,7 @@ Route::post('/completar-perfil', function (Request $request) {
         ]));
     }
 
-    return redirect('/dashboard');
+    return redirect('/dashboard')->with('message', __('messages.messages.register'));
 });
 
 // Translate
