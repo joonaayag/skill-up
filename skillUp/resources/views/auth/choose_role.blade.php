@@ -24,10 +24,10 @@
                 </x-heading>
 
                 @if ($errors->any())
-                    <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-                        <ul>
+                    <div class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                        <ul class="list-disc list-inside space-y-1">
                             @foreach ($errors->all() as $error)
-                                <li class="text-black dark:text-white">{{ $error }}</li>
+                                <li> {{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
@@ -38,11 +38,11 @@
                     @csrf
 
                     <div>
-                        <label for="role" class="block mb-1 font-semibold">
+                        <label for="role" class="block mb-1 text-sm 2md:text-base font-semibold">
                             {{ __('messages.choose.role') }}
                         </label>
                         <select name="role" id="role" x-model="role" required
-                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape dark:focus:ring-themeGrapeLight">
+                            class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape dark:focus:ring-themeGrapeLight">
                             <option value="Usuario">{{ __('messages.choose.option-user') }}</option>
                             <option value="Alumno">{{ __('messages.choose.option-student') }}</option>
                             <option value="Empresa">{{ __('messages.choose.option-company') }}</option>
@@ -52,15 +52,15 @@
                     <template x-if="role === 'Alumno'">
                         <div class="space-y-4">
                             <input type="date" name="birth_date" value="{{ old('birth_date') }}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
 
                             <input type="text" name="current_course" value="{{ old('current_course') }}" required
                                 placeholder="{{ __('messages.admin.users.ph-current-course') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
 
                             <input type="text" name="educational_center" value="{{ old('educational_center') }}" required
                                 placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
                         </div>
                     </template>
 
@@ -68,19 +68,19 @@
                         <div class="space-y-4">
                             <input type="text" name="cif" value="{{ old('cif') }}" required
                                 placeholder="{{ __('messages.profile.cif') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
 
                             <input type="text" name="address" value="{{ old('address') }}" required
                                 placeholder="{{ __('messages.profile.address') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
 
                             <input type="text" name="sector" value="{{ old('sector') }}" required
                                 placeholder="{{ __('messages.profile.sector') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
 
                             <input type="url" name="website" value="{{ old('website') }}"
                                 placeholder="{{ __('messages.profile.website') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
+                                class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
                         </div>
                     </template>
 

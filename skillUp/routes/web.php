@@ -29,49 +29,53 @@ Route::get('/auth/google/redirect', function () {
 Route::get('/auth/google/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
 
-    $user = User::firstOrCreate([
+    $existingUser = User::where('email', $googleUser->getEmail())->first();
+
+    if ($existingUser) {
+        Auth::login($existingUser);
+        return redirect('/dashboard')->with('message', __('messages.messages.register'));
+    }
+
+    Session::put('google_user', [
         'email' => $googleUser->getEmail(),
-    ], [
-        'name' => explode(' ', $googleUser->getName())[0],
-        'last_name' => explode(' ', $googleUser->getName())[1] ?? null,
-        'password' => bcrypt(uniqid()),
-        'role' => 'Pendiente',
+        'name' => $googleUser->getName(),
     ]);
 
-    if (!$user->userDetail) {
-        UserDetail::create(['user_id' => $user->id]);
-    }
-
-    Auth::login($user);
-
-    if ($user->role === 'Pendiente') {
-        return redirect('/elegir-rol');
-    }
-
-    return redirect('/dashboard')->with('message', __('messages.messages.register'));
+    return redirect('/elegir-rol');
 });
 
 Route::get('/elegir-rol', function () {
+    if (!Session::has('google_user')) {
+        return redirect('/login'); 
+    }
     return view('auth.choose_role');
 });
+
 
 Route::post('/elegir-rol', function (Request $request) {
     $request->validate([
         'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
     ]);
 
-    $user = Auth::user();
-    $user->role = $request->role;
-    $user->save();
-    if ($user->role === 'Usuario') {
-        return redirect('/dashboard')->with('message', __('messages.messages.register'));
+    $googleData = Session::get('google_user');
+
+    if (!$googleData) {
+        return redirect('/login')->withErrors('Sesión expirada. Intenta iniciar sesión de nuevo.');
     }
 
-    $detail = $user->userDetail;
+    $nameParts = explode(' ', $googleData['name'], 2);
+    $name = $nameParts[0];
+    $lastName = $nameParts[1] ?? '';
 
-    if (!$detail) {
-        $detail = UserDetail::create(['user_id' => $user->id]);
-    }
+    $user = User::create([
+        'email' => $googleData['email'],
+        'name' => $name,
+        'last_name' => $lastName,
+        'password' => bcrypt('Password1@'),
+        'role' => $request->role,
+    ]);
+
+    $detail = UserDetail::create(['user_id' => $user->id]);
 
     if ($user->role === 'Alumno') {
         $request->validate([
@@ -100,6 +104,10 @@ Route::post('/elegir-rol', function (Request $request) {
             'website'
         ]));
     }
+
+    Session::forget('google_user');
+
+    Auth::login($user);
 
     return redirect('/dashboard')->with('message', __('messages.messages.register'));
 });

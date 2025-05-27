@@ -31,11 +31,11 @@
 
                 <x-icon name="skill-up-logo" class="w-40 sm:w-56 md:w-72 h-auto -translate-x-4 mb-6" />
 
-                <x-heading level="h1" class="mb-6 text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
+                <x-heading level="h1" class="mb-6">
                     {{ __('messages.welcome.title') }}
                 </x-heading>
 
-                <p class="text-xs md:tex-sm 2md:text-base text-gray-600 dark:text-themeLightGray mb-6 leading-relaxed">
+                <p class="text-xs md:text-sm 2md:text-base text-gray-600 dark:text-themeLightGray mb-6 leading-relaxed">
                     {{ __('messages.welcome.subtitle') }}
                 </p>
 

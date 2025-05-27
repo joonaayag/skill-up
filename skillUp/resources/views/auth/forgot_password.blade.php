@@ -19,16 +19,16 @@
 
             <!-- Lado izquierdo: texto y formulario -->
             <div class="lg:col-span-3 flex flex-col justify-center md:ml-6">
-                <x-icon name="skill-up-logo" class="w-30 sm:w-40 md:w-60 h-auto -translate-x-9 mb-6" />
-                <x-heading level="h1" class="mb-6 text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
+                <x-icon name="skill-up-logo" class="w-30 sm:w-40 md:w-60 h-auto -translate-x-5 md:-translate-x-9 mb-6" />
+                <x-heading level="h1" class="mb-6">
                     {{ __('messages.auth.forgot-password') }}
                 </x-heading>
 
                 @if ($errors->any())
-                    <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-                        <ul>
+                    <div class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                        <ul class="list-disc list-inside space-y-1">
                             @foreach ($errors->all() as $error)
-                                <li class="text-black dark:text-white">- {{ $error }}</li>
+                                <li> {{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
@@ -44,18 +44,19 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="block mb-1 font-semibold text-gray-700 dark:text-white">
+                        <label for="email" class="block mb-1 tex-sm 2md:text-base font-semibold text-gray-700 dark:text-white">
                             {{ __('messages.auth.email') }}
                         </label>
                         <input type="email" name="email" id="email" required
-                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-themeGrape dark:focus:ring-themeGrapeLight">
+                            class="w-full h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-themeGrape dark:focus:ring-themeGrapeLight">
                     </div>
 
                     <div class="flex flex-col gap-4">
-                        <x-button type="submit" class="w-max cursor-pointer">
+                        <x-button type="submit" class="w-max h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 cursor-pointer">
                             {{ __('messages.auth.send-link') }}
                         </x-button>
-                        <a href="{{ route('auth') }}" class="text-blue-500 hover:underline cursor-pointer">Iniciar sesión</a>
+                        <a href="{{ route('auth') }}" class="text-blue-500 hover:underline text-xs md:text-sm 2md:text-base cursor-pointer">Iniciar
+                            sesión</a>
                     </div>
                 </form>
             </div>

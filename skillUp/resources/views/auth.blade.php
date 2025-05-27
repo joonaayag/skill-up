@@ -75,17 +75,17 @@
 
             @if ($errors->any())
                 <div
-                    class="bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                    class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                     <ul class="list-disc list-inside space-y-1">
                         @foreach ($errors->all() as $error)
-                            <li>- {{ $error }}</li>
+                            <li> {{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
             @endif
 
             <div x-show="form === 'login'" x-transition>
-                <form action="{{ route('login') }}" method="POST" class="space-y-5">
+                <form action="{{ route('login') }}" method="POST" class="space-y-4">
                     @csrf
                     <div id="login-errors" class="bg-red-300 text-black p-4 rounded hidden"></div>
 
@@ -94,7 +94,7 @@
                             {{ __('messages.auth.email') }}
                         </label>
                         <input type="email" name="email" id="email"
-                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                            class="w-full px-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
                             required value="{{ old('email') }}">
                     </div>
 
@@ -103,7 +103,7 @@
                             {{ __('messages.auth.password') }}
                         </label>
                         <input type="password" name="password" id="password"
-                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                            class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
                             required>
                     </div>
 
@@ -114,25 +114,25 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
+                        class="w-full text-xs md:text-sm 2md:text-base bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
                         {{ __('messages.auth.acceed') }}
                     </button>
 
                     <a href="{{ route('password.request') }}"
-                        class="block text-center text-sm text-blue-600 hover:underline">
+                        class="block text-center text-xs md:text-sm 2md:text-base text-blue-600 hover:underline">
                         {{ __('messages.auth.forgot-password') }}
                     </a>
-                    <p class="text-sm text-center text-gray-500 dark:text-gray-300">
+                    <p class="text-xs md:text-sm 2md:text-base text-center text-gray-500 dark:text-gray-300">
                         <template x-if="form === 'login'">
                             <span>¿No tienes cuenta?
                                 <button @click="form = 'register'"
-                                    class="text-blue-500 hover:underline cursor-pointer">Regístrate</button>
+                                    class="text-blue-500 text-xs md:text-sm 2md:text-base  hover:underline cursor-pointer">Regístrate</button>
                             </span>
                         </template>
                         <template x-if="form === 'register'">
                             <span>¿Ya tienes cuenta?
                                 <button @click="form = 'login'"
-                                    class="text-blue-500 hover:underline cursor-pointer">Inicia
+                                    class="text-blue-500 text-xs md:text-sm 2md:text-base  hover:underline cursor-pointer">Inicia
                                     sesión</button>
                             </span>
                         </template>
@@ -140,7 +140,7 @@
 
                     <a href="/auth/google/redirect">
                         <button type="button"
-                            class="mt-4 w-full bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
+                            class="mt-4 w-full text-xs md:text-sm 2md:text-base bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
                             {{ __('messages.auth.google') }}
                         </button>
                     </a>
@@ -158,21 +158,21 @@
                     @foreach (['name' => 'messages.profile.name', 'lastName' => 'messages.profile.last-name', 'email' => 'messages.profile.email',] as $field => $label)
                         <input type="{{ $field === 'email' ? 'email' : 'text' }}" name="{{ $field }}"
                             placeholder="{{ __($label) }}" value="{{ old($field) }}"
-                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                            class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
                             required>
                     @endforeach
 
                     <input type="password" name="password" placeholder="{{__('messages.auth.ph-password')}}"
-                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                        class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
                         required>
 
                     <input type="password" name="password_confirmation"
                         placeholder="{{__('messages.auth.ph-password-confirm')}}"
-                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
+                        class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition"
                         required>
 
                     <select name="role" x-model="role" required
-                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition">
+                        class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition">
                         <option value="">{{__('messages.auth.select')}}</option>
                         <option value="Usuario">{{__('messages.auth.option-user')}}</option>
                         <option value="Alumno">{{__('messages.auth.option-student')}}</option>
@@ -182,14 +182,14 @@
                     <template x-if="role === 'Alumno'">
                         <div class="space-y-3">
                             <input type="date" name="birthDate" value="{{ old('birthDate') }}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition"
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition"
                                 required>
                             <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
                                 placeholder="{{__('messages.admin.users.ph-current-course')}}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                             <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                 placeholder="{{__('messages.admin.users.ph-educational-center')}}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                         </div>
                     </template>
 
@@ -197,29 +197,29 @@
                         <div class="space-y-3">
                             <input type="text" name="cif" value="{{ old('cif') }}"
                                 placeholder="{{__('messages.profile.cif')}}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                             <input type="text" name="address" value="{{ old('address') }}"
                                 placeholder="{{__('messages.profile.address')}}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                             <input type="text" name="sector" value="{{ old('sector') }}"
                                 placeholder="{{__('messages.profile.sector')}}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                             <input type="url" name="website" value="{{ old('website') }}"
                                 placeholder="{{__('messages.profile.website')}}"
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition">
                         </div>
                     </template>
                     <p class="text-sm text-center text-gray-500 dark:text-gray-300">
                         <template x-if="form === 'login'">
                             <span>¿No tienes cuenta?
                                 <button @click="form = 'register'"
-                                    class="text-blue-500 hover:underline cursor-pointer">Regístrate</button>
+                                    class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer">Regístrate</button>
                             </span>
                         </template>
                         <template x-if="form === 'register'">
                             <span>¿Ya tienes cuenta?
                                 <button @click="form = 'login'"
-                                    class="text-blue-500 hover:underline cursor-pointer">Inicia
+                                    class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer">Inicia
                                     sesión</button>
                             </span>
                         </template>
@@ -228,7 +228,7 @@
                     <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
 
                     <button type="submit"
-                        class="w-full bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
+                        class="w-full bg-themeGrape/90 text-white px-2 py-2 2md:px-4 2md:py-2 text-xs md:text-sm 2md:text-base font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-150 shadow-md cursor-pointer">
                         {{ __('messages.auth.register') }}
                     </button>
                 </form>
@@ -245,7 +245,7 @@
             document.querySelector('form[action="{{ route('login') }}"]').addEventListener('submit', function (event) {
                 const email = this.querySelector('input[name="email"]').value.trim();
                 const password = this.querySelector('input[name="password"]').value.trim();
-            cons t errors = [];
+            const errors = [];
 
                 // V alidación de email
                 if (!email) {
