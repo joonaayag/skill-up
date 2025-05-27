@@ -14,7 +14,8 @@
         </div>
     @endif
 
-    <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
+    <div class="relative">
+        <form id="filters-input" method="GET" action="{{ route('job.offers.index') }}" class="mb-6 space-y-2">
         <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-20 p-4 dark:text-themeLightGray">
             <aside
                 class="bg-white dark:bg-themeBgDark rounded-lg border-2 border-themeLightGray shadow-md px-4 py-5 space-y-4 transition-all duration-300 ease-in-out">
@@ -125,8 +126,8 @@
             [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
             [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
 
-                    <input type="text" name="name" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
-                        value="{{ request('name') }}" />
+                    <input type="text" name="title" placeholder="{{ __('messages.job-offers.placeholder-title') }}"
+                        value="{{ request('title') }}" />
 
                     <input type="text" name="author" placeholder="{{ __('messages.job-offers.placeholder-author') }}"
                         value="{{ request('author') }}" />
@@ -150,7 +151,11 @@
                     </select>
                 </div>
 
-                <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full mt-32 sm:mt-20 md:mt-40 xl:mt-20">
+            </main>
+        </div>
+        </form>
+
+        <ul class="w-fit grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 mt-32 sm:mt-20 md:mt-40 xl:mt-20 absolute top-4 left-[340px] ">
                     @forelse ($offers as $offer)
                         <a href="{{ route('job.offers.show', $offer->id) }}">
                             <x-card
@@ -238,24 +243,21 @@
                                                 class="px-3 py-1 rounded-full {{ $offer->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">
                                                 {{ $offer->state }}
                                             </p>
-                                            @if ($offer->company_id !== auth()->id())
                                                 @if ($favorite)
                                                     <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit"><x-icon name="filled-heart"
-                                                                class="w-5 h-auto cursor-pointer" /></button>
+                                                        <button type="submit" class=" text-themeRed translate-y-1.5 hover:scale-110 transition-transform duration-200 cursor-pointer"><x-icon name="filled-heart" class="w-5 h-auto" /></button>
                                                     </form>
                                                 @else
                                                     <form action="{{ route('favorites.store') }}" method="POST">
                                                         @csrf
                                                         <input type="hidden" name="type" value="oferta">
                                                         <input type="hidden" name="reference_id" value="{{ $offer->id }}">
-                                                        <button type="submit"><x-icon name="heart"
+                                                        <button type="submit" class=" text-themeRed translate-y-1.5 hover:scale-110 transition-transform duration-200 cursor-pointer"><x-icon name="heart"
                                                                 class="w-5 h-auto cursor-pointer" /></button>
                                                     </form>
                                                 @endif
-                                            @endif
                                             <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                                                     class="w-4 h-auto" />{{ $offer->views }}</p>
                                         </div>
@@ -267,13 +269,10 @@
                             </x-card>
                         </a>
                     @empty
-                        <p class="w-full mt-32 md:mt-44 2md:mt-24 xl:mt-12">{{ __('messages.job-offers.no-offers') }}.</p>
+                        <p class="w-fit mt-32 md:mt-44 2md:mt-24 xl:mt-12">{{ __('messages.job-offers.no-offers') }}.</p>
                     @endforelse
-                </ul>
-
-            </main>
-        </div>
-    </form>
+        </ul>
+    </div>
 
     @if (in_array(auth()->user()->role, ['Profesor', 'Empresa']))
         <div x-data="{ showModal: false }" x-cloak
@@ -287,7 +286,7 @@
             <x-modal>
                 <x-heading level="h2"
                     class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.job-offers.new-offer') }}</x-heading>
-                <form action="{{ route('job.offers.store') }}" method="POST" id="mi-form"
+                <form action="{{ route('job.offers.store') }}" method="POST"
                     class="space-y-4 [&>select]:border-1 [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0 text-xs md:tex-sm lg:text-base">
                     @csrf
 
@@ -309,7 +308,12 @@
                     <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
                     <select name="sector_category" id="sector_category" required
                         class="w-full rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
-                        @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
+                        @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager',
+                         'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables',
+                          'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio',
+                           'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo',
+                            'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 
+                            'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
                             <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
                                 {{ $sector }}
                             </option>
@@ -341,11 +345,9 @@
 
                     <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
                     <select name="state" required
-                        class="w-full  rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
-                        <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.job-offers.state-open') }}
-                        </option>
-                        <option value="cerrada" @selected(old('state') == 'cerrada')>{{ __('messages.job-offers.state-close') }}
-                        </option>
+                        class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
+                        <option value="Abierta" @selected(old('state') == 'Abierta')>{{ __('messages.job-offers.state-open') }}</option>
+                        <option value="Cerrada" @selected(old('state') == 'Cerrada')>{{ __('messages.job-offers.state-close') }}</option>
                     </select>
 
                     <div class="flex justify-end gap-3 mt-4">
@@ -385,81 +387,6 @@
                 });
             }
         });
-
-        document.getElementById('mi-form').addEventListener('submit', function (event) {
-            const formData = {
-                name: document.getElementById('name')?.value.trim() || '',
-                subtitle: document.getElementById('subtitle')?.value.trim() || '',
-                description: document.getElementById('description')?.value.trim() || '',
-                sector_category: document.getElementById('sector_category')?.value || '',
-                general_category: document.getElementsByName('general_category')[0]?.value || '',
-                state: document.getElementsByName('state')[0]?.value || ''
-            };
-
-            const errors = {};
-
-            if (!formData.name) {
-                errors.name = "{{ __('messages.errors.name.required') }}";
-            } else if (formData.name.length > 40) {
-                errors.name = "{{ __('messages.errors.name.max') }}";
-            }
-
-            if (formData.subtitle && formData.subtitle.length > 255) {
-                errors.subtitle = "{{ __('messages.errors.subtitle.max') }}";
-            }
-
-            if (!formData.description) {
-                errors.description = "{{ __('messages.errors.description.required') }}";
-            }
-
-            const validSectors = [
-                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
-                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
-                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
-                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
-                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
-            ];
-            if (!formData.sector_category) {
-                errors.sector_category = "{{ __('messages.errors.sector_offer.required') }}";
-            } else if (!validSectors.includes(formData.sector_category)) {
-                errors.sector_category = "{{ __('messages.errors.sector_offer.in') }}";
-            }
-
-            const validCategories = [
-                'Administración y negocio', 'Ciencia y salud', 'Comunicación', 'Diseño y comunicación',
-                'Educación', 'Industria', 'Otro', 'Tecnología y desarrollo'
-            ];
-            if (!formData.general_category) {
-                errors.general_category = "{{ __('messages.errors.sector.required') }}";
-            } else if (!validCategories.includes(formData.general_category)) {
-                errors.general_category = "{{ __('messages.errors.sector.in') }}";
-            }
-
-            if (!formData.state) {
-                errors.state = "{{ __('messages.errors.state.required') }}";
-            } else if (!['abierta', 'cerrada'].includes(formData.state)) {
-                errors.state = "{{ __('messages.errors.state.in') }}";
-            }
-
-            const errorBox = document.getElementById('form-errors');
-            const errorList = document.getElementById('error-list');
-
-            if (Object.keys(errors).length > 0) {
-                event.preventDefault();
-
-                errorList.innerHTML = '';
-                errorBox.classList.remove('hidden');
-
-                Object.values(errors).forEach(msg => {
-                    const li = document.createElement('li');
-                    li.textContent = msg;
-                    errorList.appendChild(li);
-                });
-            } else {
-                errorBox.classList.add('hidden');
-            }
-        });
-
 
     </script>
 

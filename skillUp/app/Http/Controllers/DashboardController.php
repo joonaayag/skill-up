@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobOffer;
 use App\Models\Project;
 use App\Models\SchoolProject;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -79,6 +80,12 @@ class DashboardController extends Controller
         $user = auth()->user();
 
         return view('profile.index', compact('user'));
+    }
+
+    public function publicProfile($id)
+    {
+        $user = User::findOrFail($id);
+        return view('profile.index-public', compact('user'));
     }
 
 }

@@ -55,8 +55,11 @@
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
                 <div
                     class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
-                    <p>{{ __('messages.project-details.author') }}
-                        <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong>
+                    <p class="flex gap-2">
+                        <x-icon name="user" class="w-5 h-auto" />
+                        <a href="{{ route('profile.public', ['id' => $project->author->id]) }}" class="text-themeBlue hover:underline font-semibold">
+                            {{ $project->author->name . ' ' . $project->author->last_name }}
+                        </a>
                     </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $project->views }}</p>

@@ -23,6 +23,7 @@ class Favorite extends Model
         return match($this->type) {
             'proyecto' => Project::find($this->reference_id),
             'oferta' => JobOffer::find($this->reference_id),
+            'proyectoEscolar' => SchoolProject::find($this->reference_id),
             default => null
         };
     }

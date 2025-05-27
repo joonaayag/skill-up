@@ -177,7 +177,10 @@
                         <div x-data="{ fileName: '', previewUrl: '' }" class="w-full" x-cloak>
                             <label for="image-upload"
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
-                                🖼️ {{ __('messages.projects.label-highlight') }}
+                                <div class="flex gap-2">
+                                    <x-icon name="image" class="w-5 h-auto" />
+                                    {{ __('messages.projects.label-highlight') }}
+                                </div>
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                                     fileName = $event.target.files[0]?.name || '';
                                                     if ($event.target.files[0]) {
@@ -205,7 +208,10 @@
                         <div x-data="{ fileNames: [] }" class="w-full" x-cloak>
                             <label for="file-upload"
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
-                                📎 {{ __('messages.projects.label-upload') }}
+                                <div class="flex gap-2">
+                                    <x-icon name="clip" class="w-5 h-auto" />
+                                    {{ __('messages.projects.label-upload') }}
+                                </div> 
                                 <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                     @change="fileNames = [...$event.target.files].map(f => f.name)" />
                             </label>

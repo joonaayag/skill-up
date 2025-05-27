@@ -31,7 +31,24 @@
                                 <div>
                                     <x-heading level="h4">{{ $project->title }}</x-heading>
                                     <p class=" text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                        {{ $project->general_category }}
+                                        @php
+                                            $categoryMap = [
+                                                'Administración y negocio' => 'option-admin',
+                                                'Ciencia y salud' => 'option-science',
+                                                'Comunicación' => 'option-comunication',
+                                                'Diseño y comunicación' => 'option-design',
+                                                'Educación' => 'option-education',
+                                                'Industria' => 'option-industry',
+                                                'Otro' => 'option-other',
+                                                'Tecnología y desarrollo' => 'option-tec',
+                                            ];
+
+                                            $categoryKey = $categoryMap[$project->general_category] ?? null;
+                                        @endphp
+
+                                        @if ($categoryKey)
+                                            {{ __('messages.projects.' . $categoryKey) }}
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -61,7 +78,24 @@
                                     <div>
                                         <strong>{{ $project->title }}</strong>
                                         <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
-                                            {{ $project->description }}
+                                            @php
+                                                $categoryMap = [
+                                                    'Administración y negocio' => 'option-admin',
+                                                    'Ciencia y salud' => 'option-science',
+                                                    'Comunicación' => 'option-comunication',
+                                                    'Diseño y comunicación' => 'option-design',
+                                                    'Educación' => 'option-education',
+                                                    'Industria' => 'option-industry',
+                                                    'Otro' => 'option-other',
+                                                    'Tecnología y desarrollo' => 'option-tec',
+                                                ];
+
+                                                $categoryKey = $categoryMap[$project->general_category] ?? null;
+                                            @endphp
+
+                                            @if ($categoryKey)
+                                                {{ __('messages.projects.' . $categoryKey) }}
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -156,153 +190,5 @@
         </div>
 
     </div>
-
-
-    <div x-data="chatbot()" class="fixed bottom-6 right-6 z-50">
-
-        <button @click="toggle"
-            class="bg-themeBlue text-white rounded-full p-4 shadow-lg hover:bg-blue-700 cursor-pointer transition">
-            💬
-        </button>
-
-
-        <div x-cloak x-show="open" @click.outside="open = false" x-transition
-            class="mt-2 w-56 lg:w-72 dark:bg-themeBgDark bg-white border rounded-lg shadow-xl p-4">
-            <x-heading level="h3" class="mb-8">{{ __('messages.chatbot.skillup-assistant') }}</x-heading>
-            <div class="h-48 overflow-y-auto text-sm space-y-2 mb-2" id="chat-window">
-                <template x-for="msg in messages" :key="msg . id">
-                    <div :class="msg . from === 'bot' ? 'text-left' : 'text-right'">
-                        <span :class="msg . from === 'bot' ? 'dark:text-white text-black' : 'text-blue-600'"
-                            x-text="msg.text"></span>
-                    </div>
-                </template>
-            </div>
-
-            <form @submit.prevent="send">
-                <input x-model="input" type="text" class="w-full border px-2 py-1 rounded text-sm"
-                    placeholder="{{ __('messages.chatbot.text-some') }}">
-            </form>
-        </div>
-    </div>
-    <script>
-        function chatbot() {
-            return {
-                open: false,
-                input: '',
-                messages: [
-                    { id: 1, text: '{{ __('messages.chatbot.first-message') }}', from: 'bot' },
-                    { id: 2, text: '{{ __('messages.chatbot.second-message')}}', from: 'bot' }
-                ],
-
-                toggle() {
-                    this.open = !this.open;
-                    this.$nextTick(() => {
-                        document.getElementById('chat-window').scrollTop = 9999;
-                    });
-                },
-                send() {
-                    if (this.input.trim() === '') return;
-
-                    const userMsg = { id: Date.now(), text: this.input, from: 'user' };
-                    this.messages.push(userMsg);
-
-                    let response = '{{ __('messages.chatbot.no-understand') }}';
-                    const txt = this.input.toLowerCase();
-
-                    if (
-                        txt.includes('{{ __('messages.chatbot.text-project') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-projects') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-see-projects') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-where-projects') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-project') }}';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-offer') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-offers') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-job') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-vacancies') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-look-job') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-see-job-offers') }}.';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-apply') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-register') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-how-apply') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-interested') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-apply-job-offer') }}';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-company') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-create-job-offer') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-im-company') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-create-job-offer') }}.';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-cannot-access') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-problem-access') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-forgot-password') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-password') }}.';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-how-work') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-what-is') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-what-its-for') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-what-can-do') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-what-can-do') }}.';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-hi') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-hello') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-hey') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-how-are-you') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-greetings') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-welcome') }}';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-thanks') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-thaks-much') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-appreciate') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-your-welcome') }}';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-bye') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-goodbye') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-see-you-later') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-goodbye') }}';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-here') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-listen') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-help-me') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-someone-answer') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-anyone') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-help') }}.';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-dk') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-lost') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-dont-understand') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-guide') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-what-I-do') }}')
-                    ) {
-                        response = '{{ __('messages.chatbot.response-lost') }}.';
-                    } else if (
-                        txt.includes('{{ __('messages.chatbot.text-how-you') }}') ||
-                        txt.includes('{{ __('messages.chatbot.text-how-doing') }}')
-
-                    ) {
-                        response = '{{ __('messages.chatbot.response-chat-question') }}.';
-                    }
-
-
-                    this.messages.push({ id: Date.now() + 1, text: response, from: 'bot' });
-                    this.input = '';
-                    this.$nextTick(() => {
-                        document.getElementById('chat-window').scrollTop = 9999;
-                    });
-                }
-            }
-        }
-    </script>
 
 @endsection

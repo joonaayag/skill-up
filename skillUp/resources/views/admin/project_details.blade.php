@@ -49,7 +49,8 @@
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
                 <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
-                    <p>{{ __('messages.project-details.author') }}
+                    <p class="flex gap-2">
+                        <x-icon name="user" class="w-5 h-auto" />
                         <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong>
                     </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
@@ -235,7 +236,10 @@
                         <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
                             <label for="image-upload"
                                 class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
-                                🖼️ {{__('messages.school-projects.label-high-upload')}}
+                                <div class="flex gap-2">
+                                    <x-icon name="image" class="w-5 h-auto" />
+                                    {{ __('messages.projects.label-highlight') }}
+                                </div>
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                         fileName = $event.target.files[0]?.name || '';
                                         if ($event.target.files[0]) {
@@ -263,7 +267,10 @@
                         <div x-data="{ fileNames: [] }" class="w-full">
                             <label for="file-upload"
                                 class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
-                                📎 {{__('messages.school-projects.label-upload')}}
+                                <div class="flex gap-2">
+                                    <x-icon name="clip" class="w-5 h-auto" />
+                                    {{ __('messages.projects.label-upload') }}
+                                </div> 
                                 <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                     @change="fileNames = [...$event.target.files].map(f => f.name)" />
                             </label>

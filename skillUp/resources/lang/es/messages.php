@@ -158,7 +158,7 @@ return [
         'title' => 'Ofertas de empleo',
         'title-details' => 'Detalles de la oferta',
         'category' => 'Categorías',
-        'category-admin' => 'Administración y negocios',
+        'category-admin' => 'Administración y negocio',
         'category-science' => 'Ciencia y salud',
         'category-comunication' => 'Comunicación',
         'category-design' => 'Diseño y comunicación',

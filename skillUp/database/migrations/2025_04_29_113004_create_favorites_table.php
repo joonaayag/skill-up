@@ -13,7 +13,7 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-            $table->enum('type', ['proyecto', 'oferta']);
+            $table->enum('type', ['proyecto', 'oferta', 'proyectoEscolar']);
 
             $table->unsignedBigInteger('reference_id');
 

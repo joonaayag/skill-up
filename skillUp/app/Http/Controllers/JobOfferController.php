@@ -27,6 +27,10 @@ class JobOfferController extends Controller
         if ($request->filled('general_category')) {
             $query->whereIn('general_category', $request->general_category);
         }
+        if ($request->filled('sector_category')) {
+            $query->whereIn('sector_category', $request->sector_category);
+        }
+
 
         $order = $request->get('order');
         $direction = $request->get('direction', 'asc');
@@ -94,14 +98,44 @@ class JobOfferController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'sector_category' => 'required|in:' . implode(',', [
-                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
-                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
-                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
-                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
-                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+                'Agricultura/Medio ambiente',
+                'Arte/Cultura',
+                'Automoción',
+                'Ciberseguridad',
+                'Community Manager',
+                'Construcción',
+                'Coordinación Educativa',
+                'Diseño Gráfico',
+                'Electricidad y fontanería',
+                'Energía/Renovables',
+                'Farmacia',
+                'Finanzas y contabilidad',
+                'Fotografía/vídeo',
+                'Hostelería/turismo',
+                'AI',
+                'Investigación/laboratorio',
+                'Legal',
+                'Logística',
+                'Mecánica',
+                'Medicina/Enfermería',
+                'Nutrición',
+                'Operador Industrial',
+                'Orientación',
+                'Periodismo',
+                'Enseñanza',
+                'Psicología',
+                'Publicidad',
+                'Redes y Sistemas',
+                'RRHH',
+                'Seguridad',
+                'SEO/SEM',
+                'Terapias/Rehabilitación',
+                'Traducción',
+                'Transporte/Entrega',
+                'Ventas'
             ]),
             'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
-            'state' => 'required|in:abierta,cerrada',
+            'state' => 'required|in:Abierta,Cerrada',
         ], [
             'name.required' => __('messages.errors.name.required'),
             'name.string' => __('messages.errors.name.string'),
@@ -191,11 +225,41 @@ class JobOfferController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'sector_category' => 'required|in:' . implode(',', [
-                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
-                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
-                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
-                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
-                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
+                'Agricultura/Medio ambiente',
+                'Arte/Cultura',
+                'Automoción',
+                'Ciberseguridad',
+                'Community Manager',
+                'Construcción',
+                'Coordinación Educativa',
+                'Diseño Gráfico',
+                'Electricidad y fontanería',
+                'Energía/Renovables',
+                'Farmacia',
+                'Finanzas y contabilidad',
+                'Fotografía/vídeo',
+                'Hostelería/turismo',
+                'AI',
+                'Investigación/laboratorio',
+                'Legal',
+                'Logística',
+                'Mecánica',
+                'Medicina/Enfermería',
+                'Nutrición',
+                'Operador Industrial',
+                'Orientación',
+                'Periodismo',
+                'Enseñanza',
+                'Psicología',
+                'Publicidad',
+                'Redes y Sistemas',
+                'RRHH',
+                'Seguridad',
+                'SEO/SEM',
+                'Terapias/Rehabilitación',
+                'Traducción',
+                'Transporte/Entrega',
+                'Ventas'
             ]),
             'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'state' => 'required|in:abierta,cerrada',
@@ -213,11 +277,11 @@ class JobOfferController extends Controller
 
             'sector_category.required' => __('messages.errors.sector_offer.required'),
             'sector_category.string' => __('messages.errors.sector_offer.string'),
-            'sector_category.in' =>    __('messages.errors.sector_offer.in'),
+            'sector_category.in' => __('messages.errors.sector_offer.in'),
 
             'general_category.required' => __('messages.errors.sector.required'),
             'general_category.string' => __('messages.errors.sector.string'),
-            'general_category.in' =>    __('messages.errors.sector.in'),
+            'general_category.in' => __('messages.errors.sector.in'),
 
             'state.required' => __('messages.errors.state.required'),
             'state.in' => __('messages.errors.state.in'),

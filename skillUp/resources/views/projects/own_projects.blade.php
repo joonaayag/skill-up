@@ -4,12 +4,28 @@
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.your-projects.title') }}</x-heading>
-    <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}" class=" h-8 sm:h-10 mb-36 text-sm space-y-2
-        lg:mb-16 lg:space-x-5 lg:h-12 w-full [&>input]:h-full [&>select]:h-full
-                  [&>select]:bg-white [&>input]:bg-white [&>input]:rounded-lg [&>select]:rounded-lg [&>input]:border-2 [&>input]:border-themeLightGray
-                  [&>select]:border-2 [&>select]:border-themeLightGray [&>select]:px-4 [&>input]:px-4 [&>input]:outline-0 dark:[&>select]:text-themeLightGray [&>input]:placeholder:text-black
-                  dark:[&>input]:text-themeLightGray dark:[&>input]:placeholder:text-themeLightGray [&>select]:placeholder:text-themeLightGray dark:[&>input]:bg-themeBgDark
-                  dark:[&>select]:bg-themeBgDark ">
+    <form id="own-projects-filter-form" method="GET" action="{{ route('projects.ownProjects') }}"
+    class="space-y-2 lg:mb-9 space-x-5 h-8 sm:h-10 lg:h-12 w-full
+        [&>input]:h-full [&>select]:h-full
+        [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+        [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+        [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
+        [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+        [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
+        [&>select]:placeholder:text-themeLightGray
+        [&>input]:rounded-lg [&>select]:rounded-lg
+        [&>input]:border-2 [&>input]:border-themeLightGray
+        [&>select]:border-2 [&>select]:border-themeLightGray
+        [&>input]:px-4 [&>select]:px-4
+        [&>input]:outline-0 [&>select]:outline-0
+        [&>input]:transition-all [&>select]:transition-all
+        [&>input]:duration-300 [&>select]:duration-300
+        [&>input]:ease-in-out [&>select]:ease-in-out
+        [&>input]:hover:shadow-md [&>select]:hover:shadow-md
+        [&>input]:focus:ring-2 [&>select]:focus:ring-2
+        [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
+        [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
+
         <input type="text" name="title" placeholder="{{ __('messages.your-projects.placeholder-title') }}"
             value="{{ request('title') }}">
         <input type="text" name="description" placeholder="{{ __('messages.your-projects.placeholder-description') }}"
@@ -55,7 +71,7 @@
         </div>
     @endif
 
-    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full mt-36 2md:mt-28 lg:mt-20 xl:mt-0">
 
         @forelse ($userProjects as $project)
             <a href="{{ route('projects.show', $project->id) }}">

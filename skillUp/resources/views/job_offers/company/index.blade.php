@@ -270,8 +270,8 @@
                 <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
                 <select name="state" required
                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base border-themeLightGray rounded bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
-                    <option value="abierta">{{ __('messages.job-offers.state-open') }}</option>
-                    <option value="cerrada">{{ __('messages.job-offers.state-close') }}</option>
+                    <option value="Abierta">{{ __('messages.job-offers.state-open') }}</option>
+                    <option value="Cerrada">{{ __('messages.job-offers.state-close') }}</option>
                 </select>
 
                 <div class="flex justify-end gap-3 mt-4">
