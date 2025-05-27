@@ -218,7 +218,7 @@
                             <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>
                                 {{ __('messages.tags.grupal') }}</option>
                             <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
-                                {{ __('messages.tags.tecnologia') }}</option>
+                                {{ __('messages.tags.tecnología') }}</option>
                             <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
                                 {{ __('messages.tags.ciencias') }}</option>
                             <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}
@@ -339,7 +339,7 @@
                     class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeDark text-gray-800 dark:text-white">
 
                     <li class="flex flex-col h-full">
-                        <x-tags>{{ __('messages.tags.' . strtolower($school->tags)) }}</x-tags>
+                        <x-tags>{{ __('messages.tags.' . strtolower(string: $school->tags)) }}</x-tags>
                         <x-heading level="h3" class="mb-1">{{ $school->title }}</x-heading>
                         @php
                             $categoryMap = [

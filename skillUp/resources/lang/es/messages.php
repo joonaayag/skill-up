@@ -228,7 +228,7 @@ return [
         'tesis' => 'Tesis',
         'individual' => 'Individual',
         'grupal' => 'Grupal',
-        'tecnologia' => 'Tecnología',
+        'tecnología' => 'Tecnología',
         'ciencias' => 'Ciencias',
         'artes' => 'Artes',
         'ingenieria' => 'Ingeniería',
@@ -378,6 +378,19 @@ return [
             'create-project' => 'Crear proyecto escolar',
         ],
         'users' => [
+            'reset-all' => 'Contraseñas restablecidas para todos los alumnos del centro.',
+            'student-not' => 'Alumno no encontrado o no pertenece a tu centro.',
+            'password-change' => 'Contraseñas restablecidas para ',
+            'only-students' => 'Solo puedes registrar alumnos de tu centro',
+            'import-success' => 'Alumnos importados correctamente.',
+            'lines' => 'Linea',
+            'import-error' => 'Error al importar alumnos',
+            'import' => 'Importar alumnos',
+            'import-confirm' => '¿Quieres importar alumnos desde este archivo?',
+            'selected-file' => 'Archivo seleccionado: ',
+            'reset-password' => 'Restablecer contraseñas',
+            'select-students' => 'Seleccionar alumno: ',
+            'all-students' => 'Todos los alumnos del centro',
             'title' => 'Listado de usuarios',
             'table-name' => 'Nombre',
             'table-last-name' => 'Apellido',
@@ -453,6 +466,7 @@ return [
             'no-projects' => 'No pertenece a un proyecto',
             'no-school-project' => 'No pertenece a un proyecto escolar',
             'no-comments' => 'No hay comentarios registrados',
+            'not-allowed' => 'No tienes permiso para eliminar comentarios',
         ],
         'chatbot' => [
             'skillup-assistant' => 'Asistente SkillUp',
@@ -633,6 +647,8 @@ return [
         ]
     ],
     'errors' => [
+        'reset-token-failed' => 'El token de restablecimiento de contraseña no es válido o ha expirado.',
+        'reset-failed' => 'No hemos encontrado ningun usuario con ese correo electrónico.',
         'name' => [
             'required' => 'El campo nombre es obligatorio.',
             'string' => 'El campo nombre debe ser una cadena de texto.',
@@ -874,6 +890,8 @@ return [
     ],
     'select' => 'Seleccionar',
     'auth' => [
+        'account' => '¿Ya tienes cuenta?',
+        'no-account' => '¿No tienes una cuenta?',
         'login' => 'Iniciar sesión',
         'email' => 'Correo electrónico:',
         'password' => 'Contraseña:',
@@ -932,6 +950,7 @@ return [
     'from' => 'de ',
     'answer' => 'Responder',
     'messages' => [
+        'last-step' => 'Un último paso para empezar con Skill Up',
         'login' => 'Inicio de sesión correctamente',
         'register' => 'Registro e inicio de sesión realizado correctamente',
         'user-destroy' => 'Usuario eliminado correctamente',

@@ -50,8 +50,13 @@
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
                 <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
-                    <p>{{ __('messages.project-details.author') }}
-                        <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong></p>
+                    <p class="flex gap-2">
+                        <x-icon name="user" class="w-5 h-auto" />
+                        <a href="{{ route('profile.public', ['id' => $schoolProject->teacher->id]) }}" class="text-themeBlue hover:underline font-semibold">
+                            {{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}
+                        </a>
+                    </p>
+                    
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $schoolProject->views }}</p>
                     <p class="flex items-center justify-center gap-1">
@@ -138,9 +143,7 @@
             @include('comments.comment_section', ['commentable' => $schoolProject, 'type' => 'school-project'])
         </x-card>
 
-        <a href="{{ route('projects.index') }}"
-            class="mt-3  h-8 sm:h-10 px-3 py-2 bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}</a>
+        
 
     </div>
 
@@ -157,8 +160,7 @@
 
 
             <x-modal>
-                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Editar
-                    proyecto</x-heading>
+                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.school-projects.edit-project') }}</x-heading>
 
                 <form action="{{ route('admin.school_project.update', $schoolProject->id) }}" enctype="multipart/form-data"
                     class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0">
@@ -166,25 +168,25 @@
                     @csrf
 
                     <div>
-                        <x-label for="title">Título:</x-label>
+                        <x-label for="title">{{ __('messages.admin.offers.label-title') }}</x-label>
                         <x-inputtext type="text" name="title" id="title" value="{{ old('title', $schoolProject->title) }}"
                             required />
                     </div>
 
                     <div>
-                        <x-label for="description">Descripción:</x-label>
+                        <x-label for="description">{{ __('messages.admin.offers.label-description') }}</x-label>
                         <x-textarea name="description" id="description"
                             required>{{ old('description', $schoolProject->description) }}</x-textarea>
                     </div>
 
                     <div>
-                        <x-label for="author">Autor:</x-label>
+                        <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
                         <x-inputtext type="text" name="author" id="author"
                             value="{{ old('author', $schoolProject->author) }}" required />
                     </div>
 
                     <div>
-                        <x-label for="tags">Etiquetas (tags)</x-label>
+                        <x-label for="tags">{{ __('messages.admin.projects.table-tags') }}</x-label>
                         <select name="tags" id="tags"
                             class="w-full  h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
                             <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
@@ -203,7 +205,7 @@
                                 {{ __('messages.tags.grupal') }}
                             </option>
                             <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
-                                {{ __('messages.tags.tecnologia') }}
+                                {{ __('messages.tags.tecnología') }}
                             </option>
                             <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
                                 {{ __('messages.tags.ciencias') }}
@@ -218,7 +220,7 @@
                     </div>
 
                     <div>
-                        <x-label for="general_category">Categoría general:</x-label>
+                        <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}</x-label>
                         <select name="general_category" required
                             class="w-full  h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray dark:bg-themeBgDark">
                             <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}
@@ -235,19 +237,19 @@
                     </div>
 
                     <div>
-                        <x-label for="title">Fecha de creación:</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-date') }}</x-label>
                         <x-inputdate name="creation_date" id="creation_date"
                             value="{{ old('creation_date', $schoolProject->creation_date) }}" required />
                     </div>
 
                     <div>
-                        <x-label for="title">Enlace (Opcional):</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-link') }}</x-label>
                         <input type="url" name="link" class="w-full  h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray"
                             value="{{ old('link', $schoolProject->link) }}" />
                     </div>
 
                     <div>
-                        <x-label for="title">Imagen destacada:</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-image') }}</x-label>
                         <div x-data="{ fileName: '', previewUrl: '' }" class="w-full">
                             <label for="image-upload"
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
@@ -278,7 +280,7 @@
                     </div>
 
                     <div>
-                        <x-label for="title">Archivos adicionales</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-additional') }}</x-label>
                         <div x-data="{ fileNames: [] }" class="w-full">
                             <label for="file-upload"
                                 class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/90 transition">
@@ -304,11 +306,11 @@
                     <div class="flex justify-end gap-3 mt-4">
                         <button type="button" @click="showModal = false"
                             class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
-                            Cancelar
+                            {{ __('messages.button.cancel') }}
                         </button>
                         <button type="submit"
                             class="px-4  bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
-                            Guardar
+                            {{ __('messages.button.save-changes') }}
                         </button>
                     </div>
                 </form>
@@ -325,17 +327,16 @@
             </button>
 
             <x-modal :show="'showDelete'">
-                <x-heading level="h3" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">Seguro
-                    deses eliminar {{ $schoolProject->title }} de {{ $schoolProject->teacher->name }}?</x-heading>
+                <x-heading level="h3" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue"> {{ __('messages.applications.delete-confirm-1') . $schoolProject->title . ' ' .  __('messages.from') . $schoolProject->teacher->name }}?</x-heading>
                 <form action="{{ route('admin.school_project.destroy', $schoolProject->id) }}" method="POST"
                     class="flex justify-center gap-3">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class=" h-8 sm:h-10 px-3 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
+                        class=" h-8 sm:h-10 px-3 bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">{{ __('messages.button.delete') }}</button>
                     <button type="button"
                         class=" h-8 sm:h-10 px-3 bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
-                        @click="showDelete = false">Cancelar</button>
+                        @click="showDelete = false">{{ __('messages.button.cancel') }}</button>
                 </form>
 
             </x-modal>

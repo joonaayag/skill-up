@@ -3,15 +3,7 @@
 @section('content')
     <div class="container mx-auto px-6 py-10">
         <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">{{ __('messages.admin.comments.title') }}</h1>
-        @if ($errors->any())
-            <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li class="text-black dark:text-white">- {{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+
 
         <div class="overflow-x-auto rounded-lg shadow">
             <table

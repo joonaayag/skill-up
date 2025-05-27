@@ -243,7 +243,11 @@
                         alt="Perfil" id="profileImage" class="size-32 lg:size-40 object-cover">
                 </li>
                 <li><strong>{{__('messages.project-details.published')}} </strong>{{ $offer->created_at }}</li>
-                <li><strong>{{__('messages.roles.company')}}: </strong>{{ $offer->company->name }}</li>
+                <li><strong>{{__('messages.roles.company')}}: </strong>
+                <a href="{{ route('profile.public', ['id' => $offer->company->id]) }}"
+                        class="text-themeBlue hover:underline font-semibold">
+                        {{ $offer->company->name }}
+                    </a></li>
             </ul>
 
         </div>

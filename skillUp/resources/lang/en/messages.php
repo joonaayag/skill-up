@@ -313,7 +313,7 @@ return [
         'tesis' => "Doctoral Thesis",
         'individual' => 'Individual',
         'grupal' => 'Group',
-        'tecnologia' => 'Technology',
+        'tecnología' => 'Technology',
         'ciencias' => 'Science',
         'artes' => 'Arts',
         'ingenieria' => 'Engineering',
@@ -379,6 +379,19 @@ return [
             'create-project' => 'Create school project',
         ],
         'users' => [
+            'reset-all' => 'Passwords reset for all students from the center.',
+            'student-not' => 'Student not found or does not belong to your center.',
+            'password-change' => 'Passwords reset for ',
+            'only-students' => 'You can only register students from your center',
+            'import-success' => 'Students imported successfully.',
+            'lines' => 'Line',
+            'import-error' => 'Error importing students',
+            'import' => 'Import students',
+            'import-confirm' => 'Do you want to import students from this file?',
+            'selected-file' => 'Selected file: ',
+            'reset-password' => 'Reset passwords',
+            'select-students' => 'Select student: ',
+            'all-students' => 'All students from the center',
             'title' => 'List of users',
             'table-name' => 'First name',
             'table-last-name' => 'Last name',
@@ -438,6 +451,7 @@ return [
             'no-offers' => 'There are no job offers registered',
         ],
         'comments' => [
+            'not-allowed' => 'You do not have permission to delete comments',
             'title' => 'List of comments',
             'table-name' => 'Name',
             'table-project' => 'Project',
@@ -635,6 +649,8 @@ return [
 
     ],
     'errors' => [
+        'reset-token-failed' => 'The password reset token is invalid or has expired.',
+        'reset-failed' => 'We could not find a user with that email address.',
         'name' => [
             'required' => 'The name field is required.',
             'string' => 'The name must be a string.',
@@ -877,6 +893,8 @@ return [
     ],
     'select' => 'Select',
     'auth' => [
+        'account' => 'Already have an account?',
+        'no-account' => 'Dont have an account?',
         'login' => 'Login',
         'email' => 'Email:',
         'password' => 'Password:',
@@ -935,6 +953,7 @@ return [
     'from' => 'from ',
     'answer' => 'Answer',
     'messages' => [
+        'last-step' => 'One last step to get started with Skill Up',
         'login' => 'Logged in successfully',
         'register' => 'Registration and login completed successfully',
         'user-destroy' => 'User deleted successfully',

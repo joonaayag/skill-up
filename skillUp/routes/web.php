@@ -46,21 +46,55 @@ Route::get('/auth/google/callback', function () {
 
 Route::get('/elegir-rol', function () {
     if (!Session::has('google_user')) {
-        return redirect('/login'); 
+        return redirect('/login');
     }
     return view('auth.choose_role');
 });
 
 
 Route::post('/elegir-rol', function (Request $request) {
+    $messages = [
+        'role.required' => __('messages.errors.role.required'),
+        'role.in' => __('messages.errors.role.in'),
+
+        'birth_date.required' => __('messages.errors.birth_date.required'),
+        'birth_date.date' => __('messages.errors.birth_date.date'),
+        'birth_date.before_or_equal' => __('messages.errors.birth_date.before_or_equal'),
+
+        'current_course.required' => __('messages.errors.current_course.required'),
+        'current_course.string' => __('messages.errors.current_course.string'),
+        'current_course.max' => __('messages.errors.current_course.max'),
+
+        'educational_center.required' => __('messages.errors.educational_center.required'),
+        'educational_center.string' => __('messages.errors.educational_center.string'),
+        'educational_center.max' => __('messages.errors.educational_center.max'),
+
+        'cif.required' => __('messages.errors.cif.required'),
+        'cif.string' => __('messages.errors.cif.string'),
+        'cif.max' => __('messages.errors.cif.max'),
+
+        'address.required' => __('messages.errors.address.required'),
+        'address.string' => __('messages.errors.address.string'),
+        'address.max' => __('messages.errors.address.max'),
+
+        'sector.required' => __('messages.errors.sector.required'),
+        'sector.string' => __('messages.errors.sector.string'),
+        'sector.max' => __('messages.errors.sector.max'),
+
+        'website.url' => __('messages.errors.website.url'),
+        'website.max' => __('messages.errors.website.max'),
+    ];
+
     $request->validate([
         'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
-    ]);
+    ], $messages);
 
     $googleData = Session::get('google_user');
 
     if (!$googleData) {
-        return redirect('/login')->withErrors('Sesión expirada. Intenta iniciar sesión de nuevo.');
+        return redirect('/login')->withErrors([
+            'session' => __('messages.errors.session.expired'),
+        ]);
     }
 
     $nameParts = explode(' ', $googleData['name'], 2);
@@ -82,11 +116,12 @@ Route::post('/elegir-rol', function (Request $request) {
             'birth_date' => 'required|date|before_or_equal:' . date('Y-m-d'),
             'current_course' => 'required|string|max:50',
             'educational_center' => 'required|string|max:100',
-        ]);
+        ], $messages);
+
         $detail->update($request->only([
             'birth_date',
             'current_course',
-            'educational_center'
+            'educational_center',
         ]));
     }
 
@@ -96,17 +131,17 @@ Route::post('/elegir-rol', function (Request $request) {
             'address' => 'required|string|max:255',
             'sector' => 'required|string|max:100',
             'website' => 'nullable|url|max:255',
-        ]);
+        ], $messages);
+
         $detail->update($request->only([
             'cif',
             'address',
             'sector',
-            'website'
+            'website',
         ]));
     }
 
     Session::forget('google_user');
-
     Auth::login($user);
 
     return redirect('/dashboard')->with('message', __('messages.messages.register'));

@@ -171,7 +171,7 @@
                                     <x-icon name="bell" class="w-8 h-auto" />
                                 </div>
                                 <div class="[&>p]:mt-1">
-                                    <p class="font-semibold">{{ $notification->message }}</p>
+                                    <p class="font-semibold">{{ __($notification->message) }}</p>
                                     <p class="text-xs text-themeSmallTextLightGray dark:text-darkThemeSmallTextLightGray">
                                         {{ $notification->created_at->diffForHumans() }}
                                     </p>

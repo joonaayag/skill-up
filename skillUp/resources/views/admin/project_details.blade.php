@@ -51,7 +51,9 @@
                 <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
                     <p class="flex gap-2">
                         <x-icon name="user" class="w-5 h-auto" />
-                        <strong>{{ $project->author->name . ' ' . $project->author->last_name }}</strong>
+                        <a href="{{ route('profile.public', ['id' => $project->author->id]) }}" class="text-themeBlue hover:underline font-semibold">
+                            {{ $project->author->name . ' ' . $project->author->last_name }}
+                        </a>
                     </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $project->views }}</p>
@@ -146,7 +148,7 @@
     <div class="flex mt-3 gap-3">
         <div x-cloak x-data="{ showModal: false }"
             x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
-            class="relative z-10">
+            class="relative ">
 
             <button @click="showModal = true"
                 class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-yellow-400 text-black shadow-lg hover:bg-yellow-500 transition cursor-pointer">
@@ -193,7 +195,7 @@
                                 {{ __('messages.tags.grupal') }}
                             </option>
                             <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>
-                                {{ __('messages.tags.tecnologia') }}
+                                {{ __('messages.tags.tecnología') }}
                             </option>
                             <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>
                                 {{ __('messages.tags.ciencias') }}
@@ -303,7 +305,7 @@
 
         <div x-cloak x-data="{ showDelete: false }"
             x-init="$watch('showDelete', val => document.body.classList.toggle('overflow-hidden', val))"
-            class="relative z-10">
+            class="relative ">
 
             <button @click="showDelete = true"
                 class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white shadow-lg hover:bg-red-700 transition cursor-pointer">
@@ -317,10 +319,10 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">Eliminar</button>
+                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-white dark:bg-themeBgDark text-themeRed border-2 border-themeRed shadow-lg rounded-lg hover:bg-themeHoverRed/30 transition cursor-pointer">{{ __('messages.button.delete') }}</button>
                     <button type="button"
                         class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeLightGray text-gray-800 cursor-pointer hover:bg-gray-300 transition rounded-lg"
-                        @click="showDelete = false">Cancelar</button>
+                        @click="showDelete = false">{{ __('messages.button.cancel') }}</button>
                 </form>
 
             </x-modal>

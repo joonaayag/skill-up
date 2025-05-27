@@ -1,13 +1,5 @@
 <div class="comment bg-white dark:bg-themeDarkGray shadow-md rounded-lg p-5 mb-5" id="comment-{{ $comment->id }}">
-    @if ($errors->any())
-        <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li class="text-black dark:text-white">- {{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    
     <div class="comment-meta text-sm text-gray-600 dark:text-gray-300 mb-2">
         <strong
             class="text-gray-800 dark:text-themeLightGray ">{{ $comment->user->name . ' ' . $comment->user->last_name  }}</strong>

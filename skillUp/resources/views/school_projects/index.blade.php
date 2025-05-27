@@ -240,7 +240,7 @@
                                                     <option value="Tesis" {{ old('tags', $project->tags) == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}</option>
                                                     <option value="Individual" {{ old('tags', $project->tags) == 'Individual' ? 'selected' : '' }}>{{ __('messages.tags.individual') }}</option>
                                                     <option value="Grupal" {{ old('tags', $project->tags) == 'Grupal' ? 'selected' : '' }}>{{ __('messages.tags.grupal') }}</option>
-                                                    <option value="Tecnología" {{ old('tags', $project->tags) == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnologia') }}</option>
+                                                    <option value="Tecnología" {{ old('tags', $project->tags) == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnología') }}</option>
                                                     <option value="Ciencias" {{ old('tags', $project->tags) == 'Ciencias' ? 'selected' : '' }}>{{ __('messages.tags.ciencias') }}</option>
                                                     <option value="Artes" {{ old('tags', $project->tags) == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}</option>
                                                     <option value="Ingeniería" {{ old('tags', $project->tags) == 'Ingeniería' ? 'selected' : '' }}>{{ __('messages.tags.ingenieria') }}</option>
@@ -527,7 +527,7 @@
                         <option value="Tesis" {{ old('tags') == 'Tesis' ? 'selected' : '' }}>{{ __('messages.tags.tesis') }}</option>
                         <option value="Individual" {{ old('tags') == 'Individual' ? 'selected' : '' }}>{{ __('messages.tags.individual') }}</option>
                         <option value="Grupal" {{ old('tags') == 'Grupal' ? 'selected' : '' }}>{{ __('messages.tags.grupal') }}</option>
-                        <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnologia') }}</option>
+                        <option value="Tecnología" {{ old('tags') == 'Tecnología' ? 'selected' : '' }}>{{ __('messages.tags.tecnología') }}</option>
                         <option value="Ciencias" {{ old('tags') == 'Ciencias' ? 'selected' : '' }}>{{ __('messages.tags.ciencias') }}</option>
                         <option value="Artes" {{ old('tags') == 'Artes' ? 'selected' : '' }}>{{ __('messages.tags.artes') }}</option>
                         <option value="Ingeniería" {{ old('tags') == 'Ingeniería' ? 'selected' : '' }}>{{ __('messages.tags.ingenieria') }}</option>

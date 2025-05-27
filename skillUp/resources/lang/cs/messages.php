@@ -361,6 +361,19 @@ return [
          'create-project' => 'Vytvořit školní projekt',
       ],
       'users' => [
+         'reset-all' => 'Hesla byla obnovena pro všechny studenty ze školy.',
+         'student-not' => 'Student nebyl nalezen nebo nepatří do vašeho centra.',
+         'password-change' => 'Hesla byla obnovena pro ',
+         'only-students' => 'Můžete registrovat pouze studenty ze své školy',
+         'import-success' => 'Studenti byli úspěšně importováni.',
+         'lines' => 'Řádek',
+         'import-error' => 'Chyba při importu studentů',
+         'import' => 'Importovat studenty',
+         'import-confirm' => 'Chcete importovat studenty z tohoto souboru?',
+         'selected-file' => 'Vybraný soubor: ',
+         'reset-password' => 'Obnovit hesla',
+         'select-students' => 'Vyberte studenta: ',
+         'all-students' => 'Všichni studenti ze školy',
          'title' => 'Seznam uživatelů',
          'table-name' => 'Jméno',
          'table-last-name' => 'Příjmení',
@@ -433,7 +446,9 @@ return [
          'delete-text-2' => '.',
          'no-projects' => 'Nepatří k žádnému projektu',
          'no-school-project' => 'Nepatří k žádnému školnímu projektu',
-         'no-comments' => 'Žádné registrované komentáře.'
+         'no-comments' => 'Žádné registrované komentáře.',
+         'not-allowed' => 'Nemáte oprávnění mazat komentáře',
+
       ],
    ],
    'chatbot' => [
@@ -531,7 +546,7 @@ return [
       'tesis' => 'Disertační práce',
       'individual' => 'Individuální',
       'grupal' => 'Skupinový',
-      'tecnologia' => 'Technologie',
+      'tecnología' => 'Technologie',
       'ciencias' => 'Vědy',
       'artes' => 'Umění',
       'ingenieria' => 'Inženýrství',
@@ -627,6 +642,8 @@ return [
 
    ],
    'errors' => [
+      'reset-token-failed' => 'Token pro obnovení hesla je neplatný nebo vypršel.',
+      'reset-failed' => 'Nepodařilo se najít uživatele s touto e-mailovou adresou.',
       'name' => [
          'required' => 'Pole jméno je povinné.',
          'string' => 'Pole jméno musí být textový řetězec.',
@@ -868,6 +885,8 @@ return [
    ],
    'select' => 'Vybrat',
    'auth' => [
+      'account' => 'Už máte účet?',
+      'no-account' => 'Nemáte účet?',
       'login' => 'Přihlášení',
       'email' => 'E-mail:',
       'password' => 'Heslo:',
@@ -926,6 +945,7 @@ return [
    'from' => 'od ',
    'answer' => 'Odpovědět',
    'messages' => [
+      'last-step' => 'Jeden poslední krok k zahájení se Skill Up',
       'login' => 'Přihlášení proběhlo úspěšně',
       'register' => 'Registrace a přihlášení proběhly úspěšně',
       'user-destroy' => 'Uživatel byl úspěšně odstraněn',

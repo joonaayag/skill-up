@@ -369,6 +369,19 @@ return [
             'create-project' => '創建學校項目',
         ],
         'users' => [
+            'reset-all' => '已為該中心所有學生重設密碼。',
+            'student-not' => '找不到學生，或該學生不屬於你的中心。',
+            'password-change' => '已為以下學生重設密碼：',
+            'only-students' => '你只能註冊屬於你中心的學生',
+            'import-success' => '學生已成功匯入。',
+            'lines' => '行',
+            'import-error' => '匯入學生時發生錯誤',
+            'import' => '匯入學生',
+            'import-confirm' => '你要從這個檔案匯入學生嗎？',
+            'selected-file' => '已選擇的檔案：',
+            'reset-password' => '重設密碼',
+            'select-students' => '選擇學生：',
+            'all-students' => '該中心的所有學生',
             'title' => '用戶列表',
             'table-name' => '名字',
             'table-last-name' => '姓氏',
@@ -442,7 +455,9 @@ return [
             'delete-text-2' => ' 永久。',
             'no-projects' => '不屬於項目',
             'no-school-project' => '不屬於學校項目',
-            'no-comments' => '沒有註冊評論。'
+            'no-comments' => '沒有註冊評論。',
+            'not-allowed' => '你沒有權限刪除留言',
+
         ],
     ],
     'chatbot' => [
@@ -630,12 +645,14 @@ return [
         'tesis' => '博士論文',
         'individual' => '個人',
         'grupal' => '小組',
-        'tecnologia' => '科技',
+        'tecnología' => '科技',
         'ciencias' => '科學',
         'artes' => '藝術',
         'ingenieria' => '工程',
     ],
     'errors' => [
+        'reset-token-failed' => '密碼重設憑證無效或已過期.',
+        'reset-failed' => '我們找不到使用該電子郵件地址的用戶.',
         'name' => [
             'required' => '名字欄位為必填。',
             'string' => '名字必須是文字。',
@@ -877,6 +894,8 @@ return [
     ],
     'select' => '選擇 ',
     'auth' => [
+        'account' => '你已經有帳號了嗎？',
+        'no-account' => '你還沒有帳號嗎？',
         'login' => '登入',
         'email' => '電子郵件:',
         'password' => '密碼:',
@@ -919,7 +938,7 @@ return [
         'add-comment' => '新增留言',
         'write-comment' => '請在此輸入您的留言...',
         'publish-comment' => '發佈留言',
-        'Back' => '返回',
+        'back' => '返回',
         'see-image' => '查看圖片',
         'download-file' => '下載檔案',
 
@@ -936,6 +955,7 @@ return [
     'from' => '從',
     'answer' => '回覆',
     'messages' => [
+        'last-step' => '開始使用 Skill Up 的最後一步',
         'login' => '成功登入',
         'register' => '註冊並登入成功',
         'user-destroy' => '使用者已成功刪除',

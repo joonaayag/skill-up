@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto px-6 py-10">
-        <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">{{ __('messages.admin.offers.title') }}</h1>
+        <x-heading class="mb-10" level="h1">{{ __('messages.admin.offers.title') }}</x-heading>
         @if ($errors->any())
             <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
                 <ul>
@@ -34,7 +34,7 @@
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->name }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700">{{ $offer->subtitle }}</td>
                             <td class="px-4 py-3 border dark:border-gray-700">
-                            @php
+                                    @php
                                     $sectorMap = [
                                         'Agricultura/Medio ambiente' => 'sector-agri',
                                         'Arte/Cultura' => 'sector-art',
@@ -110,100 +110,68 @@
                                         class="bg-themeBlue/80 border-2 border-themeBlue/80 hover:bg-themeBlue text-white font-semibold py-2 px-4 rounded transition cursor-pointer">{{__('messages.button.edit')}}</button>
 
                                     <x-modal :show="'openEdit'" @click.outside="openEdit = false">
-                                        <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.offers.edit') }}</x-heading>
+                                        <x-heading level="h2"
+                                            class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
+                                            {{ __('messages.admin.offers.edit') }}
+                                        </x-heading>
 
                                         <form action="{{ route('admin.offers.update', $offer->id) }}" method="POST"
-                                            class="space-y-4 ">
+                                            class="space-y-4 [&>select]:border [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                                             @csrf
                                             @method('PUT')
 
-                                            <div>
-                                                <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-title') }}</label>
-                                                <input type="text" id="name" name="name" value="{{ $offer->name }}"
-                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
-                                                    required>
-                                            </div>
+                                            <x-label for="name">{{ __('messages.admin.offers.label-title') }}</x-label>
+                                            <x-inputtext type="text" name="name" id="name" value="{{ $offer->name }}" required />
 
-                                            <div>
-                                                <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-subtitle') }}</label>
-                                                <input type="text" id="subtitle" name="subtitle" value="{{ $offer->subtitle }}"
-                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600">
-                                            </div>
+                                            <x-label for="subtitle">{{ __('messages.admin.offers.label-subtitle') }}</x-label>
+                                            <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ $offer->subtitle }}" />
 
-                                            <div>
-                                                <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-description') }}</label>
-                                                <textarea name="description" id="description" rows="4"
-                                                    class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600 resize-none"
-                                                    required>{{ $offer->description }}</textarea>
-                                            </div>
+                                            <x-label for="description">{{ __('messages.admin.offers.label-description') }}</x-label>
+                                            <x-textarea name="description" id="description" required>{{ $offer->description }}</x-textarea>
 
-                                            <div class="grid grid-cols-2 gap-4">
-                                                <div class="">
-                                                    <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-sector') }}</label>
-                                                    <select name="sector_category" id="sector_category" required
-                                                        class="w-full h-8 sm:h-10 px-3 py-2 border-themeLightGray rounded dark:bg-themeBgDark bg-white border-1 outline-0 ">
-                                                        <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
-                                                            {{ __('messages.select') }}
-                                                        </option>
+                                            <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}</x-label>
+                                            <select name="sector_category" id="sector_category" required
+                                                class="w-full border-themeLightGray rounded text-xs md:text-sm lg:text-base h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
+                                                @foreach (array_keys($sectorMap) as $sector)
+                                                    <option value="{{ $sector }}" {{ old('sector_category', $offer->sector_category) === $sector ? 'selected' : '' }}>
+                                                        {{ __('messages.job-offers.' . $sectorMap[$sector]) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
 
-                                                        @foreach (array_keys($sectorMap) as $sector)
-                                                            <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
-                                                                {{ __('messages.job-offers.' . $sectorMap[$sector]) }}
-                                                            </option>
-                                                        @endforeach
+                                            <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}</x-label>
+                                            <select name="general_category" id="general_category" required
+                                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:text-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
+                                                <option value="Administración y negocio" {{ old('general_category', $offer->general_category) == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
+                                                <option value="Ciencia y salud" {{ old('general_category', $offer->general_category) == 'Ciencia y salud' ? 'selected' : '' }}>{{ __('messages.projects.option-science') }}</option>
+                                                <option value="Comunicación" {{ old('general_category', $offer->general_category) == 'Comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-comunication') }}</option>
+                                                <option value="Diseño y comunicación" {{ old('general_category', $offer->general_category) == 'Diseño y comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-design') }}</option>
+                                                <option value="Educación" {{ old('general_category', $offer->general_category) == 'Educación' ? 'selected' : '' }}>{{ __('messages.projects.option-education') }}</option>
+                                                <option value="Industria" {{ old('general_category', $offer->general_category) == 'Industria' ? 'selected' : '' }}>{{ __('messages.projects.option-industry') }}</option>
+                                                <option value="Otro" {{ old('general_category', $offer->general_category) == 'Otro' ? 'selected' : '' }}>{{ __('messages.projects.option-other') }}</option>
+                                                <option value="Tecnología y desarrollo" {{ old('general_category', $offer->general_category) == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
+                                            </select>
 
-                                                    </select>
-                                                </div>
-                                                <div class="[&>select]:border-1  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
-                                                    <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-category') }}</label>
-                                                    <select name="general_category" id="general_category" required
-                                                        class="w-fullh-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
-                                                        <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
-                                                        <option value="Ciencia y salud" {{ old('general_category') == 'Ciencia y salud' ? 'selected' : '' }}>
-                                                            {{ __('messages.projects.option-science') }}
-                                                        </option>
-                                                        <option value="Comunicación" {{ old('general_category') == 'Comunicación' ? 'selected' : '' }}>
-                                                            {{ __('messages.projects.option-comunication') }}
-                                                        </option>
-                                                        <option value="Diseño y comunicación" {{ old('general_category') == 'Diseño y comunicación' ? 'selected' : '' }}>{{ __('messages.projects.option-design') }}</option>
-                                                        <option value="Educación" {{ old('general_category') == 'Educación' ? 'selected' : '' }}>
-                                                            {{ __('messages.projects.option-education') }}
-                                                        </option>
-                                                        <option value="Industria" {{ old('general_category') == 'Industria' ? 'selected' : '' }}>
-                                                            {{ __('messages.projects.option-industry') }}
-                                                        </option>
-                                                        <option value="Otro" {{ old('general_category') == 'Otro' ? 'selected' : '' }}>
-                                                            {{ __('messages.projects.option-other') }}
-                                                        </option>
-                                                        <option value="Tecnología y desarrollo" {{ old('general_category') == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <x-label for="state">{{ __('messages.admin.offers.label-state') }}</x-label>
+                                            <select name="state" id="state" required
+                                                class="w-full border-themeLightGray rounded text-xs md:text-sm lg:text-base h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
+                                                <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>{{ __('messages.admin.offers.status-open') }}</option>
+                                                <option value="cerrada" {{ $offer->state === 'cerrada' ? 'selected' : '' }}>{{ __('messages.admin.offers.status-close') }}</option>
+                                            </select>
 
-                                            <div class="[&>select]:border-1  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
-                                                <label class="block text-sm font-medium">{{ __('messages.admin.offers.label-state') }}</label>
-                                                <select name="state" id="state"
-                                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2 dark:bg-themeDark dark:bg-themeBgDark dark:text-white dark:border-gray-600"
-                                                    required>
-                                                    <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>
-                                                        {{ __('messages.admin.offers.status-open') }}</option>
-                                                    <option value="cerrada" {{ $offer->state === 'cerrada' ? 'selected' : '' }}>
-                                                        {{ __('messages.admin.offers.status-close') }}</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mt-6 flex justify-end gap-4">
+                                            <div class="flex justify-end gap-3 mt-4">
                                                 <button type="button" @click="openEdit = false"
                                                     class="h-8 sm:h-10 px-3 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                                                     {{ __('messages.button.cancel') }}
                                                 </button>
                                                 <button type="submit"
-                                                    class="bg-blue-600 text-white h-8 sm:h-10 px-3 py-2 rounded hover:bg-blue-700 cursor-pointer">
+                                                    class="h-8 sm:h-10 px-3 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                                                     {{ __('messages.button.save-changes') }}
                                                 </button>
                                             </div>
                                         </form>
                                     </x-modal>
+
                                 </div>
 
                                 <div x-data="{ openDelete: false }" class="inline-block" x-cloak>
@@ -269,9 +237,9 @@
                 <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}</x-label>
                 <select name="sector_category" id="sector_category" required
                     class="w-full rounded h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark bg-white dark:bg-themeBgD">
-                    @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
-                        <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
-                            {{ $sector }}
+                    @foreach ($sectorMap as $spanishLabel => $translationKey)
+                        <option value="{{ $spanishLabel }}" {{ old('sector_category') === $spanishLabel ? 'selected' : '' }}>
+                            {{ __('messages.job-offers.' . $translationKey) }}
                         </option>
                     @endforeach
                 </select>

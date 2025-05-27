@@ -82,6 +82,43 @@
                         __('messages.job-offers.sector-sal'),
 
                     ];
+                    $sectorMap = [
+                                    'Agricultura/Medio ambiente' => 'sector-agri',
+                                    'Arte/Cultura' => 'sector-art',
+                                    'Automoción' => 'sector-aut',
+                                    'Ciberseguridad' => 'sector-cyb',
+                                    'Community Manager' => 'sector-comm',
+                                    'Construcción' => 'sector-cons',
+                                    'Coordinación Educativa' => 'sector-educ',
+                                    'Diseño Gráfico' => 'sector-grap',
+                                    'Electricidad y fontanería' => 'sector-elec',
+                                    'Energía/Renovables' => 'sector-ener',
+                                    'Farmacia' => 'sector-phar',
+                                    'Finanzas y contabilidad' => 'sector-fina',
+                                    'Fotografía/vídeo' => 'sector-photo',
+                                    'Hostelería/turismo' => 'sector-hosp',
+                                    'AI' => 'sector-ai',
+                                    'Investigación/laboratorio' => 'sector-res',
+                                    'Legal' => 'sector-leg',
+                                    'Logística' => 'sector-log',
+                                    'Mecánica' => 'sector-mec',
+                                    'Medicina/Enfermería' => 'sector-med',
+                                    'Nutrición' => 'sector-nut',
+                                    'Operador Industrial' => 'sector-ind',
+                                    'Orientación' => 'sector-ori',
+                                    'Periodismo' => 'sector-jout',
+                                    'Enseñanza' => 'sector-tea',
+                                    'Psicología' => 'sector-psy',
+                                    'Publicidad' => 'sector-adv',
+                                    'Redes y Sistemas' => 'sector-net',
+                                    'RRHH' => 'sector-hr',
+                                    'Seguridad' => 'sector-sec',
+                                    'SEO/SEM' => 'sector-seo',
+                                    'Terapias/Rehabilitación' => 'sector-ther',
+                                    'Traducción' => 'sector-trans',
+                                    'Transporte/Entrega' => 'sector-transp',
+                                    'Ventas' => 'sector-sal',
+                                ];
                 @endphp
                 <div class="space-y-1">
                     @foreach ($sectorCategories as $sector)
@@ -237,9 +274,9 @@
                     <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
                         {{ __('messages.select') }}
                     </option>
-                    @foreach (['Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción', 'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad', 'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería', 'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas', 'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'] as $sector)
-                        <option value="{{ $sector }}" {{ old('sector_category') === $sector ? 'selected' : '' }}>
-                            {{ $sector }}
+                    @foreach ($sectorMap as $spanishLabel => $translationKey)
+                        <option value="{{ $spanishLabel }}" {{ old('sector_category') === $spanishLabel ? 'selected' : '' }}>
+                            {{ __('messages.job-offers.' . $translationKey) }}
                         </option>
                     @endforeach
                 </select>

@@ -42,8 +42,8 @@ class AdminController extends Controller
                 ->whereHas('detail', function ($q) use ($user) {
                     $q->where('educational_center', $user->detail?->educational_center);
                 })->where('id', '!=', $user->id)->get();
-            
-                return view('admin.users', compact('users', 'students'));
+
+            return view('admin.users', compact('users', 'students'));
 
         } else {
             $users = User::where('id', '!=', auth()->id())->with('detail')->get();
@@ -198,7 +198,7 @@ class AdminController extends Controller
             $parts = explode(';', $line);
 
             if (count($parts) < 5) {
-                $errors[] = "Línea $lineNumber: No tiene suficientes campos.";
+                $errors[] = __('messages.admin.users.lines') . ' ' . $lineNumber . ": No tiene suficientes campos.";
                 $lineNumber++;
                 continue;
             }
@@ -222,7 +222,7 @@ class AdminController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $errors[] = "Línea $lineNumber: " . implode(' | ', $validator->errors()->all());
+                $errors[] = __('messages.admin.users.lines') . ' ' . $lineNumber . ": " . implode(' | ', $validator->errors()->all());
                 $lineNumber++;
                 continue;
             }
@@ -247,10 +247,10 @@ class AdminController extends Controller
         }
 
         if (!empty($errors)) {
-            return back()->with('message', 'Importación completada con errores.')->with('errors', $errors);
+            return back()->with('message', __('messages.admin.users.import-error'))->with('errors', $errors);
         }
 
-        return back()->with('message', 'Alumnos importados correctamente.');
+        return back()->with('message', __('messages.admin.users.import-success'));
     }
 
     public function resetPasswords(Request $request)
@@ -280,7 +280,7 @@ class AdminController extends Controller
                 $student->save();
             }
 
-            return back()->with('message', 'Contraseñas restablecidas para todos los alumnos del centro.');
+            return back()->with('message', __('messages.admin.users.reset-all'));
         }
 
         $student = User::where('id', $request->student_id)
@@ -290,13 +290,13 @@ class AdminController extends Controller
             })->first();
 
         if (!$student) {
-            return back()->with('message', 'Alumno no encontrado o no pertenece a tu centro.');
+            return back()->with('message', __('messages.admin.users.student-not'));
         }
 
         $student->password = bcrypt($newPassword);
         $student->save();
 
-        return back()->with('message', 'Contraseña restablecida para ' . $student->name . ' ' . $student->last_name);
+        return back()->with('message', __('messages.admin.users.password-change') . ' ' . $student->name . ' ' . $student->last_name);
     }
 
 
@@ -323,7 +323,7 @@ class AdminController extends Controller
     {
         $comment = Comment::findOrFail($id);
         if ($comment->user_id !== Auth::id() && !Auth::user()->isAdmin()) {
-            return back()->with('error', 'No tienes permiso para eliminar este comentario.');
+            return back()->with('error', __('messages.admin.comments.not-allowed'));
         }
 
         $comment->delete();
@@ -333,135 +333,141 @@ class AdminController extends Controller
     }
 
     public function userRegister(Request $request)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    // Solo pueden acceder Admin o Profesor
-    if (!$user || !in_array($user->role, ['Admin', 'Profesor'])) {
-        return redirect('/dashboard');
-    }
+        // Solo pueden acceder Admin o Profesor
+        if (!$user || !in_array($user->role, ['Admin', 'Profesor'])) {
+            return redirect('/dashboard');
+        }
 
-    // Si es profesor, solo puede crear alumnos
-    if ($user->role === 'Profesor' && $request->role !== 'Alumno') {
-        return redirect()->back()->withErrors([
-            'role' => 'Solo puedes registrar alumnos de tu centro educativo.',
-        ])->withInput();
-    }
+        // Si es profesor, solo puede crear alumnos
+        if ($user->role === 'Profesor' && $request->role !== 'Alumno') {
+            return redirect()->back()->withErrors([
+                'role' => __('messages.admin.users.only-students'),
+            ])->withInput();
+        }
 
-    $rules = [
-        'name' => 'required|string|max:20',
-        'lastName' => 'nullable|string|max:50',
-        'email' => 'required|string|email|max:255|unique:users',
-        'role' => 'required|in:Usuario,Alumno,Profesor,Empresa',
-        'password' => [
-            'required',
-            'string',
-            'confirmed',
-            Password::min(8)->mixedCase()->letters()->numbers()->symbols(),
-        ],
-    ];
+        $rules = [
+            'name' => 'required|string|max:20',
+            'lastName' => 'nullable|string|max:50',
+            'email' => 'required|string|email|max:255|unique:users',
+            'role' => 'required|in:Usuario,Alumno,Profesor,Empresa,Admin',
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8)->mixedCase()->letters()->numbers()->symbols(),
+            ],
+        ];
 
-    switch ($request->role) {
-        case 'Alumno':
-            $rules = array_merge($rules, [
-                'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
-                'currentCourse' => 'required|string|max:50',
-                // Se valida aunque el campo no se use en vista del profesor
-                'educationalCenter' => 'required|string|max:100',
-            ]);
-            break;
-        case 'Profesor':
-            $rules = array_merge($rules, [
-                'educationalCenter' => 'required|string|max:100',
-                'specialization' => 'required|string|max:100',
-                'department' => 'required|string|max:100',
-            ]);
-            break;
-        case 'Empresa':
-            $rules = array_merge($rules, [
-                'cif' => 'required|string|max:50',
-                'address' => 'required|string|max:255',
-                'sector' => 'required|string|max:100',
-                'website' => 'nullable|url|max:255',
-            ]);
-            break;
-    }
+        switch ($request->role) {
+            case 'Alumno':
+                if (auth()->user()->role === 'Profesor') {
+                    $rules = array_merge($rules, [
+                        'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                        'currentCourse' => 'required|string|max:50',
+                    ]);
+                } else {
+                    $rules = array_merge($rules, [
+                        'birthDate' => 'required|date|before_or_equal:' . date('Y-m-d'),
+                        'currentCourse' => 'required|string|max:50',
+                        'educationalCenter' => 'required|string|max:100',
+                    ]);
+                }
+                break;
+            case 'Profesor':
+                $rules = array_merge($rules, [
+                    'educationalCenter' => 'required|string|max:100',
+                    'specialization' => 'required|string|max:100',
+                    'department' => 'required|string|max:100',
+                ]);
+                break;
+            case 'Empresa':
+                $rules = array_merge($rules, [
+                    'cif' => 'required|string|max:50',
+                    'address' => 'required|string|max:255',
+                    'sector' => 'required|string|max:100',
+                    'website' => 'nullable|url|max:255',
+                ]);
+                break;
+        }
 
-    $request->validate($rules); // puedes incluir tus mensajes personalizados si quieres
+        $request->validate($rules); // puedes incluir tus mensajes personalizados si quieres
 
-    $newUser = User::create([
-        'name' => ucfirst($request->name),
-        'last_name' => ucfirst($request->lastName),
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'role' => $request->role,
-        'profile' => null,
-        'banner' => null,
-    ]);
-
-    $details = ['user_id' => $newUser->id];
-
-    switch ($newUser->role) {
-        case 'Alumno':
-            $details += [
-                'birth_date' => $request->birthDate,
-                'current_course' => ucfirst($request->currentCourse),
-                // Si lo crea un profesor, se impone su centro educativo
-                'educational_center' => $user->role === 'Profesor'
-                    ? $user->detail?->educational_center
-                    : ucfirst($request->educationalCenter),
-            ];
-            break;
-        case 'Profesor':
-            $details += [
-                'educational_center' => ucfirst($request->educationalCenter),
-                'specialization' => ucfirst($request->specialization),
-                'department' => ucfirst($request->department),
-            ];
-            break;
-        case 'Empresa':
-            $details += [
-                'cif' => strtoupper($request->cif),
-                'address' => ucfirst($request->address),
-                'sector' => ucfirst($request->sector),
-                'website' => $request->website,
-            ];
-            break;
-    }
-
-    UserDetail::create($details);
-
-    $message = match ($newUser->role) {
-        'Alumno' => [
-            'title' => __('messages.notifications.message-student.title'),
-            'message' => __('messages.notifications.message-student.message'),
-        ],
-        'Usuario' => [
-            'title' => __('messages.notifications.message-user.title'),
-            'message' => __('messages.notifications.message-user.message'),
-        ],
-        'Empresa' => [
-            'title' => __('messages.notifications.message-company.title'),
-            'message' => __('messages.notifications.message-company.message'),
-        ],
-        'Profesor' => [
-            'title' => __('messages.notifications.message-teacher.title'),
-            'message' => __('messages.notifications.message-teacher.message'),
-        ],
-        default => null,
-    };
-
-    if ($message) {
-        Notification::create([
-            'user_id' => $newUser->id,
-            'type' => 'mensaje',
-            'title' => $message['title'],
-            'message' => $message['message'],
+        $newUser = User::create([
+            'name' => ucfirst($request->name),
+            'last_name' => ucfirst($request->lastName),
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'profile' => null,
+            'banner' => null,
         ]);
-    }
 
-    return redirect()->route('admin.users')->with('message', __('messages.messages.user-create'));
-}
+        $details = ['user_id' => $newUser->id];
+
+        switch ($newUser->role) {
+            case 'Alumno':
+                $details += [
+                    'birth_date' => $request->birthDate,
+                    'current_course' => ucfirst($request->currentCourse),
+                    // Si lo crea un profesor, se impone su centro educativo
+                    'educational_center' => $user->role === 'Profesor'
+                        ? $user->detail?->educational_center
+                        : ucfirst($request->educationalCenter),
+                ];
+                break;
+            case 'Profesor':
+                $details += [
+                    'educational_center' => ucfirst($request->educationalCenter),
+                    'specialization' => ucfirst($request->specialization),
+                    'department' => ucfirst($request->department),
+                ];
+                break;
+            case 'Empresa':
+                $details += [
+                    'cif' => strtoupper($request->cif),
+                    'address' => ucfirst($request->address),
+                    'sector' => ucfirst($request->sector),
+                    'website' => $request->website,
+                ];
+                break;
+        }
+
+        UserDetail::create($details);
+
+        $message = match ($newUser->role) {
+            'Alumno' => [
+                'title' => __('messages.notifications.message-student.title'),
+                'message' => __('messages.notifications.message-student.message'),
+            ],
+            'Usuario' => [
+                'title' => __('messages.notifications.message-user.title'),
+                'message' => __('messages.notifications.message-user.message'),
+            ],
+            'Empresa' => [
+                'title' => __('messages.notifications.message-company.title'),
+                'message' => __('messages.notifications.message-company.message'),
+            ],
+            'Profesor' => [
+                'title' => __('messages.notifications.message-teacher.title'),
+                'message' => __('messages.notifications.message-teacher.message'),
+            ],
+            default => null,
+        };
+
+        if ($message) {
+            Notification::create([
+                'user_id' => $newUser->id,
+                'type' => 'mensaje',
+                'title' => $message['title'],
+                'message' => $message['message'],
+            ]);
+        }
+
+        return redirect()->route('admin.users')->with('message', __('messages.messages.user-create'));
+    }
 
 
     public function createProject(Request $request)
@@ -845,8 +851,8 @@ class AdminController extends Controller
             Notification::create([
                 'user_id' => $application->user->id,
                 'type' => 'oferta',
-                'title' => 'Oferta retirada',
-                'message' => 'La oferta "' . $jobOffer->name . '" a la que te postulaste ha sido eliminada por el administador.',
+                'title' => __('messages.notifications.message-offer-deleted.title'),
+                'message' => __('messages.notifications.message-offer-deleted.message-1') . $jobOffer->name . __('messages.notifications.message-offer-deleted.message-2'),
             ]);
         }
 

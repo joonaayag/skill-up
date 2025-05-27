@@ -368,6 +368,19 @@ return [
             'create-project' => 'Créer un projet scolaire',
         ],
         'users' => [
+            'reset-all' => 'Les mots de passe ont été réinitialisés pour tous les élèves du centre.',
+            'student-not' => 'Élève introuvable ou n’appartenant pas à votre centre.',
+            'password-change' => 'Mots de passe réinitialisés pour ',
+            'only-students' => 'Vous ne pouvez enregistrer que des élèves de votre centre',
+            'import-success' => 'Les élèves ont été importés avec succès.',
+            'lines' => 'Ligne',
+            'import-error' => 'Erreur lors de l’importation des élèves',
+            'import' => 'Importer des élèves',
+            'import-confirm' => 'Voulez-vous importer des élèves depuis ce fichier ?',
+            'selected-file' => 'Fichier sélectionné : ',
+            'reset-password' => 'Réinitialiser les mots de passe',
+            'select-students' => 'Sélectionner un élève : ',
+            'all-students' => 'Tous les élèves du centre',
             'title' => 'Liste des utilisateurs',
             'table-name' => 'Prénom',
             'table-last-name' => 'Nom',
@@ -441,7 +454,8 @@ return [
             'delete-text-2' => ' définitivement.',
             'no-projects' => 'N\'appartient pas à un projet',
             'no-school-project' => 'N\'appartient pas à un projet scolaire',
-            'no-comments' => 'Aucun commentaire enregistré.'
+            'no-comments' => 'Aucun commentaire enregistré.',
+            'not-allowed' => 'Vous n’êtes pas autorisé à supprimer des commentaires',
         ],
     ],
     'chatbot' => [
@@ -539,7 +553,7 @@ return [
         'tesis' => 'Thèse de doctorat',
         'individual' => 'Individuel',
         'grupal' => 'En groupe',
-        'tecnologia' => 'Technologie',
+        'tecnología' => 'Technologie',
         'ciencias' => 'Sciences',
         'artes' => 'Arts',
         'ingenieria' => 'Ingénierie',
@@ -635,6 +649,8 @@ return [
 
     ],
     'errors' => [
+        'reset-token-failed' => 'Le jeton de réinitialisation du mot de passe est invalide ou a expiré.',
+        'reset-failed' => 'Nous n’avons trouvé aucun utilisateur avec cette adresse e-mail.',
         'name' => [
             'required' => 'Le champ prénom est obligatoire.',
             'string' => 'Le champ prénom doit être une chaîne de caractères.',
@@ -876,6 +892,8 @@ return [
     ],
     'select' => 'Sélectionner',
     'auth' => [
+        'account' => 'Vous avez déjà un compte?',
+        'no-account' => 'Vous n’avez pas de compte? ',
         'login' => 'Connexion',
         'email' => 'E-mail:',
         'password' => 'Mot de passe:',
@@ -934,6 +952,7 @@ return [
     'from' => 'de ',
     'answer' => 'Répondre',
     'messages' => [
+        'last-step' => 'Une dernière étape pour commencer avec Skill Up',
         'login' => 'Connexion réussie',
         'register' => 'Inscription et connexion réussies',
         'user-destroy' => 'Utilisateur supprimé avec succès',

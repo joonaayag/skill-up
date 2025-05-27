@@ -7,14 +7,25 @@
         
         @if(session('errors'))
             <div class="alert alert-danger">
-                <strong>Se encontraron errores al importar:</strong>
-                <ul>
-                    @foreach (session('errors') as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                <strong class="mb-2">{{__('messages.admin.users.import-error')}}</strong>
+                <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach (session('errors') as $error)
+                            <li> {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         @endif
+            @if ($errors->any())
+                <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li> {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
         <div class="rounded-lg shadow w-full overflow-x-auto">
             <table
@@ -500,7 +511,7 @@
     
             </x-modal>
             <button @click="showCreateUser = true"
-                class="flex gap-2 items-center bg-themeBlue/80  hover:bg-themeBlue text-white font-semibold px-4 rounded-lg transition cursor-pointer"><x-icon
+                class="flex gap-2 items-center bg-themeBlue/80  hover:bg-themeBlue text-white font-semibold px-2 py-1 2md:px-4 2md:py-2 rounded-lg transition cursor-pointer"><x-icon
                 name="plus" class="w-5 h-auto" /> {{ __('messages.button.create') }}
             </button>
 
@@ -511,26 +522,28 @@
                         @csrf
                         <label class="flex items-center justify-center w-full px-4 py-4 bg-themeGrape text-white font-medium rounded-lg cursor-pointer hover:bg-themeGrape/80 transition">
                             <input type="file" name="students_file" id="students_file" accept=".txt" required class="hidden" @change="handleFileChosen($event)">
-                            Importar alumnos
+                            {{ __('messages.admin.users.import') }}
                         </label>
                     </form>
 
                     <div :show="'confirmUpload'" @close="confirmUpload = false">
                         <x-modal :show="'confirmUpload'" @close="confirmUpload = false">
-                                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">¿Estás seguro?</x-heading>
-                                <p class="text-center text-gray-800 dark:text-themeLightGray">¿Quieres importar los alumnos de este archivo?</p>
+                                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.heading-confirm') }}</x-heading>
+                                <p class="text-center text-gray-800 dark:text-themeLightGray">{{ __('messages.admin.users.import-confirm') }}</p>
                                 <p x-show="fileName" class="mt-2 mb-10 text-sm text-center text-gray-700 dark:text-themeLightGray">
-                                    Archivo seleccionado: <span class="font-semibold" x-text="fileName"></span>
+                                    {{ __('messages.admin.users.selected-file') }} <span class="font-semibold" x-text="fileName"></span>
                                 </p>
 
-                                <button @click="confirmUpload = false"
-                                class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition">
-                                {{ __('Cancelar') }}
-                                </button>
-                                <button @click="submitForm"
-                                class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/90 transition">
-                                {{ __('Subir') }}
-                                </button>
+                                <div class="flex w-full justify-end gap-2">
+                                    <button @click="confirmUpload = false"
+                                        class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                        {{ __('messages.button.cancel') }}
+                                        </button>
+                                        <button @click="submitForm"
+                                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/90 transition cursor-pointer">
+                                        {{ __('messages.button.save') }}
+                                    </button>
+                                </div>
                         </x-modal>
                     </div>
                 </div>
@@ -542,12 +555,12 @@
 
                     <button @click="showModal = true"
                         class="p-2 bg-themeBlue text-white h-full rounded-xl hover:bg-themeHoverBlue transition cursor-pointer">
-                        Restablecer contrase as
+                        {{ __('messages.admin.users.reset-password') }}
                     </button>
 
 
                     <x-modal>
-                        <x-heading level="h2" class="mb-8 text-center pb-4 border-b-2 border-b-themeBlue">Restablecer contrase as</x-heading>
+                        <x-heading level="h2" class="mb-8 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.reset-password') }}</x-heading>
                             <form action="{{ route('professor.reset.passwords') }}" method="POST" class="space-y-4 [&>select]:h-full
                                 [&>select]:bg-white
                                 [&>select]:rounded-lg
@@ -558,15 +571,15 @@
                                 [&>select]:placeholder:text
                                 dark:[&>select]:bg-themeBgDark">
                                 @csrf
-                                <label for="student_id">Selecciona alumno:</label>
-                                <select name="student_id" id="student_id" required class="border rounded p-2">
-                                    <option value="all">Todos los alumnos del centro</option>
+                                <label for="student_id">{{ __('messages.admin.users.select-students') }}</label>
+                                <select name="student_id" id="student_id" required class="border rounded p-2 cursor-pointer">
+                                    <option value="all">{{ __('messages.admin.users.all-students') }}</option>
                                     @foreach ($students as $student)
                                     <option value="{{ $student->id }}">{{ $student->name }} {{ $student->last_name }} ({{ $student->email }})</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                                    Restablecer contrase a(s)
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+                                    {{ __('messages.admin.users.reset-password') }}
                                 </button>
                             </form>
                     </x-modal>

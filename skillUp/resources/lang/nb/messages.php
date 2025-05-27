@@ -368,6 +368,19 @@ return [
             'create-project' => 'Opprett skoleprosjekt',
         ],
         'users' => [
+            'reset-all' => 'Passordene ble tilbakestilt for alle elever ved senteret.',
+            'student-not' => 'Elev ikke funnet eller tilhører ikke ditt senter.',
+            'password-change' => 'Passordene ble tilbakestilt for ',
+            'only-students' => 'Du kan bare registrere elever fra ditt senter',
+            'import-success' => 'Elever ble importert vellykket.',
+            'lines' => 'Linje',
+            'import-error' => 'Feil ved import av elever',
+            'import' => 'Importer elever',
+            'import-confirm' => 'Vil du importere elever fra denne filen?',
+            'selected-file' => 'Valgt fil: ',
+            'reset-password' => 'Tilbakestill passord',
+            'select-students' => 'Velg elev: ',
+            'all-students' => 'Alle elever på skolen',
             'title' => 'Liste over brukere',
             'table-name' => 'Fornavn',
             'table-last-name' => 'Etternavn',
@@ -441,7 +454,8 @@ return [
             'delete-text-2' => ' permanent.',
             'no-projects' => 'Tilhører ikke et prosjekt',
             'no-school-project' => 'Tilhører ikke et skoleprosjekt',
-            'no-comments' => 'Ingen kommentarer registrert.'
+            'no-comments' => 'Ingen kommentarer registrert.',
+            'not-allowed' => 'Du har ikke tillatelse til å slette kommentarer',
         ],
     ],
     'chatbot' => [
@@ -629,12 +643,14 @@ return [
         'tesis' => 'Doktorgradsavhandling',
         'individual' => 'Individuell',
         'grupal' => 'Gruppe',
-        'tecnologia' => 'Teknologi',
+        'tecnología' => 'Teknologi',
         'ciencias' => 'Vitenskap',
         'artes' => 'Kunst',
         'ingenieria' => 'Ingeniørfag',
     ],
     'errors' => [
+        'reset-token-failed' => 'Tilbakestillingskoblingen er ugyldig eller har utløpt.',
+        'reset-failed' => 'Vi kunne ikke finne en bruker med den e-postadressen.',
         'name' => [
             'required' => 'Feltet for fornavn er obligatorisk.',
             'string' => 'Feltet fornavn må være en tekststreng.',
@@ -876,6 +892,9 @@ return [
     ],
     'select' => 'Velg',
     'auth' => [
+
+        'account' => 'Har du allerede en konto?',
+        'no-account' => 'Har du ikke en konto?',
         'login' => 'Logg inn',
         'email' => 'E-post:',
         'password' => 'Passord:',
@@ -935,6 +954,7 @@ return [
     'from' => 'fra ',
     'answer' => 'Svar',
     'messages' => [
+        'last-step' => 'Ett siste steg for å komme i gang med Skill Up',
         'login' => 'Innlogging vellykket',
         'register' => 'Registrering og innlogging fullført',
         'user-destroy' => 'Bruker slettet',

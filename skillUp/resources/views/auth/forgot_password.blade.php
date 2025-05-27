@@ -35,7 +35,7 @@
                 @endif
 
                 @if (session('status'))
-                    <div class="text-green-600 dark:text-green-400 mb-4 font-medium">
+                    <div class="text-xs md:text-sm 2md:text-base text-green-600 dark:text-green-400 mb-4 font-medium">
                         {{ session('status') }}
                     </div>
                 @endif
@@ -55,8 +55,7 @@
                         <x-button type="submit" class="w-max h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 cursor-pointer">
                             {{ __('messages.auth.send-link') }}
                         </x-button>
-                        <a href="{{ route('auth') }}" class="text-blue-500 hover:underline text-xs md:text-sm 2md:text-base cursor-pointer">Iniciar
-                            sesión</a>
+                        <a href="{{ route('auth') }}" class="text-blue-500 hover:underline text-xs md:text-sm 2md:text-base cursor-pointer">{{ __('messages.auth.login') }}</a>
                     </div>
                 </form>
             </div>

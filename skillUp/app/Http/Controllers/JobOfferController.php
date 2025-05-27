@@ -174,9 +174,13 @@ class JobOfferController extends Controller
             Notification::create([
                 'user_id' => $usuario->id,
                 'type' => 'oferta',
-                'title' => __('messages.notifications.message-new-offer.title'),
-                'message' => __('messages.notifications.message-new-offer.message') . ' "' . $jobOffer->name . '".',
+                'title' => 'messages.notifications.message-new-offer.title',
+                'message' => 'messages.notifications.message-new-offer.message',
+                'params' => json_encode([
+                    'offer' => $jobOffer->name,
+                ]),
             ]);
+
         }
 
 

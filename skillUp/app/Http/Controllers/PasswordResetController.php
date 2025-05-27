@@ -30,7 +30,7 @@ class PasswordResetController extends Controller
 
         return $status === Password::RESET_LINK_SENT
             ? back()->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+            : back()->withErrors(['email' => __('messages.errors.password_reset_failed')]);
     }
 
     public function showResetForm(Request $request, $token)
@@ -73,6 +73,6 @@ class PasswordResetController extends Controller
 
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('auth')->with('message', __('messages.messages.password-reset'))
-            : back()->withErrors(['email' => [__($status)]]);
+            : back()->withErrors(['email' => __('messages.errors.reset-token-failed')]);
     }
 }

@@ -68,21 +68,20 @@
 
             @if (session('status'))
                 <div
-                    class="bg-green-100 border border-green-400 text-green-800 dark:bg-green-200 dark:text-green-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                    class="text-xs md:tex-sm 2md:text-base bg-green-100 border border-green-400 text-green-800 dark:bg-green-200 dark:text-green-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                     {{ session('status') }}
                 </div>
             @endif
 
             @if ($errors->any())
-                <div
-                    class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
-                    <ul class="list-disc list-inside space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li> {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
             <div x-show="form === 'login'" x-transition>
                 <form action="{{ route('login') }}" method="POST" class="space-y-4">
@@ -124,16 +123,9 @@
                     </a>
                     <p class="text-xs md:text-sm 2md:text-base text-center text-gray-500 dark:text-gray-300">
                         <template x-if="form === 'login'">
-                            <span>¿No tienes cuenta?
+                            <span>{{ __('messages.auth.no-account') }}
                                 <button @click="form = 'register'"
-                                    class="text-blue-500 text-xs md:text-sm 2md:text-base  hover:underline cursor-pointer">Regístrate</button>
-                            </span>
-                        </template>
-                        <template x-if="form === 'register'">
-                            <span>¿Ya tienes cuenta?
-                                <button @click="form = 'login'"
-                                    class="text-blue-500 text-xs md:text-sm 2md:text-base  hover:underline cursor-pointer">Inicia
-                                    sesión</button>
+                                    class="text-blue-500 text-xs md:text-sm 2md:text-base  hover:underline cursor-pointer">{{ __('messages.auth.register') }}</button>
                             </span>
                         </template>
                     </p>
@@ -210,17 +202,10 @@
                         </div>
                     </template>
                     <p class="text-sm text-center text-gray-500 dark:text-gray-300">
-                        <template x-if="form === 'login'">
-                            <span>¿No tienes cuenta?
-                                <button @click="form = 'register'"
-                                    class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer">Regístrate</button>
-                            </span>
-                        </template>
                         <template x-if="form === 'register'">
-                            <span>¿Ya tienes cuenta?
+                            <span>{{ __('messages.auth.account')  }}
                                 <button @click="form = 'login'"
-                                    class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer">Inicia
-                                    sesión</button>
+                                    class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer">{{ __('messages.auth.login') }}</button>
                             </span>
                         </template>
                     </p>

@@ -16,26 +16,26 @@
     @endif
 
     <form method="GET" id="favorite-filter-form" action="{{ route('favorites.index') }}" class="space-y-2 lg:mb-9 space-x-5 h-8 sm:h-10 lg:h-12 w-full
-                [&>input]:h-full [&>select]:h-full
-                [&>input]:bg-white dark:[&>input]:bg-themeBgDark
-                [&>select]:bg-white dark:[&>select]:bg-themeBgDark
-                [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
-                [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
-                [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
-                [&>select]:placeholder:text-themeLightGray
-                [&>input]:rounded-lg [&>select]:rounded-lg
-                [&>input]:border-2 [&>input]:border-themeLightGray
-                [&>select]:border-2 [&>select]:border-themeLightGray
-                [&>input]:px-4 [&>select]:px-4
-                [&>input]:outline-0 [&>select]:outline-0
+                            [&>input]:h-full [&>select]:h-full
+                            [&>input]:bg-white dark:[&>input]:bg-themeBgDark
+                            [&>select]:bg-white dark:[&>select]:bg-themeBgDark
+                            [&>input]:text-gray-800 dark:[&>input]:text-themeLightGray
+                            [&>select]:text-gray-800 dark:[&>select]:text-themeLightGray
+                            [&>input]:placeholder:text-black dark:[&>input]:placeholder:text-themeLightGray
+                            [&>select]:placeholder:text-themeLightGray
+                            [&>input]:rounded-lg [&>select]:rounded-lg
+                            [&>input]:border-2 [&>input]:border-themeLightGray
+                            [&>select]:border-2 [&>select]:border-themeLightGray
+                            [&>input]:px-4 [&>select]:px-4
+                            [&>input]:outline-0 [&>select]:outline-0
 
-                [&>input]:transition-all [&>select]:transition-all
-                [&>input]:duration-300 [&>select]:duration-300
-                [&>input]:ease-in-out [&>select]:ease-in-out
-                [&>input]:hover:shadow-md [&>select]:hover:shadow-md
-                [&>input]:focus:ring-2 [&>select]:focus:ring-2
-                [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
-                [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
+                            [&>input]:transition-all [&>select]:transition-all
+                            [&>input]:duration-300 [&>select]:duration-300
+                            [&>input]:ease-in-out [&>select]:ease-in-out
+                            [&>input]:hover:shadow-md [&>select]:hover:shadow-md
+                            [&>input]:focus:ring-2 [&>select]:focus:ring-2
+                            [&>input]:focus:ring-themeBlue [&>select]:focus:ring-themeBlue
+                            [&>input]:focus:border-themeBlue [&>select]:focus:border-themeBlue">
 
         <select name="type" class="cursor-pointer">
             <option value="">{{ __('messages.favorites.type') }}</option>
@@ -77,9 +77,28 @@
                         <x-card
                             class="h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeDark text-gray-800 dark:text-white">
                             <li class="flex flex-col h-full ">
-                                <x-tags class="mb-2">{{ $item->tags }}</x-tags>
+                                <x-tags>{{ __('messages.tags.' . strtolower($item->tags)) }}</x-tags>
                                 <x-heading level="h3" class="mb-1">{{ $item->title }}</x-heading>
-                                <span class="mb-4">{{ $item->general_category }}</span>
+                                @php
+                                    $categoryMap = [
+                                        'Administración y negocio' => 'option-admin',
+                                        'Ciencia y salud' => 'option-science',
+                                        'Comunicación' => 'option-comunication',
+                                        'Diseño y comunicación' => 'option-design',
+                                        'Educación' => 'option-education',
+                                        'Industria' => 'option-industry',
+                                        'Otro' => 'option-other',
+                                        'Tecnología y desarrollo' => 'option-tec',
+                                    ];
+
+                                    $categoryKey = $categoryMap[$item->general_category] ?? null;
+                                @endphp
+
+                                @if ($categoryKey)
+                                    <span class="mb-4">
+                                        {{ __('messages.projects.' . $categoryKey) }}
+                                    </span>
+                                @endif
 
                                 @php
                                     $favorite = auth()->user()->favorites()
@@ -113,7 +132,7 @@
                                         <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                                                 class="w-4 h-auto" />{{ $item->views }}</p>
                                         <p>
-                                            {{ $item->averageRating() ? number_format($item->averageRating(), 1) : 'Sin calificaciones' }}
+                                            {{ $item->averageRating() ? number_format($item->averageRating(), 1) : __('messages.your-projects.no-califications') }}
                                         </p>
                                     </div>
                                     <span class="text-sm">{{ $item->author->name . ' ' . $item->author->last_name  }}</span>
@@ -140,9 +159,72 @@
                             id="profileImage"
                             class="h-20 w-20 hidden 2xl:flex rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
                         <li class="flex flex-col h-full ">
-                            <x-tags class="mb-2">{{ $item->general_category }}</x-tags>
+                            @php
+                                $categoryMap = [
+                                    'Administración y negocio' => 'option-admin',
+                                    'Ciencia y salud' => 'option-science',
+                                    'Comunicación' => 'option-comunication',
+                                    'Diseño y comunicación' => 'option-design',
+                                    'Educación' => 'option-education',
+                                    'Industria' => 'option-industry',
+                                    'Otro' => 'option-other',
+                                    'Tecnología y desarrollo' => 'option-tec',
+                                ];
+
+                                $categoryKey = $categoryMap[$item->general_category] ?? null;
+                            @endphp
+
+                            @if ($categoryKey)
+                                <x-tags class="mb-1 ">{{ __('messages.projects.' . $categoryKey) }}</x-tags>
+                            @endif
                             <x-heading level="h3" class="mb-1">{{ $item->name }}</x-heading>
-                            <span>{{ $item->sector_category }}</span>
+                            @php
+                                $sectorMap = [
+                                    'Agricultura/Medio ambiente' => 'sector-agri',
+                                    'Arte/Cultura' => 'sector-art',
+                                    'Automoción' => 'sector-aut',
+                                    'Ciberseguridad' => 'sector-cyb',
+                                    'Community Manager' => 'sector-comm',
+                                    'Construcción' => 'sector-cons',
+                                    'Coordinación Educativa' => 'sector-educ',
+                                    'Diseño Gráfico' => 'sector-grap',
+                                    'Electricidad y fontanería' => 'sector-elec',
+                                    'Energía/Renovables' => 'sector-ener',
+                                    'Farmacia' => 'sector-phar',
+                                    'Finanzas y contabilidad' => 'sector-fina',
+                                    'Fotografía/vídeo' => 'sector-photo',
+                                    'Hostelería/turismo' => 'sector-hosp',
+                                    'AI' => 'sector-ai',
+                                    'Investigación/laboratorio' => 'sector-res',
+                                    'Legal' => 'sector-leg',
+                                    'Logística' => 'sector-log',
+                                    'Mecánica' => 'sector-mec',
+                                    'Medicina/Enfermería' => 'sector-med',
+                                    'Nutrición' => 'sector-nut',
+                                    'Operador Industrial' => 'sector-ind',
+                                    'Orientación' => 'sector-ori',
+                                    'Periodismo' => 'sector-jout',
+                                    'Enseñanza' => 'sector-tea',
+                                    'Psicología' => 'sector-psy',
+                                    'Publicidad' => 'sector-adv',
+                                    'Redes y Sistemas' => 'sector-net',
+                                    'RRHH' => 'sector-hr',
+                                    'Seguridad' => 'sector-sec',
+                                    'SEO/SEM' => 'sector-seo',
+                                    'Terapias/Rehabilitación' => 'sector-ther',
+                                    'Traducción' => 'sector-trans',
+                                    'Transporte/Entrega' => 'sector-transp',
+                                    'Ventas' => 'sector-sal',
+                                ];
+
+                                $sectorkey = $sectorMap[$item->sector_category] ?? null;
+                            @endphp
+
+                            @if ($sectorkey)
+                                <span class="mb-1">
+                                    {{ __('messages.job-offers.' . $sectorkey) }}
+                                </span>
+                            @endif
 
                             @php
                                 $favorite = auth()->user()->favorites()
@@ -153,9 +235,9 @@
 
                             <div class="flex flex-row justify-between items-center mt-auto">
                                 <div class="flex flex-row gap-3 items-center justify-center mt-2">
-                                    <p class="px-3 py-1 rounded-full text-white text-sm font-medium
-                                                                {{ $item->state === 'Abierta' ? 'bg-themeBlue' : 'bg-red-500' }}">
-                                        {{ $item->state }}
+                                    <p
+                                        class="px-3 py-1 rounded-full {{ $item->state === 'Abierta' ? 'bg-themeBlue text-white' : 'bg-themeRed text-white' }}">
+                                        {{ __('messages.company-offers.' . ($item->state === 'Abierta' ? 'open' : 'close')) }}
                                     </p>
                                     @if ($favorite)
                                         <form action="{{ route('favorites.destroy', $favorite->id) }}" method="POST">
@@ -192,16 +274,33 @@
 
     <div class="mt-44 sm:mt-32 2md:mt-20 xl:mt-10">
         @if ($proyectoEscolar->isNotEmpty())
-            <x-heading level="h3" class="mb-4">Proyectos escolares</x-heading>
+            <x-heading level="h3" class="mb-4">{{ __('messages.navbar.school-projects') }}</x-heading>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
                 @foreach ($proyectoEscolar as $fav)
                     @php $item = $fav->item(); @endphp
                     <x-card
                         class="cursor-pointer h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeBgDark text-gray-800 dark:text-white">
                         <li class="flex flex-col h-full ">
-                            <x-tags class="mb-2">{{ $item->general_category }}</x-tags>
+                            <x-tags>{{ __('messages.tags.' . strtolower(string: $item->tags)) }}</x-tags>
                             <x-heading level="h3" class="mb-1">{{ $item->title }}</x-heading>
-                            <span>{{ $item->general_category }}</span>
+                            @php
+                                $categoryMap = [
+                                    'Administración y negocio' => 'option-admin',
+                                    'Ciencia y salud' => 'option-science',
+                                    'Comunicación' => 'option-comunication',
+                                    'Diseño y comunicación' => 'option-design',
+                                    'Educación' => 'option-education',
+                                    'Industria' => 'option-industry',
+                                    'Otro' => 'option-other',
+                                    'Tecnología y desarrollo' => 'option-tec',
+                                ];
+
+                                $categoryKey = $categoryMap[$item->general_category] ?? null;
+                            @endphp
+
+                            @if ($categoryKey)
+                                <span class="mb-6">{{ __('messages.projects.' . $categoryKey) }}</span>
+                            @endif
 
                             @php
                                 $favorite = auth()->user()->favorites()
@@ -235,7 +334,7 @@
                                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                                             class="w-4 h-auto" />{{ $item->views }}</p>
                                     <p>
-                                        {{ $item->averageRating() ? number_format($item->averageRating(), 1) : 'Sin calificaciones' }}
+                                        {{ $item->averageRating() ? number_format($item->averageRating(), 1) : __('messages.your-projects.no-califications') }}
                                     </p>
                                 </div>
                                 <span class="text-sm">{{ $item->teacher->name . ' ' . $item->teacher->last_name  }}</span>

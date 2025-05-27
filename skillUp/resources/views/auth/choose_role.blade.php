@@ -20,7 +20,7 @@
 
             <div class="lg:col-span-3 flex flex-col justify-center md:ml-6">
                 <x-heading level="h1" class="mb-6">
-                    Un último paso para empezar con Skill Up
+                    {{ __('messages.messages.last-step') }}
                 </x-heading>
 
                 @if ($errors->any())

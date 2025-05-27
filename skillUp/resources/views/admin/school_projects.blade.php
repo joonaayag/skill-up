@@ -143,7 +143,7 @@
                                 {{ __('messages.tags.grupal') }}
                             </option>
                             <option value="Tecnología" {{ old('tags', $project->tags) == 'Tecnología' ? 'selected' : '' }}>
-                                {{ __('messages.tags.tecnologia') }}
+                                {{ __('messages.tags.tecnología') }}
                             </option>
                             <option value="Ciencias" {{ old('tags', $project->tags) == 'Ciencias' ? 'selected' : '' }}>
                                 {{ __('messages.tags.ciencias') }}
