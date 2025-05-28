@@ -55,7 +55,7 @@
     @endif
 
     <main class="flex-grow px-12">
-        <section x-data="{ form: 'login' }"
+        <section x-data="{ form: '{{ old('name') || old('role') || $errors->has('name') ? 'register' : 'login' }}' }"
             class="w-full md:w-1/2 lg:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
             <div class="text-center mb-6">
@@ -137,10 +137,12 @@
                                 required>
                         </div>
 
-                        <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
-                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}
-                                class="rounded border-gray-300 dark:border-gray-600 text-themeBlue focus:ring-themeBlue">
-                            <label>{{ __('messages.auth.remember') }}</label>
+                        <div class="flex w-fit items-center gap-2 text-sm text-gray-700 dark:text-gray-300 group">
+                            <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}
+                                class="rounded-md border-gray-300 dark:border-gray-600 text-themeBlue focus:ring-2 focus:ring-themeBlue transition-colors duration-200">
+                            <label for="remember" class="cursor-pointer group-hover:text-themeBlue transition-colors duration-200">
+                                {{ __('messages.auth.remember') }}
+                            </label>
                         </div>
 
                         <button type="submit"
@@ -197,7 +199,10 @@
                             class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                             required>
                     @endforeach
-
+                    
+                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                        Mínimo 8 caracteres, una mayúscula, un número y un simbolo.
+                    </span>
                     <input type="password" name="password" placeholder="{{__('messages.auth.ph-password')}}"
                         class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                         required>
