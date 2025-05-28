@@ -67,7 +67,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn-eliminar">
-                                    <x-icon name="x" class="w-6 h-auto text-themeRed cursor-pointer" />
+                                    <x-icon name="cross" class="w-6 h-auto text-themeRed cursor-pointer" />
                                 </button>
                             </form>
                         </li>

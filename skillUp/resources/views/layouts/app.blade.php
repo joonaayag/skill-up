@@ -138,9 +138,9 @@
 
 function formatearTipo(tipo) {
     switch (tipo) {
-        case 'proyecto': return '📝 Proyecto';
-        case 'oferta': return '💼 Oferta';
-        default: return '📢 Notificación';
+        case 'proyecto': return 'Proyecto';
+        case 'oferta': return 'Oferta';
+        default: return 'Notificación';
     }
 }
 
