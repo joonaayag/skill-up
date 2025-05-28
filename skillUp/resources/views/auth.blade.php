@@ -59,8 +59,8 @@
             class="w-full md:w-1/2 lg:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
             <div class="text-center mb-6">
-                <x-heading level="h2" class="mb-10">
-                    <div class="relative h-8 overflow-hidden">
+                <x-heading level="h2" class="mb-8">
+                    <div class="relative h-11 overflow-hidden">
                         <span x-show="form === 'login'" 
                               x-transition:enter="transition ease-out duration-500 transform"
                               x-transition:enter-start="opacity-0 translate-y-8"
@@ -101,81 +101,89 @@
                 </div>
             @endif
 
-            <div x-show="form === 'login'" 
-                 x-transition:enter="transition ease-out duration-600 transform"
-                 x-transition:enter-start="opacity-0 translate-x-full scale-95"
-                 x-transition:enter-end="opacity-100 translate-x-0 scale-100"
-                 x-transition:leave="transition ease-in duration-400 transform"
-                 x-transition:leave-start="opacity-100 translate-x-0 scale-100"
-                 x-transition:leave-end="opacity-0 -translate-x-full scale-95">
-                
-                <form action="{{ route('login') }}" method="POST" class="space-y-4">
-                    @csrf
-                    <div id="login-errors" class="bg-red-300 text-black p-4 rounded hidden"></div>
+            <!-- CONTENEDOR PARA FORMULARIOS -->
+            <div class="relative">
 
-                    <div class="space-y-1">
-                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                            {{ __('messages.auth.email') }}
-                        </label>
-                        <input type="email" name="email" id="email"
-                            class="w-full px-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
-                            required value="{{ old('email') }}">
-                    </div>
-
-                    <div class="space-y-1">
-                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                            {{ __('messages.auth.password') }}
-                        </label>
-                        <input type="password" name="password" id="password"
-                            class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
-                            required>
-                    </div>
-
-                    <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
-                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}
-                            class="rounded border-gray-300 dark:border-gray-600 text-themeBlue focus:ring-themeBlue">
-                        <label>{{ __('messages.auth.remember') }}</label>
-                    </div>
-
-                    <button type="submit"
-                        class="w-full text-xs md:text-sm 2md:text-base bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-200 shadow-md cursor-pointer hover:shadow-lg transform hover:-translate-y-0.5">
-                        {{ __('messages.auth.acceed') }}
-                    </button>
-
-                    <a href="{{ route('password.request') }}"
-                        class="block text-center text-xs md:text-sm 2md:text-base text-blue-600 hover:underline transition-all duration-200 hover:text-blue-800">
-                        {{ __('messages.auth.forgot-password') }}
-                    </a>
+                <!-- FORMULARIO LOGIN -->
+                <div x-show="form === 'login'" 
+                     x-transition:enter="transition ease-out duration-600 transform"
+                     x-transition:enter-start="opacity-0 -translate-x-full scale-95"
+                     x-transition:enter-end="opacity-100 translate-x-0 scale-100"
+                     x-transition:leave="transition ease-in duration-400 transform"
+                     x-transition:leave-start="opacity-100 translate-x-0 scale-100"
+                     x-transition:leave-end="opacity-0 -translate-x-full scale-95"
+                     :class="form !== 'login' ? 'absolute inset-0' : ''"
+                     class="w-full">
                     
-                    <p class="text-xs md:text-sm 2md:text-base text-center text-gray-500 dark:text-gray-300">
-                        <template x-if="form === 'login'">
-                            <span>{{ __('messages.auth.no-account') }}
-                                <button @click="form = 'register'"
-                                    class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer transition-all duration-200 hover:text-blue-700">
-                                    {{ __('messages.auth.register') }}
-                                </button>
-                            </span>
-                        </template>
-                    </p>
+                    <form action="{{ route('login') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div id="login-errors" class="bg-red-300 text-black p-4 rounded hidden"></div>
 
-                    <a href="/auth/google/redirect">
-                        <button type="button"
-                            class="mt-4 w-full text-xs md:text-sm 2md:text-base bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-200 shadow-md cursor-pointer hover:shadow-lg transform hover:-translate-y-0.5">
-                            {{ __('messages.auth.google') }}
+                        <div class="space-y-1">
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                                {{ __('messages.auth.email') }}
+                            </label>
+                            <input type="email" name="email" id="email"
+                                class="w-full px-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
+                                required value="{{ old('email') }}">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                                {{ __('messages.auth.password') }}
+                            </label>
+                            <input type="password" name="password" id="password"
+                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
+                                required>
+                        </div>
+
+                        <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}
+                                class="rounded border-gray-300 dark:border-gray-600 text-themeBlue focus:ring-themeBlue">
+                            <label>{{ __('messages.auth.remember') }}</label>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full text-xs md:text-sm 2md:text-base bg-themeBlue text-white py-2 px-4 font-semibold rounded-xl hover:bg-blue-700 active:scale-[.98] transition-all duration-200 shadow-md cursor-pointer hover:shadow-lg transform hover:-translate-y-0.5">
+                            {{ __('messages.auth.acceed') }}
                         </button>
-                    </a>
-                </form>
-            </div>
 
-            {{-- FORMULARIO REGISTRO --}}
-            <div x-show="form === 'register'" 
-                 x-transition:enter="transition ease-out duration-600 transform"
-                 x-transition:enter-start="opacity-0 -translate-x-full scale-95"
-                 x-transition:enter-end="opacity-100 translate-x-0 scale-100"
-                 x-transition:leave="transition ease-in duration-400 transform"
-                 x-transition:leave-start="opacity-100 translate-x-0 scale-100"
-                 x-transition:leave-end="opacity-0 translate-x-full scale-95"
-                 x-cloak>
+                        <a href="{{ route('password.request') }}"
+                            class="block text-center text-xs md:text-sm 2md:text-base text-blue-600 hover:underline transition-all duration-200 hover:text-blue-800">
+                            {{ __('messages.auth.forgot-password') }}
+                        </a>
+                        
+                        <p class="text-xs md:text-sm 2md:text-base text-center text-gray-500 dark:text-gray-300">
+                            <template x-if="form === 'login'">
+                                <span>{{ __('messages.auth.no-account') }}
+                                    <button @click="form = 'register'"
+                                        class="text-blue-500 text-xs md:text-sm 2md:text-base hover:underline cursor-pointer transition-all duration-200 hover:text-blue-700">
+                                        {{ __('messages.auth.register') }}
+                                    </button>
+                                </span>
+                            </template>
+                        </p>
+
+                        <a href="/auth/google/redirect">
+                            <button type="button"
+                                class="mt-4 w-full text-xs md:text-sm 2md:text-base bg-themeGrape/90 text-white py-2 px-4 font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-200 shadow-md cursor-pointer hover:shadow-lg transform hover:-translate-y-0.5">
+                                {{ __('messages.auth.google') }}
+                            </button>
+                        </a>
+                    </form>
+                </div>
+
+                <!-- FORMULARIO REGISTRO -->
+                <div x-show="form === 'register'" 
+                     x-transition:enter="transition ease-out duration-600 transform"
+                     x-transition:enter-start="opacity-0 translate-x-full scale-95"
+                     x-transition:enter-end="opacity-100 translate-x-0 scale-100"
+                     x-transition:leave="transition ease-in duration-400 transform"
+                     x-transition:leave-start="opacity-100 translate-x-0 scale-100"
+                     x-transition:leave-end="opacity-0 translate-x-full scale-95"
+                     :class="form !== 'register' ? 'absolute inset-0' : ''"
+                     class="w-full"
+                     x-cloak>
                 
                 <form method="POST" action="{{ route('register') }}" class="space-y-5"
                     x-data="{ role: '{{ old('role') }}' }">
@@ -261,7 +269,8 @@
                         class="w-full bg-themeGrape/90 text-white px-2 py-2 2md:px-4 2md:py-2 text-xs md:text-sm 2md:text-base font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-200 shadow-md cursor-pointer hover:shadow-lg transform hover:-translate-y-0.5">
                         {{ __('messages.auth.register') }}
                     </button>
-                </form>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
