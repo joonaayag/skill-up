@@ -55,7 +55,12 @@
     @endif
 
     <main class="flex-grow px-12">
-        <section x-data="{ form: '{{ old('name') || old('role') || $errors->has('name') ? 'register' : 'login' }}' }"
+        <section x-data="{
+                            form: localStorage.getItem('authForm') 
+                                ?? '{{ old('name') || old('role') || $errors->has('name') ? 'register' : 'login' }}'
+                        }"
+                        x-init="$watch('form', value => localStorage.setItem('authForm', value))"
+
             class="w-full md:w-1/2 lg:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
             <div class="text-center mb-6">
@@ -91,16 +96,6 @@
                 </div>
             @endif
 
-            @if ($errors->any())
-                <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
-                    <ul class="list-disc list-inside space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li> {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <!-- CONTENEDOR PARA FORMULARIOS -->
             <div class="relative">
 
@@ -117,7 +112,18 @@
                     
                     <form action="{{ route('login') }}" method="POST" class="space-y-4">
                         @csrf
-                        <div id="login-errors" class="bg-red-300 text-black p-4 rounded hidden"></div>
+                        @if ($errors->any() && !old('name') && !old('role'))
+                            <div x-show="form === 'login'"
+                                class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md"
+                                x-transition>
+                                <ul class="list-disc list-inside space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <div id="login-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
 
                         <div class="space-y-1">
                             <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -190,6 +196,18 @@
                 <form method="POST" action="{{ route('register') }}" class="space-y-5"
                     x-data="{ role: '{{ old('role') }}' }">
                     @csrf
+                    @if ($errors->any() && (old('name') || old('role')))
+                        <div x-show="form === 'register'"
+                            class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md"
+                            x-transition>
+                            <ul class="list-disc list-inside space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
 
                     <div id="register-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
 
