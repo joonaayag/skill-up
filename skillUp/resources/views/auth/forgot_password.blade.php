@@ -44,9 +44,7 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="block mb-1 tex-sm 2md:text-base font-semibold text-gray-700 dark:text-white">
-                            {{ __('messages.auth.email') }}
-                        </label>
+                        <x-label for="email">{{ __('messages.auth.email') }}</x-label>
                         <input type="email" name="email" id="email" required
                             class="w-full h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-themeGrape dark:focus:ring-themeGrapeLight">
                     </div>

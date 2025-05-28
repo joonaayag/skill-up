@@ -24,7 +24,7 @@
                             @method('PUT')
 
                             <div class="form-group">
-                                <label for="content">Contenido</label>
+                                <x-label for="content">Contenido</x-label>
                                 <textarea id="content" class="form-control @error('content') is-invalid @enderror resize-none"
                                     name="content" rows="5" required>{{ old('content', $comment->content) }}</textarea>
                                 @error('content')

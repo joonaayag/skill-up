@@ -56,22 +56,22 @@
                 @endif
                 <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                     <div class="w-1/2 ">
-                        <label for="name" class="text-md font-bold">{{ __('messages.profile.name') }}</label>
+                        <x-label for="name">{{ __('messages.profile.name') }}</x-label>
                         <div class=" text-dark ml-2">{{ $user->name }}</div>
                     </div>
                     <div class="w-1/2">
-                        <label for="name" class="text-md font-bold">{{ __('messages.profile.last-name') }}</label>
+                        <x-label for="last_name">{{ __('messages.profile.last-name') }}</x-label>
                         <div class=" text-dark ml-2">{{ $user->last_name }}</div>
                     </div>
                 </div>
                 <div class="flex text-xs md:tex-sm lg:text-base">
                     <div class="w-1/2">
-                        <label for="email" class="text-md font-bold">{{ __('messages.profile.email') }}</label>
+                        <x-label for="email">{{ __('messages.profile.email') }}</x-label>
                         <div class="text-dark ml-2">{{ $user->email }}</div>
                     </div>
                 </div>
                 <div class="text-xs md:tex-sm lg:text-base">
-                    <label for="email" class="text-md font-bold">{{ __('messages.profile.description') }}</label>
+                    <x-label for="description">{{ __('messages.profile.description') }}</x-label>
                     <div class="text-dark text-sm mt-1 ml-2">
                         {{ $user->description ?? __('messages.profile.no-specify') }}
                     </div>
@@ -79,57 +79,57 @@
                 @if ($user->role === 'Alumno')
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.birth-date') }}</label>
+                            <x-label for="email">{{ __('messages.profile.birth-date') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->birth_date ?? __('messages.profile.no-specify') }}</div>
                         </div>
                         <div class="w-1/2 gap-2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.current-course') }}</label>
+                            <x-label for="current_course">{{ __('messages.profile.current-course') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->current_course ?? __('messages.profile.no-specify') }}</div>
                         </div>
                     </div>
                     <div class="text-xs md:tex-sm lg:text-base">
-                        <label for="email" class="text-md font-bold">{{ __('messages.profile.educational-center') }}</label>
+                        <x-label for="educational_center">{{ __('messages.profile.educational-center') }}</x-label>
                         <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? __('messages.profile.no-specify') }}</div>
                     </div>
                 @elseif ($user->role === 'Profesor')
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.specialization') }}</label>
+                            <x-label for="specialization">{{ __('messages.profile.specialization') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->specialization ?? __('messages.profile.no-specify') }}</div>
                         </div>
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.department') }}</label>
+                            <x-label for="department">{{ __('messages.profile.department') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->department ?? __('messages.profile.no-specify') }}</div>
                         </div>
                     </div>
                     <div class="text-xs md:tex-sm lg:text-base">
-                        <label for="email" class="text-md font-bold">{{ __('messages.profile.educational-center') }}</label>
+                        <x-label for="educational_center">{{ __('messages.profile.educational-center') }}</x-label>
                         <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? __('messages.profile.no-specify') }}</div>
                     </div>
                 @elseif ($user->role === 'Empresa')
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">CIF</label>
+                            <x-label for="cif">CIF</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->cif ?? __('messages.profile.no-specify') }}</div>
                         </div>
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.address') }}</label>
+                            <x-label for="address">{{ __('messages.profile.address') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->address ?? __('messages.profile.no-specify') }}</div>
                         </div>
                     </div>
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.sector') }}</label>
+                            <x-label for="sector">{{ __('messages.profile.sector') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->sector ?? __('messages.profile.no-specify') }}</div>
                         </div>
                         <div class="w-1/2">
-                            <label for="email" class="text-md font-bold">{{ __('messages.profile.website') }}</label>
+                            <x-label for="website">{{ __('messages.profile.website') }}</x-label>
                             <div class="w-1/2 text-dark ml-2">{{ $details?->website ?? __('messages.profile.no-specify') }}</div>
                         </div>
                     </div>
                 @endif
 
-                <label for="email" class="text-xs md:tex-sm lg:text-base font-bold">Currículum</label>
+                <x-label for="cv">Curriculum</x-label>
                 @if($user->cv)
                     <div class="text-dark text-xs md:tex-sm lg:text-base mt-1">
                         <p>📄 <a href="{{ asset('storage/' . $user->cv) }}" target="_blank"

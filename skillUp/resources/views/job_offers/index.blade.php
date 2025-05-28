@@ -1,3 +1,43 @@
+@php
+    $sectorMap = [
+        'Agricultura/Medio ambiente' => 'sector-agri',
+        'Arte/Cultura' => 'sector-art',
+        'Automoción' => 'sector-aut',
+        'Ciberseguridad' => 'sector-cyb',
+        'Community Manager' => 'sector-comm',
+        'Construcción' => 'sector-cons',
+        'Coordinación Educativa' => 'sector-educ',
+        'Diseño Gráfico' => 'sector-grap',
+        'Electricidad y fontanería' => 'sector-elec',
+        'Energía/Renovables' => 'sector-ener',
+        'Farmacia' => 'sector-phar',
+        'Finanzas y contabilidad' => 'sector-fina',
+        'Fotografía/vídeo' => 'sector-photo',
+        'Hostelería/turismo' => 'sector-hosp',
+        'AI' => 'sector-ai',
+        'Investigación/laboratorio' => 'sector-res',
+        'Legal' => 'sector-leg',
+        'Logística' => 'sector-log',
+        'Mecánica' => 'sector-mec',
+        'Medicina/Enfermería' => 'sector-med',
+        'Nutrición' => 'sector-nut',
+        'Operador Industrial' => 'sector-ind',
+        'Orientación' => 'sector-ori',
+        'Periodismo' => 'sector-jout',
+        'Enseñanza' => 'sector-tea',
+        'Psicología' => 'sector-psy',
+        'Publicidad' => 'sector-adv',
+        'Redes y Sistemas' => 'sector-net',
+        'RRHH' => 'sector-hr',
+        'Seguridad' => 'sector-sec',
+        'SEO/SEM' => 'sector-seo',
+        'Terapias/Rehabilitación' => 'sector-ther',
+        'Traducción' => 'sector-trans',
+        'Transporte/Entrega' => 'sector-transp',
+        'Ventas' => 'sector-sal',
+    ];
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Ofertas de Empleo')
@@ -183,47 +223,6 @@
                             @endif
 
                             <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
-                            @php
-                                $sectorMap = [
-                                    'Agricultura/Medio ambiente' => 'sector-agri',
-                                    'Arte/Cultura' => 'sector-art',
-                                    'Automoción' => 'sector-aut',
-                                    'Ciberseguridad' => 'sector-cyb',
-                                    'Community Manager' => 'sector-comm',
-                                    'Construcción' => 'sector-cons',
-                                    'Coordinación Educativa' => 'sector-educ',
-                                    'Diseño Gráfico' => 'sector-grap',
-                                    'Electricidad y fontanería' => 'sector-elec',
-                                    'Energía/Renovables' => 'sector-ener',
-                                    'Farmacia' => 'sector-phar',
-                                    'Finanzas y contabilidad' => 'sector-fina',
-                                    'Fotografía/vídeo' => 'sector-photo',
-                                    'Hostelería/turismo' => 'sector-hosp',
-                                    'AI' => 'sector-ai',
-                                    'Investigación/laboratorio' => 'sector-res',
-                                    'Legal' => 'sector-leg',
-                                    'Logística' => 'sector-log',
-                                    'Mecánica' => 'sector-mec',
-                                    'Medicina/Enfermería' => 'sector-med',
-                                    'Nutrición' => 'sector-nut',
-                                    'Operador Industrial' => 'sector-ind',
-                                    'Orientación' => 'sector-ori',
-                                    'Periodismo' => 'sector-jout',
-                                    'Enseñanza' => 'sector-tea',
-                                    'Psicología' => 'sector-psy',
-                                    'Publicidad' => 'sector-adv',
-                                    'Redes y Sistemas' => 'sector-net',
-                                    'RRHH' => 'sector-hr',
-                                    'Seguridad' => 'sector-sec',
-                                    'SEO/SEM' => 'sector-seo',
-                                    'Terapias/Rehabilitación' => 'sector-ther',
-                                    'Traducción' => 'sector-trans',
-                                    'Transporte/Entrega' => 'sector-transp',
-                                    'Ventas' => 'sector-sal',
-                                ];
-
-                                $sectorkey = $sectorMap[$offer->sector_category] ?? null;
-                            @endphp
 
                             @if ($sectorkey)
                                 <x-heading level="h4" class="mb-1">
@@ -313,6 +312,7 @@
                     <select name="sector_category" id="sector_category" required
                         class="w-full rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
 
+                        
                         @foreach ($sectorMap as $spanishLabel => $translationKey)
                             <option value="{{ $spanishLabel }}" {{ old('sector_category') === $spanishLabel ? 'selected' : '' }}>
                                 {{ __('messages.job-offers.' . $translationKey) }}

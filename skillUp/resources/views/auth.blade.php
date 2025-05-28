@@ -126,18 +126,14 @@
                         <div id="login-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
 
                         <div class="space-y-1">
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                {{ __('messages.auth.email') }}
-                            </label>
+                            <x-label for="email">{{ __('messages.auth.email') }}</x-label>
                             <input type="email" name="email" id="email"
                                 class="w-full px-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                                 required value="{{ old('email') }}">
                         </div>
 
                         <div class="space-y-1">
-                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                {{ __('messages.auth.password') }}
-                            </label>
+                            <x-label for="password">{{ __('messages.auth.password') }}</x-label>
                             <input type="password" name="password" id="password"
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                                 required>

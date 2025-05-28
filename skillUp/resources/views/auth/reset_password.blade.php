@@ -38,26 +38,20 @@
                     <input type="hidden" name="token" value="{{ $token }}">
 
                     <div>
-                        <label for="email" class="block mb-1 font-semibold">
-                            {{ __('messages.auth.email') }}
-                        </label>
+                        <x-label for="email">{{ __('messages.auth.email') }}</x-label>
                         <input type="email" name="email" id="email" value="{{ old('email', $email ?? '') }}" readonly
                             required
                             class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white shadow-sm focus:outline-none" />
                     </div>
 
                     <div>
-                        <label for="password" class="block mb-1 font-semibold">
-                            {{ __('messages.auth.ph-password') }}
-                        </label>
+                        <x-label for="password">{{ __('messages.auth.ph-password') }}</x-label>
                         <input type="password" name="password" id="password" required
                             class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-themeGrape" />
                     </div>
 
                     <div>
-                        <label for="password_confirmation" class="block mb-1 font-semibold">
-                            {{ __('messages.auth.ph-password-confirm') }}
-                        </label>
+                        <x-label for="password_confirmation">{{ __('messages.auth.ph-password-confirm') }}</x-label>
                         <input type="password" name="password_confirmation" id="password_confirmation" required
                             class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-themeGrape" />
                     </div>

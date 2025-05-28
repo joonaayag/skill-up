@@ -37,9 +37,7 @@
                     @csrf
 
                     <div>
-                        <label for="role" class="block mb-1 text-sm 2md:text-base font-semibold">
-                            {{ __('messages.choose.role') }}
-                        </label>
+                        <x-label for="role">{{ __('messages.choose.role') }}</x-label>
                         <select name="role" id="role" x-model="role" required
                             class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape dark:focus:ring-themeGrapeLight">
                             <option value="Usuario">{{ __('messages.choose.option-user') }}</option>
