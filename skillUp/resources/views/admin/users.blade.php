@@ -2,7 +2,12 @@
 
 @section('content')
     <div class="px-6 py-10">
+        @if(auth()->user()->role === 'Admin')
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.title') }}</x-heading>
+    @elseif(auth()->user()->role === 'Profesor')
+        <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.all-students') }}</x-heading>
+    @endif
+
 
         
         @if(session('errors'))
@@ -109,14 +114,14 @@
                                                     <label
                                                         class="block text-sm font-medium">{{ __('messages.profile.label-name') }}</label>
                                                     <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                                                        class="w-full border rounded px-3 py-2" required>
+                                                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0" required>
                                                 </div>
                                                 <div>
                                                     <label
                                                         class="block text-sm font-medium">{{ __('messages.profile.label-last-name') }}</label>
                                                     <input type="text" name="last_name"
                                                         value="{{ old('last_name', $user->last_name) }}"
-                                                        class="w-full border rounded px-3 py-2">
+                                                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                 </div>
                                             </div>
 
@@ -125,12 +130,12 @@
                                                     <label
                                                         class="block text-sm font-medium">{{ __('messages.profile.label-email') }}</label>
                                                     <input type="email" name="email" value="{{ old('email', $user->email) }}"
-                                                        class="w-full border rounded px-3 py-2" required>
+                                                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0" required>
                                                 </div>
                                                 <div>
                                                     <label class="block text-sm font-medium">Rol</label>
                                                     <select name="role"
-                                                        class="w-full border rounded px-3 py-2 dark:bg-themeBgDark"
+                                                        class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 dark:bg-themeBgDark"
                                                         x-model="role">
                                                         @php
                                                             $roleMap = [
@@ -162,7 +167,7 @@
                                             <div class="mt-4">
                                                 <label
                                                     class="block text-sm font-medium">{{ __('messages.profile.label-description') }}</label>
-                                                <textarea name="description" class="w-full border rounded px-3 py-2 resize-none"
+                                                <textarea name="description" class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 resize-none"
                                                     rows="4">{{ old('description', $user->description) }}</textarea>
                                             </div>
 
@@ -171,19 +176,19 @@
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-birth-date') }}</label>
                                                         <input type="date" name="birthDate" value="{{ old('birthDate', $user->detail?->birth_date) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-current-course') }}</label>
                                                         <input type="text" name="currentCourse"
                                                             value="{{ old('currentCourse', $user->detail?->current_course) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                                         <input type="text" name="educationalCenter"
                                                             value="{{ old('educationalCenter', $user->detail?->educational_center) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                 </div>
                                             </template>
@@ -195,19 +200,19 @@
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                                         <input type="text" name="educationalCenter"
                                                             value="{{ old('educationalCenter', $user->detail?->educational_center) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-specialization') }}</label>
                                                         <input type="text" name="specialization"
                                                             value="{{ old('specialization', $user->detail?->specialization) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-department') }}</label>
                                                         <input type="text" name="department"
                                                             value="{{ old('department', $user->detail?->department) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     
                                                 </div>
@@ -219,22 +224,22 @@
                                                     <div>
                                                         <label class="block text-sm font-medium">CIF</label>
                                                         <input type="text" name="cif" value="{{ old('cif', $user->detail?->cif) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-address') }}</label>
                                                         <input type="text" name="address" value="{{ old('address', $user->detail?->address) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-sector') }}</label>
                                                         <input type="text" name="sector" value="{{ old('sector', $user->detail?->sector) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
                                                         <label class="block text-sm font-medium">{{ __('messages.profile.label-website') }}</label>
                                                         <input type="url" name="website" value="{{ old('website', $user->detail?->website) }}"
-                                                            class="w-full border rounded px-3 py-2">
+                                                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                 </div>
                                             </template>
@@ -324,7 +329,7 @@
                 class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.create-user') }}</x-heading>
                 <form method="POST" action="{{ route('admin.register') }}" enctype="multipart/form-data"
                 class=" dark:bg-themeBgDark bg-white p-6 rounded shadow space-y-6"
-                x-data="{ role: '{{ old('role') }}' }">
+                x-data="{ role: '{{ auth()->user()->role === 'Profesor' ? 'Alumno' : old('role') }}' }">
                 @csrf
                 
                 <div class="relative mb-12 sm:mb-8">
@@ -344,62 +349,64 @@
                         <div>
                             <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-name') }}</label>
                             <input type="text" name="name" placeholder="{{ __('messages.admin.users.ph-name') }}"
-                            value="{{ old('name') }}" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                            value="{{ old('name') }}" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                         </div>
                         <div>
                             <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-last-name') }}</label>
                             <input type="text" name="lastName" placeholder="{{ __('messages.admin.users.ph-last-name') }}"
-                                value="{{ old('lastName') }}" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                value="{{ old('lastName') }}" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                     </div>
 
                     <div>
                         <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-email') }}</label>
                         <input type="email" name="email" placeholder="{{ __('messages.admin.users.ph-email') }}"
-                            value="{{ old('email') }}" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                            value="{{ old('email') }}" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.ph-password') }}</label>
-                            <input type="password" name="password" required class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                            <input type="password" name="password" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                         </div>
                         <div>
                             <label
                             class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.ph-password-confirmation') }}</label>
                             <input type="password" name="password_confirmation" required
-                            class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                            class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.select-role') }}</label>
-                        <select name="role" x-model="role" required class="w-full border rounded h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark">
-                            <option value="">{{ __('messages.admin.users.select-role') }}</option>
-                            @php
-                                $roleMap = [
-                                    'Usuario' => 'user',
-                                    'Alumno' => 'student',
-                                    'Profesor' => 'teacher',
-                                    'Empresa' => 'company',
-                                ];
-                            @endphp
+                    @php
+                        $roleMap = [
+                            'Usuario' => 'user',
+                            'Alumno' => 'student',
+                            'Profesor' => 'teacher',
+                            'Empresa' => 'company',
+                        ];
+                    @endphp
 
-                            <option value="Usuario" {{ old('role') == 'Usuario' ? 'selected' : '' }}>
-                                {{ __('messages.roles.' . ($roleMap['Usuario'] )) }}
-                            </option>
-                            <option value="Alumno" {{ old('role') == 'Alumno' ? 'selected' : '' }}>
-                                {{ __('messages.roles.' . ($roleMap['Alumno'] )) }}
-                            </option>
-                            <option value="Profesor" {{ old('role') == 'Profesor' ? 'selected' : '' }}>
-                                {{ __('messages.roles.' . ($roleMap['Profesor'] )) }}
-                            </option>
-                            <option value="Empresa" {{ old('role') == 'Empresa' ? 'selected' : '' }}>
-                                {{ __('messages.roles.' . ($roleMap['Empresa'] )) }}
-                            </option>
-                            
-                        </select>
-                    </div>
+                    @if(auth()->user()->role === 'Profesor')
+                        <input type="hidden" name="role" value="Alumno">
+                        <div>
+                            <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.select-role') }}</label>
+                            <input type="text" value="{{ __('messages.roles.student') }}" disabled
+                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 bg-gray-100 dark:bg-gray-800 text-gray-500">
+                        </div>
+                    @else
+                        <div>
+                            <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.admin.users.select-role') }}</label>
+                            <select name="role" x-model="role" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 dark:bg-themeBgDark">
+                                <option value="">{{ __('messages.admin.users.select-role') }}</option>
+                                @foreach ($roleMap as $dbValue => $translationKey)
+                                    <option value="{{ $dbValue }}" {{ old('role') == $dbValue ? 'selected' : '' }}>
+                                        {{ __('messages.roles.' . $translationKey) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
+
                     
                     <template x-if="role === 'Alumno'">
                         <div class="space-y-4">
@@ -407,14 +414,14 @@
                                 <label
                                 class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-birth-date') }}</label>
                                 <input type="date" name="birthDate" value="{{ old('birthDate') }}"
-                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             <div>
                                 <label
                                 class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-current-course') }}</label>
                                 <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
                                 placeholder="{{ __('messages.admin.users.ph-current-course') }}"
-                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             @if(auth()->user()->role !== 'Profesor')
                                 <div>
@@ -422,7 +429,7 @@
                                     class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                     <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                     placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
-                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                 </div>
                             @endif
 
@@ -436,21 +443,21 @@
                                 class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}</label>
                                 <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                 placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
-                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             <div>
                                 <label
                                 class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-specialization') }}</label>
                                 <input type="text" name="specialization" value="{{ old('specialization') }}"
                                 placeholder="{{ __('messages.admin.users.ph-specialization') }}"
-                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             <div>
                                 <label
                                 class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-department') }}</label>
                                 <input type="text" name="department" value="{{ old('department') }}"
                                 placeholder="{{ __('messages.admin.users.ph-department') }}"
-                                class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                         </div>
                     </template>
@@ -461,13 +468,13 @@
                                 <label class="block text-xs md:text-sm lg:text-base font-medium">CIF</label>
                                 <input type="text" name="cif" value="{{ old('cif') }}"
                                 placeholder="{{ __('messages.admin.users.ph-cif') }}"
-                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                 </div>
                                 <div>
                                     <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-address') }}</label>
                                     <input type="text" name="address" value="{{ old('address') }}"
                                     placeholder="{{ __('messages.admin.users.ph-address') }}"
-                                    class="w-full border rounded h-8 sm:h-10 px-3 py-2">
+                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                 </div>
                                 <div>
                                     <label class="block text-xs md:text-sm lg:text-base font-medium">{{ __('messages.profile.label-sector') }}</label>

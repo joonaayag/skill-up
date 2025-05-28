@@ -154,9 +154,9 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'Admin',
-            'last_name' => 'Master',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
+            'last_name' => 'Jonay',
+            'email' => 'skillup.help.contact@gmail.com',
+            'password' => Hash::make('AdminJonay1@'),
             'role' => 'Admin',
             'avatar' => null,
             'cv' => null,
