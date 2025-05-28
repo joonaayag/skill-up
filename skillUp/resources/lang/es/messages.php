@@ -247,7 +247,7 @@ return [
         'projects' => 'Proyectos',
         'offers' => 'Ofertas',
         'placeholder-title' => 'Título',
-        'placeholder-description' => 'Descripcion',
+        'placeholder-description' => 'Descripción',
         'placeholder-author' => 'Autor o empresa',
         'order-by' => 'Ordenar por',
         'order-title' => 'Título',
