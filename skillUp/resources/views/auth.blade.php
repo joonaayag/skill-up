@@ -286,7 +286,10 @@
                         </template>
                     </p>
 
-                    <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
+                    <div class="inline-block origin-top-left scale-75 xl:scale-100 transition-transform duration-300">
+                        <div class="g-recaptcha" data-sitekey="{{ config('services.nocaptcha.sitekey') }}"></div>
+                    </div>
+
 
                     <button type="submit"
                         class="w-full bg-themeGrape/90 text-white px-2 py-2 2md:px-4 2md:py-2 text-xs md:text-sm 2md:text-base font-semibold rounded-xl hover:bg-themeGrape active:scale-[.98] transition-all duration-200 shadow-md cursor-pointer hover:shadow-lg transform hover:-translate-y-0.5">
@@ -300,8 +303,7 @@
 
     <x-footer />
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer>
-        </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         <script>
             document.querySelector('form[action="{{ route('login') }}"]').addEventListener('submit', function (event) {
