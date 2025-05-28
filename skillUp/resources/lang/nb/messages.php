@@ -953,6 +953,7 @@ return [
     ],
     'from' => 'fra ',
     'answer' => 'Svar',
+    'password-features' => 'Minimum 8 tegn, én stor bokstav, ett tall og ett symbol.',
     'messages' => [
         'last-step' => 'Ett siste steg for å komme i gang med Skill Up',
         'login' => 'Innlogging vellykket',

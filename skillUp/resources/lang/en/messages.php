@@ -952,6 +952,7 @@ return [
     ],
     'from' => 'from ',
     'answer' => 'Answer',
+    'password-features' => 'Minimum 8 characters, one uppercase letter, one number, and one symbol.',
     'messages' => [
         'last-step' => 'One last step to get started with Skill Up',
         'login' => 'Logged in successfully',

@@ -219,7 +219,7 @@
                     @endforeach
                     
                     <span class="text-xs text-gray-500 dark:text-gray-400">
-                        Mínimo 8 caracteres, una mayúscula, un número y un simbolo.
+                        {{ __('messages.password-features') }}
                     </span>
                     <input type="password" name="password" placeholder="{{__('messages.auth.ph-password')}}"
                         class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"

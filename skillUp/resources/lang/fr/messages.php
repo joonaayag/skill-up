@@ -951,6 +951,7 @@ return [
     ],
     'from' => 'de ',
     'answer' => 'Répondre',
+    'password-features' => 'Minimum 8 caractères, une majuscule, un chiffre et un symbole.',
     'messages' => [
         'last-step' => 'Une dernière étape pour commencer avec Skill Up',
         'login' => 'Connexion réussie',

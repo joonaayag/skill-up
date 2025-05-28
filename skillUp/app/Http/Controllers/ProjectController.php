@@ -189,7 +189,7 @@ class ProjectController extends Controller
         }
 
 
-        return redirect()->back()->with('message', __('messages.messages.project-created'));
+        return redirect()->back()->with('message', __('messages.messages.project-create'));
     }
 
     public function update(Request $request, $id)

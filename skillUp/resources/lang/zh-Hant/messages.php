@@ -954,6 +954,7 @@ return [
     ],
     'from' => '從',
     'answer' => '回覆',
+    'password-features' => '至少 8 個字元，需包含一個大寫字母、一個數字和一個符號。',
     'messages' => [
         'last-step' => '開始使用 Skill Up 的最後一步',
         'login' => '成功登入',

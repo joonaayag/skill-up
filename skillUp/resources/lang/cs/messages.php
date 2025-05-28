@@ -944,6 +944,7 @@ return [
    ],
    'from' => 'od ',
    'answer' => 'Odpovědět',
+   'password-features' => 'Minimálně 8 znaků, jedno velké písmeno, jedno číslo a jeden symbol.',
    'messages' => [
       'last-step' => 'Jeden poslední krok k zahájení se Skill Up',
       'login' => 'Přihlášení proběhlo úspěšně',
