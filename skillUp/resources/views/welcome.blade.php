@@ -17,7 +17,7 @@
         <section
             class="w-full 2md:w-4/7 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-5 gap-10 transition-all duration-300 ease-in-out">
 
-            <div class="lg:col-span-3 flex flex-col justify-center md:ml-6">
+            <div class="col-span-5 lg:col-span-3 flex flex-col justify-center md:ml-6">
                 @if ($errors->any())
                     <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                         <ul class="list-disc list-inside space-y-1">
@@ -43,7 +43,7 @@
                 </x-button>
             </div>
 
-            <div class="lg:col-span-2 flex items-center justify-center">
+            <div class="hidden lg:col-span-2 lg:flex items-center justify-center">
                 <img class="max-h-[400px] w-auto rounded-lg " src="{{ asset('images/phone-mockup.png') }}"
                     alt="phone mockup">
             </div>
