@@ -152,6 +152,7 @@ if ($request->hasFile('image')) {
     $file = $request->file('image');
     if ($file->isValid()) {
         $path = $file->store('project_images', 's3');
+        dd($path);
         Storage::disk('s3')->setVisibility($path, 'public');
         logger('Subido a S3: ' . $path);
         $imagePath = $path;
@@ -200,8 +201,6 @@ if ($request->hasFile('image')) {
                 ]);
             }
         }
-dd(Storage::disk('s3'));
-
         return redirect()->back()->with('message', __('messages.messages.project-create'));
     }
 
