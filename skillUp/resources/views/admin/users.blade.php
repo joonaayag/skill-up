@@ -96,12 +96,12 @@
 
 
                                             <div class="relative mb-14">
-                                                <img src="{{ $user->banner ? asset('storage/' . $user->banner) : asset('images/defaultBanner.jpg') }}"
+                                                <img src="{{ $user->banner ? Storage::disk('s3')->url($user->banner) : asset('images/defaultBanner.jpg') }}"
                                                     class="w-full h-40 object-cover cursor-pointer banner-preview" alt="Banner">
                                                 <input type="file" name="banner" accept="image/*" class="hidden banner-input">
 
                                                 <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                                                    <img src="{{ $user->profile ? asset('storage/' . $user->profile) : asset('images/defaultProfile.png') }}"
+                                                    <img src="{{ $user->profile ? Storage::disk('s3')->url($user->profile) : asset('images/defaultProfile.png') }}"
                                                         class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer profile-preview"
                                                         alt="Foto de perfil">
                                                     <input type="file" name="profile" accept="image/*"

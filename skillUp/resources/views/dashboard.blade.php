@@ -166,7 +166,7 @@
                     @if($notifications->count())
                         @foreach($notifications as $notification)
                             <div
-                                class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
+                                class="flex items-center space-x-4 leading-card mb-2.5 hover:bg-themeLightGray/20 p-1 rounded-lg transition cursor-default">
                                 <div class="bg-themeGrape text-white p-2 rounded-full">
                                     <x-icon name="bell" class="w-8 h-auto" />
                                 </div>

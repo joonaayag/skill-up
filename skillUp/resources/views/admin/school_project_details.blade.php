@@ -42,10 +42,8 @@
 
             <p class="mb-9 break-words">{{ $schoolProject->description }}</p>
 
-
-            @if($schoolProject->image)
-                <img src="{{ asset('storage/' . $schoolProject->image) }}" alt="Imagen del proyecto"
-                    class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
+            @if ($schoolProject->image)
+                <img src="{{ Storage::disk('s3')->url($schoolProject->image) }}" alt="Imagen del proyecto" class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
             @endif
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
@@ -108,12 +106,12 @@
                             @endphp
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
-                                    <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
+                                    <a href="#" @click.prevent="selectedImage = '{{ Storage::disk('s3')->url($img->path) }}'"
                                         class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
-                                    <a href="{{ asset('storage/' . $img->path) }}" download
+                                    <a href="{{ Storage::disk('s3')->url($img->path) }}" download
                                         class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center hover:bg-gray-200">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>

@@ -43,15 +43,8 @@
 
             <p class="mb-9 break-words">{{ $project->description }}</p>
 
-
-            <!-- @if($project->image)
-                <div class="flex justify-center mb-4">
-                    <img src="{{ asset('storage/' . $project->image) }}" alt="Imagen del proyecto"
-                        class="w-[80%] h-auto rounded-lg shadow-md">
-                </div>
-            @endif -->
             @if ($project->image)
-                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto">
+                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] h-auto rounded-lg shadow-md">
             @endif
 
 

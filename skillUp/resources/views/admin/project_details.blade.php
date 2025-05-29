@@ -42,9 +42,8 @@
             <p class="mb-9 break-words">{{ $project->description }}</p>
 
 
-            @if($project->image)
-                <img src="{{ asset('storage/' . $project->image) }}" alt="Imagen del proyecto"
-                    class="w-[80%] h-auto rounded-lg shadow-md">
+            @if ($project->image)
+                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] h-auto rounded-lg shadow-md">
             @endif
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
@@ -68,7 +67,7 @@
                             @for ($i = 1; $i <= 5; $i++)
                                 <button type="submit" name="rating" value="{{ $i }}"
                                     class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
-                                                                                                        {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                        {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
                                     aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
                                     <x-icon name="star" class="w-3 md:w-4 h-auto" />
                                 </button>
@@ -107,12 +106,12 @@
                             @endphp
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
-                                    <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
+                                    <a href="#" @click.prevent="selectedImage = '{{ Storage::disk('s3')->url($img->path) }}'"
                                         class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center dark:bg-themeDarkGray hover:bg-themeGrape">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
-                                    <a href="{{ asset('storage/' . $img->path) }}" download
+                                    <a href="{{ Storage::disk('s3')->url($img->path) }}" download
                                         class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center hover:bg-themeGrape">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
