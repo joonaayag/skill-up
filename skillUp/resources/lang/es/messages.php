@@ -365,6 +365,7 @@ return [
             'create-user' => 'Crear proyecto',
         ],
         'school-projects' => [
+            'title' => 'Listado de proyectos escolares',
             'table-name' => 'Nombre',
             'table-author' => 'Autor',
             'table-category' => 'Categoría',
