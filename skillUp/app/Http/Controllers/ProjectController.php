@@ -147,9 +147,13 @@ class ProjectController extends Controller
         ]);
 
         $imagePath = $request->hasFile('image')
-            ? $request->file('image')->store('project_images', 'public')
+            ? $request->file('image')->store('project_images', 's3')
             : null;
 
+        if ($imagePath) {
+            // Hacer pública la imagen (opcional pero recomendado)
+            Storage::disk('s3')->setVisibility($imagePath, 'public');
+        }
 
         $project = Project::create([
             'title' => $request->title,
@@ -158,9 +162,10 @@ class ProjectController extends Controller
             'sector_category' => $request->sector_category,
             'creation_date' => $request->creation_date,
             'link' => $request->link,
-            'image' => $imagePath,
+            'image' => $imagePath, // solo se guarda la ruta
             'author_id' => auth()->id(),
         ]);
+
 
         Notification::firstOrCreate([
             'user_id' => auth()->id(),
