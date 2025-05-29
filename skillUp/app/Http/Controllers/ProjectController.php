@@ -150,15 +150,14 @@ class ProjectController extends Controller
 
 if ($request->hasFile('image')) {
     $file = $request->file('image');
-    if ($file->isValid()) {
+        if ($file->isValid()) {
         $path = $file->store('project_images', 's3');
-        dd($path);
-        Storage::disk('s3')->setVisibility($path, 'public');
-        logger('Subido a S3: ' . $path);
+        logger('Subido a S3 (public): ' . $path);
         $imagePath = $path;
-    } else {
-        logger('Archivo inválido');
     }
+    else {
+            logger('Archivo inválido');
+        }
 } else {
     logger('No hay archivo en request');
 }
