@@ -9,11 +9,11 @@
         class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
         
         <div class="relative">
-            <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
+           <img src="{{ Storage::disk('s3')->url($user->banner) }}"
                 alt="Fondo" class="w-full h-20 md:h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}"
+                <img src="{{ Storage::disk('s3')->url($user->profile) }}"
                     alt="Perfil" id="profileImage"
                     class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-themeBlue dark:border-white object-cover shadow-lg">
             </div>
