@@ -193,7 +193,7 @@
                 class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
                                             transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
-                <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user())->profile) : asset('images/defaultProfile.png') }}"
+                <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                     alt="Perfil" id="profileImage"
                     class="size-8 rounded-full border-2 border-themeBlue dark:border-white object-cover shadow-lg">
             </a>
