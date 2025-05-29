@@ -13,7 +13,7 @@
                 alt="Fondo" class="w-full h-20 md:h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                <img src="{{ Storage::disk('s3')->url($user->profile) }}"
+                <img src="{{ $user->profile ? Storage::disk('s3')->url($user->profile) : asset('images/defaultProfile.png') }}"
                     alt="Perfil" id="profileImage"
                     class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-themeBlue dark:border-white object-cover shadow-lg">
             </div>

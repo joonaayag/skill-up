@@ -155,7 +155,8 @@
                     <x-card
                         class="cursor-pointer h-full border border-transparent hover:border-themeBlue shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-in-out bg-white dark:bg-themeBgDark text-gray-800 dark:text-white">
 
-                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : '' }}" alt="Perfil"
+                        <img src="{{ $user->profile ? Storage::disk('s3')->url($user->profile) : asset('images/defaultProfile.png') }}"
+                            alt="Perfil" id="profileImage"
                             id="profileImage"
                             class="h-20 w-20 hidden 2xl:flex rounded-full object-cover shadow-lg absolute top-0 right-0 m-2">
                         <li class="flex flex-col h-full ">

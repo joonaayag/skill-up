@@ -193,7 +193,7 @@
                 class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
                                             transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>
-                <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user())->profile) : asset('images/defaultProfile.png') }}"
                     alt="Perfil" id="profileImage"
                     class="size-8 rounded-full border-2 border-themeBlue dark:border-white object-cover shadow-lg">
             </a>
@@ -294,7 +294,7 @@
             @auth
                 <div class="border-t border-gray-200 dark:border-gray-600 pt-6">
                     <a href="{{ route('profile.index') }}" class="flex items-center space-x-4 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png' }}"
+                        <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                             alt="Perfil" class="w-10 h-10 rounded-full border-2 border-themeBlue dark:border-white object-cover">
                         <span class="text-lg">{{ auth()->user()->name }}</span>
                     </a>

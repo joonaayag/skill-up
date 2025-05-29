@@ -142,10 +142,10 @@
             <div
                 class="row-span-3 h-full order-2 xl:order-1 [&>div]:h-full [&>div]:bg-white [&>div]:border-2 [&>div]:border-themeLightGray [&>div]:rounded-lg dark:[&>div]:bg-themeBgDark">
                 <div class="relative">
-                    <img src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg')  }}"
+                    <img src="{{ auth()->user()->banner ? Storage::disk('s3')->url(path: auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
                         alt="Fondo" class="w-full h-30 rounded-t-md object-cover" id="bannerImage">
                     <div class="absolute top-20 left-1/6 transform -translate-x-1/2">
-                        <img src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}"
+                        <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                             alt="Perfil" id="profileImage"
                             class="h-18 w-18 rounded-full border-4 border-white object-cover shadow-lg">
 
