@@ -146,14 +146,22 @@ class ProjectController extends Controller
             'files.*.max' => __('messages.errors.file.max'),
         ]);
 
-        $imagePath = $request->hasFile('image')
-            ? $request->file('image')->store('project_images', 's3')
-            : null;
+        $imagePath = null;
 
-        if ($imagePath) {
-            // Hacer pública la imagen (opcional pero recomendado)
-            Storage::disk('s3')->setVisibility($imagePath, 'public');
-        }
+if ($request->hasFile('image')) {
+    $file = $request->file('image');
+    if ($file->isValid()) {
+        $path = $file->store('project_images', 's3');
+        Storage::disk('s3')->setVisibility($path, 'public');
+        logger('Subido a S3: ' . $path);
+        $imagePath = $path;
+    } else {
+        logger('Archivo inválido');
+    }
+} else {
+    logger('No hay archivo en request');
+}
+
 
         $project = Project::create([
             'title' => $request->title,
