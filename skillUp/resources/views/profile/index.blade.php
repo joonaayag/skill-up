@@ -292,20 +292,42 @@
                         </div>
                     @endif
 
-                    <div class="mt-4" x-data="{ cvName: '' }" x-cloak>
-                        <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.upload-cv') }}</label>
+                <div class="mt-4" x-data="{ cvName: '', showTooltip: false }" x-cloak>
+                    <label class="block text-xs lg:text-base font-medium relative flex items-center gap-1">
+                        {{ __('messages.profile.upload-cv') }}
+                        <div 
+                            @mouseenter="showTooltip = true" 
+                            @mouseleave="showTooltip = false" 
+                            class="relative cursor-pointer"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <title>Info</title>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+                            </svg>
 
-                        <label for="cv-upload"
-                            class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
-                            {{ __('messages.profile.upload-cv') }}
-                            <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
-                                @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
-                        </label>
+                            <div 
+                                x-show="showTooltip" 
+                                x-transition 
+                                class="absolute z-10 w-48 text-xs text-white bg-black rounded px-2 py-1 -top-10 left-1/2 transform -translate-x-1/2 whitespace-normal"
+                            >
+                                {{ __('Al subir uno nuevo, se eliminará tu CV actual.') }}
+                            </div>
+                        </div>
+                    </label>
 
-                        <template x-if="cvName">
-                            <p class="mt-2 text-xs lg:text-base text-black dark:text-themeLightGray" x-text="cvName"></p>
-                        </template>
-                    </div>
+                    <label for="cv-upload"
+                        class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape text-white font-medium rounded cursor-pointer hover:bg-themeGrape/80 transition">
+                        {{ __('messages.profile.upload-cv') }}
+                        <input id="cv-upload" type="file" name="cv" accept=".pdf" class="hidden"
+                            @change="cvName = $event.target.files.length ? $event.target.files[0].name : ''">
+                    </label>
+
+                    <template x-if="cvName">
+                        <p class="mt-2 text-xs lg:text-base text-black dark:text-themeLightGray" x-text="cvName"></p>
+                    </template>
+                </div>
+
 
 
                     <div class="mt-6 flex justify-end gap-4">

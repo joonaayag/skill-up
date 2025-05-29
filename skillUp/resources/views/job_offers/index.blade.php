@@ -224,6 +224,10 @@
 
                             <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
 
+                            @php
+                                $sectorkey = $sectorMap[$offer->sector_category] ?? null;
+                            @endphp
+
                             @if ($sectorkey)
                                 <x-heading level="h4" class="mb-1">
                                     {{ __('messages.job-offers.' . $sectorkey) }}
