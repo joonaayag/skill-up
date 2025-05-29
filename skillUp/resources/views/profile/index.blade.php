@@ -195,7 +195,7 @@
 
                         <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                             <img id="fotoPerfilPreview"
-                                src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.jpg') }}"
+                                src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                                 class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
                                 alt="Foto de perfil">
                             <input type="file" name="profile" id="fotoPerfilInput" accept="image/*" class="hidden">
