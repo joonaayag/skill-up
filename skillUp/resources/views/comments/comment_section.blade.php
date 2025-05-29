@@ -8,15 +8,6 @@
 
     @auth
         <div class="bg-white dark:bg-themeDarkGray rounded-lg shadow-md p-6 mb-8">
-            @if ($errors->any())
-                <div class="bg-red-300 border dark:bg-red-300/60 border-red-400 p-4 mb-6 rounded">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li class="text-black dark:text-white">- {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <h4 class="text-lg font-semibold mb-3 text-gray-700 dark:text-themeLightGray">{{ __('messages.project-details.add-comment')  }}</h4>
             <form
                 action="{{ $type === 'project' ? route('projects.comments.store', $commentable->id) : route('school-projects.comments.store', $commentable->id) }}"

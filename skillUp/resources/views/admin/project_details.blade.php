@@ -43,7 +43,7 @@
 
 
             @if ($project->image)
-                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] h-auto rounded-lg shadow-md">
+                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] mx-auto h-auto rounded-lg shadow-md">
             @endif
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
