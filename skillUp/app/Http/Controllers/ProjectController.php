@@ -200,7 +200,7 @@ if ($request->hasFile('image')) {
                 ]);
             }
         }
-
+dd(Storage::disk('s3'));
 
         return redirect()->back()->with('message', __('messages.messages.project-create'));
     }
