@@ -101,12 +101,12 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        class="block bg-themeGrape/90 p-3 rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-themeGrape">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
                                     <a href="{{ asset('storage/' . $img->path) }}" download
-                                        class="block bg-gray-100 p-3 rounded shadow text-sm text-center hover:bg-gray-200">
+                                        class="block bg-themeGrape/90 p-3 rounded shadow text-sm text-center hover:bg-themeGrape">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
                                 @endif
