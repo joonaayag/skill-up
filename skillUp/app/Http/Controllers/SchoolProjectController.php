@@ -135,11 +135,11 @@ class SchoolProjectController extends Controller
         $project = SchoolProject::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            if ($project->image && Storage::disk('public')->exists($project->image)) {
-                Storage::disk('public')->delete($project->image);
+            if ($project->image && Storage::disk('s3')->exists($project->image)) {
+                Storage::disk('s3')->delete($project->image);
             }
 
-            $imagePath = $request->file('image')->store('project_images', 'public');
+            $imagePath = $request->file('image')->store('project_images', 's3');
             $project->image = $imagePath;
         }
 
@@ -166,12 +166,12 @@ class SchoolProjectController extends Controller
         if ($request->hasFile('files')) {
 
             foreach ($project->images as $img) {
-                Storage::disk('public')->delete($img->path);
+                Storage::disk('s3')->delete($img->path);
                 $img->delete();
             }
 
             foreach ($request->file('files') as $file) {
-                $path = $file->store('project_images', 'public');
+                $path = $file->store('project_images', 's3');
                 $project->images()->create([
                     'path' => $path,
                 ]);
@@ -252,7 +252,7 @@ class SchoolProjectController extends Controller
 
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $imageFile) {
-                $path = $imageFile->store('project_images', 'public');
+                $path = $imageFile->store('project_images', 's3');
                 $project->images()->create([
                     'path' => $path,
                 ]);

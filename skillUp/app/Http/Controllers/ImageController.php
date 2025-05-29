@@ -12,8 +12,8 @@ class ImageController extends Controller
     {
         $image = ProjectImage::findOrFail($id);
 
-        if (Storage::disk('public')->exists($image->path)) {
-            Storage::disk('public')->delete($image->path);
+        if (Storage::disk('s3')->exists($image->path)) {
+            Storage::disk('s3')->delete($image->path);
         }
 
         $image->delete();

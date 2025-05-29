@@ -52,18 +52,18 @@ class UserController extends Controller
         $validated = $request->validate($rules);
 
         if ($request->hasFile('cv')) {
-            if ($user->cv && Storage::disk('public')->exists($user->cv)) {
-                Storage::disk('public')->delete($user->cv);
+            if ($user->cv && Storage::disk('s3')->exists($user->cv)) {
+                Storage::disk('s3')->delete($user->cv);
             }
-            $user->cv = $request->file('cv')->store('cvs', 'public');
+            $user->cv = $request->file('cv')->store('cvs', 's3');
         }
 
         if ($request->hasFile('profile')) {
-            $user->profile = $request->file('profile')->store('perfil', 'public');
+            $user->profile = $request->file('profile')->store('perfil', 's3');
         }
 
         if ($request->hasFile('banner')) {
-            $user->banner = $request->file('banner')->store('banners', 'public');
+            $user->banner = $request->file('banner')->store('banners', 's3');
         }
 
         $user->name = ucfirst($validated['name']);

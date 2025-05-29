@@ -41,11 +41,11 @@ class ApplicationController extends Controller
         ]);
 
         if ($request->hasFile('cv')) {
-            if ($request->cv && Storage::disk('public')->exists($request->cv)) {
-                Storage::disk('public')->delete($request->cv);
+            if ($request->cv && Storage::disk('s3')->exists($request->cv)) {
+                Storage::disk('s3')->delete($request->cv);
             }
 
-            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $cvPath = $request->file('cv')->store('cvs', 's3');
         }
 
         $application = Application::create([

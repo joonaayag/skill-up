@@ -194,7 +194,7 @@ if ($request->hasFile('image')) {
 
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $imageFile) {
-                $path = $imageFile->store('project_images', 'public');
+                $path = $imageFile->store('project_images', 's3');
                 $project->images()->create([
                     'path' => $path,
                 ]);
@@ -246,11 +246,11 @@ if ($request->hasFile('image')) {
         ]);
 
         if ($request->hasFile('image')) {
-            if ($project->image && Storage::disk('public')->exists($project->image)) {
-                Storage::disk('public')->delete($project->image);
+            if ($project->image && Storage::disk('s3')->exists($project->image)) {
+                Storage::disk('s3')->delete($project->image);
             }
 
-            $imagePath = $request->file('image')->store('project_images', 'public');
+            $imagePath = $request->file('image')->store('project_images', 's3');
             $project->image = $imagePath;
         }
 
@@ -266,7 +266,7 @@ if ($request->hasFile('image')) {
         if ($request->hasFile('files')) {
 
             foreach ($request->file('files') as $file) {
-                $path = $file->store('project_images', 'public');
+                $path = $file->store('project_images', 's3');
                 $project->images()->create([
                     'path' => $path,
                 ]);
@@ -283,15 +283,15 @@ if ($request->hasFile('image')) {
 
         if ($project->image) {
             $path = $project->image;
-            if (Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
+            if (Storage::disk('s3')->exists($path)) {
+                Storage::disk('s3')->delete($path);
             }
         }
 
         foreach ($project->images as $image) {
             $path = $image->path;
-            if (Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
+            if (Storage::disk('s3')->exists($path)) {
+                Storage::disk('s3')->delete($path);
             }
             $image->delete();
         }
