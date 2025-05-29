@@ -1038,9 +1038,9 @@ class AdminController extends Controller
             'link.url' => __('messages.errors.link.url'),
             'link.max' => __('messages.errors.link.max'),
 
-            'image.*.image' => __('messages.errors.image.image'),
-            'image.*.mimes' => __('messages.errors.image.mimes'),
-            'image.*.max' => __('messages.errors.image.max'),
+            'image.image' => __('messages.errors.image.image'),
+            'image.mimes' => __('messages.errors.image.mimes'),
+            'image.max' => __('messages.errors.image.max'),
 
             'files.*.file' => __('messages.errors.file.file'),
             'files.*.max' => __('messages.errors.file.max'),
