@@ -189,13 +189,13 @@
 
                     <div class="relative mb-12 sm:mb-8">
                         <img id="bannerPreview"
-                            src="{{ auth()->user()->banner ? asset('storage/' . auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
+                            src="{{ auth()->user()->banner ? Storage::disk('s3')->url(auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
                             class="w-full h-20 md:h-40 object-cover cursor-pointer" alt="Banner">
                         <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden">
 
                         <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                             <img id="fotoPerfilPreview"
-                                src="{{ auth()->user()->profile ? asset('storage/' . auth()->user()->profile) : asset('images/defaultProfile.png') }}"
+                                src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.jpg') }}"
                                 class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
                                 alt="Foto de perfil">
                             <input type="file" name="profile" id="fotoPerfilInput" accept="image/*" class="hidden">
