@@ -9,7 +9,7 @@
         class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
         
         <div class="relative">
-           <img src="{{ Storage::disk('s3')->url($user->banner) }}"
+           <img src="{{ $user->banner ? Storage::disk('s3')->url($user->banner) : asset('images/defaultBanner.jpg') }}"
                 alt="Fondo" class="w-full h-20 md:h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
