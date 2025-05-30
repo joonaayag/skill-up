@@ -178,6 +178,7 @@ class AdminController extends Controller
 
     public function importStudents(Request $request)
     {
+        // Nombre;Apellido;Correo;Fecha de nacimiento(AAAA-MM-DD);Curso actual
         $user = auth()->user();
 
         if ($user->role !== 'Profesor') {

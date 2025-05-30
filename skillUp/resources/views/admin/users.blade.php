@@ -522,6 +522,24 @@
                                     {{ __('messages.admin.users.selected-file') }} <span class="font-semibold" x-text="fileName"></span>
                                 </p>
 
+                                <!-- Icono de info con tooltip -->
+                                <div class="relative flex justify-center mb-6">
+                                    <div class="group relative flex items-center">
+                                        <!-- Icono info -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 cursor-pointer" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                                        </svg>
+
+                                        <!-- Tooltip -->
+                                        <div class="absolute bottom-full mb-2 hidden group-hover:flex w-64 px-4 py-2 bg-gray-800 text-white text-xs rounded shadow-lg dark:bg-gray-700">
+                                            Recuerda el formato 'Nombre;Apellido;Correo;Fecha de nacimiento(AAAA-MM-DD);Curso actual'
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="flex w-full justify-end gap-2">
                                     <button @click="confirmUpload = false"
                                         class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
