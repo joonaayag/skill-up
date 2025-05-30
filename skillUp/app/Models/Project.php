@@ -59,4 +59,11 @@ class Project extends Model
     {
         return $this->comments()->whereNull('parent_id');
     }
+    protected static function booted()
+    {
+        static::deleting(function ($project) {
+            Favorite::where('type', 'proyecto')->where('reference_id', $project->id)->delete();
+        });
+    }
+
 }

@@ -107,7 +107,7 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ Storage::disk('s3')->url($img->path) }}'"
-                                        class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center dark:bg-themeDarkGray hover:bg-gray-200">
+                                        class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center hover:bg-gray-200">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else

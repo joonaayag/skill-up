@@ -34,5 +34,11 @@ class JobOffer extends Model
     {
         return $this->applications()->where('user_id', $userId)->exists();
     }
+    protected static function booted()
+    {
+        static::deleting(function ($jobOffer) {
+            Favorite::where('type', 'oferta')->where('reference_id', $jobOffer->id)->delete();
+        });
+    }
 
 }

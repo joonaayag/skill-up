@@ -64,4 +64,12 @@ class SchoolProject extends Model
     {
         return $this->comments()->whereNull('parent_id');
     }
+
+    protected static function booted()
+    {
+        static::deleting(function ($schoolProject) {
+            Favorite::where('type', 'proyectoEscolar')->where('reference_id', $schoolProject->id)->delete();
+        });
+    }
+
 }

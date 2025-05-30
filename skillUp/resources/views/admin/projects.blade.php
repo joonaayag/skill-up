@@ -101,7 +101,7 @@
             <x-modal :show="'showCreateUser'" @close="showCreateUser = false">
                 <x-heading level="h2"
                     class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.projects.create-user') }}</x-heading>
-                <form method="POST" action="{{ route('admin.create.project') }}" class="space-y-4"
+                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.create.project') }}" class="space-y-4 [&>div>input]:outline-0 [&>div>textarea]:outline-0"
                     x-data="{ role: '{{ old('role') }}' }">
                     @csrf
 

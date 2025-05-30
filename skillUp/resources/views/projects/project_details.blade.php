@@ -112,7 +112,7 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ asset('storage/' . $img->path) }}'"
-                                        class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center dark:bg-themeDarkGray hover:bg-themeGrape">
+                                        class="text-xs md:tex-sm lg:text-base block bg-themeGrape/80 p-1 lg:p-3 rounded shadow text-center hover:bg-themeGrape transition">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
