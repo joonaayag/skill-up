@@ -518,7 +518,7 @@
                         <x-modal :show="'confirmUpload'" @close="confirmUpload = false">
                                 <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.admin.users.heading-confirm') }}</x-heading>
                                 <p class="text-center text-gray-800 dark:text-themeLightGray">{{ __('messages.admin.users.import-confirm') }}</p>
-                                <p x-show="fileName" class="mt-2 mb-10 text-sm text-center text-gray-700 dark:text-themeLightGray">
+                                <p x-show="fileName" class="mt-2 text-sm text-center text-gray-700 dark:text-themeLightGray">
                                     {{ __('messages.admin.users.selected-file') }} <span class="font-semibold" x-text="fileName"></span>
                                 </p>
 
