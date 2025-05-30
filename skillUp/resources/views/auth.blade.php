@@ -214,12 +214,26 @@
                             required>
                     @endforeach
                     
-                    <span class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ __('messages.password-features') }}
-                    </span>
-                    <input type="password" name="password" placeholder="{{__('messages.auth.ph-password')}}"
-                        class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
-                        required>
+                    <div x-data="{ showTip: false }" class="relative w-full">
+                        <div x-show="showTip"
+                            x-transition
+                            class="absolute -top-12 sm:-top-10 left-0 w-full bg-black text-white text-xs rounded-lg shadow-lg px-3 py-2 z-10 dark:bg-gray-900"
+                            style="display: none;"
+                        >
+                            {{ __('messages.password-features') }}
+                        </div>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="{{ __('messages.auth.ph-password') }}"
+                            @input.debounce.300ms="showTip = $event.target.value.length > 0"
+                            @blur="showTip = false"
+                            class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
+                            required
+                        >
+
+                    </div>
+
 
                     <input type="password" name="password_confirmation"
                         placeholder="{{__('messages.auth.ph-password-confirm')}}"
