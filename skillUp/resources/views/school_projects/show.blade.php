@@ -50,9 +50,12 @@
                     class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
             @endif
 
-            <div class="flex justify-between mt-16">
-                <div class="flex gap-4 items-center justify-center">
-                    <p>{{ __('messages.project-details.author') }} <strong>{{ $schoolProject->teacher->name . ' ' . $schoolProject->teacher->last_name }}</strong></p>
+            <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
+                <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
+                    <p class="flex gap-2">
+                        <x-icon name="user" class="w-5 h-auto" />
+                        <p>{{ $schoolProject->author}}</p>
+                    </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $schoolProject->views }}</p>
                     <p class="flex items-center justify-center gap-1">
