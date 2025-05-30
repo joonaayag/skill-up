@@ -41,12 +41,12 @@
                 </x-heading>
             @endif
 
-            <p class="mb-9 break-words">{{ $project->description }}</p>
-
+            
             @if ($project->image)
-                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] mx-auto h-auto rounded-lg shadow-md">
+            <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] mx-auto h-auto rounded-lg shadow-md">
             @endif
-
+            
+            <p class="mb-9 break-words">{{ $project->description }}</p>
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
                 <div
@@ -144,9 +144,48 @@
             @include('comments.comment_section', ['commentable' => $project, 'type' => 'project'])
         </x-card>
 
-        <a href="{{ route('projects.index') }}"
-            class="mt-3 px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
-            <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}</a>
+        <div class="flex gap-2 items-center mt-3">
+            @if (auth()->id() === $project->author->id)
+                <div x-data="{ open: false }" class="inline-block" x-cloak>
+                    <button @click="open = true"
+                    class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{
+                    __('messages.button.delete') }}</button>
+
+                    <div x-show="open" x-cloak
+                    class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
+                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
+                        @click.outside="open = false">
+                            <x-heading level="h2"
+                            class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{__('messages.admin.users.heading-confirm')}}</x-heading>
+                            <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                {{__('messages.admin.projects.delete-text-1')}} <strong>{{ $project->name }}</strong>
+                                {{ __('messages.admin.projects.delete-text-2') }}
+                            </p>
+                            <div class="flex justify-end gap-4">
+                                <button @click="open = false"
+                                    class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
+                                    {{ __('messages.button.cancel') }}
+                                </button>
+
+                                <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer">
+                                        {{ __('messages.button.delete') }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <a href="{{ route('projects.index') }}"
+                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-themeBlue text-white hover:bg-themeHoverBlue flex items-center gap-2 w-max rounded transition duration-200 ease-in-out transform hover:scale-101">
+                <x-icon name="arrow-left" class="w-5 h-auto" /> {{ __('messages.project-details.back')  }}
+            </a>
+        </div>
 
     </div>
 

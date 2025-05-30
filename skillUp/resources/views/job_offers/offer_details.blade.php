@@ -149,7 +149,7 @@
                                     </p>
                                     <div class="flex justify-end gap-4">
                                         <button @click="open = false"
-                                            class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+                                            class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer">
                                             {{ __('messages.button.cancel') }}
                                         </button>
 
@@ -157,7 +157,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700 ">
+                                                class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer">
                                                 {{ __('messages.button.delete') }}
                                             </button>
                                         </form>
@@ -170,7 +170,11 @@
 
             </div>
 
-            @if (in_array(auth()->user()->role, ['Usuario', 'Alumno']) && $offer->state === 'Abierta')
+            @if (
+                in_array(auth()->user()->role, ['Usuario', 'Alumno']) &&
+                $offer->state === 'Abierta' &&
+                !$offer->hasApplied(auth()->id())
+            )
                 <div x-data="{ showModal: false }" x-cloak
                     x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))"
                     class="relative z-10">

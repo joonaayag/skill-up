@@ -345,6 +345,10 @@ return [
          'see' => 'Zobrazit',
          'no-projects' => 'Žádné registrované projekty',
          'create-user' => 'Vytvořit projekt',
+         'delete-confirm' => 'Jste si jistý?',
+         'delete-text-1' => 'Tato akce odstraní projekt',
+         'delete-text-2' => 'natrvalo.',
+
       ],
       'school-projects' => [
          'title' => 'Seznam školních projektů',

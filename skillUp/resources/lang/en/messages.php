@@ -363,6 +363,10 @@ return [
             'see' => 'See',
             'no-projects' => 'No projects registered',
             'create-user' => 'Create project',
+            'delete-confirm' => 'Are you sure?',
+            'delete-text-1' => 'This action will delete the project',
+            'delete-text-2' => 'permanently.',
+
         ],
         'school-projects' => [
             'title' => 'List of school projects',

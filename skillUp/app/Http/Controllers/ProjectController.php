@@ -298,7 +298,7 @@ if ($request->hasFile('image')) {
 
         $project->delete();
 
-        return redirect()->back()->with('message', __('messages.messages.project-deleted'));
+        return redirect()->route('projects.ownProjects')->with('message', __('messages.messages.project-delete'));
     }
 
 

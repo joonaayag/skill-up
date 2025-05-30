@@ -353,6 +353,10 @@ return [
             'see' => '查看',
             'no-projects' => '沒有註冊項目',
             'create-user' => '創建項目',
+            'delete-confirm' => '你確定嗎？',
+            'delete-text-1' => '此操作將永久刪除該專案',
+            'delete-text-2' => '無法恢復。',
+
         ],
         'school-projects' => [
             'title' => '學校項目列表',

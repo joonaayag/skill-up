@@ -29,4 +29,10 @@ class JobOffer extends Model
     {
         return $this->hasMany(Application::class, 'offer_id');
     }
+
+    public function hasApplied($userId)
+    {
+        return $this->applications()->where('user_id', $userId)->exists();
+    }
+
 }

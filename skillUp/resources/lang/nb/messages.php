@@ -352,6 +352,10 @@ return [
             'see' => 'Se',
             'no-projects' => 'Ingen prosjekter registrert',
             'create-user' => 'Opprett prosjekt',
+            'delete-confirm' => 'Er du sikker?',
+            'delete-text-1' => 'Denne handlingen vil slette prosjektet',
+            'delete-text-2' => 'permanent.',
+
         ],
         'school-projects' => [
             'title' => 'Liste over skoleprosjekter',

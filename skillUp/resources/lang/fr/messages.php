@@ -352,6 +352,10 @@ return [
             'see' => 'Voir',
             'no-projects' => 'Aucun projet enregistré',
             'create-user' => 'Créer un projet',
+            'delete-confirm' => 'Êtes-vous sûr ?',
+            'delete-text-1' => 'Cette action supprimera le projet',
+            'delete-text-2' => 'de façon permanente.',
+
         ],
         'school-projects' => [
             'title' => 'Liste des projets scolaires',
