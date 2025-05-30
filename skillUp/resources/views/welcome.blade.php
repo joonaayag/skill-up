@@ -15,7 +15,7 @@
         <source src="{{ asset('images/bg-video.mp4') }}" type="video/mp4">
     </video>
 
-    <main class="relative z-10 flex-grow px-12">
+    <main id="welcome-section" class="relative z-10 flex-grow px-12">
         <section
             class="w-full 2md:w-4/7 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-5 gap-10 transition-all duration-300 ease-in-out">
 
@@ -56,6 +56,25 @@
 </body>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.from("#welcome-section", {
+            opacity: 0,
+            y: 80,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+
+        gsap.from("#welcome-section > div", {
+            opacity: 0,
+            y: 40,
+            duration: 1,
+            delay: 0.3,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+    });
+</script>
 
 
 </html>
