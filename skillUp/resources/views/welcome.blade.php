@@ -10,10 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body class="flex flex-col min-h-screen bg-cover bg-center"
-    style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">
+<body class="flex flex-col min-h-screen">
+    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-fill z-[-1]">
+        <source src="{{ asset('images/bg-video.mp4') }}" type="video/mp4">
+    </video>
 
-    <main class="flex-grow px-12">
+    <main class="relative z-10 flex-grow px-12">
         <section
             class="w-full 2md:w-4/7 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl grid grid-cols-1 lg:grid-cols-5 gap-10 transition-all duration-300 ease-in-out">
 

@@ -61,7 +61,7 @@
                         }"
                         x-init="$watch('form', value => localStorage.setItem('authForm', value))"
 
-            class="w-full md:w-1/2 lg:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
+            class="w-full md:w-1/2 xl:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
             <div class="text-center mb-6">
                 <x-heading level="h2" class="mb-8">
@@ -112,6 +112,7 @@
                     
                     <form action="{{ route('login') }}" method="POST" class="space-y-4">
                         @csrf
+
                         @if ($errors->any() && !old('name') && !old('role'))
                             <div x-show="form === 'login'"
                                 class="text-xs md:text-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md"
@@ -123,28 +124,46 @@
                                 </ul>
                             </div>
                         @endif
+
                         <div id="login-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
 
+                        <!-- Email -->
                         <div class="space-y-1">
                             <x-label for="email">{{ __('messages.auth.email') }}</x-label>
-                            <input type="email" name="email" id="email"
-                                class="w-full px-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
-                                required value="{{ old('email') }}">
+                            <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <x-icon name="mail" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
+                                </div>
+                                <input type="email" name="email" id="email"
+                                    value="{{ old('email') }}"
+                                    class="w-full pl-10 pr-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
+                                    required>
+                            </div>
                         </div>
 
+                        <!-- Password -->
                         <div class="space-y-1">
                             <x-label for="password">{{ __('messages.auth.password') }}</x-label>
-                            <input type="password" name="password" id="password"
-                                class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
-                                required>
+                            <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <x-icon name="password" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
+                                </div>
+                                <input type="password" name="password" id="password"
+                                    class="w-full pl-10 pr-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
+                                    required>
+                            </div>
                         </div>
 
-                        <div class="flex w-fit items-center gap-2 text-sm text-gray-700 dark:text-gray-300 group">
+                        <div class="flex w-full justify-between items-center gap-2 text-xs md:text-sm 2md:text-base text-gray-700 dark:text-gray-300 group">
+                            <label for="remember" class="cursor-pointer group-hover:text-themeBlue transition-colors duration-200">
                             <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}
                                 class="rounded-md border-gray-300 dark:border-gray-600 text-themeBlue focus:ring-2 focus:ring-themeBlue transition-colors duration-200">
-                            <label for="remember" class="cursor-pointer group-hover:text-themeBlue transition-colors duration-200">
                                 {{ __('messages.auth.remember') }}
                             </label>
+                            <a href="{{ route('password.request') }}"
+                                class="block text-center text-blue-600 hover:underline transition-all duration-200 hover:text-blue-800">
+                                {{ __('messages.auth.forgot-password') }}
+                            </a>
                         </div>
 
                         <button type="submit"
@@ -152,11 +171,8 @@
                             {{ __('messages.auth.acceed') }}
                         </button>
 
-                        <a href="{{ route('password.request') }}"
-                            class="block text-center text-xs md:text-sm 2md:text-base text-blue-600 hover:underline transition-all duration-200 hover:text-blue-800">
-                            {{ __('messages.auth.forgot-password') }}
-                        </a>
                         
+
                         <p class="text-xs md:text-sm 2md:text-base text-center text-gray-500 dark:text-gray-300">
                             <template x-if="form === 'login'">
                                 <span>{{ __('messages.auth.no-account') }}
@@ -175,9 +191,9 @@
                             </button>
                         </a>
                     </form>
+
                 </div>
 
-                <!-- FORMULARIO REGISTRO -->
                 <div x-show="form === 'register'" 
                      x-transition:enter="transition ease-out duration-600 transform"
                      x-transition:enter-start="opacity-0 translate-x-full scale-95"
@@ -207,32 +223,57 @@
 
                     <div id="register-errors" class="bg-red-100 text-red-700 p-4 rounded hidden"></div>
 
-                    @foreach (['name' => 'messages.profile.name', 'lastName' => 'messages.profile.last-name', 'email' => 'messages.profile.email',] as $field => $label)
-                        <input type="{{ $field === 'email' ? 'email' : 'text' }}" name="{{ $field }}"
-                            placeholder="{{ __($label) }}" value="{{ old($field) }}"
+                    @foreach (['name' => 'messages.profile.name', 'lastName' => 'messages.profile.last-name', 'email' => 'messages.profile.email'] as $field => $label)
+                    @if ($field === 'email')
+                        <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]">
+                            <!-- Icono -->
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <x-icon name="mail" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
+                            </div>
+
+                            <input type="email" name="email"
+                                placeholder="{{ __('messages.auth.email') }}"
+                                value="{{ old('email') }}"
+                                class="w-full pl-10 pr-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
+                                required>
+                        </div>
+
+                    @else
+                        <input
+                            type="text"
+                            name="{{ $field }}"
+                            placeholder="{{ __($label) }}"
+                            value="{{ old($field) }}"
                             class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
-                            required>
-                    @endforeach
+                            required
+                        >
+                    @endif
+                @endforeach
+
                     
-                    <div x-data="{ showTip: false }" class="relative w-full">
+                    <div x-data="{ showTip: false }" class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]">
                         <div x-show="showTip"
                             x-transition
                             class="absolute -top-12 sm:-top-10 left-0 w-full bg-black text-white text-xs rounded-lg shadow-lg px-3 py-2 z-10 dark:bg-gray-900"
-                            style="display: none;"
-                        >
+                            style="display: none;">
                             {{ __('messages.password-features') }}
                         </div>
+
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <x-icon name="password" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
+                        </div>
+
                         <input
                             type="password"
                             name="password"
                             placeholder="{{ __('messages.auth.ph-password') }}"
                             @input.debounce.300ms="showTip = $event.target.value.length > 0"
                             @blur="showTip = false"
-                            class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
+                            class="w-full pl-10 pr-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
                             required
                         >
-
                     </div>
+
 
 
                     <input type="password" name="password_confirmation"
