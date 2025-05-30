@@ -156,7 +156,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'last_name' => 'Jonay',
             'email' => 'skillup.help.contact@gmail.com',
-            'password' => Hash::make('AdminJonay1@'),
+            'password' => Hash::make('Administrador1@'),
             'role' => 'Admin',
             'avatar' => null,
             'cv' => null,

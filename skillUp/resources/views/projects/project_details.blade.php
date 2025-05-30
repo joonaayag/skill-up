@@ -41,42 +41,45 @@
                 </x-heading>
             @endif
 
-            
+
             @if ($project->image)
-            <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto" class="w-[80%] mx-auto h-auto rounded-lg shadow-md">
+                <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto"
+                    class="w-[80%] mx-auto h-auto rounded-lg shadow-md">
             @endif
-            
+
             <p class="mb-9 break-words">{{ $project->description }}</p>
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
-                <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
+                <div
+                    class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">
                     <p class="flex gap-2">
                         <x-icon name="user" class="w-5 h-auto" />
-                        <a href="{{ route('profile.public', ['id' => $project->author->id]) }}" class="text-themeBlue hover:underline font-semibold">
+                        <a href="{{ route('profile.public', ['id' => $project->author->id]) }}"
+                            class="text-themeBlue hover:underline font-semibold">
                             {{ $project->author->name . ' ' . $project->author->last_name }}
                         </a>
                     </p>
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $project->views }}</p>
-                    <p class="flex items-center justify-center gap-1">
-                        <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
-                        {{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}
-                    </p>
-                    @auth
-                        <form id="rating-form" action="{{ route('projects.rate', $project->id) }}" method="POST"
-                            class="flex gap-1">
-                            @csrf
-                            @for ($i = 1; $i <= 5; $i++)
-                                <button type="submit" name="rating" value="{{ $i }}"
-                                    class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
-                                                                                {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
-                                    aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
-                                    <x-icon name="star" class="w-3 md:w-4 h-auto" />
-                                </button>
-                            @endfor
-                        </form>
-
-                    @endauth
+                    <div id="rating-container" class="flex items-center gap-3">
+                        <p class="flex items-center justify-center gap-1" id="average-rating">
+                            <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
+                            <span id="rating-value">{{ $project->averageRating() ? number_format($project->averageRating(), 1) : 'N/A' }}</span>
+                        </p>
+                        @auth
+                            <form id="rating-form" data-project-id="{{ $project->id }}" class="flex gap-1">
+                                @csrf
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <button type="button" data-rating="{{ $i }}"
+                                        class="rating-star text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
+                                                   {{ $project->getRatingByUser(auth()->id()) && $project->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                        aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
+                                        <x-icon name="star" class="w-3 md:w-4 h-auto" />
+                                    </button>
+                                @endfor
+                            </form>
+                        @endauth
+                    </div>
                 </div>
                 <div class="flex flex-col justify-end [&>p]:text-black dark:[&>p]:text-themeLightGray">
                     <p class="text-sm text-gray-500">{{ __('messages.project-details.published') . $project->created_at }}
@@ -94,8 +97,8 @@
             <x-heading level="h2" class="mt-2 mb-3">{{ __('messages.project-details.project-files')  }}</x-heading>
 
             @if($project->link)
-                <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.project-details.link')  }}</strong> <a href="{{ $project->link }}"
-                        target="_blank">{{ $project->link }}</a></p>
+                <p class="text-xs md:tex-sm lg:text-base"><strong>{{ __('messages.project-details.link')  }}</strong> <a
+                        href="{{ $project->link }}" target="_blank">{{ $project->link }}</a></p>
             @endif
 
             @if ($project->images && $project->images->count())
@@ -147,15 +150,14 @@
             @if (auth()->id() === $project->author->id)
                 <div x-data="{ open: false }" class="inline-block" x-cloak>
                     <button @click="open = true"
-                    class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{
-                    __('messages.button.delete') }}</button>
+                        class="dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{
+                __('messages.button.delete') }}</button>
 
-                    <div x-show="open" x-cloak
-                    class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
+                    <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
                         <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
-                        @click.outside="open = false">
+                            @click.outside="open = false">
                             <x-heading level="h2"
-                            class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{__('messages.admin.users.heading-confirm')}}</x-heading>
+                                class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{__('messages.admin.users.heading-confirm')}}</x-heading>
                             <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
                                 {{__('messages.admin.projects.delete-text-1')}} <strong>{{ $project->name }}</strong>
                                 {{ __('messages.admin.projects.delete-text-2') }}
@@ -189,26 +191,88 @@
     </div>
 
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('rating-form');
+            const stars = document.querySelectorAll('.rating-star');
+            const ratingValue = document.getElementById('rating-value');
+            const messageDiv = document.getElementById('rating-message');
 
-            if (form) {
-                const inputs = form.querySelectorAll('input, select');
+            if (!form) return; // Si no hay formulario (usuario no autenticado)
 
-                inputs.forEach(input => {
-                    input.addEventListener('change', () => {
-                        form.submit();
+            const projectId = form.dataset.projectId;
+            const csrfToken = form.querySelector('input[name="_token"]').value;
+
+            // Agregar event listeners a todas las estrellas
+            stars.forEach(star => {
+                star.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const rating = parseInt(this.dataset.rating);
+                    submitRating(rating);
+                });
+            });
+
+            function submitRating(rating) {
+                // Deshabilitar botones durante la petición
+                stars.forEach(star => star.disabled = true);
+
+                fetch(`/projects/${projectId}/rate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        rating: rating
+                    })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Actualizar el promedio mostrado
+                            updateAverageRating(data.averageRating);
+
+                            // Actualizar las estrellas seleccionadas
+                            updateStarSelection(rating);
+
+                        } else {
+                            throw new Error(data.message || 'Error al enviar la calificación');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        stars.forEach(star => star.disabled = false);
                     });
+            }
 
-                    if (input.tagName === 'INPUT') {
-                        input.addEventListener('keyup', () => {
-                            clearTimeout(input._timeout);
-                            input._timeout = setTimeout(() => form.submit(), 100);
-                        });
+            function updateAverageRating(newAverage) {
+                if (newAverage && newAverage > 0) {
+                    ratingValue.textContent = parseFloat(newAverage).toFixed(1);
+                } else {
+                    ratingValue.textContent = 'N/A';
+                }
+            }
+
+            function updateStarSelection(userRating) {
+                stars.forEach((star, index) => {
+                    const starValue = index + 1;
+                    if (starValue <= userRating) {
+                        star.classList.remove('text-gray-400');
+                        star.classList.add('text-yellow-400');
+                    } else {
+                        star.classList.remove('text-yellow-400');
+                        star.classList.add('text-gray-400');
                     }
                 });
             }
         });
-
     </script>
 @endsection

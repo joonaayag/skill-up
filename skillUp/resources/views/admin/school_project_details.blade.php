@@ -57,25 +57,25 @@
                     
                     <p class="flex items-center justify-center gap-1"><x-icon name="graphic"
                             class="w-4 h-auto" />{{ $schoolProject->views }}</p>
-                    <p class="flex items-center justify-center gap-1">
-                        <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
-                        {{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'N/A' }}
-                    </p>
-                    @auth
-                        <form id="rating-form" action="{{ route('projects.rate', $schoolProject->id) }}" method="POST"
-                            class="flex gap-1">
-                            @csrf
-                            @for ($i = 1; $i <= 5; $i++)
-                                <button type="submit" name="rating" value="{{ $i }}"
-                                    class="text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
-                                                                    {{ $schoolProject->getRatingByUser(auth()->id()) && $schoolProject->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
-                                    aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
-                                    <x-icon name="star" class="w-3 md:w-4 h-auto" />
-                                </button>
-                            @endfor
-                        </form>
-
-                    @endauth
+                    <div id="rating-container" class="flex items-center gap-3">
+                        <p class="flex items-center justify-center gap-1" id="average-rating">
+                            <label class="text-yellow-400"><x-icon name="star" class="w-3 md:w-4 h-auto" /></label>
+                            <span id="rating-value">{{ $schoolProject->averageRating() ? number_format($schoolProject->averageRating(), 1) : 'N/A' }}</span>
+                        </p>
+                        @auth
+                            <form id="rating-form" data-project-id="{{ $schoolProject->id }}" class="flex gap-1">
+                                @csrf
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <button type="button" data-rating="{{ $i }}"
+                                        class="rating-star text-3xl focus:outline-none transition transform hover:scale-110 cursor-pointer hover:text-yellow-400
+                                                   {{ $schoolProject->getRatingByUser(auth()->id()) && $schoolProject->getRatingByUser(auth()->id())->rating >= $i ? 'text-yellow-400' : 'text-gray-400' }}"
+                                        aria-label="Valorar con {{ $i }} estrella{{ $i > 1 ? 's' : '' }}">
+                                        <x-icon name="star" class="w-3 md:w-4 h-auto" />
+                                    </button>
+                                @endfor
+                            </form>
+                        @endauth
+                    </div>
                 </div>
                 <div class="flex flex-col justify-end [&>p]:text-black dark:[&>p]:text-themeLightGray">
                     <p class="text-sm text-gray-500">
@@ -349,26 +349,88 @@
 
     
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('rating-form');
+            const stars = document.querySelectorAll('.rating-star');
+            const ratingValue = document.getElementById('rating-value');
+            const messageDiv = document.getElementById('rating-message');
 
-            if (form) {
-                const inputs = form.querySelectorAll('input, select');
+            if (!form) return; // Si no hay formulario (usuario no autenticado)
 
-                inputs.forEach(input => {
-                    input.addEventListener('change', () => {
-                        form.submit();
+            const projectId = form.dataset.projectId;
+            const csrfToken = form.querySelector('input[name="_token"]').value;
+
+            // Agregar event listeners a todas las estrellas
+            stars.forEach(star => {
+                star.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const rating = parseInt(this.dataset.rating);
+                    submitRating(rating);
+                });
+            });
+
+            function submitRating(rating) {
+                // Deshabilitar botones durante la petición
+                stars.forEach(star => star.disabled = true);
+
+                fetch(`/projects/${projectId}/rate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        rating: rating
+                    })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Actualizar el promedio mostrado
+                            updateAverageRating(data.averageRating);
+
+                            // Actualizar las estrellas seleccionadas
+                            updateStarSelection(rating);
+
+                        } else {
+                            throw new Error(data.message || 'Error al enviar la calificación');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        stars.forEach(star => star.disabled = false);
                     });
+            }
 
-                    if (input.tagName === 'INPUT') {
-                        input.addEventListener('keyup', () => {
-                            clearTimeout(input._timeout);
-                            input._timeout = setTimeout(() => form.submit(), 100);
-                        });
+            function updateAverageRating(newAverage) {
+                if (newAverage && newAverage > 0) {
+                    ratingValue.textContent = parseFloat(newAverage).toFixed(1);
+                } else {
+                    ratingValue.textContent = 'N/A';
+                }
+            }
+
+            function updateStarSelection(userRating) {
+                stars.forEach((star, index) => {
+                    const starValue = index + 1;
+                    if (starValue <= userRating) {
+                        star.classList.remove('text-gray-400');
+                        star.classList.add('text-yellow-400');
+                    } else {
+                        star.classList.remove('text-yellow-400');
+                        star.classList.add('text-gray-400');
                     }
                 });
             }
         });
-
     </script>
 @endsection
