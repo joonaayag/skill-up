@@ -64,7 +64,7 @@ class AdminController extends Controller
 
     public function destroyUser($id)
     {
-        if (auth()->user()->role !== 'Admin') {
+        if (!in_array(auth()->user()->role, ['Admin', 'Profesor'])) {
             abort(403, 'Acceso denegado');
         }
         $user = User::findOrFail($id);
