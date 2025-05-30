@@ -384,7 +384,7 @@ return [
             'selected-file' => 'Valgt fil: ',
             'reset-password' => 'Tilbakestill passord',
             'select-students' => 'Velg elev: ',
-            'all-students' => 'Alle elever på skolen',
+            'all-users' => 'Alle brukere på skolen',
             'title' => 'Liste over brukere',
             'table-name' => 'Fornavn',
             'table-last-name' => 'Etternavn',
@@ -461,6 +461,17 @@ return [
             'no-comments' => 'Ingen kommentarer registrert.',
             'not-allowed' => 'Du har ikke tillatelse til å slette kommentarer',
         ],
+        'teachers' => [
+            'heading-confirm' => 'Er du sikker?',
+            'import-confirm' => 'Vil du importere lærere fra denne filen?',
+            'selected-file' => 'Valgt fil: ',
+            'import-failed' => 'Kunne ikke importere lærere',
+            'import-success' => 'Lærere importert med suksess.',
+        ],
+        'import-teachers' => 'Importer lærere',
+        'students-format' => 'Husk formatet: Fornavn;Etternavn;E-post;Fødselsdato(ÅÅÅÅ-MM-DD);Nåværende trinn',
+        'teacher-format' => 'Husk formatet: Fornavn;Etternavn;E-post;Spesialisering;Avdeling',
+
     ],
     'chatbot' => [
         'text-some' => 'Skrive noe...',

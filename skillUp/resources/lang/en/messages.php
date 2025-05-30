@@ -395,7 +395,7 @@ return [
             'selected-file' => 'Selected file: ',
             'reset-password' => 'Reset passwords',
             'select-students' => 'Select student: ',
-            'all-students' => 'All students from the center',
+            'all-users' => 'All users from the center',
             'title' => 'List of users',
             'table-name' => 'First name',
             'table-last-name' => 'Last name',
@@ -472,6 +472,17 @@ return [
             'no-school-project' => 'Does not belong to a school project',
             'no-comments' => 'No comments registered.'
         ],
+        'teachers' => [
+            'heading-confirm' => 'Are you sure?',
+            'import-confirm' => 'Do you want to import teachers from this file?',
+            'selected-file' => 'Selected file: ',
+            'import-failed' => 'Failed to import teachers',
+            'import-success' => 'Teachers imported successfully.',
+        ],
+        'import-teachers' => 'Import teachers',
+        'students-format' => 'Remember the format: First Name;Last Name;Email;Date of Birth(YYYY-MM-DD);Current Grade',
+        'teacher-format' => 'Remember the format: First Name;Last Name;Email;Specialization;Department',
+
     ],
     'chatbot' => [
         'text-some' => 'Text something...',

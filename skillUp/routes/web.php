@@ -192,7 +192,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/profesor/importar-alumnos', [AdminController::class, 'importStudents'])->name('professor.import.students');
         Route::post('/profesor/reset-passwords', [AdminController::class, 'resetPasswords'])->name('professor.reset.passwords');
 
-
+        Route::post('/admin/import/teachers', [AdminController::class, 'importTeachers'])->name('admin.import.teachers');
 
         Route::get('/admin/proyectos-escolares', [AdminController::class, 'showSchoolProjects'])->name('admin.school_projects');
         Route::get('/admin/proyectos-escolares/{id}/detalles', [AdminController::class, 'detailsSchoolProject'])->name('admin.school_project.details');

@@ -385,7 +385,7 @@ return [
             'selected-file' => '已選擇的檔案：',
             'reset-password' => '重設密碼',
             'select-students' => '選擇學生：',
-            'all-students' => '該中心的所有學生',
+            'all-users' => '該中心的所有用戶',
             'title' => '用戶列表',
             'table-name' => '名字',
             'table-last-name' => '姓氏',
@@ -463,6 +463,17 @@ return [
             'not-allowed' => '你沒有權限刪除留言',
 
         ],
+        'teachers' => [
+            'heading-confirm' => '你確定嗎？',
+            'import-confirm' => '你要從此檔案匯入教師嗎？',
+            'selected-file' => '已選檔案：',
+            'import-failed' => '匯入教師失敗',
+            'import-success' => '教師匯入成功。',
+        ],
+        'import-teachers' => '匯入教師',
+        'students-format' => '請記住格式：名字;姓氏;電子郵件;出生日期(YYYY-MM-DD);目前年級',
+        'teacher-format' => '請記住格式：名字;姓氏;電子郵件;專業;部門',
+
     ],
     'chatbot' => [
         'text-some' => '著述...',

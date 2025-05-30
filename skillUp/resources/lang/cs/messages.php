@@ -377,7 +377,7 @@ return [
          'selected-file' => 'Vybraný soubor: ',
          'reset-password' => 'Obnovit hesla',
          'select-students' => 'Vyberte studenta: ',
-         'all-students' => 'Všichni studenti ze školy',
+         'all-users' => 'Všichni uživatelé ze školy',
          'title' => 'Seznam uživatelů',
          'table-name' => 'Jméno',
          'table-last-name' => 'Příjmení',
@@ -454,6 +454,17 @@ return [
          'not-allowed' => 'Nemáte oprávnění mazat komentáře',
 
       ],
+      'teachers' => [
+         'heading-confirm' => 'Jsi si jistý?',
+         'import-confirm' => 'Chceš importovat učitele z tohoto souboru?',
+         'selected-file' => 'Vybraný soubor: ',
+         'import-failed' => 'Chyba při importu učitelů',
+         'import-success' => 'Učitelé byli úspěšně importováni.',
+      ],
+      'import-teachers' => 'Importovat učitele',
+      'students-format' => 'Pamatuj na formát: Jméno;Příjmení;Email;Datum narození(RRRR-MM-DD);Aktuální ročník',
+      'teacher-format' => 'Pamatuj na formát: Jméno;Příjmení;Email;Specializace;Oddělení',
+
    ],
    'chatbot' => [
       'text-some' => 'Něco napsat...',

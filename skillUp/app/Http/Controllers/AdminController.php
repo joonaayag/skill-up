@@ -257,6 +257,90 @@ class AdminController extends Controller
 
     }
 
+
+    public function importTeachers(Request $request)
+{
+    $user = auth()->user();
+
+    if (!in_array($user->role, ['Administrador', 'Profesor'])) {
+        abort(403, 'Acceso denegado');
+    }
+
+    $request->validate([
+        'teachers_file' => 'required|file|mimes:txt|max:2048',
+    ]);
+
+    $path = $request->file('teachers_file')->getRealPath();
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+    $errors = [];
+    $lineNumber = 1;
+
+    foreach ($lines as $line) {
+        $parts = explode(';', $line);
+
+        if (count($parts) < 5) {
+            $errors[] = __('messages.admin.users.lines') . ' ' . $lineNumber . ": No tiene suficientes campos.";
+            $lineNumber++;
+            continue;
+        }
+
+        [$name, $last_name, $email, $specialization, $department] = array_map('trim', $parts);
+
+        $data = [
+            'name' => $name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'specialization' => $specialization,
+            'department' => $department,
+            'educationalCenter' => $user->detail->educational_center, // asignado automáticamente
+        ];
+
+        $rules = [
+            'name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:40',
+            'email' => 'required|email|string|max:50|unique:users,email',
+            'specialization' => 'required|string|max:100',
+            'department' => 'required|string|max:100',
+            'educationalCenter' => 'required|string|max:100',
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            $errors[] = __('messages.admin.users.lines') . ' ' . $lineNumber . ": " . implode(' | ', $validator->errors()->all());
+            $lineNumber++;
+            continue;
+        }
+
+        $newUser = new User();
+        $newUser->name = ucfirst($name);
+        $newUser->last_name = ucfirst($last_name);
+        $newUser->email = $email;
+        $newUser->password = bcrypt('Password1@');
+        $newUser->role = 'Profesor';
+        $newUser->save();
+
+        $detail = new UserDetail();
+        $detail->user_id = $newUser->id;
+        $detail->educational_center = $data['educationalCenter'];
+        $detail->specialization = ucfirst($specialization);
+        $detail->department = ucfirst($department);
+        $detail->save();
+
+        $lineNumber++;
+    }
+
+    if (!empty($errors)) {
+        return back()->with('message', __('messages.admin.teachers.import-failed'))->with('errors', $errors);
+    }
+
+        return back()
+            ->with('message', __('messages.admin.teachers.import-failed'))
+            ->with('importErrors', $errors);
+    }
+
+
     public function resetPasswords(Request $request)
     {
         $request->validate([

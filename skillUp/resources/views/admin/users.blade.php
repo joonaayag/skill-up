@@ -5,7 +5,7 @@
         @if(auth()->user()->role === 'Admin')
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.title') }}</x-heading>
     @elseif(auth()->user()->role === 'Profesor')
-        <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.all-students') }}</x-heading>
+        <x-heading level="h1" class="mb-10">{{ __('messages.admin.users.all-users') }}</x-heading>
     @endif
 
 
@@ -15,7 +15,7 @@
                 <strong class="mb-2">{{__('messages.admin.users.import-error')}}</strong>
                 <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                     <ul class="list-disc list-inside space-y-1 text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
-                        @foreach (session('errors') as $error)
+                        @foreach (session('importErrors') as $error)
                             <li> {{ $error }}</li>
                         @endforeach
                     </ul>
@@ -535,7 +535,7 @@
 
                                         <!-- Tooltip -->
                                         <div class="absolute bottom-full mb-2 hidden group-hover:flex w-64 px-4 py-2 bg-gray-800 text-white text-xs rounded shadow-lg dark:bg-gray-700">
-                                            Recuerda el formato 'Nombre;Apellido;Correo;Fecha de nacimiento(AAAA-MM-DD);Curso actual'
+                                            {{__('messages.admin.students-format')}}
                                         </div>
                                     </div>
                                 </div>
@@ -554,6 +554,55 @@
                         </x-modal>
                     </div>
                 </div>
+                <div x-data="importTeachersModal()" x-cloak>
+                    <form id="importTeachersForm" x-ref="uploadTeacherForm" action="{{ route('admin.import.teachers') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <label class="flex items-center justify-center w-full px-4 py-4 bg-themeGrape text-white font-medium rounded-lg cursor-pointer hover:bg-themeGrape/80 transition">
+                            <input type="file" name="teachers_file" accept=".txt" required class="hidden" @change="handleFileChosen($event)">
+                            {{ __('messages.admin.import-teachers') }}
+                        </label>
+                    </form>
+
+                    <div :show="'confirmTeachersUpload'" @close="confirmTeachersUpload = false">
+                        <x-modal :show="'confirmTeachersUpload'" @close="confirmTeachersUpload = false">
+                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">
+                                {{ __('messages.admin.users.heading-confirm') }}
+                            </x-heading>
+                            <p class="text-center text-gray-800 dark:text-themeLightGray">
+                                {{ __('messages.admin.teachers.import-confirm') }}
+                            </p>
+                            <p x-show="fileName" class="mt-2 text-sm text-center text-gray-700 dark:text-themeLightGray">
+                                {{ __('messages.admin.teachers.selected-file') }} <span class="font-semibold" x-text="fileName"></span>
+                            </p>
+
+                            <!-- Tooltip -->
+                            <div class="relative flex justify-center mb-6">
+                                <div class="group relative flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 cursor-pointer" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                                    </svg>
+                                    <div class="absolute bottom-full mb-2 hidden group-hover:flex w-80 px-4 py-2 bg-gray-800 text-white text-xs rounded shadow-lg dark:bg-gray-700">
+                                        {{ __('messages.admin.teacher-format') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex w-full justify-end gap-2">
+                                <button @click="confirmTeachersUpload = false"
+                                    class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                    {{ __('messages.button.cancel') }}
+                                </button>
+                                <button @click="submitForm"
+                                    class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/90 transition cursor-pointer">
+                                    {{ __('messages.button.save') }}
+                                </button>
+                            </div>
+                        </x-modal>
+                    </div>
+                </div>
+
 
                 @if (isset($students) && $students->isNotEmpty())
 
@@ -651,6 +700,25 @@
             }
         }
     }   
+
+
+    function importTeachersModal() {
+    return {
+        fileName: '',
+        confirmTeachersUpload: false,
+        handleFileChosen(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.fileName = file.name;
+                this.confirmTeachersUpload = true;
+            }
+        },
+        submitForm() {
+            this.$refs.uploadTeacherForm.submit();
+        }
+    };
+}
+
 
     document.addEventListener('DOMContentLoaded', function() {
     // Manejo de previsualización de imágenes

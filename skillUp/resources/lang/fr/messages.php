@@ -384,7 +384,7 @@ return [
             'selected-file' => 'Fichier sélectionné : ',
             'reset-password' => 'Réinitialiser les mots de passe',
             'select-students' => 'Sélectionner un élève : ',
-            'all-students' => 'Tous les élèves du centre',
+            'all-users' => 'Tous les utilisateurs du centre',
             'title' => 'Liste des utilisateurs',
             'table-name' => 'Prénom',
             'table-last-name' => 'Nom',
@@ -461,6 +461,17 @@ return [
             'no-comments' => 'Aucun commentaire enregistré.',
             'not-allowed' => 'Vous n’êtes pas autorisé à supprimer des commentaires',
         ],
+        'teachers' => [
+            'heading-confirm' => 'Es-tu sûr ?',
+            'import-confirm' => 'Souhaites-tu importer les enseignants depuis ce fichier ?',
+            'selected-file' => 'Fichier sélectionné : ',
+            'import-failed' => 'Échec de l’importation des enseignants',
+            'import-success' => 'Enseignants importés avec succès.',
+        ],
+        'import-teachers' => 'Importer les enseignants',
+        'students-format' => 'Souviens-toi du format : Prénom;Nom;Email;Date de naissance(AAAA-MM-JJ);Classe actuelle',
+        'teacher-format' => 'Souviens-toi du format : Prénom;Nom;Email;Spécialisation;Département',
+
     ],
     'chatbot' => [
         'text-some' => 'Écrire quelque chose...',
