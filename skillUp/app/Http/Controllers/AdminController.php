@@ -250,7 +250,10 @@ class AdminController extends Controller
             return back()->with('message', __('messages.admin.users.import-error'))->with('errors', $errors);
         }
 
-        return back()->with('message', __('messages.admin.users.import-success'));
+        return back()
+            ->with('message', __('messages.admin.users.import-error'))
+            ->with('importErrors', $errors);
+
     }
 
     public function resetPasswords(Request $request)

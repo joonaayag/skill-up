@@ -10,7 +10,7 @@
 
 
         
-        @if(session('errors'))
+        @if(session('importErrors'))
             <div class="alert alert-danger">
                 <strong class="mb-2">{{__('messages.admin.users.import-error')}}</strong>
                 <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
