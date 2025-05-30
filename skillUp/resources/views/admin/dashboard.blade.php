@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto px-6 py-10">
-        <x-heading level="h1" class="mb-6 text-3xl font-bold text-gray-800 dark:text-white">
+        <x-heading level="h1" class="mb-6 text-gray-800 dark:text-white">
             {{ __('messages.admin.dashboard.title') }}
         </x-heading>
         @if ($errors->any())

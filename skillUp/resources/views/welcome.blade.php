@@ -2,10 +2,10 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Skill Up</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    <meta charset="UTF-8">
+    <title>Skill Up</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('icons/logo.svg') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -54,27 +54,5 @@
 
     <x-footer />
 </body>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        gsap.from("#welcome-section", {
-            opacity: 0,
-            y: 80,
-            duration: 1.2,
-            ease: "power3.out"
-        });
-
-        gsap.from("#welcome-section > div", {
-            opacity: 0,
-            y: 40,
-            duration: 1,
-            delay: 0.3,
-            stagger: 0.2,
-            ease: "power2.out"
-        });
-    });
-</script>
-
 
 </html>
