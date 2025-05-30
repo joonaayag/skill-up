@@ -187,7 +187,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="relative mb-12 sm:mb-8">
+                    <div class="relative mb-16 sm:mb-12">
                         <img id="bannerPreview"
                             src="{{ auth()->user()->banner ? Storage::disk('s3')->url(auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
                             class="w-full h-20 md:h-40 object-cover cursor-pointer" alt="Banner">
@@ -201,7 +201,11 @@
                             <input type="file" name="profile" id="fotoPerfilInput" accept="image/*" class="hidden">
                         </div>
                     </div>
-
+                    <div x-data="{ showTooltip: false }" x-cloak>
+                        <div class="flex items-center gap-1">
+                            <x-extrainfo :text="__('Por favor trate de subir imágenes en formato JPG o PNG, con un tamaño máximo de 1MB y en caso de modificar más de un archivo debe ser de uno en uno.')" />
+                        </div>
+                    </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-name') }}</label>
