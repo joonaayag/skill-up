@@ -7,7 +7,7 @@
     <!-- Logo -->
     <div class="flex flex-grow xl:basis-0">
         <a href="{{ route('dashboard') }}">
-            <x-icon name="skill-up-logo" class="w-20 sm:w-28 2md:w-32 lg:w-48 h-auto fill-current -translate-x-5" />
+            <x-icon name="skill-up-logo" class="w-28 2md:w-32 lg:w-48 h-auto fill-current -translate-x-5" />
         </a>
     </div>
 
