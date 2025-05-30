@@ -11,7 +11,7 @@
 </head>
 
 <body class="flex flex-col min-h-screen">
-    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-fill z-[-1]">
+    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover z-[-1]">
         <source src="{{ asset('images/bg-video.mp4') }}" type="video/mp4">
     </video>
 
