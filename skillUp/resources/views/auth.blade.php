@@ -144,13 +144,22 @@
                         <!-- Password -->
                         <div class="space-y-1">
                             <x-label for="password">{{ __('messages.auth.password') }}</x-label>
-                            <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]">
+                            <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]" x-data="{ showPassword: false }">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <x-icon name="password" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
                                 </div>
-                                <input type="password" name="password" id="password"
-                                    class="w-full pl-10 pr-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
+                                <input :type="showPassword ? 'text' : 'password'" name="password" id="password"
+                                    class="w-full pl-10 pr-12 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
                                     required>
+                                <button type="button" @click="showPassword = !showPassword"
+                                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
+                                    <template x-if="!showPassword">
+                                        <x-icon name="eye" class="w-5 h-5" />
+                                    </template>
+                                    <template x-if="showPassword">
+                                        <x-icon name="close-eye" class="w-5 h-5" />
+                                    </template>
+                                </button>
                             </div>
                         </div>
 
