@@ -530,27 +530,15 @@ return [
         'response-chat-question' => '我工作正常，謝謝您的詢問。我是一個沒有感情的虛擬助手，但我在這裡幫助您需要的任何事情。',
     ],
     'email' => [
-        'title' => '您的申請狀態已更新',
-        'hello' => '您好，',
-        'text-1' => '您對職位 ',
-        'text-2' => '由 ',
-        'text-3' => '所發佈的申請已更新。',
-        'text-4' => '職位描述：',
-        'text-5' => '您申請的目前狀態：',
-        'text-6' => '感謝您的關注。',
-        'text-7' => '— SkillUp 團隊',
-        'new' => '您的申請已成功提交，稍後我們將進行審核。',
-        'review' => '我們正在審查您的資料。會隨時通知您進度。',
-        'accepted' => '恭喜！您的申請已被接受，我們將儘快與您聯繫。',
-        'rejected' => '很遺憾地通知您，這次您的申請未被錄取。',
-        'text-title-1' => '您針對職缺 ',
-        'text-title-2' => ' 的申請狀態已更新。',
-        'message' => '目前更新的狀態為：',
+        'title' => '你的申請狀態已更新',
+        'message' => '你對職缺「:offer_name」的申請已更新。'
+            . '最新狀態為：:status_text。:custom_message',
+
         'messages' => [
             'nueva' => '新的',
             'en revisión' => '審核中',
-            'aceptado' => '已接受',
-            'rechazado' => '已拒絕',
+            'aceptado' => '已錄取',
+            'rechazado' => '未錄取',
         ],
     ],
     'notifications' => [
@@ -572,8 +560,7 @@ return [
         ],
         'message-create-project' => [
             'title' => '專案已註冊',
-            'message-1' => '您的專案 ',
-            'message-2' => ' 已成功建立。',
+            'message' => '你的專案「:project_title」已成功建立。',
         ],
         'message-project-available' => [
             'title' => '有新專案可用',
@@ -581,41 +568,35 @@ return [
         ],
         'message-new-job-offer' => [
             'title' => '有新的職缺',
-            'message' => '有一則新職缺已發布：',
+            'message' => '有一則新職缺已發布：":offer"',
         ],
         'message-sp-published' => [
             'title' => '學校專案已發布',
-            'message-1' => '您的專案 ',
-            'message-2' => ' 已成功註冊。',
+            'message' => '你的專案「:project_title」已成功註冊。',
         ],
         'message-offer-closed' => [
             'title' => '職缺已關閉',
-            'message-1' => '職缺 ',
-            'message-2' => ' 已被管理員關閉。',
+            'message' => '職缺「:offer_name」已被管理員關閉。',
         ],
         'message-offer-deleted' => [
             'title' => '職缺已撤回',
-            'message-1' => '您申請的職缺 ',
-            'message-2' => ' 已被管理員撤回。',
+            'message' => '你應徵的職缺「:offer_name」已由 :deleted_by 撤回。',
         ],
         'message-project-updated' => [
-            'title' => '您的專案已更新',
-            'message-1' => '專案 ',
-            'message-2' => ' 已被管理員更新。',
+            'title' => '你的專案已被更新',
+            'message' => '專案「:project_title」已由管理員更新。',
         ],
         'message-project-deleted' => [
-            'title' => '您的專案已刪除',
-            'message-1' => '專案 ',
-            'message-2' => ' 已被管理員刪除。',
+            'title' => '你的專案已被刪除',
+            'message' => '專案「:project_title」已由管理員刪除。',
         ],
         'message-app-received' => [
             'title' => '收到新的申請',
-            'message' => ' 已申請你的職缺 ',
+            'message' => ':user_name 已應徵您的職缺「:offer_name」。',
         ],
         'message-app-deleted' => [
             'title' => '你的申請已被撤回',
-            'message-1' => '你對職缺 ',
-            'message-2' => ' 的申請已被 ',
+            'message' => '你對職缺「:offer_name」的申請已由 :deleted_by 撤回。',
         ],
         'message-new-offer' => [
             'title' => '有新的職缺可供應徵！',
@@ -623,24 +604,21 @@ return [
         ],
         'message-project-registered' => [
             'title' => '專案已註冊',
-            'message-1' => '你的專案 ',
-            'message-2' => ' 已成功建立。',
+            'message' => '您的專案「:project_title」已成功建立。',
         ],
         'message-project-deleted-teacher' => [
             'title' => '你的專案已被刪除',
-            'message-1' => '專案 ',
-            'message-2' => ' 已被教師刪除。',
+            'message' => '專案「:project_title」已被教師刪除。',
         ],
         'message-project-updated-teacher' => [
             'title' => '你的專案已被更新',
-            'message-1' => '專案 ',
-            'message-2' => ' 已被教師更新。',
+            'message' => '專案「:project_title」已由教師更新。',
         ],
         'message-project-published' => [
             'title' => '學校專案已發布',
-            'message-1' => '你的專案 ',
-            'message-2' => ' 已成功註冊。',
+            'message' => '你的專案「:project_title」已成功註冊。',
         ],
+
 
     ],
     'tags' => [

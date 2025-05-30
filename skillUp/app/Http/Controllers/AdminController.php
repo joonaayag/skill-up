@@ -439,20 +439,20 @@ class AdminController extends Controller
 
         $message = match ($newUser->role) {
             'Alumno' => [
-                'title' => __('messages.notifications.message-student.title'),
-                'message' => __('messages.notifications.message-student.message'),
+                'title' => 'messages.notifications.message-student.title',
+                'message' => 'messages.notifications.message-student.message',
             ],
             'Usuario' => [
-                'title' => __('messages.notifications.message-user.title'),
-                'message' => __('messages.notifications.message-user.message'),
+                'title' => 'messages.notifications.message-user.title',
+                'message' => 'messages.notifications.message-user.message',
             ],
             'Empresa' => [
-                'title' => __('messages.notifications.message-company.title'),
-                'message' => __('messages.notifications.message-company.message'),
+                'title' => 'messages.notifications.message-company.title',
+                'message' => 'messages.notifications.message-company.message',
             ],
             'Profesor' => [
-                'title' => __('messages.notifications.message-teacher.title'),
-                'message' => __('messages.notifications.message-teacher.message'),
+                'title' => 'messages.notifications.message-teacher.title',
+                'message' => 'messages.notifications.message-teacher.message',
             ],
             default => null,
         };
@@ -526,11 +526,14 @@ class AdminController extends Controller
             'author_id' => auth()->id(),
         ]);
 
-        Notification::firstOrCreate([
+        Notification::create([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
-            'title' => __('messages.notifications.message-create-project.title'),
-            'message' => __('messages.notifications.message-create-project.message-1') . $project->title . __('messages.notifications.message-create-project.message-2'),
+            'title' => 'messages.notifications.message-create-project.title',
+            'message' => 'messages.notifications.message-create-project.message',
+            'data' => [
+                'project_title' => $project->title,
+            ],
         ]);
         $otrosUsuarios = User::where('id', '!=', auth()->id())->get();
 
@@ -538,8 +541,8 @@ class AdminController extends Controller
             Notification::firstOrCreate([
                 'user_id' => $usuario->id,
                 'type' => 'proyecto',
-                'title' => __('messages.notifications.message-project-available.title'),
-                'message' => __('messages.notifications.message-project-available.message'),
+                'title' => 'messages.notifications.message-project-available.title',
+                'message' => 'messages.notifications.message-project-available.message',
             ]);
         }
 
@@ -639,8 +642,11 @@ class AdminController extends Controller
             Notification::create([
                 'user_id' => $usuario->id,
                 'type' => 'oferta',
-                'title' => __('messages.notifications.message-new-job-offer.title'),
-                'message' => __('messages.notifications.message-new-job-offer.message') . $jobOffer->name . '".',
+                'title' => 'messages.notifications.message-new-job-offer.title',
+                'message' => 'messages.notifications.message-new-job-offer.message',
+                'data' => [
+                    'offer' => $jobOffer->name,
+                ],
             ]);
         }
 
@@ -706,8 +712,11 @@ class AdminController extends Controller
         Notification::create([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
-            'title' => __('messages.notifications.message-sp-published.title'),
-            'message' => __('messages.notifications.message-sp-published.message-1') . $project->title . __('messages.notifications.message-sp-published.message-2'),
+            'title' => 'messages.notifications.message-sp-published.title',
+            'message' => 'messages.notifications.message-sp-published.message',
+            'data' => [
+                'project_title' => $project->title,
+            ],
         ]);
 
         if ($request->hasFile('files')) {
@@ -827,8 +836,11 @@ class AdminController extends Controller
                 Notification::create([
                     'user_id' => $application->user->id,
                     'type' => 'oferta',
-                    'title' => __('messages.notifications.message-offer-closed.title'),
-                    'message' => __('messages.notifications.message-offer-closed.message-1') . $jobOffer->name . __('messages.notifications.message-offer-closed.message-2'),
+                    'title' => 'messages.notifications.message-offer-closed.title',
+                    'message' => 'messages.notifications.message-offer-closed.message',
+                    'data' => [
+                        'offer_name' => $jobOffer->name,
+                    ],
                 ]);
             }
         }
@@ -851,8 +863,12 @@ class AdminController extends Controller
             Notification::create([
                 'user_id' => $application->user->id,
                 'type' => 'oferta',
-                'title' => __('messages.notifications.message-offer-deleted.title'),
-                'message' => __('messages.notifications.message-offer-deleted.message-1') . $jobOffer->name . __('messages.notifications.message-offer-deleted.message-2'),
+                'title' => 'messages.notifications.message-offer-deleted.title',
+                'message' => 'messages.notifications.message-offer-deleted.message',
+                'data' => [
+                    'offer_name' => $jobOffer->name,
+                    'deleted_by' => auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor',
+                ],
             ]);
         }
 
@@ -942,8 +958,11 @@ class AdminController extends Controller
             Notification::create([
                 'user_id' => $project->teacher_id,
                 'type' => 'proyecto',
-                'title' => __('messages.notifications.message-project-updated.title'),
-                'message' => __('messages.notifications.message-project-updated.message-1') . $project->title . __('messages.notifications.message-project-updated.message-2'),
+                'title' => 'messages.notifications.message-project-updated.title',
+                'message' => 'messages.notifications.message-project-updated.message',
+                'data' => [
+                    'project_title' => $project->title,
+                ],
             ]);
         }
 
@@ -977,8 +996,11 @@ class AdminController extends Controller
             Notification::create([
                 'user_id' => $project->user_id,
                 'type' => 'proyecto',
-                'title' => __('messages.notifications.message-project-deleted.title'),
-                'message' => __('messages.notifications.message-project-deleted.message-1') . $project->title . __('messages.notifications.message-project-deleted.message-2'),
+                'title' => 'messages.notifications.message-project-deleted.title',
+                'message' => 'messages.notifications.message-project-deleted.message',
+                'data' => [
+                    'project_title' => $project->title,
+                ],
             ]);
         }
 

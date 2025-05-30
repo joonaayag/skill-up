@@ -59,8 +59,11 @@
                         <li
                             class="flex flex-row justify-between items-start p-3 hover:bg-themeLightGray/20 [&>div>span]text-themeLightGray cursor-default transition">
                             <div class="flex flex-col">
-                                <span class="text-sm font-semibold">{{ $notification->title }}</span>
-                                <span class="text-sm">{{ $notification->message}}</span>
+                                <span class="text-sm font-semibold">{{ __($notification->title) }}</span>
+                                <span class="text-sm">
+                                    {{ __($notification->message, $notification->data ?? []) }}
+                                </span>
+
                             </div>
                             <form method="POST" action="{{ route('notifications.destroy', $notification->id) }}"
                                 class="form-eliminar-notificacion" data-id="{{ $notification->id }}">

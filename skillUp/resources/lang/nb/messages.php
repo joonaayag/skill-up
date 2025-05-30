@@ -528,25 +528,13 @@ return [
         'response-chat-question' => 'Jeg fungerer perfekt, takk for at du spør. Jeg er en virtuell assistent uten følelser, men jeg er her for å hjelpe deg med det du måtte trenge.',
     ],
     'email' => [
-        'title' => 'Statusen på søknaden din har blitt oppdatert',
-        'hello' => 'Hei ',
-        'text-1' => 'Din søknad på stillingen ',
-        'text-2' => 'publisert av ',
-        'text-3' => 'har blitt oppdatert.',
-        'text-4' => 'Stillingsbeskrivelse:',
-        'text-5' => 'Nåværende status for søknaden din:',
-        'text-6' => 'Takk for interessen din.',
-        'text-7' => '— SkillUp-teamet',
-        'new' => 'Søknaden din har blitt registrert og vil snart bli vurdert.',
-        'review' => 'Vi gjennomgår profilen din. Du vil bli holdt informert.',
-        'accepted' => 'Gratulerer! Søknaden din har blitt akseptert. Vi tar kontakt med deg snart.',
-        'rejected' => 'Vi beklager å informere deg om at søknaden din ikke ble godkjent denne gangen.',
-        'text-title-1' => 'Søknaden din for stillingen ',
-        'text-title-2' => 'har blitt oppdatert. ',
-        'message' => 'Oppdatert status: ',
+        'title' => 'Statusen for søknaden din er oppdatert',
+        'message' => 'Søknaden din for tilbudet ":offer_name" har blitt oppdatert. '
+            . 'Den nye statusen er: :status_text. :custom_message',
+
         'messages' => [
             'nueva' => 'Ny',
-            'en revisión' => 'Til vurdering',
+            'en revisión' => 'Under vurdering',
             'aceptado' => 'Godkjent',
             'rechazado' => 'Avslått',
         ],
@@ -570,8 +558,7 @@ return [
         ],
         'message-create-project' => [
             'title' => 'Prosjekt registrert',
-            'message-1' => 'Ditt prosjekt ',
-            'message-2' => ' har blitt opprettet.',
+            'message' => 'Ditt prosjekt ":project_title" har blitt opprettet.',
         ],
         'message-project-available' => [
             'title' => 'Nye prosjekter tilgjengelig',
@@ -579,41 +566,35 @@ return [
         ],
         'message-new-job-offer' => [
             'title' => 'Nytt jobbtilbud tilgjengelig',
-            'message' => 'Et nytt jobbtilbud har blitt publisert: ',
+            'message' => 'Et nytt jobbtilbud har blitt publisert: ":offer"',
         ],
         'message-sp-published' => [
             'title' => 'Skoleprosjekt publisert',
-            'message-1' => 'Ditt prosjekt ',
-            'message-2' => ' har blitt registrert.',
+            'message' => 'Ditt prosjekt ":project_title" har blitt registrert.',
         ],
         'message-offer-closed' => [
             'title' => 'Tilbud stengt',
-            'message-1' => 'Tilbudet ',
-            'message-2' => ' har blitt stengt av administratoren.',
+            'message' => 'Tilbudet ":offer_name" har blitt stengt av administrator.',
         ],
         'message-offer-deleted' => [
             'title' => 'Tilbud trukket tilbake',
-            'message-1' => 'Tilbudet ',
-            'message-2' => ' som du søkte på har blitt trukket tilbake av administratoren.',
+            'message' => 'Tilbudet ":offer_name" som du søkte på, har blitt trukket tilbake av :deleted_by.',
         ],
         'message-project-updated' => [
             'title' => 'Prosjektet ditt har blitt oppdatert',
-            'message-1' => 'Prosjektet ',
-            'message-2' => ' har blitt oppdatert av administratoren.',
+            'message' => 'Prosjektet ":project_title" har blitt oppdatert av administrator.',
         ],
         'message-project-deleted' => [
             'title' => 'Prosjektet ditt har blitt slettet',
-            'message-1' => 'Prosjektet ',
-            'message-2' => ' har blitt slettet av administratoren.',
+            'message' => 'Prosjektet ":project_title" har blitt slettet av administrator.',
         ],
         'message-app-received' => [
             'title' => 'Ny søknad mottatt',
-            'message' => ' har søkt på din stillingsutlysning ',
+            'message' => ':user_name har søkt på tilbudet ditt ":offer_name".',
         ],
         'message-app-deleted' => [
-            'title' => 'Søknaden din har blitt trukket tilbake',
-            'message-1' => 'Søknaden din til stillingen ',
-            'message-2' => ' har blitt trukket tilbake av ',
+            'title' => 'Søknaden din er trukket tilbake',
+            'message' => 'Søknaden din for tilbudet ":offer_name" har blitt trukket tilbake av :deleted_by.',
         ],
         'message-new-offer' => [
             'title' => 'Ny stilling tilgjengelig!',
@@ -621,23 +602,19 @@ return [
         ],
         'message-project-registered' => [
             'title' => 'Prosjekt registrert',
-            'message-1' => 'Ditt prosjekt ',
-            'message-2' => ' har blitt opprettet.',
+            'message' => 'Ditt prosjekt ":project_title" ble opprettet med hell.',
         ],
         'message-project-deleted-teacher' => [
             'title' => 'Prosjektet ditt har blitt slettet',
-            'message-1' => 'Prosjektet ',
-            'message-2' => ' har blitt slettet av lærer.',
+            'message' => 'Prosjektet ":project_title" har blitt slettet av læreren.',
         ],
         'message-project-updated-teacher' => [
             'title' => 'Prosjektet ditt har blitt oppdatert',
-            'message-1' => 'Prosjektet ',
-            'message-2' => ' har blitt oppdatert av lærer.',
+            'message' => 'Prosjektet ":project_title" har blitt oppdatert av læreren.',
         ],
         'message-project-published' => [
             'title' => 'Skoleprosjekt publisert',
-            'message-1' => 'Ditt prosjekt ',
-            'message-2' => ' har blitt registrert.',
+            'message' => 'Ditt prosjekt ":project_title" har blitt registrert.',
         ],
 
     ],

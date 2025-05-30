@@ -65,8 +65,12 @@ class ApplicationController extends Controller
             Notification::create([
                 'user_id' => $company->id,
                 'type' => 'candidatura',
-                'title' => __('messages.notifications.message-app-received.title'),
-                'message' => $application->user->name . $application->user->last_name . __('messages.notifications.message-app-received.message') . $application->jobOffer->name . '".',
+                'title' => 'messages.notifications.message-app-received.title',
+                'message' => 'messages.notifications.message-app-received.message',
+                'data' => [
+                    'user_name' => $application->user->name . ' ' . $application->user->last_name,
+                    'offer_name' => $application->jobOffer->name,
+                ],
             ]);
         }
 
@@ -107,8 +111,12 @@ class ApplicationController extends Controller
         Notification::create([
             'user_id' => $application->user->id,
             'type' => 'candidatura',
-            'title' => __('messages.notifications.message-app-deleted.title'),
-            'message' => __('messages.notifications.message-app-deleted.message-1') . $application->jobOffer->name . __('messages.notifications.message-app-deleted.message-2') . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
+            'title' => 'messages.notifications.message-app-deleted.title',
+            'message' => 'messages.notifications.message-app-deleted.message',
+            'data' => [
+                'offer_name' => $application->jobOffer->name,
+                'deleted_by' => auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor',
+            ],
         ]);
 
         $application->delete();
@@ -149,8 +157,14 @@ class ApplicationController extends Controller
         Notification::create([
             'user_id' => $application->user->id,
             'type' => 'candidatura',
-            'title' => __('messages.email.text-title-1') . $application->jobOffer->name . __('messages.email.text-title-2'),
-            'message' => __('messages.email.message') . __('messages.email.messages.' . $request->state) . ', ' . $messages[$request->state],
+            'title' => 'messages.email.title', 
+            'message' => 'messages.email.message', 
+            'data' => [
+                'offer_name' => $application->jobOffer->name,
+                'status_key' => $request->state,
+                'status_text' => __('messages.email.messages.' . $request->state),
+                'custom_message' => $messages[$request->state] ?? '',
+            ],
         ]);
 
         return redirect()->route('applications.index')->with('message', __('messages.messages.candidate-update'));

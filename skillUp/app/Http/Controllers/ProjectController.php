@@ -175,11 +175,14 @@ if ($request->hasFile('image')) {
         ]);
 
 
-        Notification::firstOrCreate([
+        Notification::create([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
-            'title' => __('messages.notifications.message-project-registered.title'),
-            'message' => __('messages.notifications.message-project-registered.message-1') . ' "' . $project->title . __('messages.notifications.message-project-registered.message-2'),
+            'title' => 'messages.notifications.message-project-registered.title',
+            'message' => 'messages.notifications.message-project-registered.message',
+            'data' => [
+                'project_title' => $project->title,
+            ],
         ]);
         $otrosUsuarios = User::where('id', '!=', auth()->id())->get();
 
@@ -187,8 +190,8 @@ if ($request->hasFile('image')) {
             Notification::firstOrCreate([
                 'user_id' => $usuario->id,
                 'type' => 'proyecto',
-                'title' => __('messages.notifications.message-project-available.title'),
-                'message' => __('messages.notifications.message-project-available.message'),
+                'title' => 'messages.notifications.message-project-available.title',
+                'message' => 'messages.notifications.message-project-available.message',
             ]);
         }
 

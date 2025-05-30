@@ -81,8 +81,11 @@ class SchoolProjectController extends Controller
             Notification::create([
                 'user_id' => $project->user_id,
                 'type' => 'proyecto',
-                'title' => __('messages.notifications.message-project-deleted-teacher.title'),
-                'message' =>  __('messages.notifications.message-project-deleted-teacher.message-1') . ' "' . $project->title . __('messages.notifications.message-project-deleted-teacher.message-2'),
+                'title' => 'messages.notifications.message-project-deleted-teacher.title',
+                'message' => 'messages.notifications.message-project-deleted-teacher.message',
+                'data' => [
+                    'project_title' => $project->title,
+                ],
             ]);
         }
 
@@ -123,7 +126,7 @@ class SchoolProjectController extends Controller
 
             'general_category.in' => __('messages.errors.sector.in'),
             'general_category.required' => __('messages.errors.sector.required'),
-            
+
             'images.*.image' => __('messages.errors.image.image'),
             'images.*.mimes' => __('messages.errors.image.mimes'),
             'images.*.max' => __('messages.errors.image.max'),
@@ -158,8 +161,11 @@ class SchoolProjectController extends Controller
             Notification::create([
                 'user_id' => $project->teacher_id,
                 'type' => 'proyecto',
-                'title' => __('messages.notifications.message-project-updated-teacher.title'),
-                'message' => __('messages.notifications.message-project-updated-teacher.message-1') . $project->title . __('messages.notifications.message-project-updated-teacher.message-2'),
+                'title' => 'messages.notifications.message-project-updated-teacher.title',
+                'message' => 'messages.notifications.message-project-updated-teacher.message',
+                'data' => [
+                    'project_title' => $project->title,
+                ],
             ]);
         }
 
@@ -219,7 +225,7 @@ class SchoolProjectController extends Controller
 
             'general_category.in' => __('messages.errors.sector.in'),
             'general_category.required' => __('messages.errors.sector.required'),
-            
+
             'images.*.image' => __('messages.errors.image.image'),
             'images.*.mimes' => __('messages.errors.image.mimes'),
             'images.*.max' => __('messages.errors.image.max'),
@@ -246,8 +252,11 @@ class SchoolProjectController extends Controller
         Notification::create([
             'user_id' => auth()->id(),
             'type' => 'proyecto',
-            'title' => __('messages.notifications.message-project-published.title'),
-            'message' => __('messages.notifications.message-project-published.message-1') . $project->title . __('messages.notifications.message-project-published.message-2'),
+            'title' => 'messages.notifications.message-project-published.title',
+            'message' => 'messages.notifications.message-project-published.message',
+            'data' => [
+                'project_title' => $project->title,
+            ],
         ]);
 
         if ($request->hasFile('files')) {

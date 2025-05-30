@@ -521,27 +521,15 @@ return [
       'response-chat-question' => 'Funguju perfektně, děkuji za optání. Jsem virtuální asistent bez pocitů, ale jsem tady'
    ],
    'email' => [
-      'title' => 'Stav vaší žádosti byl aktualizován',
-      'hello' => 'Ahoj ',
-      'text-1' => 'Vaše žádost o pozici ',
-      'text-2' => 'zveřejněnou společností ',
-      'text-3' => 'byla aktualizována.',
-      'text-4' => 'Popis pracovní pozice:',
-      'text-5' => 'Aktuální stav vaší žádosti:',
-      'text-6' => 'Děkujeme za váš zájem.',
-      'text-7' => '— Tým SkillUp',
-      'new' => 'Vaše přihláška byla úspěšně odeslána a brzy bude posouzena.',
-      'review' => 'Vaše profil právě posuzujeme. Budeme vás informovat.',
-      'accepted' => 'Gratulujeme! Vaše přihláška byla přijata. Brzy vás budeme kontaktovat.',
-      'rejected' => 'S lítostí vám oznamujeme, že vaše přihláška nebyla tentokrát úspěšná.',
-      'text-title-1' => 'Vaše přihláška na nabídku ',
-      'text-title-2' => 'byla aktualizována. ',
-      'message' => 'Aktualizovaný stav je: ',
+      'title' => 'Stav tvé přihlášky byl aktualizován',
+      'message' => 'Tvoje přihláška na nabídku „:offer_name“ byla aktualizována. '
+         . 'Aktuální stav je: :status_text. :custom_message',
+
       'messages' => [
          'nueva' => 'Nová',
-         'en revisión' => 'V přezkoumání',
-         'aceptado' => 'Přijato',
-         'rechazado' => 'Zamítnuto',
+         'en revisión' => 'Ve fázi posouzení',
+         'aceptado' => 'Přijat(a)',
+         'rechazado' => 'Zamítnut(a)',
       ],
    ],
    'tags' => [
@@ -574,8 +562,7 @@ return [
       ],
       'message-create-project' => [
          'title' => 'Projekt zaregistrován',
-         'message-1' => 'Váš projekt ',
-         'message-2' => ' byl úspěšně vytvořen.',
+         'message' => 'Tvůj projekt „:project_title“ byl úspěšně vytvořen.',
       ],
       'message-project-available' => [
          'title' => 'Nové projekty k dispozici',
@@ -583,41 +570,35 @@ return [
       ],
       'message-new-job-offer' => [
          'title' => 'Nová pracovní nabídka',
-         'message' => 'Byla zveřejněna nová nabídka: ',
+         'message' => 'Byla zveřejněna nová nabídka: ":offer"',
       ],
       'message-sp-published' => [
          'title' => 'Školní projekt zveřejněn',
-         'message-1' => 'Váš projekt ',
-         'message-2' => ' byl úspěšně zaregistrován.',
+         'message' => 'Tvůj projekt „:project_title“ byl úspěšně zaregistrován.',
       ],
       'message-offer-closed' => [
          'title' => 'Nabídka uzavřena',
-         'message-1' => 'Nabídka ',
-         'message-2' => ' byla uzavřena administrátorem.',
+         'message' => 'Nabídka „:offer_name“ byla uzavřena administrátorem.',
       ],
       'message-offer-deleted' => [
-         'title' => 'Nabídka stažena',
-         'message-1' => 'Nabídka ',
-         'message-2' => ' o kterou jste se ucházel/a, byla stažena administrátorem.',
+         'title' => 'Nabídka byla stažena',
+         'message' => 'Nabídka „:offer_name“, na kterou ses přihlásil(a), byla stažena uživatelem :deleted_by.',
       ],
       'message-project-updated' => [
-         'title' => 'Váš projekt byl aktualizován',
-         'message-1' => 'Projekt ',
-         'message-2' => ' byl aktualizován administrátorem.',
+         'title' => 'Tvůj projekt byl aktualizován',
+         'message' => 'Projekt „:project_title“ byl aktualizován administrátorem.',
       ],
       'message-project-deleted' => [
-         'title' => 'Váš projekt byl odstraněn',
-         'message-1' => 'Projekt ',
-         'message-2' => ' byl odstraněn administrátorem.',
+         'title' => 'Tvůj projekt byl odstraněn',
+         'message' => 'Projekt „:project_title“ byl odstraněn administrátorem.',
       ],
       'message-app-received' => [
-         'title' => 'Nová přihláška byla přijata',
-         'message' => ' se přihlásil(a) na vaši nabídku ',
+         'title' => 'Nová přihláška přijata',
+         'message' => ':user_name se přihlásil(a) na vaši nabídku „:offer_name“.',
       ],
       'message-app-deleted' => [
-         'title' => 'Vaše přihláška byla stažena',
-         'message-1' => 'Vaše přihláška na nabídku ',
-         'message-2' => ' byla stažena uživatelem ',
+         'title' => 'Tvoje přihláška byla stažena',
+         'message' => 'Tvoje přihláška na nabídku „:offer_name“ byla stažena uživatelem :deleted_by.',
       ],
       'message-new-offer' => [
          'title' => 'Nová nabídka k dispozici!',
@@ -625,23 +606,19 @@ return [
       ],
       'message-project-registered' => [
          'title' => 'Projekt zaregistrován',
-         'message-1' => 'Tvůj projekt ',
-         'message-2' => ' byl úspěšně vytvořen.',
+         'message' => 'Tvůj projekt „:project_title“ byl úspěšně vytvořen.',
       ],
       'message-project-deleted-teacher' => [
          'title' => 'Tvůj projekt byl odstraněn',
-         'message-1' => 'Projekt ',
-         'message-2' => ' byl odstraněn vyučujícím.',
+         'message' => 'Projekt „:project_title“ byl odstraněn vyučujícím.',
       ],
       'message-project-updated-teacher' => [
          'title' => 'Tvůj projekt byl aktualizován',
-         'message-1' => 'Projekt ',
-         'message-2' => ' byl aktualizován vyučujícím.',
+         'message' => 'Projekt „:project_title“ byl aktualizován vyučujícím.',
       ],
       'message-project-published' => [
          'title' => 'Školní projekt zveřejněn',
-         'message-1' => 'Tvůj projekt ',
-         'message-2' => ' byl úspěšně zaregistrován',
+         'message' => 'Tvůj projekt „:project_title“ byl úspěšně zaregistrován.',
       ],
 
    ],

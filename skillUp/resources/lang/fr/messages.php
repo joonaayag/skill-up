@@ -528,27 +528,15 @@ return [
         'response-chat-question' => 'Je fonctionne parfaitement, merci de demander. Je suis un assistant virtuel sans sentiments mais je suis là pour vous aider avec tout ce dont vous avez besoin.',
     ],
     'email' => [
-        'title' => 'Le statut de votre candidature a été mis à jour',
-        'hello' => 'Bonjour ',
-        'text-1' => 'Votre candidature pour le poste ',
-        'text-2' => 'publié par ',
-        'text-3' => 'a été mise à jour.',
-        'text-4' => 'Description du poste :',
-        'text-5' => 'Statut actuel de votre candidature :',
-        'text-6' => 'Merci pour votre intérêt.',
-        'text-7' => '— L’équipe SkillUp',
-        'new' => 'Votre candidature a été enregistrée avec succès et sera examinée prochainement.',
-        'review' => 'Nous examinons votre profil. Nous vous tiendrons informé.',
-        'accepted' => 'Félicitations ! Votre candidature a été acceptée. Nous vous contacterons bientôt.',
-        'rejected' => 'Nous sommes désolés de vous informer que votre candidature n\'a pas été retenue cette fois-ci.',
-        'text-title-1' => 'Votre candidature pour l\'offre ',
-        'text-title-2' => 'a été mise à jour. ',
-        'message' => 'Le statut mis à jour est : ',
+        'title' => 'Statut de ta candidature mis à jour',
+        'message' => 'Ta candidature pour l’offre « :offer_name » a été mise à jour. '
+            . 'Le nouveau statut est : :status_text. :custom_message',
+
         'messages' => [
-            'nueva' => 'Nouvelle',
-            'en revisión' => 'En cours d\'examen',
-            'aceptado' => 'Acceptée',
-            'rechazado' => 'Refusée',
+            'nueva' => 'Nouveau',
+            'en revisión' => 'En cours d’examen',
+            'aceptado' => 'Accepté',
+            'rechazado' => 'Rejeté',
         ],
     ],
     'tags' => [
@@ -581,8 +569,7 @@ return [
         ],
         'message-create-project' => [
             'title' => 'Projet enregistré',
-            'message-1' => 'Votre projet ',
-            'message-2' => ' a été créé avec succès.',
+            'message' => 'Ton projet « :project_title » a été créé avec succès.',
         ],
         'message-project-available' => [
             'title' => 'Nouveaux projets disponibles',
@@ -590,41 +577,35 @@ return [
         ],
         'message-new-job-offer' => [
             'title' => 'Nouvelle offre disponible',
-            'message' => 'Une nouvelle offre a été publiée : ',
+            'message' => 'Une nouvelle offre a été publiée: ":offer"',
         ],
         'message-sp-published' => [
             'title' => 'Projet scolaire publié',
-            'message-1' => 'Votre projet ',
-            'message-2' => ' a été enregistré avec succès.',
+            'message' => 'Ton projet « :project_title » a été enregistré avec succès.',
         ],
         'message-offer-closed' => [
             'title' => 'Offre fermée',
-            'message-1' => 'L’offre ',
-            'message-2' => ' a été fermée par l’administrateur.',
+            'message' => 'L’offre « :offer_name » a été clôturée par l’administrateur.',
         ],
         'message-offer-deleted' => [
             'title' => 'Offre retirée',
-            'message-1' => 'L’offre ',
-            'message-2' => ' à laquelle vous avez postulé a été retirée par l’administrateur.',
+            'message' => 'L’offre « :offer_name » à laquelle tu as postulé a été retirée par :deleted_by.',
         ],
         'message-project-updated' => [
-            'title' => 'Votre projet a été mis à jour',
-            'message-1' => 'Le projet ',
-            'message-2' => ' a été mis à jour par l’administrateur.',
+            'title' => 'Ton projet a été mis à jour',
+            'message' => 'Le projet « :project_title » a été mis à jour par l’administrateur.',
         ],
         'message-project-deleted' => [
-            'title' => 'Votre projet a été supprimé',
-            'message-1' => 'Le projet ',
-            'message-2' => ' a été supprimé par l’administrateur.',
+            'title' => 'Ton projet a été supprimé',
+            'message' => 'Le projet « :project_title » a été supprimé par l’administrateur.',
         ],
         'message-app-received' => [
             'title' => 'Nouvelle candidature reçue',
-            'message' => ' a postulé à votre offre ',
+            'message' => ':user_name a postulé à votre offre « :offer_name ».',
         ],
         'message-app-deleted' => [
-            'title' => 'Votre candidature a été retirée',
-            'message-1' => 'Votre candidature pour l’offre ',
-            'message-2' => ' a été retirée par ',
+            'title' => 'Ta candidature a été retirée',
+            'message' => 'Ta candidature pour l’offre « :offer_name » a été retirée par :deleted_by.',
         ],
         'message-new-offer' => [
             'title' => 'Nouvelle offre disponible !',
@@ -632,23 +613,19 @@ return [
         ],
         'message-project-registered' => [
             'title' => 'Projet enregistré',
-            'message-1' => 'Votre projet ',
-            'message-2' => ' a été créé avec succès.',
+            'message' => 'Ton projet « :project_title » a été créé avec succès.',
         ],
         'message-project-deleted-teacher' => [
-            'title' => 'Votre projet a été supprimé',
-            'message-1' => 'Le projet ',
-            'message-2' => ' a été supprimé par l’enseignant.',
+            'title' => 'Ton projet a été supprimé',
+            'message' => 'Le projet « :project_title » a été supprimé par l’enseignant.',
         ],
         'message-project-updated-teacher' => [
-            'title' => 'Votre projet a été mis à jour',
-            'message-1' => 'Le projet ',
-            'message-2' => ' a été mis à jour par l’enseignant.',
+            'title' => 'Ton projet a été mis à jour',
+            'message' => 'Le projet « :project_title » a été mis à jour par l’enseignant.',
         ],
         'message-project-published' => [
             'title' => 'Projet scolaire publié',
-            'message-1' => 'Votre projet ',
-            'message-2' => ' a été enregistré avec succès',
+            'message' => 'Ton projet « :project_title » a été enregistré avec succès.',
         ],
 
     ],

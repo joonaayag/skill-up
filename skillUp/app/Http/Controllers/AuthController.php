@@ -170,16 +170,16 @@ class AuthController extends Controller
 
         $message = match ($user->role) {
             'Alumno' => [
-                'title' => __('messages.notifications.message-student.title'),
-                'message' => __('messages.notifications.message-student.message'),
+                'title' => 'messages.notifications.message-student.title',
+                'message' => 'messages.notifications.message-student.message',
             ],
             'Usuario' => [
-                'title' => __('messages.notifications.message-user.title'),
-                'message' => __('messages.notifications.message-user.message'),
+                'title' => 'messages.notifications.message-user.title',
+                'message' => 'messages.notifications.message-user.message',
             ],
             'Empresa' => [
-                'title' => __('messages.notifications.message-company.title'),
-                'message' => __('messages.notifications.message-company.message'),
+                'title' => 'messages.notifications.message-company.title',
+                'message' => 'messages.notifications.message-company.message',
             ],
             default => null,
         };
@@ -190,6 +190,7 @@ class AuthController extends Controller
                 'type' => 'mensaje',
                 'title' => $message['title'],
                 'message' => $message['message'],
+                'data' => [], 
             ]);
         }
 

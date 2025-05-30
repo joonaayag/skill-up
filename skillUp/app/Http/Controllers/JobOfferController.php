@@ -176,11 +176,10 @@ class JobOfferController extends Controller
                 'type' => 'oferta',
                 'title' => 'messages.notifications.message-new-job-offer.title',
                 'message' => 'messages.notifications.message-new-job-offer.message',
-                'params' => json_encode([
+                'data' => [
                     'offer' => $jobOffer->name,
-                ]),
+                ],
             ]);
-
         }
 
 
@@ -202,8 +201,12 @@ class JobOfferController extends Controller
             Notification::create([
                 'user_id' => $application->user->id,
                 'type' => 'oferta',
-                'title' => __('messages.notifications.message-offer-deleted.title'),
-                'message' => __('messages.notifications.message-offer-deleted.message') . ' "' . $jobOffer->name . __('messages.notifications.message-offer-deleted.message-2') . (auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor') . '.',
+                'title' => 'messages.notifications.message-offer-deleted.title',
+                'message' => 'messages.notifications.message-offer-deleted.message',
+                'data' => [
+                    'offer_name' => $jobOffer->name,
+                    'deleted_by' => auth()->user()->role === 'Empresa' ? 'la empresa' : 'el profesor',
+                ],
             ]);
         }
 
@@ -312,8 +315,11 @@ class JobOfferController extends Controller
                 Notification::create([
                     'user_id' => $application->user->id,
                     'type' => 'oferta',
-                    'title' => __('messages.notifications.message-offer-closed.title'),
-                    'message' => __('messages.notifications.message-offer-closed.message-1') . ' "' . $jobOffer->name . __('messages.notifications.message-offer-closed.message-2'),
+                    'title' => 'messages.notifications.message-offer-closed.title',
+                    'message' => 'messages.notifications.message-offer-closed.message',
+                    'data' => [
+                        'offer_name' => $jobOffer->name,
+                    ],
                 ]);
             }
         }

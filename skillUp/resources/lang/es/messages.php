@@ -539,21 +539,9 @@ return [
     ],
     'email' => [
         'title' => 'Estado de tu candidatura actualizado',
-        'hello' => 'Hola ',
-        'text-1' => 'Tu candidatura para la oferta ',
-        'text-2' => 'publicada por ',
-        'text-3' => 'ha sido actualizada.',
-        'text-4' => 'Descripción del puesto:',
-        'text-5' => 'Estado actual de tu candidatura:',
-        'text-6' => 'Gracias por tu interés.',
-        'text-7' => '— El equipo de SkillUp',
-        'new' => 'Tu candidatura ha sido registrada correctamente y será revisada pronto.',
-        'review' => 'Estamos revisando tu perfil. Te mantendremos informado.',
-        'accepted' => '¡Felicidades! Tu candidatura ha sido aceptada. Nos pondremos en contacto contigo pronto.',
-        'rejected' => 'Lamentamos informarte que esta vez no ha sido posible continuar con tu candidatura.',
-        'text-title-1' => 'Tu candidatura para la oferta ',
-        'text-title-2' => 'ha sido actualizada. ',
-        'message' => 'El estado actualizado es: ',
+        'message' => 'Tu candidatura para la oferta ":offer_name" ha sido actualizada. '
+            . 'El estado actualizado es: :status_text. :custom_message',
+
         'messages' => [
             'nueva' => 'Nueva',
             'en revisión' => 'En revisión',
@@ -580,8 +568,7 @@ return [
         ],
         'message-create-project' => [
             'title' => 'Proyecto registrado',
-            'message-1' => 'Tu proyecto ',
-            'message-2' => ' ha sido creado correctamente.',
+            'message' => 'Tu proyecto ":project_title" ha sido creado correctamente.',
         ],
         'message-project-available' => [
             'title' => 'Nuevos proyectos disponible',
@@ -589,41 +576,35 @@ return [
         ],
         'message-new-job-offer' => [
             'title' => 'Nueva oferta disponible',
-            'message' => 'Se ha publicado una nueva oferta: ',
+            'message' => 'Se ha publicado una nueva oferta: ":offer"',
         ],
         'message-sp-published' => [
             'title' => 'Proyecto escolar publicado',
-            'message-1' => 'Tu proyecto ',
-            'message-2' => 'ha sido registrado correctamente',
+            'message' => 'Tu proyecto ":project_title" ha sido registrado correctamente.',
         ],
         'message-offer-closed' => [
             'title' => 'Oferta cerrada',
-            'message-1' => 'La oferta ',
-            'message-2' => ' ha sido cerrada por el administrador.',
+            'message' => 'La oferta ":offer_name" ha sido cerrada por el administrador.',
         ],
         'message-offer-deleted' => [
             'title' => 'Oferta retirada',
-            'message-1' => 'La oferta ',
-            'message-2' => ' a la que te postulaste ha sido retirada por el administrador.',
+            'message' => 'La oferta ":offer_name" a la que te postulaste ha sido retirada por :deleted_by.',
         ],
         'message-project-updated' => [
             'title' => 'Tu proyecto ha sido actualizado',
-            'message-1' => 'El proyecto ',
-            'message-2' => ' ha sido actualizado por el administrador.',
+            'message' => 'El proyecto ":project_title" ha sido actualizado por el administrador.',
         ],
         'message-project-deleted' => [
             'title' => 'Tu proyecto ha sido eliminado',
-            'message-1' => 'El proyecto ',
-            'message-2' => ' ha sido eliminado por el administrador.',
+            'message' => 'El proyecto ":project_title" ha sido eliminado por el administrador.',
         ],
         'message-app-received' => [
             'title' => 'Nueva candidatura recibida',
-            'message' => ' se ha postulado a tu oferta ',
+            'message' => ':user_name se ha postulado a tu oferta ":offer_name".',
         ],
         'message-app-deleted' => [
             'title' => 'Tu candidatura ha sido retirada',
-            'message-1' => 'Tu candidatura para la oferta ',
-            'message-2' => ' ha sido retirada por ',
+            'message' => 'Tu candidatura para la oferta ":offer_name" ha sido retirada por :deleted_by.',
         ],
         'message-new-offer' => [
             'title' => '¡Nueva oferta disponible!',
@@ -631,24 +612,20 @@ return [
         ],
         'message-project-registered' => [
             'title' => 'Proyecto registrado',
-            'message-1' => 'Tu proyecto ',
-            'message-2' => ' ha sido creado correctamente.',
+            'message' => 'Tu proyecto ":project_title" ha sido creado correctamente.',
         ],
         'message-project-deleted-teacher' => [
             'title' => 'Tu proyecto ha sido eliminado',
-            'message-1' => 'El proyecto ',
-            'message-2' => ' ha sido eliminado por el profesorado.',
+            'message' => 'El proyecto ":project_title" ha sido eliminado por el profesorado.',
         ],
         'message-project-updated-teacher' => [
             'title' => 'Tu proyecto ha sido actualizado',
-            'message-1' => 'El proyecto ',
-            'message-2' => ' ha sido actualizado por el profesorado.',
+            'message' => 'El proyecto ":project_title" ha sido actualizado por el profesorado.',
         ],
         'message-project-published' => [
             'title' => 'Proyecto escolar publicado',
-            'message-1' => 'Tu proyecto ',
-            'message-2' => 'ha sido registrado correctamente',
-        ]
+            'message' => 'Tu proyecto ":project_title" ha sido registrado correctamente.',
+        ],
     ],
     'errors' => [
         'reset-token-failed' => 'El token de restablecimiento de contraseña no es válido o ha expirado.',
