@@ -14,7 +14,7 @@
             <div class="alert alert-danger">
                 <strong class="mb-2">{{__('messages.admin.users.import-error')}}</strong>
                 <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
-                    <ul class="list-disc list-inside space-y-1">
+                    <ul class="list-disc list-inside space-y-1 text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
                         @foreach (session('errors') as $error)
                             <li> {{ $error }}</li>
                         @endforeach
@@ -22,6 +22,7 @@
                 </div>
             </div>
         @endif
+        <div id="fileErrors" class="text-red-500 mt-2"></div>
 
         <div class="rounded-lg shadow w-full overflow-x-auto">
             <table
@@ -506,10 +507,10 @@
         
             @if (auth()->user()->role == 'Profesor')
                 <div x-data="importStudentsModal()" x-cloak>
-                    <form x-ref="uploadForm" action="{{ route('professor.import.students') }}" method="POST" enctype="multipart/form-data">
+                    <form id="importForm" x-ref="uploadForm" action="{{ route('professor.import.students') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label class="flex items-center justify-center w-full px-4 py-4 bg-themeGrape text-white font-medium rounded-lg cursor-pointer hover:bg-themeGrape/80 transition">
-                            <input type="file" name="students_file" id="students_file" accept=".txt" required class="hidden" @change="handleFileChosen($event)">
+                            <input id="students_file" type="file" name="students_file" id="students_file" accept=".txt" required class="hidden" @change="handleFileChosen($event)">
                             {{ __('messages.admin.users.import') }}
                         </label>
                     </form>
@@ -875,7 +876,57 @@
     });
 });
 
-    </script>
+document.getElementById('importForm').addEventListener('submit', function (e) {
+    const fileInput = document.getElementById('students_file');
+    const errorDiv = document.getElementById('fileErrors');
+    errorDiv.innerHTML = '';
+
+    const file = fileInput.files[0];
+    if (!file || file.type !== 'text/plain') {
+        errorDiv.textContent = 'Debes seleccionar un archivo .txt válido.';
+        e.preventDefault();
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const content = event.target.result;
+        const lines = content.split(/\r?\n/).filter(line => line.trim() !== '');
+        const errors = [];
+
+        lines.forEach((line, index) => {
+            const parts = line.split(';').map(p => p.trim());
+
+            if (parts.length < 5) {
+                errors.push(`Línea ${index + 1}: No tiene suficientes campos.`);
+                return;
+            }
+
+            const [name, last_name, email, birthDate, currentCourse] = parts;
+
+            // Validaciones básicas (puedes extenderlas según las del backend)
+            if (name.length === 0 || name.length > 20) errors.push(`Línea ${index + 1}: Nombre inválido.`);
+            if (last_name.length === 0 || last_name.length > 40) errors.push(`Línea ${index + 1}: Apellido inválido.`);
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push(`Línea ${index + 1}: Email inválido.`);
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) errors.push(`Línea ${index + 1}: Fecha inválida (formato esperado: AAAA-MM-DD).`);
+            if (currentCourse.length === 0 || currentCourse.length > 50) errors.push(`Línea ${index + 1}: Curso inválido.`);
+        });
+
+        if (errors.length > 0) {
+            e.preventDefault();
+            errorDiv.innerHTML = errors.map(err => `<p>${err}</p>`).join('');
+        } else {
+            // No hay errores, se envía el formulario
+            document.getElementById('importForm').submit();
+        }
+    };
+
+    reader.readAsText(file);
+
+    // Prevenir envío por defecto hasta que se lea y valide el archivo
+    e.preventDefault();
+});
+</script>
 
 
 @endsection
