@@ -331,7 +331,7 @@
 
     <br>
 
-    <x-heading level="h1" class="mb-10">{{ __('messages.school-projects.title') }}</x-heading>
+    <x-heading level="h1" class="mb-10">{{ __('messages.navbar.school-projects') }}</x-heading>
     <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
         @forelse ($schoolProjects as $school)
             <a href="{{ route('school.projects.show', $school->id) }}">
