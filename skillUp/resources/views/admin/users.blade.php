@@ -22,15 +22,6 @@
                 </div>
             </div>
         @endif
-            @if ($errors->any())
-                <div class="text-xs md:tex-sm 2md:text-base bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900 px-4 py-3 rounded-xl mb-6 shadow-md">
-                    <ul class="list-disc list-inside space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li> {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
         <div class="rounded-lg shadow w-full overflow-x-auto">
             <table
