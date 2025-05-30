@@ -575,9 +575,11 @@
                                     <option value="{{ $student->id }}">{{ $student->name }} {{ $student->last_name }} ({{ $student->email }})</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+                                <div class="flex justify-end mt-2">
+                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
                                     {{ __('messages.admin.users.reset-password') }}
-                                </button>
+                                    </button>
+                                </div>
                             </form>
                     </x-modal>
 
