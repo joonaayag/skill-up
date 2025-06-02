@@ -48,6 +48,7 @@
 
                     <template x-if="role === 'Alumno'">
                         <div class="space-y-4">
+                            <x-label for="birth_date">{{ __('messages.profile.birth-date') }}</x-label>
                             <input type="date" name="birth_date" value="{{ old('birth_date') }}" required
                                 class="w-full text-xs md:text-sm 2md:text-base px-2 py-1 2md:px-4 2md:py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeGrape shadow-sm transition" />
 
@@ -81,7 +82,7 @@
                         </div>
                     </template>
 
-                    <x-button type="submit" class="w-max">
+                    <x-button type="submit" class="w-max cursor-pointer">
                         {{ __('messages.choose.continue') }}
                     </x-button>
                 </form>
