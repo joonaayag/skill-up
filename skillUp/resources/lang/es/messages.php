@@ -394,7 +394,7 @@ return [
             'selected-file' => 'Archivo seleccionado: ',
             'reset-password' => 'Restablecer contraseñas',
             'select-students' => 'Seleccionar alumno: ',
-            'all-users' => 'Todos los usuarios del centro',
+            'all-' => 'Todos los usuarios del centro',
             'title' => 'Listado de usuarios',
             'table-name' => 'Nombre',
             'table-last-name' => 'Apellido',

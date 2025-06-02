@@ -629,7 +629,7 @@
                                 @csrf
                                 <label for="student_id">{{ __('messages.admin.users.select-students') }}</label>
                                 <select name="student_id" id="student_id" required class="border rounded p-2 cursor-pointer">
-                                    <option value="all">{{ __('messages.admin.users.all-students') }}</option>
+                                    <option value="all">{{ __('messages.admin.users.all-users') }}</option>
                                     @foreach ($students as $student)
                                     <option value="{{ $student->id }}">{{ $student->name }} {{ $student->last_name }} ({{ $student->email }})</option>
                                     @endforeach
