@@ -296,7 +296,7 @@
             <!-- Mobile Profile -->
             @auth
                 <div class="border-t border-gray-200 dark:border-gray-600 pt-6">
-                    <a href="{{ route('profile.index') }}" class="flex items-center space-x-4 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <a href="{{ route('profile.index', ['id' => auth()->user()->id]) }}" class="flex items-center space-x-4 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                         <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
                             alt="Perfil" class="w-10 h-10 rounded-full border-2 border-themeBlue dark:border-white object-cover">
                         <span class="text-lg">{{ auth()->user()->name }}</span>

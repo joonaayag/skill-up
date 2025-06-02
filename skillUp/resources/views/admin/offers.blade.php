@@ -1,5 +1,47 @@
 @extends('layouts.app')
 
+@section('title', content: __('messages.titles.admin-offers'))
+
+@php
+    $sectorMap = [
+        'Agricultura/Medio ambiente' => 'sector-agri',
+        'Arte/Cultura' => 'sector-art',
+        'Automoción' => 'sector-aut',
+        'Ciberseguridad' => 'sector-cyb',
+        'Community Manager' => 'sector-comm',
+        'Construcción' => 'sector-cons',
+        'Coordinación Educativa' => 'sector-educ',
+        'Diseño Gráfico' => 'sector-grap',
+        'Electricidad y fontanería' => 'sector-elec',
+        'Energía/Renovables' => 'sector-ener',
+        'Farmacia' => 'sector-phar',
+        'Finanzas y contabilidad' => 'sector-fina',
+        'Fotografía/vídeo' => 'sector-photo',
+        'Hostelería/turismo' => 'sector-hosp',
+        'AI' => 'sector-ai',
+        'Investigación/laboratorio' => 'sector-res',
+        'Legal' => 'sector-leg',
+        'Logística' => 'sector-log',
+        'Mecánica' => 'sector-mec',
+        'Medicina/Enfermería' => 'sector-med',
+        'Nutrición' => 'sector-nut',
+        'Operador Industrial' => 'sector-ind',
+        'Orientación' => 'sector-ori',
+        'Periodismo' => 'sector-jout',
+        'Enseñanza' => 'sector-tea',
+        'Psicología' => 'sector-psy',
+        'Publicidad' => 'sector-adv',
+        'Redes y Sistemas' => 'sector-net',
+        'RRHH' => 'sector-hr',
+        'Seguridad' => 'sector-sec',
+        'SEO/SEM' => 'sector-seo',
+        'Terapias/Rehabilitación' => 'sector-ther',
+        'Traducción' => 'sector-trans',
+        'Transporte/Entrega' => 'sector-transp',
+        'Ventas' => 'sector-sal',
+    ];
+@endphp
+
 @section('content')
     <div class="container mx-auto px-6 py-10">
         <x-heading class="mb-10" level="h1">{{ __('messages.admin.offers.title') }}</x-heading>

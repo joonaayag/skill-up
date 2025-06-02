@@ -1,5 +1,32 @@
 <?php
 return [
+    'titles' => [
+        'auth' => 'Authentification',
+        'dashboard' => 'Tableau de bord',
+        'admin-offers' => 'Admin - Offres d\'emploi',
+        'admin-projects-details' => 'Admin - Détails du projet',
+        'admin-school-projects-details' => 'Admin - Détails du projet scolaire',
+        'admin-projects' => 'Admin - Projets',
+        'admin-school-projects' => 'Admin - Projets scolaires',
+        'admin-comments' => 'Admin - Commentaires',
+        'admin-users' => 'Admin - Utilisateurs',
+        'applications' => 'Gestion des candidatures',
+        'applications-details' => 'Détails de la candidature',
+        'last-steps' => 'Dernières étapes',
+        'forgot-password' => 'Mot de passe oublié',
+        'reset-password' => 'Réinitialiser le mot de passe',
+        'favorites' => 'Favoris',
+        'job-offers-company' => 'Mes offres d\'emploi',
+        'job-offers' => 'Offres d\'emploi',
+        'job-offers-details' => 'Détails de l\'offre d\'emploi',
+        'profile' => 'Profil',
+        'projects' => 'Projets',
+        'school-projects' => 'Projets scolaires',
+        'school-projects-detail' => 'Détails du projet scolaire',
+        'own-projects' => 'Mes projets',
+        'projects-details' => 'Détails du projet',
+    ],
+
     'welcome' => [
         'title' => 'Découvrez les projets finaux et les opportunités d\'emploi !',
         'subtitle' => 'Explorez une variété de projets académiques et d\'offres d\'emploi adaptés aux étudiants et aux entreprises. Connectez-vous, collaborez et faites progresser votre carrière en toute simplicité.',

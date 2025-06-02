@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('messages.titles.admin-school-projects'))
+
 @section('content')
     <div class="container mx-auto px-6 py-10">
         <x-heading level="h1" class="mb-10">{{ __('messages.admin.school-projects.title') }}</x-heading>

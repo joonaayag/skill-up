@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detalles de la candidatura')
+@section('title', __('messages.titles.applications-details'))
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ $application->offer->name }}</x-heading>

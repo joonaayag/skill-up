@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Skill Up</title>
+    <title>Skill Up - {{ __('messages.titles.last-step') }}</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
     <link rel="icon" type="image/x-icon" href="{{ asset('icons/logo.svg') }}">

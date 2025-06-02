@@ -1,5 +1,32 @@
 <?php
 return [
+    'titles' => [
+        'auth' => '驗證',
+        'dashboard' => '儀表板',
+        'admin-offers' => '管理員 - 職缺',
+        'admin-projects-details' => '管理員 - 專案詳情',
+        'admin-school-projects-details' => '管理員 - 校園專案詳情',
+        'admin-projects' => '管理員 - 專案',
+        'admin-school-projects' => '管理員 - 校園專案',
+        'admin-comments' => '管理員 - 評論',
+        'admin-users' => '管理員 - 使用者',
+        'applications' => '申請管理',
+        'applications-details' => '申請詳情',
+        'last-steps' => '最後步驟',
+        'forgot-password' => '忘記密碼',
+        'reset-password' => '重設密碼',
+        'favorites' => '收藏',
+        'job-offers-company' => '我的職缺',
+        'job-offers' => '職缺',
+        'job-offers-details' => '職缺詳情',
+        'profile' => '個人資料',
+        'projects' => '專案',
+        'school-projects' => '校園專案',
+        'school-projects-detail' => '校園專案詳情',
+        'own-projects' => '我的專案',
+        'projects-details' => '專案詳情',
+    ],
+
     'welcome' => [
         'title' => '了解最終項目和工作機會！',
         'subtitle' => '探索各種為學生和公司量身定制的學術項目和工作機會。輕鬆連接、協作並推進您的職業發展。',

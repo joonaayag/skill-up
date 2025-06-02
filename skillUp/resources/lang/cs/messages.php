@@ -1,5 +1,32 @@
 <?php
 return [
+   'titles' => [
+      'auth' => 'Ověření',
+      'dashboard' => 'Přehled',
+      'admin-offers' => 'Admin - Pracovní nabídky',
+      'admin-projects-details' => 'Admin - Detaily projektu',
+      'admin-school-projects-details' => 'Admin - Detaily školního projektu',
+      'admin-projects' => 'Admin - Projekty',
+      'admin-school-projects' => 'Admin - Školní projekty',
+      'admin-comments' => 'Admin - Komentáře',
+      'admin-users' => 'Admin - Uživatelé',
+      'applications' => 'Správa žádostí',
+      'applications-details' => 'Detaily žádosti',
+      'last-steps' => 'Poslední kroky',
+      'forgot-password' => 'Zapomněl jsem heslo',
+      'reset-password' => 'Obnovení hesla',
+      'favorites' => 'Oblíbené',
+      'job-offers-company' => 'Moje pracovní nabídky',
+      'job-offers' => 'Pracovní nabídky',
+      'job-offers-details' => 'Detaily pracovní nabídky',
+      'profile' => 'Profil',
+      'projects' => 'Projekty',
+      'school-projects' => 'Školní projekty',
+      'school-projects-detail' => 'Detaily školního projektu',
+      'own-projects' => 'Moje projekty',
+      'projects-details' => 'Detaily projektu',
+   ],
+
    'welcome' => [
       'title' => 'Objevte závěrečné projekty a pracovní příležitosti!',
       'subtitle' => 'Prozkoumejte různé akademické projekty a pracovní nabídky přizpůsobené studentům a společnostem. Spojte se, spolupracujte a rozvíjejte svou kariéru snadno.',

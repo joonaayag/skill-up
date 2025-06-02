@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('messages.titles.admin-users'))
+
 @section('content')
     <div class="px-6 py-10">
         @if(auth()->user()->role === 'Admin')

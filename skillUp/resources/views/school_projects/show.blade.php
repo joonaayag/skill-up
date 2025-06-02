@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $schoolProject->name)
+@section('title', __('messages.titles.school-projects-detail'))
 
 @section('content')
     <div x-data="{ selectedImage: null }">

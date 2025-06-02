@@ -1,5 +1,31 @@
 <?php
 return [
+    'titles' => [
+        'auth' => 'Autenticación',
+        'dashboard' => 'Dashboard',
+        'admin-offers' => 'Admin - Ofertas de empleo',
+        'admin-projects-details' => 'Admin - Detalles del proyecto',
+        'admin-school-projects-details' => 'Admin - Detalles del proyecto escolar',
+        'admin-projects' => 'Admin - Projectos',
+        'admin-school-projects' => 'Admin - Projectos escolares',
+        'admin-comments' => 'Admin - Comentarios',
+        'admin-users' => 'Admin - Usuarios',
+        'applications' => 'Gestión de candidaturas',
+        'applications-details' => 'Detalles de la candidatura',
+        'last-steps' => 'Últimos pasos',
+        'forgot-password' => 'Olvidé mi contraseña',
+        'reset-password' => 'Restablecer contraseña',
+        'favorites' => 'Favoritos',
+        'job-offers-company' => 'Mis Ofertas de trabajo',
+        'job-offers' => 'Ofertas de empleo',
+        'job-offers-details' => 'Detalles de la oferta de empleo',
+        'profile' => 'Perfil',
+        'projects' => 'Proyectos',
+        'school-projects' => 'Proyectos escolares',
+        'school-projects-detail' => 'Detalles del proyecto escolar',
+        'own-projects' => 'Mis proyectos',
+        'projects-details' => 'Detalles del proyecto',
+    ],
     'welcome' => [
         'title' => '¡Descubre proyectos TFG y oportunidades de trabajo!',
         'subtitle' => 'Explora una variedad de proyectos académicos y ofertas de trabajo adaptadas

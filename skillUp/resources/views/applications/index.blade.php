@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Gestión de candidaturas')
+@section('title', __('messages.titles.applications'))
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.applications.title') }}</x-heading>

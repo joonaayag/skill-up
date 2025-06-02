@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', __('messages.titles.admin-comments'))
+
 @section('content')
     <div class="container mx-auto px-6 py-10">
-        <x-heading level="h1" class="mb-4">{{ __('messages.admin.comments.title') }}
+        <x-heading level="h1" class="mb-4">{{ __('messages.admin.comments.title') }}</x-heading>
 
 
         <div class="overflow-x-auto rounded-lg shadow">

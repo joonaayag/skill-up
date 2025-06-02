@@ -1,5 +1,32 @@
 <?php
 return [
+    'titles' => [
+        'auth' => 'Autentisering',
+        'dashboard' => 'Dashbord',
+        'admin-offers' => 'Admin - Stillingsannonser',
+        'admin-projects-details' => 'Admin - Prosjektdetaljer',
+        'admin-school-projects-details' => 'Admin - Skoleprosjektdetaljer',
+        'admin-projects' => 'Admin - Prosjekter',
+        'admin-school-projects' => 'Admin - Skoleprosjekter',
+        'admin-comments' => 'Admin - Kommentarer',
+        'admin-users' => 'Admin - Brukere',
+        'applications' => 'Søknadsbehandling',
+        'applications-details' => 'Søknadsdetaljer',
+        'last-steps' => 'Siste steg',
+        'forgot-password' => 'Glemt passord',
+        'reset-password' => 'Tilbakestill passord',
+        'favorites' => 'Favoritter',
+        'job-offers-company' => 'Mine stillingsannonser',
+        'job-offers' => 'Stillingsannonser',
+        'job-offers-details' => 'Detaljer om stillingsannonse',
+        'profile' => 'Profil',
+        'projects' => 'Prosjekter',
+        'school-projects' => 'Skoleprosjekter',
+        'school-projects-detail' => 'Skoleprosjektdetaljer',
+        'own-projects' => 'Mine prosjekter',
+        'projects-details' => 'Prosjektdetaljer',
+    ],
+
     'welcome' => [
         'title' => 'Oppdag sluttprosjekter og jobbmuligheter!',
         'subtitle' => 'Utforsk et mangfold av akademiske prosjekter og jobbtilbud skreddersydd for studenter og bedrifter. Koble til, samarbeid og fremme karrieren din med letthet.',

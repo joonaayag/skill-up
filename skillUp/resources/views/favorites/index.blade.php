@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Favoritos')
+@section('title', __('messages.titles.favorites'))
 
 @section('content')
 

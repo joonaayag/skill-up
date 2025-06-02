@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detalles del proyecto')
+@section('title', __('messages.titles.projects-details'))
 
 @section('content')
     <div x-data="{ selectedImage: null }">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tus proyectos')
+@section('title', __('messages.titles.own-projects'))
 
 @section('content')
     <x-heading level="h1" class="mb-10">{{ __('messages.your-projects.title') }}</x-heading>
