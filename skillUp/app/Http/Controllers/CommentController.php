@@ -11,52 +11,130 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     public function storeProjectComment(Request $request, Project $project)
-    {
-        $request->validate([
-            'content' => 'required|string|max:300',
-            'parent_id' => 'nullable|exists:comments,id'
-        ], [
-            'content.required' => __('messages.errors.comments.required'),
-            'content.string' => __('messages.errors.comments.string'),
-            'content.max' => __('messages.errors.comments.max'),
+{
+    $request->validate([
+        'content' => 'required|string|max:300',
+        'parent_id' => 'nullable|exists:comments,id'
+    ], [
+        'content.required' => __('messages.errors.comments.required'),
+        'content.string' => __('messages.errors.comments.string'),
+        'content.max' => __('messages.errors.comments.max'),
+        'parent_id.exists' => __('messages.errors.comments.exists'),
+    ]);
+
+    $comment = new Comment([
+        'user_id' => Auth::id(),
+        'content' => $request->content,
+        'parent_id' => $request->parent_id
+    ]);
+    
+    $project->comments()->save($comment);
+
+    // Si es una petición AJAX, devolver respuesta JSON
+    if ($request->ajax() || $request->wantsJson()) {
+        // Cargar las relaciones necesarias del comentario
+        $comment->load('user');
         
-            'parent_id.exists' => __('messages.errors.comments.exists'),
-        ]);
+        $isReply = !empty($request->parent_id);
+        
+        if ($isReply) {
+            // Es una respuesta, renderizar solo el HTML de la respuesta
+            $replyHtml = view('comments.single_reply', [
+                'reply' => $comment,
+                'type' => 'project'
+            ])->render();
 
-        $comment = new Comment([
-            'user_id' => Auth::id(),
-            'content' => $request->content,
-            'parent_id' => $request->parent_id
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.messages.comment-create'),
+                'reply_html' => $replyHtml,
+                'parent_id' => $request->parent_id,
+                'is_reply' => true,
+                'comments_count' => $project->comments->count()
+            ]);
+        } else {
+            // Es un comentario principal, renderizar el comentario completo
+            $commentHtml = view('comments.single_comment', [
+                'comment' => $comment,
+                'type' => 'project',
+                'commentable' => $project
+            ])->render();
 
-        $project->comments()->save($comment);
-
-        return back()->with('message', __('messages.messages.comment-create'));
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.messages.comment-create'),
+                'comment_html' => $commentHtml,
+                'is_reply' => false,
+                'comments_count' => $project->comments->count()
+            ]);
+        }
     }
+
+    return back()->with('message', __('messages.messages.comment-create'));
+}
 
     public function storeSchoolProjectComment(Request $request, SchoolProject $schoolProject)
-    {
-        $request->validate([
-            'content' => 'required|string|max:300',
-            'parent_id' => 'nullable|exists:comments,id'
-        ], [
-            'content.required' => __('messages.errors.comments.required'),
-            'content.string' => __('messages.errors.comments.string'),
-            'content.max' => __('messages.errors.comments.max'),
+{
+    $request->validate([
+        'content' => 'required|string|max:300',
+        'parent_id' => 'nullable|exists:comments,id'
+    ], [
+        'content.required' => __('messages.errors.comments.required'),
+        'content.string' => __('messages.errors.comments.string'),
+        'content.max' => __('messages.errors.comments.max'),
+        'parent_id.exists' => __('messages.errors.comments.exists'),
+    ]);
+
+    $comment = new Comment([
+        'user_id' => Auth::id(),
+        'content' => $request->content,
+        'parent_id' => $request->parent_id
+    ]);
+
+    $schoolProject->comments()->save($comment);
+
+    // Si es una petición AJAX, devolver respuesta JSON
+    if ($request->ajax() || $request->wantsJson()) {
+        // Cargar las relaciones necesarias del comentario
+        $comment->load('user');
         
-            'parent_id.exists' => __('messages.errors.comments.exists'),
-        ]);
+        $isReply = !empty($request->parent_id);
+        
+        if ($isReply) {
+            // Es una respuesta, renderizar solo el HTML de la respuesta
+            $replyHtml = view('comments.single_reply', [
+                'reply' => $comment,
+                'type' => 'school-project'
+            ])->render();
 
-        $comment = new Comment([
-            'user_id' => Auth::id(),
-            'content' => $request->content,
-            'parent_id' => $request->parent_id
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.messages.comment-create'),
+                'reply_html' => $replyHtml,
+                'parent_id' => $request->parent_id,
+                'is_reply' => true,
+                'comments_count' => $schoolProject->comments->count()
+            ]);
+        } else {
+            // Es un comentario principal, renderizar el comentario completo
+            $commentHtml = view('comments.single_comment', [
+                'comment' => $comment,
+                'type' => 'school-project',
+                'commentable' => $schoolProject
+            ])->render();
 
-        $schoolProject->comments()->save($comment);
-
-        return back()->with('message', __('messages.messages.comment-create'));
+            return response()->json([
+                'success' => true,
+                'message' => __('messages.messages.comment-create'),
+                'comment_html' => $commentHtml,
+                'is_reply' => false,
+                'comments_count' => $schoolProject->comments->count()
+            ]);
+        }
     }
+
+    return back()->with('message', __('messages.messages.comment-create'));
+}
 
     public function edit(Comment $comment)
     {
