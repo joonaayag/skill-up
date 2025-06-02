@@ -215,7 +215,7 @@
                                                     for="date_created">{{ __('messages.school-projects.label-date') }}</x-label>
                                                 <input type="date" name="creation_date" id="date_created"
                                                     value="{{ old('creation_date', $project->creation_date) }}"
-                                                    class="w-full mb-2 border px-2 py-1 rounded" required>
+                                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0" required>
                                                 @error('creation_date')
                                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                                 @enderror
@@ -223,7 +223,7 @@
                                                 <x-label
                                                     for="description">{{ __('messages.school-projects.label-description') }}</x-label>
                                                 <textarea name="description" id="description"
-                                                    class="w-full mb-2 border px-2 py-1 rounded resize-none"
+                                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 resize-none"
                                                     required>{{ old('description', $project->description) }}</textarea>
                                                 @error('description')
                                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -252,7 +252,7 @@
                                                 <x-label
                                                     for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
                                                 <select name="general_category" id="general_category"
-                                                    class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
+                                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 dark:bg-themeBgDark rounded border border-themeLightGray">
                                                     <option value="Administración y negocio" {{ old('general_category', $project->general_category) == 'Administración y negocio' ? 'selected' : '' }}>
                                                         {{ __('messages.projects.option-admin') }}
                                                     </option>
@@ -281,13 +281,16 @@
 
                                                 <x-label for="url">{{ __('messages.school-projects.label-link') }}</x-label>
                                                 <input type="url" name="link" value="{{ $project->link }}"
-                                                    class="w-full mb-2 border px-2 py-1 rounded">
+                                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
 
                                                 <x-label for="title">{{ __('messages.school-projects.label-highlight') }}</x-label>
                                                 <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
                                                     <label for="image-upload-{{ $project->id }}"
-                                                        class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
-                                                        {{ __('messages.school-projects.label-high-upload') }}
+                                                        class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 bg-themeGrape/80 text-white font-medium  cursor-pointer hover:bg-themeGrape transition">
+                                                        <div class="flex gap-2">
+                                                            <x-icon name="image" class="w-5 h-auto" />
+                                                            {{ __('messages.school-projects.label-high-upload') }}
+                                                        </div>
                                                         <input id="image-upload-{{ $project->id }}" type="file" name="image"
                                                             accept="image/*" class="hidden" @change="
                                                                                         fileName = $event.target.files[0]?.name || '';
@@ -313,8 +316,11 @@
                                                 <x-label for="title">{{ __('messages.school-projects.label-additional') }}</x-label>
                                                 <div x-data="{ fileNames: [] }" x-cloak class="w-full">
                                                     <label for="file-upload-{{ $project->id }}"
-                                                        class="flex items-center justify-center w-full px-4 py-2 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
-                                                        {{ __('messages.school-projects.label-upload') }}
+                                                        class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
+                                                        <div class="flex gap-2">
+                                                            <x-icon name="clip" class="w-5 h-auto" />
+                                                            {{ __('messages.school-projects.label-upload') }}
+                                                        </div> 
                                                         <input id="file-upload-{{ $project->id }}" name="files[]" type="file"
                                                             multiple accept="file/*" class="hidden"
                                                             @change="fileNames = [...$event.target.files].map(f => f.name)" />
@@ -332,11 +338,11 @@
 
                                                 <div class="flex justify-end gap-3 mt-4">
                                                     <button type="button" @click="showEdit = false"
-                                                        class="px-4 py-2 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
+                                                        class="h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base border border-themeLightGray outline-0 bg-themeLightGray text-gray-800 rounded hover:bg-gray-400 transition cursor-pointer">
                                                         {{ __('messages.button.cancel') }}
                                                     </button>
                                                     <button type="submit"
-                                                        class="px-4 py-2 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
+                                                        class="h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base border border-themeLightGray outline-0 bg-themeBlue text-white rounded hover:bg-themeBlue/80 transition cursor-pointer">
                                                         {{ __('messages.button.save') }}
                                                     </button>
                                                 </div>
@@ -562,9 +568,12 @@
                     <x-label for="title">{{ __('messages.school-projects.label-highlight') }}</x-label>
                     <div x-data="{ fileName: '', previewUrl: '' }" x-cloak class="w-full">
                         <label for="image-upload"
-                            class="flex items-center justify-center w-full px-2 py-1 md:px-4 md:py-2 bg-themeBlue text-white font-medium
-                             rounded cursor-pointer hover:bg-themeHoverBlue transition">
-                            {{ __('messages.school-projects.label-high-upload') }}
+                            class="flex items-center justify-center w-full px-2 py-1 md:px-4 md:py-2 bg-themeGrape/80 text-white font-medium
+                             rounded cursor-pointer hover:bg-themeGrape transition">
+                             <div class="flex gap-2">
+                                    <x-icon name="image" class="w-5 h-auto" />
+                                {{ __('messages.school-projects.label-high-upload') }}
+                            </div>
                             <input id="image-upload" type="file" name="image" accept="image/*" class="hidden" @change="
                                             fileName = $event.target.files[0]?.name || '';
                                             if ($event.target.files[0]) {
@@ -590,8 +599,11 @@
                     <x-label for="title">{{ __('messages.school-projects.label-additional') }}</x-label>
                     <div x-data="{ fileNames: [] }" x-cloak class="w-full">
                         <label for="file-upload"
-                            class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeBlue text-white font-medium rounded cursor-pointer hover:bg-themeHoverBlue transition">
-                            {{ __('messages.school-projects.label-upload') }}
+                            class="flex items-center justify-center w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base bg-themeGrape/80 text-white font-medium rounded cursor-pointer hover:bg-themeGrape transition">
+                            <div class="flex gap-2">
+                                <x-icon name="clip" class="w-5 h-auto" />
+                                {{ __('messages.school-projects.label-upload') }}
+                                </div> 
                             <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
                                 @change="fileNames = [...$event.target.files].map(f => f.name)" />
                         </label>
