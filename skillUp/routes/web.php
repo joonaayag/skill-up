@@ -214,8 +214,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::delete('/admin/ofertas/{id}', [AdminController::class, 'destroyOffer'])->name('admin.offers.destroy');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/perfil', [DashboardController::class, 'profile'])->name('profile.index');
-        Route::get('/perfil/{id}', [DashboardController::class, 'publicProfile'])->name('profile.public');
+        Route::get('/perfil/{id}', [DashboardController::class, 'profile'])->name('profile.index');
 
         Route::get('/gestion-proyectos-escolares', [SchoolProjectController::class, 'index'])->name('school.projects.index');
         Route::put('/school-projects/editar/{id}', [SchoolProjectController::class, 'update'])->name('school.projects.update');

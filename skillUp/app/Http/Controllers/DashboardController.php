@@ -75,17 +75,11 @@ class DashboardController extends Controller
         return view('dashboard', compact('notifications', 'combined', 'ownProjects', 'jobOffers'));
     }
 
-    public function profile()
-    {
-        $user = auth()->user();
-
-        return view('profile.index', compact('user'));
-    }
-
-    public function publicProfile($id)
+    public function profile($id)
     {
         $user = User::findOrFail($id);
-        return view('profile.index-public', compact('user'));
+
+        return view('profile.index', compact('user'));
     }
 
 }

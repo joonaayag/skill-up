@@ -192,7 +192,7 @@
     <!-- Desktop Profile (XL and up) -->
     <nav class="hidden 2xl:flex flex-grow justify-end basis-0">
         @auth
-            <a href="{{ route('profile.index') }}"
+            <a href="{{ route('profile.index', ['id' => auth()->user()->id]) }}"
                 class="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-black/5 dark:hover:bg-white/9 
                                             transition border-b-2 border-transparent rounded hover:border-b-2 hover:border-b-themeBlue">
                 <span>{{ auth()->user()->name }}</span>

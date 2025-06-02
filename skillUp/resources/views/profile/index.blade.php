@@ -9,11 +9,11 @@
         class="relative z-10 max-w-xl mx-auto bg-white dark:bg-themeBgDark rounded-xl shadow-md overflow-hidden mt-10 border-2 border-themeLightGray">
         
         <div class="relative">
-           <img src="{{ auth()->user()->banner ? Storage::disk('s3')->url(auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
+           <img src="{{ $user->banner ? Storage::disk('s3')->url($user->banner) : asset('images/defaultBanner.jpg') }}"
                 alt="Fondo" class="w-full h-20 md:h-40 object-cover" id="bannerImage">
 
             <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
-                <img src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
+                <img src="{{ $user->profile ? Storage::disk('s3')->url($user->profile) : asset('images/defaultProfile.png') }}"
                     alt="Perfil" id="profileImage"
                     class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-themeBlue dark:border-white object-cover shadow-lg">
             </div>
@@ -21,10 +21,10 @@
 
         <div class="pt-8 pb-6 px-6 text-center ">
 
-            <h2 class="text-2xl font-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</h2>
+            <h2 class="text-2xl font-bold">{{ $user->name }} {{ $user->last_name }}</h2>
             <span
                 class="inline-block mt-2 px-3 py-1 text-xs md:text-sm text-white bg-green-500 rounded-full">
-                @switch(auth()->user()->role)
+                @switch($user->role)
                     @case('Alumno')
                         {{ __('messages.roles.student') }}
                         @break
@@ -43,7 +43,7 @@
                 @endswitch
             </span>
             @php
-                $details = auth()->user()->detail;
+                $details = $user->detail;
             @endphp
 
             <div class="mt-6 text-left space-y-4 dark:[&>div>div>div]:text-themeLightGray">
@@ -59,26 +59,26 @@
                 <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                     <div class="w-1/2 ">
                         <x-label for="name">{{ __('messages.profile.name') }}</x-label>
-                        <div class=" text-dark ml-2">{{ auth()->user()->name }}</div>
+                        <div class=" text-dark ml-2">{{ $user->name }}</div>
                     </div>
                     <div class="w-1/2">
                         <x-label for="last_name">{{ __('messages.profile.last-name') }}</x-label>
-                        <div class=" text-dark ml-2">{{ auth()->user()->last_name }}</div>
+                        <div class=" text-dark ml-2">{{ $user->last_name }}</div>
                     </div>
                 </div>
                 <div class="flex text-xs md:tex-sm lg:text-base">
                     <div class="w-1/2">
                         <x-label for="email">{{ __('messages.profile.email') }}</x-label>
-                        <div class="text-dark ml-2">{{ auth()->user()->email }}</div>
+                        <div class="text-dark ml-2">{{ $user->email }}</div>
                     </div>
                 </div>
                 <div class="text-xs md:tex-sm lg:text-base">
                     <x-label for="description">{{ __('messages.profile.description') }}</x-label>
                     <div class="text-dark text-sm mt-1 ml-2">
-                        {{ auth()->user()->description ?? __('messages.profile.no-specify') }}
+                        {{ $user->description ?? __('messages.profile.no-specify') }}
                     </div>
                 </div>
-                @if (auth()->user()->role === 'Alumno')
+                @if ($user->role === 'Alumno')
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
                             <x-label for="birth_date">{{ __('messages.profile.birth-date') }}</x-label>
@@ -93,7 +93,7 @@
                         <x-label for="educational_center">{{ __('messages.profile.educational-center') }}</x-label>
                         <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? __('messages.profile.no-specify') }}</div>
                     </div>
-                @elseif (auth()->user()->role === 'Profesor')
+                @elseif ($user->role === 'Profesor')
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
                             <x-label for="specialization">{{ __('messages.profile.specialization') }}</x-label>
@@ -108,7 +108,7 @@
                         <x-label for="educational_center">{{ __('messages.profile.educational-center') }}</x-label>
                         <div class="w-1/2 text-dark ml-2">{{ $details?->educational_center ?? __('messages.profile.no-specify') }}</div>
                     </div>
-                @elseif (auth()->user()->role === 'Empresa')
+                @elseif ($user->role === 'Empresa')
                     <div class="flex gap-2 text-xs md:tex-sm lg:text-base">
                         <div class="w-1/2">
                             <x-label for="cif">CIF</x-label>
@@ -132,9 +132,9 @@
                 @endif
 
                 <x-label for="cv">Currículum</x-label>
-                @if(auth()->user()->cv)
+                @if($user->cv)
                     <div class="text-dark text-xs md:tex-sm lg:text-base mt-1">
-                        <p>📄 <a href="{{ asset('storage/' . auth()->user()->cv) }}" target="_blank"
+                        <p>📄 <a href="{{ asset('storage/' . $user->cv) }}" target="_blank"
                                 class="underline text-blue-600">
                                 {{ __('messages.profile.see-cv') }}
                             </a></p>
@@ -144,58 +144,63 @@
                 @endif
             </div>
 
-            <div>
-                <button @click="showModal = true"
-                    class="mt-6 bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">
-                    {{ __('messages.profile.edit-profile') }}
-                </button>
-                <div x-cloak x-data="{ open: false }" class="inline-block" x-cloak>
-                    <button @click="open = true" class="mt-6 dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{ __('messages.profile.logout') }}</button>
+            @if (auth()->user()->id === $user->id)
 
-                    <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
-                        <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
-                            @click.outside="open = false">
-                            <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.profile.logout') }}</x-heading>
-                            <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
-                                {{ __('messages.profile.confirm-logout') }} <strong>{{ auth()->user()->name }} {{ auth()->user()->last_name}}</strong>?
-                            </p>
-                            <div class="flex justify-end gap-4">
-                                <button @click="open = false"
-                                    class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition cursor-pointer">
-                                    {{ __('messages.button.cancel') }}
-                                </button>
+                <div>
+                    <button @click="showModal = true"
+                        class="mt-6 bg-themeBlue border-2 border-themeBlue hover:bg-blue-700 text-white font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">
+                        {{ __('messages.profile.edit-profile') }}
+                    </button>
+                    <div x-cloak x-data="{ open: false }" class="inline-block" x-cloak>
+                        <button @click="open = true" class="mt-6 dark:bg-themeBgDark bg-white border-2 border-themeRed hover:bg-themeRed/20 text-themeRed font-semibold px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm rounded transition cursor-pointer">{{ __('messages.profile.logout') }}</button>
 
-                                <form action="{{ route('user.logout', $user->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit"
-                                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
-                                        {{ __('messages.profile.logout') }}
+                        <div x-show="open" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center px-10 z-50">
+                            <div class="bg-white dark:bg-themeBgDark p-6 rounded shadow-lg w-full max-w-md"
+                                @click.outside="open = false">
+                                <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.profile.logout') }}</x-heading>
+                                <p class="mb-4 text-gray-600 dark:text-gray-300 break-words">
+                                    {{ __('messages.profile.confirm-logout') }} <strong>{{ $user->name }} {{ $user->last_name}}</strong>?
+                                </p>
+                                <div class="flex justify-end gap-4">
+                                    <button @click="open = false"
+                                        class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition cursor-pointer">
+                                        {{ __('messages.button.cancel') }}
                                     </button>
-                                </form>
+
+                                    <form action="{{ route('user.logout', $user->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="px-2 py-1 2md:px-4 2md:py-2 text-xs lg:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer">
+                                            {{ __('messages.profile.logout') }}
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+            @endif
+
         </div>
         <div x-cloak x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))">
             <x-modal>
                 <x-heading level="h2" class="mb-4 text-center pb-4 border-b-2 border-b-themeBlue">{{ __('messages.profile.edit-profile') }}</x-heading>
                 <form action="{{ route('user.update', auth()->id()) }}" method="POST" enctype="multipart/form-data"
                     class="max-w-2xl mx-auto p-6 rounded shadow [&>div>div>input]:border-themeLightGray [&>div>input]:border-themeLightGray
-                     [&>div>textarea]:border-themeLightGray text-xs md:tex-sm lg:text-base">
+                     [&>div>textarea]:border-themeLightGray text-xs md:tex-sm lg:text-base [&>div>input]:outline-none [&>div>div>input]:outline-none [&>div>textarea]:outline-none">
                     @csrf
                     @method('PUT')
 
                     <div class="relative mb-16 sm:mb-12">
                         <img id="bannerPreview"
-                            src="{{ auth()->user()->banner ? Storage::disk('s3')->url(auth()->user()->banner) : asset('images/defaultBanner.jpg') }}"
+                            src="{{ $user->banner ? Storage::disk('s3')->url($user->banner) : asset('images/defaultBanner.jpg') }}"
                             class="w-full h-20 md:h-40 object-cover cursor-pointer" alt="Banner">
                         <input type="file" name="banner" id="bannerInput" accept="image/*" class="hidden">
 
                         <div class="absolute -bottom-10 left-1/6 transform -translate-x-1/2">
                             <img id="fotoPerfilPreview"
-                                src="{{ auth()->user()->profile ? Storage::disk('s3')->url(auth()->user()->profile) : asset('images/defaultProfile.png') }}"
+                                src="{{ $user->profile ? Storage::disk('s3')->url($user->profile) : asset('images/defaultProfile.png') }}"
                                 class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer"
                                 alt="Foto de perfil">
                             <input type="file" name="profile" id="fotoPerfilInput" accept="image/*" class="hidden">

@@ -248,7 +248,7 @@
                 </li>
                 <li><strong>{{__('messages.project-details.published')}} </strong>{{ $offer->created_at }}</li>
                 <li><strong>{{__('messages.roles.company')}}: </strong>
-                <a href="{{ route('profile.public', ['id' => $offer->company->id]) }}"
+                <a href="{{ route('profile.index', ['id' => $offer->company->id]) }}"
                         class="text-themeBlue hover:underline font-semibold">
                         {{ $offer->company->name }}
                     </a></li>
