@@ -63,32 +63,35 @@
 
             class="w-full md:w-1/2 xl:w-1/3 mx-auto mt-20 mb-40 px-4 sm:px-6 2md:px-10 py-10 bg-white dark:bg-themeBgDark rounded-2xl shadow-xl transition-all duration-300">
 
-            <div class="text-center mb-6">
-                <x-heading level="h2" class="mb-8">
-                    <div class="relative h-11 overflow-hidden">
-                        <span x-show="form === 'login'" 
-                              x-transition:enter="transition ease-out duration-500 transform"
-                              x-transition:enter-start="opacity-0 translate-y-8"
-                              x-transition:enter-end="opacity-100 translate-y-0"
-                              x-transition:leave="transition ease-in duration-300 transform"
-                              x-transition:leave-start="opacity-100 translate-y-0"
-                              x-transition:leave-end="opacity-0 -translate-y-8"
-                              class="absolute inset-0"
-                              x-text="'{{ __('messages.auth.login') }}'">
+            <div class="text-center px-4 sm:px-6 lg:px-8">
+                <a href="/"><x-icon name="logo" class="w-16 h-auto mb-2 mx-auto sm:w-20" /></a>
+                
+                <x-heading level="h2" class="mb-4 text-2xl sm:text-3xl font-semibold">
+                    <div class="relative h-12 sm:h-14 overflow-hidden">
+                        <span x-show="form === 'login'"
+                            x-transition:enter="transition ease-out duration-500 transform"
+                            x-transition:enter-start="opacity-0 translate-y-6"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-300 transform"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-6"
+                            class="absolute inset-0 w-full"
+                            x-text="'{{ __('messages.auth.login') }}'">
                         </span>
-                        <span x-show="form === 'register'" 
-                              x-transition:enter="transition ease-out duration-500 transform"
-                              x-transition:enter-start="opacity-0 translate-y-8"
-                              x-transition:enter-end="opacity-100 translate-y-0"
-                              x-transition:leave="transition ease-in duration-300 transform"
-                              x-transition:leave-start="opacity-100 translate-y-0"
-                              x-transition:leave-end="opacity-0 -translate-y-8"
-                              class="absolute inset-0"
-                              x-text="'{{ __('messages.auth.register') }}'">
+                        <span x-show="form === 'register'"
+                            x-transition:enter="transition ease-out duration-500 transform"
+                            x-transition:enter-start="opacity-0 translate-y-6"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-300 transform"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-6"
+                            class="absolute inset-0 w-full"
+                            x-text="'{{ __('messages.auth.register') }}'">
                         </span>
                     </div>
                 </x-heading>
             </div>
+
 
             @if (session('status'))
                 <div class="text-xs md:tex-sm 2md:text-base bg-green-100 border border-green-400 text-green-800 dark:bg-green-200 dark:text-green-900 px-4 py-3 rounded-xl mb-6 shadow-md">
@@ -96,7 +99,6 @@
                 </div>
             @endif
 
-            <!-- CONTENEDOR PARA FORMULARIOS -->
             <div class="relative">
 
                 <!-- FORMULARIO LOGIN -->
