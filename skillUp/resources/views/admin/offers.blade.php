@@ -2,6 +2,10 @@
 
 @section('title', content: __('messages.titles.admin-offers'))
 
+@push('scripts')
+    <script src="{{ asset('js/admin/offers.js') }}"></script>
+@endpush
+
 @php
     $sectorMap = [
         'Agricultura/Medio ambiente' => 'sector-agri',
@@ -157,21 +161,21 @@
                                             {{ __('messages.admin.offers.edit') }}
                                         </x-heading>
 
-                                        <form action="{{ route('admin.offers.update', $offer->id) }}" method="POST"
+                                        <form id="mi-form" action="{{ route('admin.offers.update', $offer->id) }}" method="POST"
                                             class="space-y-4 [&>select]:border [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                                             @csrf
                                             @method('PUT')
 
-                                            <x-label for="name">{{ __('messages.admin.offers.label-title') }}</x-label>
+                                            <x-label for="name">{{ __('messages.admin.offers.label-title') }}<x-red-required/></x-label>
                                             <x-inputtext type="text" name="name" id="name" value="{{ $offer->name }}" required />
 
                                             <x-label for="subtitle">{{ __('messages.admin.offers.label-subtitle') }}</x-label>
                                             <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ $offer->subtitle }}" />
 
-                                            <x-label for="description">{{ __('messages.admin.offers.label-description') }}</x-label>
+                                            <x-label for="description">{{ __('messages.admin.offers.label-description') }}<x-red-required/></x-label>
                                             <x-textarea name="description" id="description" required>{{ $offer->description }}</x-textarea>
 
-                                            <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}</x-label>
+                                            <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}<x-red-required/></x-label>
                                             <select name="sector_category" id="sector_category" required
                                                 class="w-full border-themeLightGray rounded text-xs md:text-sm lg:text-base h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                                                 @foreach (array_keys($sectorMap) as $sector)
@@ -181,7 +185,7 @@
                                                 @endforeach
                                             </select>
 
-                                            <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}</x-label>
+                                            <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}<x-red-required/></x-label>
                                             <select name="general_category" id="general_category" required
                                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:text-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                                                 <option value="Administración y negocio" {{ old('general_category', $offer->general_category) == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
@@ -194,7 +198,7 @@
                                                 <option value="Tecnología y desarrollo" {{ old('general_category', $offer->general_category) == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
                                             </select>
 
-                                            <x-label for="state">{{ __('messages.admin.offers.label-state') }}</x-label>
+                                            <x-label for="state">{{ __('messages.admin.offers.label-state') }}<x-red-required/></x-label>
                                             <select name="state" id="state" required
                                                 class="w-full border-themeLightGray rounded text-xs md:text-sm lg:text-base h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                                                 <option value="abierta" {{ $offer->state === 'abierta' ? 'selected' : '' }}>{{ __('messages.admin.offers.status-open') }}</option>
@@ -267,16 +271,16 @@
                 class="space-y-4 [&>select]:border-1  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
 
-                <x-label for="title">{{ __('messages.admin.offers.label-title') }}</x-label>
+                <x-label for="title">{{ __('messages.admin.offers.label-title') }}<x-red-required/></x-label>
                 <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
 
                 <x-label for="subtitle">{{ __('messages.admin.offers.label-subtitle') }}</x-label>
                 <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
 
-                <x-label for="description">{{ __('messages.admin.offers.label-description') }}</x-label>
+                <x-label for="description">{{ __('messages.admin.offers.label-description') }}<x-red-required/></x-label>
                 <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
 
-                <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}</x-label>
+                <x-label for="sector_category">{{ __('messages.admin.offers.label-sector') }}<x-red-required/></x-label>
                 <select name="sector_category" id="sector_category" required
                     class="w-full rounded h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark bg-white dark:bg-themeBgD">
                     @foreach ($sectorMap as $spanishLabel => $translationKey)
@@ -286,7 +290,7 @@
                     @endforeach
                 </select>
 
-                <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}</x-label>
+                <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}<x-red-required/></x-label>
                 <select name="general_category" required
                     class="w-full h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border">
                     <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
@@ -309,7 +313,7 @@
                     <option value="Tecnología y desarrollo" {{ old('general_category') == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
                 </select>
 
-                <x-label for="state">{{ __('messages.admin.offers.label-state') }}</x-label>
+                <x-label for="state">{{ __('messages.admin.offers.label-state') }}<x-red-required/></x-label>
                 <select name="state" required
                     class="w-full rounded h-8 sm:h-10 px-3 text-xs md:tex-sm lg:text-base bg-white dark:bg-themeBgDark outline-0">
                     <option value="abierta" @selected(old('state') == 'abierta')>{{ __('messages.admin.offers.status-open') }}</option>
@@ -332,79 +336,4 @@
         </div>
 
     </div>
-    <script>
-        document.getElementById('mi-form').addEventListener('submit', function (event) {
-            const formData = {
-                name: document.getElementById('name')?.value.trim() || '',
-                subtitle: document.getElementById('subtitle')?.value.trim() || '',
-                description: document.getElementById('description')?.value.trim() || '',
-                sector_category: document.getElementById('sector_category')?.value || '',
-                general_category: document.getElementsByName('general_category')[0]?.value || '',
-                state: document.getElementsByName('state')[0]?.value || ''
-            };
-
-            const errors = {};
-
-            if (!formData.name) {
-                errors.name = "{{ __('messages.errors.name.required') }}";
-            } else if (formData.name.length > 40) {
-                errors.name = "{{ __('messages.errors.name.max') }}";
-            }
-
-            if (formData.subtitle && formData.subtitle.length > 255) {
-                errors.subtitle = "{{ __('messages.errors.subtitle.max') }}";
-            }
-
-            if (!formData.description) {
-                errors.description = "{{ __('messages.errors.description.required') }}";
-            }
-
-            const validSectors = [
-                'Agricultura/Medio ambiente', 'Arte/Cultura', 'Automoción', 'Ciberseguridad', 'Community Manager', 'Construcción',
-                'Coordinación Educativa', 'Diseño Gráfico', 'Electricidad y fontanería', 'Energía/Renovables', 'Farmacia', 'Finanzas y contabilidad',
-                'Fotografía/vídeo', 'Hostelería/turismo', 'AI', 'Investigación/laboratorio', 'Legal', 'Logística', 'Mecánica', 'Medicina/Enfermería',
-                'Nutrición', 'Operador Industrial', 'Orientación', 'Periodismo', 'Enseñanza', 'Psicología', 'Publicidad', 'Redes y Sistemas',
-                'RRHH', 'Seguridad', 'SEO/SEM', 'Terapias/Rehabilitación', 'Traducción', 'Transporte/Entrega', 'Ventas'
-            ];
-            if (!formData.sector_category) {
-                errors.sector_category = "{{ __('messages.errors.sector_offer.required') }}";
-            } else if (!validSectors.includes(formData.sector_category)) {
-                errors.sector_category = "{{ __('messages.errors.sector_offer.in') }}";
-            }
-
-            const validCategories = [
-                'Administración y negocio', 'Ciencia y salud', 'Comunicación', 'Diseño y comunicación',
-                'Educación', 'Industria', 'Otro', 'Tecnología y desarrollo'
-            ];
-            if (!formData.general_category) {
-                errors.general_category = "{{ __('messages.errors.sector.required') }}";
-            } else if (!validCategories.includes(formData.general_category)) {
-                errors.general_category = "{{ __('messages.errors.sector.in') }}";
-            }
-
-            if (!formData.state) {
-                errors.state = "{{ __('messages.errors.state.required') }}";
-            } else if (!['abierta', 'cerrada'].includes(formData.state)) {
-                errors.state = "{{ __('messages.errors.state.in') }}";
-            }
-
-            const errorBox = document.getElementById('form-errors');
-            const errorList = document.getElementById('error-list');
-
-            if (Object.keys(errors).length > 0) {
-                event.preventDefault();
-
-                errorList.innerHTML = '';
-                errorBox.classList.remove('hidden');
-
-                Object.values(errors).forEach(msg => {
-                    const li = document.createElement('li');
-                    li.textContent = msg;
-                    errorList.appendChild(li);
-                });
-            } else {
-                errorBox.classList.add('hidden');
-            }
-        });
-    </script>
 @endsection

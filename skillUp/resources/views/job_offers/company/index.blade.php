@@ -190,9 +190,6 @@
                                     <x-tags class="mb-1">{{ $offer->general_category }}</x-tags>
                                     <x-heading level="h3" class="mb-1">{{ $offer->name }}</x-heading>
                                     <x-heading level="h4" class="mb-1">{{ $offer->sector_category }}</x-heading>
-                                    @if($offer->subtitle)
-                                        <p><strong>{{ Str::limit($offer->subtitle, 20) }}</strong></p>
-                                    @endif
 
                                     @php
                                         $favorite = auth()->user()->favorites()
@@ -259,16 +256,16 @@
                 class="space-y-4 [&>select]:border  [&>select]:border-themeLightGray [&>input]:outline-0 [&>textarea]:outline-0">
                 @csrf
 
-                <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
+                <x-label for="title">{{ __('messages.job-offers.label-title') }}<x-red-required/></x-label>
                 <x-inputtext type="text" name="name" id="name" required />
 
                 <x-label for="subtitle">{{ __('messages.job-offers.label-subtitle') }}</x-label>
                 <x-inputtext type="text" name="subtitle" id="subtitle" required />
 
-                <x-label for="description">{{ __('messages.job-offers.label-description') }}</x-label>
+                <x-label for="description">{{ __('messages.job-offers.label-description') }}<x-red-required/></x-label>
                 <x-textarea name="description" id="description" required></x-textarea>
 
-                <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
+                <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}<x-red-required/></x-label>
                 <select name="sector_category" id="sector_category" required
                     class="w-full border-themeLightGray rounded text-xs md:tex-sm lg:text-base h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
                     <option value="" {{ old('sector_category') === null ? 'selected' : '' }}>
@@ -281,7 +278,7 @@
                     @endforeach
                 </select>
 
-                <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
+                <x-label for="general_category">{{ __('messages.job-offers.label-category') }}<x-red-required/></x-label>
                 <select name="general_category" required
                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                     <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
@@ -304,7 +301,7 @@
                     <option value="Tecnología y desarrollo" {{ old('general_category') == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
                 </select>
 
-                <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
+                <x-label for="state">{{ __('messages.job-offers.label-state') }}<x-red-required/></x-label>
                 <select name="state" required
                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base border-themeLightGray rounded bg-white dark:bg-themeBgDark outline-0 cursor-pointer">
                     <option value="Abierta">{{ __('messages.job-offers.state-open') }}</option>

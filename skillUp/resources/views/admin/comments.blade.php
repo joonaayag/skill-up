@@ -2,10 +2,13 @@
 
 @section('title', __('messages.titles.admin-comments'))
 
+@push('scripts')
+    <script src="{{ asset('js/admin-comments.js') }}"></script>
+@endpush
+
 @section('content')
     <div class="container mx-auto px-6 py-10">
         <x-heading level="h1" class="mb-4">{{ __('messages.admin.comments.title') }}</x-heading>
-
 
         <div class="overflow-x-auto rounded-lg shadow">
             <table
@@ -49,7 +52,7 @@
                                             </div>
 
                                             <div>
-                                                <label class="block text-sm font-medium mb-4">{{ __('messages.admin.comments.content') }}</label>
+                                                <label class="block text-sm font-medium mb-4">{{ __('messages.admin.comments.content') }}<x-red-required/></label>
                                                 <input type="text" name="content" value="{{ $comment->content }}"
                                                     class="w-full border rounded px-3 py-2 dark:bg-themeDark dark:text-white dark:border-gray-600"
                                                     required>
@@ -110,37 +113,4 @@
         </div>
 
     </div>
-    <script>
-        document.getElementById('edit-comment-form').addEventListener('submit', function (event) {
-            const form = event.target;
-            const contentInput = form.querySelector('input[name="content"]');
-            const content = contentInput.value.trim();
-            const errors = [];
-
-            // Validaciones
-            if (!content) {
-                errors.push("{{ __('messages.errors.comment.required') }}");
-            } else if (content.length > 100) {
-                errors.push("{{ __('messages.errors.comment.max') }}");
-            }
-
-            // Mostrar errores
-            const errorBox = document.getElementById('comment-errors');
-            const errorList = errorBox.querySelector('ul');
-            errorList.innerHTML = '';
-
-            if (errors.length > 0) {
-                event.preventDefault();
-                errorBox.classList.remove('hidden');
-                errors.forEach(msg => {
-                    const li = document.createElement('li');
-                    li.textContent = msg;
-                    errorList.appendChild(li);
-                });
-                window.scrollTo({ top: errorBox.offsetTop - 20, behavior: 'smooth' });
-            } else {
-                errorBox.classList.add('hidden');
-            }
-        });
-    </script>
 @endsection

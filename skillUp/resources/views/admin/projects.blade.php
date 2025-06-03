@@ -108,17 +108,17 @@
                     @csrf
 
                     <div>
-                        <x-label for="title">{{ __('messages.projects.label-title') }}</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-title') }}<x-red-required /></x-label>
                         <x-inputtext type="text" name="title" id="title" required />
                     </div>
 
                     <div>
-                        <x-label for="description">{{ __('messages.projects.label-description') }}</x-label>
+                        <x-label for="description">{{ __('messages.projects.label-description') }}<x-red-required /></x-label>
                         <x-textarea name="description" id="description" required></x-textarea>
                     </div>
 
                     <div>
-                        <x-label for="tags">{{ __('messages.projects.label-tags') }}</x-label>
+                        <x-label for="tags">{{ __('messages.projects.label-tags') }}<x-red-required /></x-label>
                         <select name="tags" id="tags"
                             class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
                             <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>{{ __('messages.tags.tfg') }}
@@ -150,7 +150,7 @@
                     </div>
 
                     <div>
-                        <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
+                        <x-label for="general_category">{{ __('messages.projects.category') }}:<x-red-required /></x-label>
                         <select name="sector_category" required
                             class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray">
                             <option value="Administración y negocio">{{ __('messages.projects.option-admin') }}</option>
@@ -165,7 +165,7 @@
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.projects.label-date') }}</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-date') }}<x-red-required /></x-label>
                         <x-inputdate name="creation_date" id="creation_date" required />
                     </div>
 

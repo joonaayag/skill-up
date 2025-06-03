@@ -111,22 +111,22 @@
                     @csrf
 
                     <div>
-                        <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
+                        <x-label for="title">{{ __('messages.school-projects.label-title') }}<x-red-required /></x-label>
                         <x-inputtext type="text" name="title" id="title" required />
                     </div>
 
                     <div>
-                        <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
+                        <x-label for="author">{{ __('messages.school-projects.label-author') }}<x-red-required /></x-label>
                         <x-inputtext type="text" name="author" id="author" required />
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.school-projects.label-description') }}</x-label>
+                        <x-label for="title">{{ __('messages.school-projects.label-description') }}<x-red-required /></x-label>
                         <x-textarea name="description" id="description" required></x-textarea>
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.school-projects.label-tags') }}</x-label>
+                        <x-label for="title">{{ __('messages.school-projects.label-tags') }}<x-red-required /></x-label>
                         <select name="tags" id="tags"
                             class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
                             <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
@@ -160,7 +160,7 @@
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.school-projects.label-category') }}</x-label>
+                        <x-label for="title">{{ __('messages.school-projects.label-category') }}<x-red-required /></x-label>
                         <select name="general_category" required
                             class="w-full px-3 py-2 rounded border border-themeLightGray dark:bg-themeBgDark">
                             <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}
@@ -177,7 +177,7 @@
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.school-projects.table-dateC') }}</x-label>
+                        <x-label for="title">{{ __('messages.school-projects.table-dateC') }}<x-red-required /></x-label>
                         <x-inputdate name="creation_date" id="creation_date" required />
                     </div>
 

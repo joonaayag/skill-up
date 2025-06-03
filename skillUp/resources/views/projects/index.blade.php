@@ -169,7 +169,7 @@
         @endforelse
     </ul>
 
-    @if (auth()->user()->role !== 'Admin')
+    @if (auth()->user()->role !== 'Admin' && auth()->user()->role !== 'Empresa')
         <div x-cloak x-data="{ showModal: false }"
             x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
@@ -193,17 +193,17 @@
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.projects.label-title') }}</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-title') }}<x-red-required/></x-label>
                         <x-inputtext type="text" name="title" id="title" value="{{ old('title') }}" required />
                     </div>
 
                     <div>
-                        <x-label for="description">{{ __('messages.projects.label-description') }}</x-label>
+                        <x-label for="description">{{ __('messages.projects.label-description') }}<x-red-required/></x-label>
                         <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
                     </div>
 
                     <div>
-                        <x-label for="tags">{{ __('messages.projects.label-tags') }}</x-label>
+                        <x-label for="tags">{{ __('messages.projects.label-tags') }}<x-red-required/></x-label>
                         <select name="tags" id="tags"
                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray"
                             required>
@@ -229,7 +229,7 @@
                     </div>
 
                     <div>
-                        <x-label for="general_category">{{ __('messages.projects.category') }}:</x-label>
+                        <x-label for="general_category">{{ __('messages.projects.category') }}:<x-red-required/></x-label>
                         <select name="sector_category" id="sector_category" required
                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray">
                             <option value="Administración y negocio" {{ old('sector_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
@@ -249,7 +249,7 @@
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.projects.label-date') }}</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-date') }}<x-red-required/></x-label>
                         <x-inputdate name="creation_date" id="creation_date" required />
                     </div>
 

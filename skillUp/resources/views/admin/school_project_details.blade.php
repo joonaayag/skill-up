@@ -109,12 +109,12 @@
                             <div class="flex-1 min-w-28">
                                 @if ($isImage)
                                     <a href="#" @click.prevent="selectedImage = '{{ Storage::disk('s3')->url($img->path) }}'"
-                                        class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center hover:bg-gray-200">
+                                        class="block h-8 sm:h-10 px-3 py-2 text-xs md:text-sm lg:text-base bg-themeGrape/90 rounded shadow text-center hover:bg-themeGrape">
                                         {{ __('messages.project-details.see-image') }}
                                     </a>
                                 @else
                                     <a href="{{ Storage::disk('s3')->url($img->path) }}" download
-                                        class="block bg-gray-100 text-xs md:tex-sm lg:text-base rounded shadow text-sm text-center hover:bg-gray-200">
+                                        class="block bg-themeGrape/90 h-8 sm:h-10 px-3 py-2 text-xs md:text-sm lg:text-base rounded shadow  text-center hover:bg-themeGrape">
                                         📄 {{ __('messages.project-details.download-file')  }} ({{ $extension }})
                                     </a>
                                 @endif
@@ -168,25 +168,25 @@
                     @csrf
 
                     <div>
-                        <x-label for="title">{{ __('messages.admin.offers.label-title') }}</x-label>
+                        <x-label for="title">{{ __('messages.admin.offers.label-title') }}<x-red-required /></x-label>
                         <x-inputtext type="text" name="title" id="title" value="{{ old('title', $schoolProject->title) }}"
                             required />
                     </div>
 
                     <div>
-                        <x-label for="description">{{ __('messages.admin.offers.label-description') }}</x-label>
+                        <x-label for="description">{{ __('messages.admin.offers.label-description') }}<x-red-required /></x-label>
                         <x-textarea name="description" id="description"
                             required>{{ old('description', $schoolProject->description) }}</x-textarea>
                     </div>
 
                     <div>
-                        <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
+                        <x-label for="author">{{ __('messages.school-projects.label-author') }}<x-red-required /></x-label>
                         <x-inputtext type="text" name="author" id="author"
                             value="{{ old('author', $schoolProject->author) }}" required />
                     </div>
 
                     <div>
-                        <x-label for="tags">{{ __('messages.admin.projects.table-tags') }}</x-label>
+                        <x-label for="tags">{{ __('messages.admin.projects.table-tags') }}<x-red-required /></x-label>
                         <select name="tags" id="tags"
                             class="w-full  h-8 sm:h-10 px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray" required>
                             <option value="TFG" {{ old('tags') == 'TFG' ? 'selected' : '' }}>
@@ -220,7 +220,7 @@
                     </div>
 
                     <div>
-                        <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}</x-label>
+                        <x-label for="general_category">{{ __('messages.admin.offers.label-category') }}<x-red-required /></x-label>
                         <select name="general_category" required
                             class="w-full  h-8 sm:h-10 px-3 py-2 rounded border border-themeLightGray dark:bg-themeBgDark">
                             <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}
@@ -237,7 +237,7 @@
                     </div>
 
                     <div>
-                        <x-label for="title">{{ __('messages.projects.label-date') }}</x-label>
+                        <x-label for="title">{{ __('messages.projects.label-date') }}<x-red-required /></x-label>
                         <x-inputdate name="creation_date" id="creation_date"
                             value="{{ old('creation_date', $schoolProject->creation_date) }}" required />
                     </div>

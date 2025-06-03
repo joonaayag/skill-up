@@ -303,16 +303,16 @@
                     </div>
 
 
-                    <x-label for="title">{{ __('messages.job-offers.label-title') }}</x-label>
+                    <x-label for="title">{{ __('messages.job-offers.label-title') }}<x-red-required/></x-label>
                     <x-inputtext type="text" name="name" id="name" value="{{ old('name') }}" required />
 
                     <x-label for="subtitle">{{ __('messages.job-offers.label-subtitle') }}</x-label>
                     <x-inputtext type="text" name="subtitle" id="subtitle" value="{{ old('subtitle') }}" required />
 
-                    <x-label for="description">{{ __('messages.job-offers.label-description') }}</x-label>
+                    <x-label for="description">{{ __('messages.job-offers.label-description') }}<x-red-required/></x-label>
                     <x-textarea name="description" id="description" required>{{ old('description') }}</x-textarea>
 
-                    <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}</x-label>
+                    <x-label for="sector_category">{{ __('messages.job-offers.label-sector') }}<x-red-required/></x-label>
                     <select name="sector_category" id="sector_category" required
                         class="w-full rounded px-4 py-2 dark:bg-themeBgDark bg-white cursor-pointer">
 
@@ -325,7 +325,7 @@
 
                     </select>
 
-                    <x-label for="general_category">{{ __('messages.job-offers.label-category') }}</x-label>
+                    <x-label for="general_category">{{ __('messages.job-offers.label-category') }}<x-red-required/></x-label>
                     <select name="general_category" required
                         class="w-full px-3 py-2 dark:bg-themeBgDark rounded border  cursor-pointer">
                         <option value="Administración y negocio" {{ old('general_category') == 'Administración y negocio' ? 'selected' : '' }}>{{ __('messages.projects.option-admin') }}</option>
@@ -348,7 +348,7 @@
                         <option value="Tecnología y desarrollo" {{ old('general_category') == 'Tecnología y desarrollo' ? 'selected' : '' }}>{{ __('messages.projects.option-tec') }}</option>
                     </select>
 
-                    <x-label for="state">{{ __('messages.job-offers.label-state') }}</x-label>
+                    <x-label for="state">{{ __('messages.job-offers.label-state') }}<x-red-required/></x-label>
                     <select name="state" required
                         class="w-full border-themeLightGray rounded px-4 py-2 bg-white dark:bg-themeBgDark outline-0">
                         <option value="Abierta" @selected(old('state') == 'Abierta')>{{ __('messages.job-offers.state-open') }}

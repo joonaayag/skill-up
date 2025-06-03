@@ -131,7 +131,7 @@
 
                         <!-- Email -->
                         <div class="space-y-1">
-                            <x-label for="email">{{ __('messages.auth.email') }}</x-label>
+                            <x-label for="email">{{ __('messages.auth.email') }}<x-red-required /></x-label>
                             <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <x-icon name="mail" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
@@ -145,7 +145,7 @@
 
                         <!-- Password -->
                         <div class="space-y-1">
-                            <x-label for="password">{{ __('messages.auth.password') }}</x-label>
+                            <x-label for="password">{{ __('messages.auth.password') }}<x-red-required /></x-label>
                             <div class="relative w-full transition-all duration-300 hover:shadow-md focus-within:scale-[1.02]" x-data="{ showPassword: false }">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <x-icon name="password" class="w-5 h-5 text-gray-400 dark:text-gray-500" />
@@ -253,7 +253,7 @@
                         <input
                             type="text"
                             name="{{ $field }}"
-                            placeholder="{{ __($label) }}"
+                            placeholder="{{ __($label) . '*' }}"
                             value="{{ old($field) }}"
                             class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                             required
@@ -277,7 +277,7 @@
                         <input
                             type="password"
                             name="password"
-                            placeholder="{{ __('messages.auth.ph-password') }}"
+                            placeholder="{{ __('messages.auth.ph-password') . '*' }}"
                             @input.debounce.300ms="showTip = $event.target.value.length > 0"
                             @blur="showTip = false"
                             class="w-full pl-10 pr-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
@@ -288,13 +288,13 @@
 
 
                     <input type="password" name="password_confirmation"
-                        placeholder="{{__('messages.auth.ph-password-confirm')}}"
+                        placeholder="{{__('messages.auth.ph-password-confirm') . '*'}}"
                         class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                         required>
 
                     <select name="role" x-model="role" required
                         class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm transition-all duration-300 hover:shadow-md focus:scale-[1.02]">
-                        <option value="">{{__('messages.auth.select')}}</option>
+                        <option value="">{{__('messages.auth.select') . '*'}}</option>
                         <option value="Usuario">{{__('messages.auth.option-user')}}</option>
                         <option value="Alumno">{{__('messages.auth.option-student')}}</option>
                         <option value="Empresa">{{__('messages.auth.option-company')}}</option>
@@ -305,14 +305,15 @@
                              x-transition:enter="transition ease-out duration-500 transform"
                              x-transition:enter-start="opacity-0 translate-y-4 scale-95"
                              x-transition:enter-end="opacity-100 translate-y-0 scale-100">
+                              <x-label for="birth_date">{{ __('messages.profile.birth-date') . '*' }}</x-label>
                             <input type="date" name="birthDate" value="{{ old('birthDate') }}"
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition-all duration-300 hover:shadow-md focus:scale-[1.02]"
                                 required>
                             <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
-                                placeholder="{{__('messages.admin.users.ph-current-course')}}" required
+                                placeholder="{{__('messages.admin.users.ph-current-course') . '*'}}" required
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition-all duration-300 hover:shadow-md focus:scale-[1.02]">
-                            <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
-                                placeholder="{{__('messages.admin.users.ph-educational-center')}}" required
+                            <input type="text" name="educationalCenter" value="{{ old('educationalCenter')}}"
+                                placeholder="{{__('messages.admin.users.ph-educational-center') . '*'}}" required
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition-all duration-300 hover:shadow-md focus:scale-[1.02]">
                         </div>
                     </template>
@@ -323,13 +324,13 @@
                              x-transition:enter-start="opacity-0 translate-y-4 scale-95"
                              x-transition:enter-end="opacity-100 translate-y-0 scale-100">
                             <input type="text" name="cif" value="{{ old('cif') }}"
-                                placeholder="{{__('messages.profile.cif')}}" required
+                                placeholder="{{__('messages.profile.cif') . '*'}}" required
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition-all duration-300 hover:shadow-md focus:scale-[1.02]">
                             <input type="text" name="address" value="{{ old('address') }}"
-                                placeholder="{{__('messages.profile.address')}}" required
+                                placeholder="{{__('messages.profile.address') . '*'}}" required
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition-all duration-300 hover:shadow-md focus:scale-[1.02]">
                             <input type="text" name="sector" value="{{ old('sector') }}"
-                                placeholder="{{__('messages.profile.sector')}}" required
+                                placeholder="{{__('messages.profile.sector') . '*'}}" required
                                 class="w-full px-4 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-themeBlue focus:border-themeBlue transition-all duration-300 hover:shadow-md focus:scale-[1.02]">
                             <input type="url" name="website" value="{{ old('website') }}"
                                 placeholder="{{__('messages.profile.website')}}"

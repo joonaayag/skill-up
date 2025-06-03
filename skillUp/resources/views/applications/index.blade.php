@@ -125,7 +125,7 @@
                                             @csrf
                                             @method('PUT')
 
-                                            <x-label for="state">{{ __('messages.applications.change-status') }}</x-label>
+                                            <x-label for="state">{{ __('messages.applications.change-status') }}<x-red-required/></x-label>
                                             <select name="state" required
                                                 class="dark:bg-themeBgDark text-xs md:tex-sm lg:text-base border border-themeLightGray rounded-md px-4 py-2 cursor-pointer">
                                                 <option value="nueva" {{ $app->state === 'nueva' ? 'selected' : '' }}>

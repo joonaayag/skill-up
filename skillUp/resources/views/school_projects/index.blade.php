@@ -197,14 +197,14 @@
                                                 </div>
 
 
-                                                <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
+                                                <x-label for="title">{{ __('messages.school-projects.label-title') }}<x-red-required/></x-label>
                                                 <x-inputtext type="text" name="title" id="title"
                                                     value="{{ old('title', $project->title) }}" required />
                                                 @error('title')
                                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                                 @enderror
 
-                                                <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
+                                                <x-label for="author">{{ __('messages.school-projects.label-author') }}<x-red-required/></x-label>
                                                 <x-inputtext type="text" name="author" id="author"
                                                     value="{{ old('author', $project->author) }}" required />
                                                 @error('author')
@@ -212,7 +212,7 @@
                                                 @enderror
 
                                                 <x-label
-                                                    for="date_created">{{ __('messages.school-projects.label-date') }}</x-label>
+                                                    for="date_created">{{ __('messages.school-projects.label-date') }}<x-red-required/></x-label>
                                                 <input type="date" name="creation_date" id="date_created"
                                                     value="{{ old('creation_date', $project->creation_date) }}"
                                                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0" required>
@@ -221,7 +221,7 @@
                                                 @enderror
 
                                                 <x-label
-                                                    for="description">{{ __('messages.school-projects.label-description') }}</x-label>
+                                                    for="description">{{ __('messages.school-projects.label-description') }}<x-red-required/></x-label>
                                                 <textarea name="description" id="description"
                                                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 resize-none"
                                                     required>{{ old('description', $project->description) }}</textarea>
@@ -229,7 +229,7 @@
                                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                                 @enderror
 
-                                                <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
+                                                <x-label for="tags">{{ __('messages.school-projects.label-tags') }}<x-red-required/></x-label>
                                                 <select name="tags" id="tags"
                                                     class="w-full px-3 py-2 dark:bg-themeBgDark rounded border border-themeLightGray"
                                                     required>
@@ -250,9 +250,9 @@
                                                 @enderror
 
                                                 <x-label
-                                                    for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
+                                                    for="general_category">{{ __('messages.school-projects.label-category') }}<x-red-required/></x-label>
                                                 <select name="general_category" id="general_category"
-                                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 dark:bg-themeBgDark rounded border border-themeLightGray">
+                                                    class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base outline-0 dark:bg-themeBgDark rounded border border-themeLightGray">
                                                     <option value="Administración y negocio" {{ old('general_category', $project->general_category) == 'Administración y negocio' ? 'selected' : '' }}>
                                                         {{ __('messages.projects.option-admin') }}
                                                     </option>
@@ -507,22 +507,22 @@
 
 
                 <div>
-                    <x-label for="title">{{ __('messages.school-projects.label-title') }}</x-label>
+                    <x-label for="title">{{ __('messages.school-projects.label-title') }}<x-red-required/></x-label>
                     <x-inputtext type="text" name="title" id="title" required />
                 </div>
 
                 <div>
-                    <x-label for="author">{{ __('messages.school-projects.label-author') }}</x-label>
+                    <x-label for="author">{{ __('messages.school-projects.label-author') }}<x-red-required/></x-label>
                     <x-inputtext type="text" name="author" id="author" required />
                 </div>
 
                 <div>
-                    <x-label for="title">{{ __('messages.school-projects.label-description') }}</x-label>
+                    <x-label for="title">{{ __('messages.school-projects.label-description') }}<x-red-required/></x-label>
                     <x-textarea name="description" id="description" required></x-textarea>
                 </div>
 
                 <div>
-                    <x-label for="tags">{{ __('messages.school-projects.label-tags') }}</x-label>
+                    <x-label for="tags">{{ __('messages.school-projects.label-tags') }}<x-red-required/></x-label>
                     <select name="tags" id="tags"
                         class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer"
                         required>
@@ -541,7 +541,7 @@
                 </div>
 
                 <div>
-                    <x-label for="general_category">{{ __('messages.school-projects.label-category') }}</x-label>
+                    <x-label for="general_category">{{ __('messages.school-projects.label-category') }}<x-red-required/></x-label>
                     <select name="general_category" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base dark:bg-themeBgDark rounded border border-themeLightGray cursor-pointer">
                         <option value="Administración y negocio">{{ __('messages.school-projects.option-admin') }}</option>
                         <option value="Ciencia y salud">{{ __('messages.school-projects.option-science') }}</option>
@@ -555,7 +555,7 @@
                 </div>
 
                 <div>
-                    <x-label for="title">{{ __('messages.school-projects.table-dateC') }}</x-label>
+                    <x-label for="title">{{ __('messages.school-projects.table-dateC') }}<x-red-required/></x-label>
                     <x-inputdate name="creation_date" id="creation_date" required />
                 </div>
 

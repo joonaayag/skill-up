@@ -213,44 +213,44 @@
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-name') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-name') }}<x-red-required /></label>
                             <input type="text" name="name" value="{{ old('name', $user->name) }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2" required>
                         </div>
                         <div>
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-last-name') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-last-name') }}<x-red-required /></label>
                             <input type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-email') }}</label>
+                        <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-email') }}<x-red-required />
                         <input type="email" name="email" value="{{ old('email', $user->email) }}"
                             class="w-full border rounded h-8 sm:h-10 px-3 py-2" required>
                     </div>
 
                     <div class="mt-4">
-                        <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-description') }}</label>
+                        <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-description') }}
                         <textarea name="description" class="w-full border rounded h-8 sm:h-10 px-3 py-2 resize-none"
                             rows="4">{{ old('description', $user->description) }}</textarea>
                     </div>
 
                     @if ($user->role === 'Alumno')
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-birth-date') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-birth-date') }}<x-red-required /></label>
                             <input type="date" name="birth_date"
                                 value="{{ old('birth_date', $user->detail->birth_date ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-current-course') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-current-course') }}<x-red-required /></label>
                             <input type="text" name="current_course"
                                 value="{{ old('current_course', $user->detail->current_course ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}<x-red-required /></label>
                             <input type="text" name="educational_center"
                                 value="{{ old('educational_center', $user->detail->educational_center ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
@@ -259,19 +259,19 @@
 
                     @if ($user->role === 'Profesor')
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-specialization') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-specialization') }}<x-red-required /></label>
                             <input type="text" name="specialization"
                                 value="{{ old('specialization', $user->detail->specialization ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-department') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-department') }}<x-red-required /></label>
                             <input type="text" name="department"
                                 value="{{ old('department', $user->detail->department ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-educational-center') }}<x-red-required /></label>
                             <input type="text" name="educational_center"
                                 value="{{ old('educational_center', $user->detail->educational_center ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
@@ -280,17 +280,17 @@
 
                     @if ($user->role === 'Empresa')
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">CIF</label>
+                            <label class="block text-xs lg:text-base font-medium">CIF<x-red-required /></label>
                             <input type="text" name="cif" value="{{ old('cif', $user->detail->cif ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-address') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-address') }}<x-red-required /></label>
                             <input type="text" name="address" value="{{ old('address', $user->detail->address ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>
                         <div class="mt-4">
-                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-sector') }}</label>
+                            <label class="block text-xs lg:text-base font-medium">{{ __('messages.profile.label-sector') }}<x-red-required /></label>
                             <input type="text" name="sector" value="{{ old('sector', $user->detail->sector ?? '') }}"
                                 class="w-full border rounded h-8 sm:h-10 px-3 py-2">
                         </div>

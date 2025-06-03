@@ -105,13 +105,13 @@
 
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <x-label for="name">{{ __('messages.profile.label-name') }}</x-label>
+                                                    <x-label for="name">{{ __('messages.profile.label-name') }}<x-red-required/></x-label>
                                                     
                                                     <input type="text" name="name" value="{{ old('name', $user->name) }}"
                                                         class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0" required>
                                                 </div>
                                                 <div>
-                                                    <x-label for="last_name">{{ __('messages.profile.label-last-name') }}</x-label>
+                                                    <x-label for="last_name">{{ __('messages.profile.label-last-name') }}<x-red-required/></x-label>
                                                     <input type="text" name="last_name"
                                                         value="{{ old('last_name', $user->last_name) }}"
                                                         class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
@@ -120,12 +120,12 @@
 
                                             <div class="grid grid-cols-2 gap-4 mt-4">
                                                 <div>
-                                                    <x-label for="email">{{ __('messages.profile.label-email') }}</x-label>
+                                                    <x-label for="email">{{ __('messages.profile.label-email') }}<x-red-required/></x-label>
                                                     <input type="email" name="email" value="{{ old('email', $user->email) }}"
                                                         class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0" required>
                                                 </div>
                                                 <div>
-                                                    <x-label for="role">{{ __('messages.admin.users.table-role') }}</x-label>
+                                                    <x-label for="role">{{ __('messages.admin.users.table-role') }}<x-red-required/></x-label>
                                                     <select name="role"
                                                         class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 dark:bg-themeBgDark"
                                                         x-model="role">
@@ -165,18 +165,18 @@
                                             <template x-if="role === 'Alumno'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
-                                                        <x-label for="birthDate">{{ __('messages.profile.label-birth-date') }}</x-label>
+                                                        <x-label for="birthDate">{{ __('messages.profile.label-birth-date') }}<x-red-required/></x-label>
                                                         <input type="date" name="birthDate" value="{{ old('birthDate', $user->detail?->birth_date) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
-                                                        <x-label for="currentCourse">{{ __('messages.profile.label-current-course') }}</x-label>
+                                                        <x-label for="currentCourse">{{ __('messages.profile.label-current-course') }}<x-red-required/></x-label>
                                                         <input type="text" name="currentCourse"
                                                             value="{{ old('currentCourse', $user->detail?->current_course) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
-                                                        <x-label for="educational_center">{{ __('messages.profile.label-educational-center') }}</x-label>
+                                                        <x-label for="educational_center">{{ __('messages.profile.label-educational-center') }}<x-red-required/></x-label>
                                                         <input type="text" name="educationalCenter"
                                                             value="{{ old('educationalCenter', $user->detail?->educational_center) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
@@ -188,19 +188,19 @@
                                             <template x-if="role === 'Profesor'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
-                                                        <x-label for="educational_center">{{ __('messages.profile.label-educational-center') }}</x-label>
+                                                        <x-label for="educational_center">{{ __('messages.profile.label-educational-center') }}<x-red-required/></x-label>
                                                         <input type="text" name="educationalCenter"
                                                             value="{{ old('educationalCenter', $user->detail?->educational_center) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
-                                                        <x-label for="specialization">{{ __('messages.profile.label-specialization') }}</x-label>
+                                                        <x-label for="specialization">{{ __('messages.profile.label-specialization') }}<x-red-required/></x-label>
                                                         <input type="text" name="specialization"
                                                             value="{{ old('specialization', $user->detail?->specialization) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
-                                                        <x-label for="department">{{ __('messages.profile.label-department') }}</x-label>
+                                                        <x-label for="department">{{ __('messages.profile.label-department') }}<x-red-required/></x-label>
                                                         <input type="text" name="department"
                                                             value="{{ old('department', $user->detail?->department) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
@@ -213,17 +213,17 @@
                                             <template x-if="role === 'Empresa'">
                                                 <div class="space-y-4 mt-4">
                                                     <div>
-                                                        <x-label for="cif">CIF</x-label>
+                                                        <x-label for="cif">CIF<x-red-required/></x-label>
                                                         <input type="text" name="cif" value="{{ old('cif', $user->detail?->cif) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
-                                                        <x-label for="address">{{ __('messages.profile.label-address') }}</x-label>
+                                                        <x-label for="address">{{ __('messages.profile.label-address') }}<x-red-required/></x-label>
                                                         <input type="text" name="address" value="{{ old('address', $user->detail?->address) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
                                                     <div>
-                                                        <x-label for="sector">{{ __('messages.profile.label-sector') }}</x-label>
+                                                        <x-label for="sector">{{ __('messages.profile.label-sector') }}<x-red-required/></x-label>
                                                         <input type="text" name="sector" value="{{ old('sector', $user->detail?->sector) }}"
                                                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                                     </div>
@@ -338,30 +338,30 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <x-label for="name">{{ __('messages.profile.label-name') }}</x-label>
+                            <x-label for="name">{{ __('messages.profile.label-name') }}<x-red-required/></x-label>
                             <input type="text" name="name" placeholder="{{ __('messages.admin.users.ph-name') }}"
                             value="{{ old('name') }}" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                         </div>
                         <div>
-                            <x-label for="lastName">{{ __('messages.profile.label-last-name') }}</x-label>
+                            <x-label for="lastName">{{ __('messages.profile.label-last-name') }}<x-red-required/></x-label>
                             <input type="text" name="lastName" placeholder="{{ __('messages.admin.users.ph-last-name') }}"
                                 value="{{ old('lastName') }}" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                     </div>
 
                     <div>
-                        <x-label for="email">{{ __('messages.profile.label-email') }}</x-label>
+                        <x-label for="email">{{ __('messages.profile.label-email') }}<x-red-required/></x-label>
                         <input type="email" name="email" placeholder="{{ __('messages.admin.users.ph-email') }}"
                             value="{{ old('email') }}" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <x-label for="password">{{ __('messages.admin.users.ph-password') }}</x-label>
+                            <x-label for="password">{{ __('messages.admin.users.ph-password') }}<x-red-required/></x-label>
                             <input type="password" name="password" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                         </div>
                         <div>
-                            <x-label for="password_confirmation">{{ __('messages.admin.users.ph-password-confirmation') }}</x-label>
+                            <x-label for="password_confirmation">{{ __('messages.admin.users.ph-password-confirmation') }}<x-red-required/></x-label>
                             <input type="password" name="password_confirmation" required
                             class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                         </div>
@@ -379,13 +379,13 @@
                     @if(auth()->user()->role === 'Profesor')
                         <input type="hidden" name="role" value="Alumno">
                         <div>
-                            <x-label for="role">{{ __('messages.admin.users.select-role') }}</x-label>
+                            <x-label for="role">{{ __('messages.admin.users.select-role') }}<x-red-required/></x-label>
                             <input type="text" value="{{ __('messages.roles.student') }}" disabled
                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 bg-gray-100 dark:bg-gray-800 text-gray-500">
                         </div>
                     @else
                         <div>
-                            <x-label for="role">{{ __('messages.admin.users.select-role') }}</x-label>
+                            <x-label for="role">{{ __('messages.admin.users.select-role') }}<x-red-required/></x-label>
                             <select name="role" x-model="role" required class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0 dark:bg-themeBgDark">
                                 <option value="">{{ __('messages.admin.users.select-role') }}</option>
                                 @foreach ($roleMap as $dbValue => $translationKey)
@@ -401,19 +401,19 @@
                     <template x-if="role === 'Alumno'">
                         <div class="space-y-4">
                             <div>
-                                <x-label for="birthDate">{{ __('messages.profile.label-birth-date') }}</x-label>
+                                <x-label for="birthDate">{{ __('messages.profile.label-birth-date') }}<x-red-required/></x-label>
                                 <input type="date" name="birthDate" value="{{ old('birthDate') }}"
                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             <div>
-                                <x-label for="currentCourse">{{ __('messages.profile.label-current-course') }}</x-label>
+                                <x-label for="currentCourse">{{ __('messages.profile.label-current-course') }}<x-red-required/></x-label>
                                 <input type="text" name="currentCourse" value="{{ old('currentCourse') }}"
                                 placeholder="{{ __('messages.admin.users.ph-current-course') }}"
                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             @if(auth()->user()->role !== 'Profesor')
                                 <div>
-                                    <x-label for="educationalCenter">{{ __('messages.profile.label-educational-center') }}</x-label>
+                                    <x-label for="educationalCenter">{{ __('messages.profile.label-educational-center') }}<x-red-required/></x-label>
                                     <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                     placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
                                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
@@ -426,19 +426,19 @@
                     <template x-if="role === 'Profesor'">
                         <div class="space-y-4">
                             <div>
-                                <x-label for="educationalCenter">{{ __('messages.profile.label-educational-center') }}</x-label>
+                                <x-label for="educationalCenter">{{ __('messages.profile.label-educational-center') }}<x-red-required/></x-label>
                                 <input type="text" name="educationalCenter" value="{{ old('educationalCenter') }}"
                                 placeholder="{{ __('messages.admin.users.ph-educational-center') }}"
                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             <div>
-                                <x-label for="specialization">{{ __('messages.profile.label-specialization') }}</x-label>
+                                <x-label for="specialization">{{ __('messages.profile.label-specialization') }}<x-red-required/></x-label>
                                 <input type="text" name="specialization" value="{{ old('specialization') }}"
                                 placeholder="{{ __('messages.admin.users.ph-specialization') }}"
                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                             </div>
                             <div>
-                                <x-label for="department">{{ __('messages.profile.label-department') }}</x-label>
+                                <x-label for="department">{{ __('messages.profile.label-department') }}<x-red-required/></x-label>
                                 <input type="text" name="department" value="{{ old('department') }}"
                                 placeholder="{{ __('messages.admin.users.ph-department') }}"
                                 class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
@@ -449,19 +449,19 @@
                     <template x-if="role === 'Empresa'">
                         <div class="space-y-4">
                             <div>
-                                <x-label for="cif">CIF</x-label>
+                                <x-label for="cif">CIF<x-red-required/></x-label>
                                 <input type="text" name="cif" value="{{ old('cif') }}"
                                 placeholder="{{ __('messages.admin.users.ph-cif') }}"
                                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                 </div>
                                 <div>
-                                    <x-label for="address">{{ __('messages.profile.label-address') }}</x-label>
+                                    <x-label for="address">{{ __('messages.profile.label-address') }}<x-red-required/></x-label>
                                     <input type="text" name="address" value="{{ old('address') }}"
                                     placeholder="{{ __('messages.admin.users.ph-address') }}"
                                     class="w-full h-8 sm:h-10 px-3 py-2 text-xs md:tex-sm lg:text-base rounded border border-themeLightGray outline-0">
                                 </div>
                                 <div>
-                                    <x-label for="sector">{{ __('messages.profile.label-sector') }}</x-label>
+                                    <x-label for="sector">{{ __('messages.profile.label-sector') }}<x-red-required/></x-label>
                                     <input type="text" name="sector" value="{{ old('sector') }}"
                                     placeholder="{{ __('messages.admin.users.ph-sector') }}"
                                     class="w-full border rounded h-8 sm:h-10 px-3 py-2">

@@ -98,7 +98,7 @@
                 <p class="text-xs md:tex-sm lg:text-base"><strong>{{ $offer->subtitle }}</strong></p>
             @endif
 
-            <p class="mt-6 mb-3 text-xs md:tex-sm lg:text-base font-semibold">{{ __('messages.email.text-4') }}</p>
+            <p class="mt-6 mb-3 text-xs md:tex-sm lg:text-base font-semibold">{{ __('messages.admin.offers.label-description') }}</p>
 
             <p class="mb-9 text-xs md:tex-sm lg:text-base">{{ $offer->description }}</p>
 
@@ -193,15 +193,15 @@
 
                             <input type="hidden" name="offer_id" value="{{ $offer->id }}">
                             <div class="flex flex-col gap-2.5">
-                                <x-label for="candidate_name">{{ __('messages.apply-form.candidate-name') }}</x-label>
+                                <x-label for="candidate_name">{{ __('messages.apply-form.candidate-name') }}<x-red-required/></x-label>
                                 <x-inputtext type="text" name="candidate_name" id="candidate_name"
                                     value="{{ auth()->user()->name }}" readonly />
 
-                                <x-label for="position_applied">{{ __('messages.apply-form.position-applied') }}</x-label>
+                                <x-label for="position_applied">{{ __('messages.apply-form.position-applied') }}<x-red-required/></x-label>
                                 <x-inputtext type="text" name="position_applied" id="position_applied"
                                     value="{{ $offer->name }}" readonly />
 
-                                <x-label for="position_applied">{{ __('messages.apply-form.application-reason') }}</x-label>
+                                <x-label for="position_applied">{{ __('messages.apply-form.application-reason') }}<x-red-required/></x-label>
                                 <textarea name="application_reason"
                                     class="w-full h-30 border rounded border-themeLightGray resize-none"
                                     required></textarea><br>

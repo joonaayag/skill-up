@@ -22,6 +22,4 @@ window.addEventListener('load', () => {
         duration: 1.2,
         ease: "power3.out"
     });
-
-    
 });
