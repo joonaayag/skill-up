@@ -113,6 +113,7 @@
                 <div class="flex flex-col gap-3">
                     @if ($jobOffers->isNotEmpty())
                         @foreach($jobOffers as $offer)
+                        
                             <a href="{{ route('job.offers.show', $offer->id) }}">
                                 <div
                                     class="flex items-center space-x-4 hover:bg-themeLightGray/20 cursor-pointer p-1 rounded-lg transition">
