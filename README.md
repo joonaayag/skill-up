@@ -14,7 +14,7 @@ This project was developed as part of a final academic project by **Jonay Aguila
 
 
 # Local Installation (develop and testing)
-To set up the project locally, follow these steps:
+To set up the project locally, follow these steps: <br>
   1º Clone the repository from GitHub. <br>
   2º Run composer install to install PHP dependencies. <br>
   3º Run npm install && npm run build to compile CSS and JavaScript assets. <br>
