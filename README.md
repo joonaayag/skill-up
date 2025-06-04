@@ -12,6 +12,12 @@ This project was developed as part of a final academic project by **Jonay Aguila
 - **Alpine.js** for lightweight JavaScript interactivity.  
 - Custom **JavaScript scripts** for enhanced user experience and frontend behavior.
 
+### Infrastructure & Services
+
+- **Railway** for cloud deployment and database hosting.  
+- **Amazon AWS S3** for secure file storage and asset delivery.  
+- **Gmail SMTP** integration for sending notification and verification emails.  
+- **Google reCAPTCHA** for spam prevention and bot protection on forms.
 
 # Local Installation (develop and testing)
 To set up the project locally, follow these steps: <br>
