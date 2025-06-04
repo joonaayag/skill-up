@@ -15,9 +15,9 @@ This project was developed as part of a final academic project by **Jonay Aguila
 
 # Local Installation (develop and testing)
 To set up the project locally, follow these steps:
-  1º Clone the repository from GitHub.
-  2º Run composer install to install PHP dependencies.
-  3º Run npm install && npm run build to compile CSS and JavaScript assets.
-  4º Configure the .env file with your local environment variables.
-  5º Create the database and run the migrations.
+  1º Clone the repository from GitHub. <br>
+  2º Run composer install to install PHP dependencies. <br>
+  3º Run npm install && npm run build to compile CSS and JavaScript assets. <br>
+  4º Configure the .env file with your local environment variables. <br> 
+  5º Create the database and run the migrations. <br>
   6º Start the development server.
