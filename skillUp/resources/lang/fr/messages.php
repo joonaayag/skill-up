@@ -974,7 +974,7 @@ return [
     'messages' => [
         'last-step' => 'Une dernière étape pour commencer avec Skill Up',
         'login' => 'Connexion réussie',
-        'register' => 'Inscription et connexion réussies',
+        'register' => 'Authentification réussie',
         'user-destroy' => 'Utilisateur supprimé avec succès',
         'user-update' => 'Utilisateur mis à jour avec succès',
         'comment-update' => 'Commentaire mis à jour avec succès',

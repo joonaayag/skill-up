@@ -970,7 +970,7 @@ return [
     'messages' => [
         'last-step' => 'Un último paso para empezar con Skill Up',
         'login' => 'Inicio de sesión correctamente',
-        'register' => 'Registro e inicio de sesión realizado correctamente',
+        'register' => 'Autenticado correctamente',
         'user-destroy' => 'Usuario eliminado correctamente',
         'user-update' => 'Usuario actualizado correctamente',
         'comment-update' => 'Comentario actualizado correctamente',

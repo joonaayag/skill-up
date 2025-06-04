@@ -978,7 +978,7 @@ return [
     'messages' => [
         'last-step' => '開始使用 Skill Up 的最後一步',
         'login' => '成功登入',
-        'register' => '註冊並登入成功',
+        'register' => '驗證成功',
         'user-destroy' => '使用者已成功刪除',
         'user-update' => '使用者已成功更新',
         'comment-update' => '留言已成功更新',

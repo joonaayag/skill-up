@@ -976,7 +976,7 @@ return [
     'messages' => [
         'last-step' => 'Ett siste steg for å komme i gang med Skill Up',
         'login' => 'Innlogging vellykket',
-        'register' => 'Registrering og innlogging fullført',
+        'register' => 'Vellykket autentisering',
         'user-destroy' => 'Bruker slettet',
         'user-update' => 'Bruker oppdatert',
         'comment-update' => 'Kommentar oppdatert',

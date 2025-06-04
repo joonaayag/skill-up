@@ -967,7 +967,7 @@ return [
    'messages' => [
       'last-step' => 'Jeden poslední krok k zahájení se Skill Up',
       'login' => 'Přihlášení proběhlo úspěšně',
-      'register' => 'Registrace a přihlášení proběhly úspěšně',
+      'register' => 'Úspěšně ověřeno',
       'user-destroy' => 'Uživatel byl úspěšně odstraněn',
       'user-update' => 'Uživatel byl úspěšně aktualizován',
       'comment-update' => 'Komentář byl úspěšně aktualizován',
