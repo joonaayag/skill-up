@@ -134,7 +134,7 @@
                 <x-label for="cv">Currículum</x-label>
                 @if($user->cv)
                     <div class="text-dark text-xs md:tex-sm lg:text-base mt-1">
-                        <p>📄 <a href="{{ asset('storage/' . $user->cv) }}" target="_blank"
+                        <p>📄 <a href="{{ Storage::disk('s3')->url($user->cv) }}" target="_blank"
                                 class="underline text-blue-600">
                                 {{ __('messages.profile.see-cv') }}
                             </a></p>
