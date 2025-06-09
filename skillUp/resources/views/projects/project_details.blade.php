@@ -41,13 +41,12 @@
                 </x-heading>
             @endif
 
+            <p class="mb-9 break-words">{{ $project->description }}</p>
 
             @if ($project->image)
                 <img src="{{ Storage::disk('s3')->url($project->image) }}" alt="Imagen del proyecto"
-                    class="w-[80%] mx-auto h-auto rounded-lg shadow-md">
+                    class="w-[60%] mx-auto h-auto rounded-lg shadow-md">
             @endif
-
-            <p class="mb-9 break-words">{{ $project->description }}</p>
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
                 <div
