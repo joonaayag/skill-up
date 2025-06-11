@@ -1,8 +1,8 @@
 ## About the Project
 
-**SkillUp** is a web platform designed to connect students, teachers, and local companies through academic projects and job opportunities. The platform allows users to browse and manage student projects, publish and apply to job offers, and promote collaboration between the educational community and the local job market.
+**SkillUp** is a web platform designed to connect students, teachers, and local companies through academic projects and job opportunities. It enables users to browse and manage student projects, publish and apply for job offers, and foster collaboration between the educational community and the local job market.
 
-This project was developed as part of a final academic project by **Jonay Aguilar Menéndez**, with the goal of creating a useful tool to improve communication and opportunity-sharing between students and professionals. It aims to support both career development and educational innovation.
+This platform was developed in just 30 days as part of the final academic project by Jonay Aguilar Menéndez. While fully functional, the code still has a lot of room for improvement in terms of structure, optimization, and maintainability. The main goal was to create a useful foundation that could grow over time to better support communication and opportunity-sharing between students and professionals.
 
 ### Technologies Used
 
