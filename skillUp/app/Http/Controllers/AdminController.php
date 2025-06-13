@@ -336,7 +336,7 @@ class AdminController extends Controller
     }
 
         return back()
-            ->with('message', __('messages.admin.teachers.import-failed'))
+            ->with('message', __('messages.admin.teachers.import-success'))
             ->with('importErrors', $errors);
     }
 
