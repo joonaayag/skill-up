@@ -990,7 +990,7 @@ class AdminController extends Controller
             'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
-            'files.*' => 'nullable|file|max:4096',
+            'files.*' => 'nullable|max:4096',
         ], [
             'title.required' => __('messages.errors.title.required'),
             'title.string' => __('messages.errors.title.string'),
@@ -1053,20 +1053,23 @@ class AdminController extends Controller
             ]);
         }
 
-        if ($request->hasFile('files')) {
+        // Borrar archivos anteriores siempre
+foreach ($project->images as $img) {
+    Storage::disk('s3')->delete($img->path);
+    $img->delete();
+}
 
-            foreach ($project->images as $img) {
-                Storage::disk('s3')->delete($img->path);
-                $img->delete();
-            }
+// Subir nuevos archivos (si los hay)
+if ($request->hasFile('files')) {
+    
+    foreach ($request->file('files') as $file) {
+        $path = $file->store('project_images', 's3');
+        $project->images()->create([
+            'path' => $path,
+        ]);
+    }
+}
 
-            foreach ($request->file('files') as $file) {
-                $path = $file->store('project_images', 's3');
-                $project->images()->create([
-                    'path' => $path,
-                ]);
-            }
-        }
 
 
         return redirect()->route('admin.school_project.details', $project->id)->with('message', __('messages.messages.sp-update'));

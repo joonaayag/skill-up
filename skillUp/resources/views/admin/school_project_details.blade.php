@@ -288,9 +288,9 @@
                                     <x-icon name="clip" class="w-5 h-auto" />
                                     {{ __('messages.projects.label-upload') }}
                                 </div> 
-                                <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
-                                    @change="fileNames = [...$event.target.files].map(f => f.name)" />
                             </label>
+                            <input id="file-upload" name="files[]" type="file" multiple accept="file/*" class="hidden"
+                                @change="fileNames = [...$event.target.files].map(f => f.name)" />
 
                             <template x-if="fileNames.length > 0">
                                 <ul
