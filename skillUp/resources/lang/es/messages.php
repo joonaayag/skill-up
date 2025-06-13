@@ -574,15 +574,25 @@ return [
         'teacher-format' => 'Recuerda el formato: Nombre;Apellido;Correo;Especialización;Departamento',
     ],
     'email' => [
+        'hello' => 'Hola ',
+        'text-1' => 'Gracias por postularte a la oferta',
+        'text-2' => 'de la empresa',
+        'text-3' => '. A continuación te informamos sobre el estado de tu candidatura.',
+        'text-4' => 'Descripción de la oferta:',
+        'text-5' => 'Estado actual:',
+        'text-6' => 'Si tienes alguna duda, no dudes en contactarnos.',
+        'text-7' => 'Gracias por utilizar nuestra plataforma.',
+        'new' => 'Tu candidatura ha sido registrada correctamente. Te contactaremos en caso de que seas seleccionado/a para continuar con el proceso.',
+        'review' => 'Tu candidatura está siendo revisada. Te informaremos tan pronto como tengamos novedades.',
+        'accepted' => '¡Felicidades! Has sido seleccionado/a para continuar con el proceso. Nos pondremos en contacto contigo próximamente.',
+        'rejected' => 'Gracias por tu interés. Lamentablemente, en esta ocasión no has sido seleccionado/a.',
         'title' => 'Estado de tu candidatura actualizado',
-        'message' => 'Tu candidatura para la oferta ":offer_name" ha sido actualizada. '
-            . 'El estado actualizado es: :status_text. :custom_message',
-
+        'message' => 'El estado de tu candidatura ha cambiado. Consulta los detalles en la plataforma.',
         'messages' => [
-            'nueva' => 'Nueva',
-            'en revisión' => 'En revisión',
-            'aceptado' => 'Aceptado',
-            'rechazado' => 'Rechazado',
+            'nueva' => 'Candidatura registrada',
+            'en revisión' => 'Candidatura en revisión',
+            'aceptado' => 'Candidatura aceptada',
+            'rechazado' => 'Candidatura rechazada',
         ],
     ],
     'notifications' => [
