@@ -10,8 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body class="flex flex-col min-h-screen bg-cover bg-center"
-    style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">
+<body class="flex flex-col min-h-screen bg-center bg-cover bg-fixed"
+      style="background-image: url('{{ asset('images/welcome-bg.jpg') }}')">
+
 
     @if (session('message'))
         <div id="toast"
@@ -112,7 +113,7 @@
                      :class="form !== 'login' ? 'absolute inset-0' : ''"
                      class="w-full">
                     
-                    <form action="{{ route('login') }}" method="POST" class="space-y-4">
+                    <form id="login" action="{{ route('login') }}" method="POST" class="space-y-4">
                         @csrf
 
                         @if ($errors->any() && !old('name') && !old('role'))
@@ -139,7 +140,7 @@
                                 <input type="email" name="email" id="email"
                                     value="{{ old('email') }}"
                                     class="w-full pl-10 pr-4 py-2 border text-xs md:text-sm 2md:text-base border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
-                                    required>
+                                    >
                             </div>
                         </div>
 
@@ -152,7 +153,7 @@
                                 </div>
                                 <input :type="showPassword ? 'text' : 'password'" name="password" id="password"
                                     class="w-full pl-10 pr-12 py-2 text-xs md:text-sm 2md:text-base border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-themeBlue focus:border-themeBlue shadow-sm"
-                                    required>
+                                    >
                                 <button type="button" @click="showPassword = !showPassword"
                                     class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
                                     <template x-if="!showPassword">
@@ -216,7 +217,7 @@
                      class="w-full"
                      x-cloak>
                 
-                <form method="POST" action="{{ route('register') }}" class="space-y-5"
+                <form id="register" method="POST" action="{{ route('register') }}" class="space-y-5"
                     x-data="{ role: '{{ old('role') }}' }">
                     @csrf
                     @if ($errors->any() && (old('name') || old('role')))
@@ -369,131 +370,330 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         <script>
-            document.querySelector('form[action="{{ route('login') }}"]').addEventListener('submit', function (event) {
-                const email = this.querySelector('input[name="email"]').value.trim();
-                const password = this.querySelector('input[name="password"]').value.trim();
-            const errors = [];
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('login');
+    if (!form) return;
 
-                // V alidación de email
-                if (!email) {
-                    errors.push("{{ __('validation.required', ['attribute' => 'email']) }}");
-                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                    errors.push("{{ __('validation.email', ['attribute' => 'email']) }}");
+    form.addEventListener('submit', function (event) {
+        const emailInput = form.querySelector('input[name="email"]');
+        const passwordInput = form.querySelector('input[name="password"]');
+        const errors = [];
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Validación de email
+        if (!email) {
+            errors.push("El correo electrónico es obligatorio.");
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.push("El formato del correo no es válido.");
+        }
+
+        // Validación de contraseña
+        if (!password) {
+            errors.push("La contraseña es obligatoria.");
+        }
+
+        // Mostrar errores si los hay
+        const errorBox = document.getElementById('login-errors');
+        if (errors.length > 0) {
+            event.preventDefault();
+
+            errorBox.classList.remove('hidden');
+            errorBox.innerHTML = `
+                <ul class="list-disc list-inside space-y-1">
+                    ${errors.map(msg => `<li>${msg}</li>`).join('')}
+                </ul>
+            `;
+        } else {
+            errorBox.classList.add('hidden');
+            errorBox.innerHTML = '';
+        }
+    });
+});
+
+
+// Validación JavaScript para formulario de registro
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("VALIDACNDO")
+    const form = document.getElementById('register');
+    const errorContainer = document.getElementById('register-errors');
+
+    // Función para mostrar errores
+    function showErrors(errors) {
+        if (errors.length > 0) {
+            errorContainer.innerHTML = '<ul class="list-disc list-inside space-y-1">' + 
+                errors.map(error => `<li>${error}</li>`).join('') + '</ul>';
+            errorContainer.classList.remove('hidden');
+            errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            errorContainer.classList.add('hidden');
+        }
+    }
+
+    // Función para limpiar errores
+    function clearErrors() {
+        errorContainer.classList.add('hidden');
+    }
+
+    // Validación de contraseña
+    function validatePassword(password) {
+        const errors = [];
+        
+        if (password.length < 8) {
+            errors.push('La contraseña debe tener al menos 8 caracteres');
+        }
+        
+        if (!/[a-z]/.test(password)) {
+            errors.push('La contraseña debe contener al menos una letra minúscula');
+        }
+        
+        if (!/[A-Z]/.test(password)) {
+            errors.push('La contraseña debe contener al menos una letra mayúscula');
+        }
+        
+        if (!/\d/.test(password)) {
+            errors.push('La contraseña debe contener al menos un número');
+        }
+        
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(password)) {
+            errors.push('La contraseña debe contener al menos un símbolo especial');
+        }
+        
+        return errors;
+    }
+
+    // Validación de email
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Validación de fecha de nacimiento
+    function validateBirthDate(date) {
+        const today = new Date();
+        const birthDate = new Date(date);
+        return birthDate <= today;
+    }
+
+    // Validación de URL
+    function validateURL(url) {
+        try {
+            new URL(url);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    // Función principal de validación
+    function validateForm() {
+        const errors = [];
+        
+        // Obtener valores del formulario
+        const name = form.querySelector('[name="name"]').value.trim();
+        const lastName = form.querySelector('[name="lastName"]').value.trim();
+        const email = form.querySelector('[name="email"]').value.trim();
+        const password = form.querySelector('[name="password"]').value;
+        const passwordConfirmation = form.querySelector('[name="password_confirmation"]').value;
+        const role = form.querySelector('[name="role"]').value;
+        const recaptcha = grecaptcha?.getResponse();
+
+        // Validación del nombre
+        if (!name) {
+            errors.push('El nombre es obligatorio');
+        } else if (name.length > 20) {
+            errors.push('El nombre no puede tener más de 20 caracteres');
+        }
+
+        // Validación del apellido (opcional pero con límite)
+        if (lastName && lastName.length > 40) {
+            errors.push('El apellido no puede tener más de 40 caracteres');
+        }
+
+        // Validación del email
+        if (!email) {
+            errors.push('El email es obligatorio');
+        } else if (!validateEmail(email)) {
+            errors.push('El formato del email no es válido');
+        } else if (email.length > 50) {
+            errors.push('El email no puede tener más de 50 caracteres');
+        }
+
+        // Validación de la contraseña
+        if (!password) {
+            errors.push('La contraseña es obligatoria');
+        } else {
+            const passwordErrors = validatePassword(password);
+            errors.push(...passwordErrors);
+        }
+
+        // Validación de confirmación de contraseña
+        if (!passwordConfirmation) {
+            errors.push('La confirmación de contraseña es obligatoria');
+        } else if (password !== passwordConfirmation) {
+            errors.push('Las contraseñas no coinciden');
+        }
+
+        // Validación del rol
+        if (!role) {
+            errors.push('Debe seleccionar un rol');
+        } else if (!['Usuario', 'Alumno', 'Empresa'].includes(role)) {
+            errors.push('El rol seleccionado no es válido');
+        }
+
+        // Validación del reCaptcha
+        if (!recaptcha || recaptcha.length === 0) {
+            errors.push('Debe completar el reCaptcha');
+        }
+
+        // Validaciones específicas según el rol
+        if (role === 'Alumno') {
+            const birthDate = form.querySelector('[name="birthDate"]')?.value;
+            const currentCourse = form.querySelector('[name="currentCourse"]')?.value.trim();
+            const educationalCenter = form.querySelector('[name="educationalCenter"]')?.value.trim();
+
+            if (!birthDate) {
+                errors.push('La fecha de nacimiento es obligatoria para estudiantes');
+            } else if (!validateBirthDate(birthDate)) {
+                errors.push('La fecha de nacimiento no puede ser futura');
+            }
+
+            if (!currentCourse) {
+                errors.push('El curso actual es obligatorio para estudiantes');
+            } else if (currentCourse.length > 50) {
+                errors.push('El curso actual no puede tener más de 50 caracteres');
+            }
+
+            if (!educationalCenter) {
+                errors.push('El centro educativo es obligatorio para estudiantes');
+            } else if (educationalCenter.length > 100) {
+                errors.push('El centro educativo no puede tener más de 100 caracteres');
+            }
+        }
+
+        if (role === 'Empresa') {
+            const cif = form.querySelector('[name="cif"]')?.value.trim();
+            const address = form.querySelector('[name="address"]')?.value.trim();
+            const sector = form.querySelector('[name="sector"]')?.value.trim();
+            const website = form.querySelector('[name="website"]')?.value.trim();
+
+            if (!cif) {
+                errors.push('El CIF es obligatorio para empresas');
+            } else if (cif.length > 50) {
+                errors.push('El CIF no puede tener más de 50 caracteres');
+            }
+
+            if (!address) {
+                errors.push('La dirección es obligatoria para empresas');
+            } else if (address.length > 255) {
+                errors.push('La dirección no puede tener más de 255 caracteres');
+            }
+
+            if (!sector) {
+                errors.push('El sector es obligatorio para empresas');
+            } else if (sector.length > 100) {
+                errors.push('El sector no puede tener más de 100 caracteres');
+            }
+
+            if (website && website.length > 0) {
+                if (!validateURL(website)) {
+                    errors.push('El formato de la página web no es válido');
+                } else if (website.length > 255) {
+                    errors.push('La página web no puede tener más de 255 caracteres');
                 }
+            }
+        }
 
-                // Validación de contraseña
-                if (!password) {
-                    errors.push("{{ __('validation.required', ['attribute' => 'password']) }}");
-                }
+        return errors;
+    }
 
-                // Mostrar errores
-                if (errors.length > 0) {
-                    event.preventDefault();
+    // Validación en tiempo real para algunos campos
+    const passwordField = form.querySelector('[name="password"]');
+    const passwordConfirmField = form.querySelector('[name="password_confirmation"]');
+    const emailField = form.querySelector('[name="email"]');
 
-                    let errorBox = document.getElementById('login-errors');
-                    if (!errorBox) {
-                        errorBox = document.createElement('div');
-                        errorBox.id = 'login-errors';
-                        errorBox.className = 'bg-red-300 text-black p-4 rounded mb-4';
-                        const form = this;
-                        form.parentNode.insertBefore(errorBox, form);
-                    }
+    // Validación en tiempo real del email
+    emailField.addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (email && !validateEmail(email)) {
+            this.style.borderColor = '#ef4444';
+        } else {
+            this.style.borderColor = '';
+        }
+    });
 
-                    errorBox.innerHTML = '<ul class="list-disc list-inside">' +
-                        errors.map(e => `<li>${e}</li>`).join('') +
-                        '</ul>';
-                }
+    // Validación en tiempo real de la confirmación de contraseña
+    passwordConfirmField.addEventListener('input', function() {
+        const password = passwordField.value;
+        const confirmation = this.value;
+        
+        if (confirmation && password !== confirmation) {
+            this.style.borderColor = '#ef4444';
+        } else {
+            this.style.borderColor = '';
+        }
+    });
+
+    // Limpiar errores cuando el usuario comience a escribir
+    form.addEventListener('input', function() {
+        if (!errorContainer.classList.contains('hidden')) {
+            setTimeout(clearErrors, 1000); // Limpiar después de 1 segundo
+        }
+    });
+
+    // Validación al enviar el formulario
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const errors = validateForm();
+        
+        if (errors.length > 0) {
+            showErrors(errors);
+            return false;
+        }
+        
+        // Si no hay errores, enviar el formulario
+        clearErrors();
+        
+        // Aquí podrías agregar una validación adicional del email único via AJAX
+        // Por ahora, simplemente enviamos el formulario
+        this.submit();
+    });
+
+    // Función para validar email único (opcional - requiere endpoint AJAX)
+    async function checkEmailUnique(email) {
+        try {
+            const response = await fetch('/check-email-unique', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('[name="_token"]').value
+                },
+                body: JSON.stringify({ email: email })
             });
+            
+            const data = await response.json();
+            return data.unique;
+        } catch (error) {
+            console.log('Error checking email uniqueness:', error);
+            return true; // Asumir que es único si hay error
+        }
+    }
 
-
-            document.querySelector('form[action$="/register"]').addEventListener('submit', function (event) {
-                const form = event.target;
-                const role = form.querySelector('select[name="role"]').value;
-                const errors = {};
-
-                const name = form.querySelector('input[name="name"]').value.trim();
-                const lastName = form.querySelector('input[name="lastName"]').value.trim();
-                const email = form.querySelector('input[name="email"]').value.trim();
-                const password = form.querySelector('input[name="password"]').value;
-                const passwordConfirmation = form.querySelector('input[name="password_confirmation"]').value;
-                const recaptcha = form.querySelector('[name="g-recaptcha-response"]')?.value;
-
-                if (!name) errors.name = "El nombre es obligatorio.";
-                else if (name.length > 20) errors.name = "El nombre no puede tener más de 20 caracteres.";
-
-                if (lastName.length > 40) errors.lastName = "El apellido no puede tener más de 40 caracteres.";
-
-                if (!email) errors.email = "El correo electrónico es obligatorio.";
-                else if (!/^[\w-.]+@[\w-]+\.[a-z]{2,}$/i.test(email)) errors.email = "El formato del correo no es válido.";
-                else if (email.length > 50) errors.email = "El correo no puede tener más de 50 caracteres.";
-
-                if (!password) errors.password = "La contraseña es obligatoria.";
-                else if (password !== passwordConfirmation) errors.password_confirmation = "Las contraseñas no coinciden.";
-                else if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password)
-                    || !/[^\w]/.test(password))
-                    errors.password = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo."
-                        ; if (!role) errors.role = "El rol es obligatorio."; else if (!['Usuario', 'Alumno', 'Profesor'
-                            , 'Empresa'].includes(role)) errors.role = "El rol seleccionado no es válido."; if (!recaptcha)
-                    errors.recaptcha = "Debes verificar el captcha."; if (role === 'Alumno') {
-                        const
-                        birthDate = form.querySelector('input[name="birthDate" ]').value; const
-                            currentCourse = form.querySelector('input[name="currentCourse" ]').value.trim(); const
-                                educationalCenter = form.querySelector('input[name="educationalCenter" ]').value.trim(); if (!birthDate)
-                            errors.birthDate = "La fecha de nacimiento es obligatoria."; else if (new Date(birthDate) > new Date())
-                            errors.birthDate = "La fecha debe ser anterior o igual a hoy.";
-
-                        if (!currentCourse) errors.currentCourse = "El curso actual es obligatorio.";
-                        else if (currentCourse.length > 50) errors.currentCourse = "El curso no puede tener más de 50
-                        caracteres.";
-
-                        if (!educationalCenter) errors.educationalCenter = "El centro educativo es obligatorio.";
-                        else if (educationalCenter.length > 100) errors.educationalCenter = "El centro no puede tener más de 100
-                        caracteres.";
-                    }
-
-                if (role === 'Empresa') {
-                    const cif = form.querySelector('input[name="cif"]').value.trim();
-                    const address = form.querySelector('input[name="address"]').value.trim();
-                    const sector = form.querySelector('input[name="sector"]').value.trim();
-                    const website = form.querySelector('input[name="website"]').value.trim();
-
-                    if (!cif) errors.cif = "El CIF es obligatorio.";
-                    else if (cif.length > 50) errors.cif = "El CIF no puede tener más de 50 caracteres.";
-
-                    if (!address) errors.address = "La dirección es obligatoria.";
-                    else if (address.length > 255) errors.address = "La dirección no puede tener más de 255 caracteres.";
-
-                    if (!sector) errors.sector = "El sector es obligatorio.";
-                    else if (sector.length > 100) errors.sector = "El sector no puede tener más de 100 caracteres.";
-
-                    if (website && website.length > 255) {
-                        errors.website = "La URL del sitio web no es válida o es demasiado larga.";
-                    }
-                }
-
-                // Limpiar errores anteriores
-                const existingBox = document.getElementById('register-errors');
-                if (existingBox) {
-                    existingBox.remove();
-                }
-
-                if (Object.keys(errors).length > 0) {
-                    event.preventDefault();
-
-                    const box = document.createElement('div');
-                    box.id = 'register-errors';
-                    box.className = 'bg-red-100 text-red-700 p-4 rounded mt-4';
-                    const ul = document.createElement('ul');
-                    Object.values(errors).forEach(msg => {
-                        const li = document.createElement('li');
-                        li.textContent = msg;
-                        ul.appendChild(li);
-                    });
-                    box.appendChild(ul);
-                    xfoinsertBefore(box, form.querySelector('button[type="submit"]'));
-                }
-            });
-
+    // Validar email único cuando pierda el foco (opcional)
+    emailField.addEventListener('blur', async function() {
+        const email = this.value.trim();
+        if (email && validateEmail(email)) {
+            const isUnique = await checkEmailUnique(email);
+            if (!isUnique) {
+                this.style.borderColor = '#ef4444';
+                showErrors(['Este email ya está registrado']);
+            }
+        }
+    });
+});
+            
         </script>
 
 </body>

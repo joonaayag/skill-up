@@ -47,6 +47,7 @@
             @if ($schoolProject->image)
                 <img src="{{ Storage::disk('s3')->url($schoolProject->image) }}" alt="Imagen del proyecto" class="mx-auto w-2/3 h-auto mb-4 rounded-lg shadow-md">
             @endif
+            
 
             <div class="grid grid-cols-1 2md:flex 2md:justify-between mt-16">
                 <div class="flex gap-4 items-center justify-start 2md:justify-center mb-4 2md:mb-0 text-xs md:text-sm 2md:text-base">

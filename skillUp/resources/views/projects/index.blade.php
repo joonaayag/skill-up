@@ -169,7 +169,7 @@
         @endforelse
     </ul>
 
-    @if (auth()->user()->role !== 'Admin' && auth()->user()->role !== 'Empresa')
+    @if (auth()->user()->role !== 'Admin' && auth()->user()->role !== 'Empresa' && auth()->user()->role !== 'Profesor')
         <div x-cloak x-data="{ showModal: false }"
             x-init="$watch('showModal', val => document.body.classList.toggle('overflow-hidden', val))" class="relative z-10">
 
