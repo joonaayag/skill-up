@@ -142,13 +142,13 @@
                                                 </option>
                                             </select>
                                             <br>
+                                            <div class="mt-6">
+                                                <button type="submit"
+                                                    class="h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
+                                                <button type="button" @click="showDetails = false"
+                                                    class="h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray/50 text-white cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
+                                            </div>
                                         </form>
-                                        <div class="mt-6">
-                                            <button type="submit"
-                                                class="h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 bg-themeBlue text-white cursor-pointer hover:bg-themeHoverBlue/80 transition rounded-lg">{{ __('messages.button.save-changes') }}</button>
-                                            <button @click="showDetails = false"
-                                                class="h-8 sm:h-10 px-2 py-1 2md:px-4 2md:py-2 bg-themeLightGray/50 text-white cursor-pointer hover:bg-themeLightGray transition rounded-lg">{{ __('messages.button.cancel') }}</button>
-                                        </div>
 
                                     </div>
                                 </x-modal>
