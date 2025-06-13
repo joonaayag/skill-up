@@ -252,8 +252,7 @@ class AdminController extends Controller
         }
 
         return back()
-            ->with('message', __('messages.admin.users.import-error'))
-            ->with('importErrors', $errors);
+            ->with('message', __('messages.admin.users.import-success'));
 
     }
 
