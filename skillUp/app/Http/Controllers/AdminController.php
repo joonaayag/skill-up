@@ -989,7 +989,7 @@ class AdminController extends Controller
             'tags' => 'required|in:TFG,TFM,Tesis,Individual,Grupal,Tecnología,Ciencias,Artes,Ingeniería',
             'general_category' => 'required|in:Administración y negocio,Ciencia y salud,Comunicación,Diseño y comunicación,Educación,Industria,Otro,Tecnología y desarrollo',
             'link' => 'nullable|url|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'files.*' => 'nullable|max:4096',
         ], [
             'title.required' => __('messages.errors.title.required'),
@@ -1012,9 +1012,9 @@ class AdminController extends Controller
             'general_category.in' => __('messages.errors.sector.in'),
             'general_category.required' => __('messages.errors.sector.required'),
 
-            'images.*.image' => __('messages.errors.image.image'),
-            'images.*.mimes' => __('messages.errors.image.mimes'),
-            'images.*.max' => __('messages.errors.image.max'),
+            'image.*.image' => __('messages.errors.image.image'),
+            'image.*.mimes' => __('messages.errors.image.mimes'),
+            'image.*.max' => __('messages.errors.image.max'),
 
             'files.*.file' => __('messages.errors.file.file'),
             'files.*.max' => __('messages.errors.file.max'),
@@ -1053,23 +1053,20 @@ class AdminController extends Controller
             ]);
         }
 
-        // Borrar archivos anteriores siempre
-foreach ($project->images as $img) {
-    Storage::disk('s3')->delete($img->path);
-    $img->delete();
-}
+        if ($request->hasFile('files')) {
 
-// Subir nuevos archivos (si los hay)
-if ($request->hasFile('files')) {
-    
-    foreach ($request->file('files') as $file) {
-        $path = $file->store('project_images', 's3');
-        $project->images()->create([
-            'path' => $path,
-        ]);
-    }
-}
+            foreach ($project->images as $img) {
+                Storage::disk('s3')->delete($img->path);
+                $img->delete();
+            }
 
+            foreach ($request->file('files') as $file) {
+                $path = $file->store('project_images', 's3');
+                $project->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
 
 
         return redirect()->route('admin.school_project.details', $project->id)->with('message', __('messages.messages.sp-update'));
