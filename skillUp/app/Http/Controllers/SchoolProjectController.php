@@ -185,7 +185,7 @@ class SchoolProjectController extends Controller
         }
 
 
-        return redirect()->route('school.projects.index')->with('message', 'messages.messages.sp-update');
+        return redirect()->route('school.projects.index')->with('message', __('messages.messages.sp-update'));
     }
 
     public function show($id)
