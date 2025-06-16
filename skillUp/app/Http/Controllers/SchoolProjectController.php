@@ -268,7 +268,7 @@ class SchoolProjectController extends Controller
             }
         }
 
-        return redirect()->route('school.projects.index')->with('message', 'messages.messages.project-create');
+        return redirect()->route('school.projects.index')->with('message', __('messages.messages.project-create'));
     }
 
 }
