@@ -92,7 +92,7 @@ class SchoolProjectController extends Controller
 
         $project->delete();
 
-        return redirect()->route('school.projects.index')->with('message', 'messages.messages.sp-delete');
+        return redirect()->route('school.projects.index')->with('message', __('messages.messages.sp-delete'));
     }
     public function update(Request $request, $id)
     {
