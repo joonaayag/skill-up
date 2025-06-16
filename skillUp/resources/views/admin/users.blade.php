@@ -625,7 +625,8 @@
                                 [&>select]:border-2
                                 [&>select]:border-themeLightGray
                                 [&>select]:px-4
-                                [&>select]:text-themeLightGray
+                                [&>select]:text-themeDarkGray
+                                dark:[&>select]:text-themeLightGray
                                 [&>select]:placeholder:text
                                 dark:[&>select]:bg-themeBgDark">
                                 @csrf
